@@ -23,3 +23,9 @@ java.lang.OutOfMemoryError: PermGen space
 
 
 四、手机端统一访问网址：http://192.168.0.110:8080/iqasweb/mobile/**/**.html
+
+五：在进行单元测试时要把applicationContext.xml中的<property name="uploadTempDir" value="/upload/temp"/>注释掉
+
+
+管理员登录连接：http://localhost:8088/iqasweb/admin/loginUI.html 
+

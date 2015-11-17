@@ -9,7 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cnu.iqas.bean.ontology.IWord;
+import com.cnu.iqas.bean.ontology.ISentence;
+import com.cnu.iqas.bean.ontology.Iword;
 import com.cnu.iqas.service.ontology.SentenceSim;
 
 @Controller
@@ -31,7 +32,7 @@ public class SearchController {
 	    	if(text.trim().length()<15)
 	    	{
 		    	//根据单词进行查询
-		    	IWord iword=sentenceSim.findWordProperty(text);
+		    	Iword iword=sentenceSim.findWordProperty(text);
 		    	if( iword !=null ){
 					mv.addObject("word", iword);
 					mv.setViewName("/front/search/wordresult");
@@ -39,16 +40,15 @@ public class SearchController {
 	    	}
 	    	else
 	    	{
-		    	//根据句子进行查询
+	    		//根据句子进行查询
 		        System.out.println("根据句子进行查询");
-		        List<String>Property=sentenceSim.maxSimilar(text);
-		        System.out.println(Property);
-				mv.addObject("text",Property.get(0));
-				mv.addObject("tempAnswer", Property.get(1));
-				mv.addObject("tempVersion", Property.get(2));
-				mv.addObject("tempBook", Property.get(3));
-				mv.addObject("tempScene", Property.get(4));
-				mv.addObject("tempPattern", Property.get(5));
+		        ISentence sentence=sentenceSim.maxSimilar(text);
+				mv.addObject("text",sentence.getInstanceLabel());
+				mv.addObject("tempAnswer", sentence.getPropertyAnswer());
+				mv.addObject("tempVersion", sentence.getPropertyVersion());
+				mv.addObject("tempBook", sentence.getPropertyBook());
+				mv.addObject("tempScene",sentence.getPropertyScene());
+				mv.addObject("tempPattern", sentence.getPropertySentencePattern());
 				mv.setViewName("/front/search/result");
 	    	}
 	    	return mv;

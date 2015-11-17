@@ -9,7 +9,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.cnu.iqas.bean.ontology.IWord;
+import com.cnu.iqas.bean.ontology.ISentence;
+import com.cnu.iqas.bean.ontology.Iword;
 import com.cnu.iqas.bean.ontology.Word_simalgorithm;
 import com.cnu.iqas.listener.InitializedListener;
 import com.cnu.iqas.service.ontology.SentenceSim;
@@ -178,6 +179,7 @@ public class SentenceSimImpl implements SentenceSim  {
 		}
 		return max;
 	}
+
 	/**
 	  * 将两组单词进行合并为一个数组
 	  * @param word_prop1   数组1
@@ -205,6 +207,7 @@ public class SentenceSimImpl implements SentenceSim  {
 		}
 		return temp;
 	}
+
 	/**
 	  * 将输入的句子进行词性还原
 	  * @param  str1      输入的字符串
@@ -231,6 +234,7 @@ public class SentenceSimImpl implements SentenceSim  {
 		System.out.println();
 		return temp;
 	}
+
 	 /**
 	  * 截取一个字符串的首字符
 	  * @param s 字符串
@@ -293,8 +297,9 @@ public class SentenceSimImpl implements SentenceSim  {
 	  * @param key 键值
 	  * @return 该id下所有的属性
 	  */
-	public List<String> findPropertyById(String key) {
-		List<String>list=new ArrayList();
+	public ISentence findPropertyById(String key) {
+		ISentence sentence = null;
+		//List<String>list=new ArrayList();
 		QuerySentenceDependOnId querySentenceDependOnId=new QuerySentenceDependOnIdImpl();
 	    ResultSet resultsSentenceProperty = querySentenceDependOnId.checkSentencePropertyDependOnId(key);
 	    while (resultsSentenceProperty.hasNext()) {
@@ -338,12 +343,8 @@ public class SentenceSimImpl implements SentenceSim  {
 			String tempPattern=stringPattern.substring(0, stringPattern.length() - 3);
 			System.out.println("重要句型："+tempPattern);
 			System.out.println("====================重要句型=========================");	
-			list.add(tempStr);
-			list.add(tempAnswer);
-			list.add(tempVersion);
-			list.add(tempBook);
-			list.add(tempScene);
-			list.add(tempPattern);
+			
+			sentence = new ISentence(tempStr, tempAnswer, tempVersion, tempBook, tempScene, tempPattern);
 			System.out.println("================第2次打印=============");
 			System.out.println("ID：" + key + "\n" + "    ————实例："
 					+ solutionInstance.get("?instanceLabel") + "\n"
@@ -356,17 +357,16 @@ public class SentenceSimImpl implements SentenceSim  {
 					+ "\n" + "    ————重要句型："
 					+ solutionInstance.get("?propertySentencePattern"));
 		}
-		return list;
+		return sentence;
 	}
 	 /**
 	 * 用户输入一个单词或词组的时候，执行这个方法，通过对本题库的查询，查询到该单词在本体库中所有的属性。
 	 * @param  用户输入一个单词或词组
 	 * @return 该单词所对应的所有的属性
-	 * @author 王文辉
 	 */
 	@Override
-	public IWord findWordProperty(String str) {
-		IWord word  = null;
+	public Iword findWordProperty(String str) {
+		Iword word  = null;
 		System.out.println("进入checkword方法！！！");
 	    QueryIndividualAndProperty queryIndividualAndProperty=new QueryIndividualAndPropertyImpl();
 		ResultSet resultsWordProperty=queryIndividualAndProperty.checkProperty(str);
@@ -383,7 +383,7 @@ public class SentenceSimImpl implements SentenceSim  {
 			String tempAntonym = stringAntonym.substring(0, stringAntonym.length() - 3);
 			String stringSynonyms = solutionInstance.get("?propertySynonyms").toString();
 			String tempSynonyms = stringSynonyms.substring(0, stringSynonyms.length() - 3);
-			word = new IWord(tempChinese, tempFunction, tempAntonym, tempSynonyms);
+			word = new Iword(tempChinese, tempFunction, tempAntonym, tempSynonyms);
 		    }
 		    return word;
 	}
@@ -396,14 +396,14 @@ public class SentenceSimImpl implements SentenceSim  {
 	  * @author  王文辉
 	  */
 	@Override
-	public List<String> maxSimilar(String str) {
+	public ISentence maxSimilar(String str) {
 		long time1 = System.currentTimeMillis();
     	System.out.println("================================CheckSimAction开始时间：" + time1);
 		String maxCompareString=null;
 		String tempAnswer=null;
         double max=0;
       	Map<String,String> map = new HashMap(); 
-      	List<String>list=new ArrayList();
+      	//List<String>list=new ArrayList();
 		int a=str.indexOf(",");
 		int b=str.lastIndexOf(",");
 		String string1=str.substring(a+1, b);
@@ -437,8 +437,9 @@ public class SentenceSimImpl implements SentenceSim  {
 				System.out.print(str3.get(i).toString()+" ");
 			ArrayList word_prop3 = Word_property_Combine(word_prop1,
 					word_prop2, str1, str2);
+
 			// 根据概念词相似度，给向量中的每个单词赋与概念词相似度
-			System.out.println();
+			
 			double[] t1 = word_similarity(word_prop3, str3, word_prop1, str1);
 			double[] t2 = word_similarity(word_prop3, str3, word_prop2, str2);
 			// 假设
@@ -461,10 +462,9 @@ public class SentenceSimImpl implements SentenceSim  {
         String key= (String)keyString(map,maxCompareString);
 	    System.out.println("最相似的句子的ID:"+key);
 	    
-	    list=findPropertyById(key);
-	    System.out.println("list中打印的属性"+list);
+	    ISentence sentence=findPropertyById(key);
 	    //System.out.println(resultsSentenceProperty);		
-	    return list;
+	    return sentence;
 	}
 
 }

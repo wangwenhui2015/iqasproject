@@ -15,7 +15,6 @@ import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.formbean.user.UserForm;
 import com.cnu.iqas.service.user.UserService;
-import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.WebUtils;
 
 import net.sf.json.JSONArray;
@@ -55,7 +54,6 @@ public class MUserController {
 		try{
 			//参数校验
 			if(!bindingResult.hasErrors()){
-				System.out.println(bindingResult.hasErrors()+":"+bindingResult.getFieldValue("username")+"："+bindingResult.getFieldValue("password"));
 				//检查账号是否存在
 				if( null==userService.find(formbean.getUsername()))
 				{
@@ -70,23 +68,15 @@ public class MUserController {
 				
 			}else{
 				scode = MyStatus.PARAMERROR;
-				message=bindingResult.getFieldError("username").getDefaultMessage()+" : "+bindingResult.getFieldError("password").getDefaultMessage();//获取参数错误信息
+				message="用户名或密码不规范!";
 				
 			}
 		}catch(Exception e ){
 			scode = MyStatus.PARAMERROR;
 			message = e.getMessage();
 		}finally{
-			//-------------------
-			//状态对象
-			MyStatus status =new MyStatus(scode,message);
-			if(jsonObejct !=null || status !=null)
-			{
-				jsonObejct.put("status", status.getStatus());
-				jsonObejct.put("message", status.getMessage());
-			}
-			mv.addObject("json", jsonObejct.toString());
-			return mv;
+			//-------------------返回视图
+			return WebUtils.beforeReturn(scode, message, jsonObejct, null, mv);
 		}
 	}
 	/**
@@ -125,9 +115,9 @@ public class MUserController {
 			if(formbean.validateNameAndPass()){
 				//System.out.println(bindingResult.hasErrors()+":"+bindingResult.getFieldValue("username")+"："+bindingResult.getFieldValue("password"));
 				//检查账号是否存在
-				User user = userService.find(formbean.getUsername());
-			
-				if( null==user || !user.getPassword().equals(formbean.getPassword()))
+				//User user = userService.find(formbean.getUsername());
+				User user= userService.validate(formbean.getUsername(), formbean.getPassword());
+				if( null==user )
 				{
 					scode = MyStatus.PARAMERROR;
 					message ="用户名或者密码有误!";
@@ -140,7 +130,7 @@ public class MUserController {
 						
 					JSONArray usersArray = new JSONArray();
 					usersArray.add(userObject);
-
+					
 					resultObject.put("count", 1);
 					resultObject.put("data", usersArray);
 				}
@@ -152,16 +142,12 @@ public class MUserController {
 			scode = MyStatus.PARAMERROR;
 			message = e.getMessage();
 		}finally{
-			//-------------------
-			//状态对象
-			MyStatus status =new MyStatus(scode,message);
-			
-			JsonTool.putStatusJson(status, jsonObejct);
-			jsonObejct.put("result", resultObject);
-			mv.addObject("json", jsonObejct.toString());
-			return mv;
+			//-------------------返回视图
+			return WebUtils.beforeReturn(scode, message, jsonObejct, resultObject, mv);
 		}
 	}
+	
+	
 	/**
 	 * public String register()
 	{

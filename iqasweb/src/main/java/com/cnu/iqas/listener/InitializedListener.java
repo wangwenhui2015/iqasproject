@@ -5,7 +5,10 @@ import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import com.cnu.iqas.test.LogTest;
 import com.cnu.iqas.utils.PropertyUtils;
 
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -21,6 +24,7 @@ import edu.sussex.nlp.jws.JWS;
 
 public class InitializedListener implements ServletContextListener  {
 	
+	private final static Logger log = LogManager.getLogger(InitializedListener.class);
 	private static JWS jws;
 	private static MaxentTagger tagger;
 	private static StanfordCoreNLP pipeline;
@@ -28,11 +32,12 @@ public class InitializedListener implements ServletContextListener  {
 	 * 方法说明：设置了一个监听的类，将wordnet的启动、模板的加载、词性还原工具放在这个方法中。在程序启动加载这个类，节省了大量的运行时间。
 	 */
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		System.out.println("加载模板！！！");
+		log.info("--初始化wordnet相关类");
+		log.info("加载模板！！！");
 		String dir = PropertyUtils.get(PropertyUtils.JWSDIR);
 		String version = PropertyUtils.get(PropertyUtils.JWSVERSION);
 		jws = new JWS(dir, version);
-		System.out.println("JWs 初始化成功");
+		log.info("JWs 初始化成功");
 		String path="";
 		try {
 			path = InitializedListener.class.getClassLoader().getResource("english-left3words-distsim.tagger").toURI().getPath();
@@ -40,16 +45,16 @@ public class InitializedListener implements ServletContextListener  {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		System.out.println("------path:"+path);
+		log.info("------path:"+path);
 		tagger = new MaxentTagger(path);//单词属性***
 
-		System.out.println("MaxentTagger 初始化成功");
+		log.info("MaxentTagger 初始化成功");
 		Properties props = new Properties();//单词还原****
 		props.put("annotators", "tokenize, ssplit, pos, lemma");
 		
 		pipeline = new StanfordCoreNLP(props);   //--------------费时	
 
-		System.out.println("StanfordCoreNLP 初始化成功");
+		log.info("StanfordCoreNLP 初始化成功");
 	}
 	
 	public void contextDestroyed(ServletContextEvent sce) {

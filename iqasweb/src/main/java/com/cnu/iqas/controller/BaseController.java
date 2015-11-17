@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/base")
 public class BaseController {
 	/**
-	 * mv.setViewName("redirect:/myforward.html?urladdress=front/main");
+	 * mv.setViewName("redirect:/myforward.html?page=front/main");
 	 * @param urladdress
 	 * @return
 	 */
 	@RequestMapping(value="/myforward")
-	public String forward(String urladdress){
-		return urladdress;
+	public String forward(String page){
+		return page;
 	}
 }

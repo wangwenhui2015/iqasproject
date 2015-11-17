@@ -13,14 +13,14 @@ public class User {
 	private String password;
 	
 	
-	@Id  
+	@Id  @Column(length=15,nullable=false)
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	@Column(length=15,nullable=false)
+	@Column(length=32,nullable=false)
 	public String getPassword() {
 		return password;
 	}

@@ -28,6 +28,24 @@
   </properties>
   
   <dependencies>
+  
+  <!-- log4j 2 -->
+    <dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.4.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.4.1</version>
+  </dependency>
+  
+    <dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-jcl</artifactId>
+    <version>2.4.1</version>
+  </dependency>
   <!-- json格式依赖jar -->
 	<dependency>
 		<groupId>net.sf.json-lib</groupId>
@@ -234,7 +252,7 @@
             <artifactId>stanford-postagger</artifactId>
             <version>1.0</version>
 	</dependency>
-	 
+	
 		<dependency>
 	            <groupId>local.edu.stanford</groupId>
 	            <artifactId>edu.sussex.nlp.jws.beta.11</artifactId>
@@ -295,7 +313,7 @@
            <artifactId>maven-surefire-plugin</artifactId>
            <version>2.19</version>
            <configuration>
-               <skip>true</skip>  <!-- 不跳过执行测试代码 -->
+               <skip>false</skip>  <!-- 不跳过执行测试代码 -->
            </configuration> 
        </plugin> 
        
@@ -306,8 +324,8 @@
        <!-- 执行tomcat7:deploy -->
          <!-- .将web项目自动发布到tomcat服务器上,如果不用该插件就需要将项目打包成war然后拷贝到tomcat下
 使用插件tomcat7-maven-plugin， -->
-       <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
+        <plugin>
+        <groupId>org.apache.tomcat.maven</groupId> 
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
@@ -318,7 +336,7 @@
           <password>admin</password>
           <update>true</update>
         </configuration>
-      </plugin>
+      </plugin> 
       
 
        

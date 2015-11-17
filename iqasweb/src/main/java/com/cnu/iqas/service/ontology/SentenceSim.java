@@ -3,12 +3,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.cnu.iqas.bean.ontology.IWord;
+import com.cnu.iqas.bean.ontology.ISentence;
+import com.cnu.iqas.bean.ontology.Iword;
 
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public interface SentenceSim {
+	
 	 /**
 	  * 截取一个字符串的首字符
 	  * @param s 字符串
@@ -69,13 +71,13 @@ public interface SentenceSim {
 	  * 根据id查询句子的所有属性
 	  * @param key 键值
 	  */
-	 public List<String>findPropertyById(String key);	
+	 public ISentence findPropertyById(String key);	
 	 /**
 		 * 用户输入一个单词或词组的时候，执行这个方法，通过对本题库的查询，查询到该单词在本体库中所有的属性。
 		 * @param  用户输入一个单词或词组
 		 * @return 该单词所对应的所有的属性
 	 */
-	 public IWord findWordProperty(String str);
+	 public Iword findWordProperty(String str);
 	 /**
 	  * 该方法用于通过传入一个问句，提取问句的疑问词，在本题库中进行查询，将查询结果保存在Map集合，然后将问句与集合中的问句进行对比计算相似度。
 	  * 首先将问句与所要对比的问句进行单词还原，然后采用问句模板，寻找有用的词性，然后将问句和所要对比的句子中有用的词合并到一个容器，通过相似度
@@ -84,7 +86,7 @@ public interface SentenceSim {
 	  * @return  返回该字符串所对应的所有属性
 	  * @author  王文辉
 	  */
-	 public List<String>maxSimilar(String str);
+	 public ISentence maxSimilar(String str);
 	 
 	 
 }

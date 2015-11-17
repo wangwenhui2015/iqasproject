@@ -21,6 +21,7 @@ public class UserController {
 	private UserService userService;
 	
 	
+	
 	/*转发登录界面*/
 	@RequestMapping(value = "/loginUI") //负责处理/login.html的请求
     public String loginUI() {
@@ -28,7 +29,6 @@ public class UserController {
     }
 	/*登录*/
 	@RequestMapping(value="/login")
-	
 	public ModelAndView login( UserForm formbean){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("front/login");  //登录视图
@@ -45,7 +45,7 @@ public class UserController {
 				//将user信息保存到session中
 				mv.addObject("user", u);
 				//重定向到主界面front/main.jsp,先访问myforward方法，由该方法在访问main.jsp，因为jsp页面放置在WEB-INF下面，直接访问不了
-				mv.setViewName("redirect:/base/myforward.html?urladdress=front/main");
+				mv.setViewName("redirect:/base/myforward.html?page=front/main");
 				//mv.setViewName("redirect:front/main");//主页视图
 			}
 		}

@@ -9,7 +9,7 @@ public class PropertyUtils {
 	private static Properties properties = new Properties();
 	static{
 		try {
-			properties.load(PropertyUtils.class.getClassLoader().getResourceAsStream("wordnet.properties"));
+			properties.load(PropertyUtils.class.getClassLoader().getResourceAsStream("savepath.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
