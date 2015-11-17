@@ -1,0 +1,6 @@
+2015-11-17 15:41:48.086 INFO [main][InitializedListener.java:35] - --初始化wordnet相关类
+2015-11-17 15:41:48.108 INFO [main][InitializedListener.java:36] - 加载模板！！！
+2015-11-17 15:41:49.064 INFO [main][InitializedListener.java:40] - JWs 初始化成功
+2015-11-17 15:41:49.064 INFO [main][InitializedListener.java:48] - ------path:E:/EclipseWorkspace/Cnu/iqasweb/target/classes/english-left3words-distsim.tagger
+2015-11-17 15:41:49.558 INFO [main][InitializedListener.java:51] - MaxentTagger 初始化成功
+2015-11-17 15:41:50.101 INFO [main][InitializedListener.java:57] - StanfordCoreNLP 初始化成功

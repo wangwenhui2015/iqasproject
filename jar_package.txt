@@ -1,7 +1,0 @@
-将每条语句粘贴到命令行中执行，前提，6个jar包都放置g盘，如果放置别的盘，修改下面的g换成你放置的盘
-mvn install:install-file -Dfile=g:\stanford-corenlp-3.3.1-models.jar -DgroupId=local.edu.stanford -DartifactId=stanford-corenlp-3.3.1-models -Dversion=3.3.1 -Dpackaging=jar  
-mvn install:install-file -Dfile=g:\stanford-postagger.jar -DgroupId=local.edu.stanford -DartifactId=stanford-postagger -Dversion=1.0 -Dpackaging=jar  
-mvn install:install-file -Dfile=g:\edu.sussex.nlp.jws.beta.11.jar -DgroupId=local.edu.stanford -DartifactId=edu.sussex.nlp.jws.beta.11 -Dversion=11 -Dpackaging=jar  
-mvn install:install-file -Dfile=g:\edu.mit.jwi_2.1.4.jar -DgroupId=local.edu.stanford -DartifactId=edu.mit.jwi -Dversion=2.1.4 -Dpackaging=jar  
-mvn install:install-file -Dfile=g:\edu.mit.jwi_2.3.3_jdk.jar -DgroupId=local.edu.stanford -DartifactId=edu.mit.jwi_jdk -Dversion=2.3.3 -Dpackaging=jar  
-mvn install:install-file -Dfile=g:\fuseki-server.jar -DgroupId=local.apache.jena.fuseki -DartifactId=fuseki-server -Dversion=1.0 -Dpackaging=jar  
