@@ -104,7 +104,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	
 	 	</div>
 	 	<div> 视频
-	 	
+	 	 <div class="col-sm-6 col-md-3">
+				    <div class="thumbnail">
+				      <img src="images/hbmonkey.jpeg" alt="...">
+				      <div class="caption" style="text-align: center;">
+				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="col-sm-6 col-md-3">
+				    <div class="thumbnail" style="border:0px;">
+				      <img src="images/add.jpg" class="img-circle btn" alt="...">
+				    </div>
+				  </div>
 	 	</div>
 	</div>
 
