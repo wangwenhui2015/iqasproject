@@ -61,6 +61,17 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 		return  ht.get(this.entityClass, entityId);
 	}
 
+	@Override
+	public T find(final String wherejpql,final Object attribute) {
+		// TODO Auto-generated method stub
+		
+		QueryResult<T> result= getScrollData(-1,-1,wherejpql,new Object[]{attribute},null);
+		List<T> list =result.getResultlist();
+		if(list.size()>0)
+			return list.get(0);
+		return null;
+	}
+	
 	public void save(T entity) {
 			ht.persist(entity);
 	}

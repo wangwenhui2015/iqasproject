@@ -26,6 +26,16 @@ java.lang.OutOfMemoryError: PermGen space
 
 五：在进行单元测试时要把applicationContext.xml中的<property name="uploadTempDir" value="/upload/temp"/>注释掉
 
+                   --------------------------访问http连接----------------------------
+网页端访问：
+用户登录：http://localhost:8088/iqasweb/user/loginUI.html
+注册：http://localhost:8088/iqasweb/user/registerUI.html
+管理员登录连接：http://localhost:8088/iqasweb/admin/loginUI.html
 
-管理员登录连接：http://localhost:8088/iqasweb/admin/loginUI.html 
+手机端访问连接：
+搜索单词：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=park
+搜索句子：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
+登录：http://localhost:8088/iqasweb/mobile/user/login.html?password=12345&username=zhouliang
+注册：http://localhost:8088/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
+
 

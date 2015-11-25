@@ -15,7 +15,7 @@ public class LogTest {
 	private static final Logger logger= LogManager.getLogger(LogTest.class);
 	public static void main(String[] args){
 		
-		User user = new User();
+		/*User user = new User();
 		user.setPassword("1323");
 		user.setUsername("zhangsan");
 		logger.trace(user.getUsername());
@@ -23,6 +23,12 @@ public class LogTest {
 		logger.info(user.getUsername());
 		logger.warn(user.getUsername());
 		logger.error(user.getUsername());
-		logger.fatal(user.getUsername());
+		logger.fatal(user.getUsername());*/
+		String rex="[123456]{1}";
+		String rex2="\\d{1}";
+		String word = "67";
+		System.out.println(word.matches(rex2));
 	}
+	
+	
 }

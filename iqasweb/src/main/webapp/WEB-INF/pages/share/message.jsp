@@ -44,7 +44,7 @@
 													<td height="80" align="center" valign="middle"><font
 														size="2"><span class="content"> <input
 																type="button" name="sure" value="确 定"
-																onclick="javascript:window.location.href='<c:url value="${urladdress}"/>.html'">
+																onclick="javascript:window.location.href='<c:url value="${urladdress}"/>'">
 														</span></font></td>
 												</tr>
 											</table>

@@ -64,7 +64,7 @@ public class FileController implements ServletContextAware{
 			}else{
 				mv.setViewName("share/message");
 				mv.addObject("message", "上传失败!");
-				mv.addObject("urladdress", "/file/uploadPage");
+				mv.addObject("urladdress", "/file/uploadPage.html");
 			}
 		return mv;
 	}

@@ -37,9 +37,9 @@ public class UserController {
 			mv.addObject("error", "请填写用户名和密码!");
 		}else{
 		 //2.检查用户是否存在
-			User u =userService.find(formbean.getUsername());
+			User u =userService.validate(formbean.getUsername(), formbean.getPassword());
 			
-			if( null == u || !u.getPassword().equalsIgnoreCase(formbean.getPassword())){
+			if( null == u ){
 					mv.addObject("error", "用户名或密码有误!");
 			}else{
 				//将user信息保存到session中
@@ -79,7 +79,7 @@ public class UserController {
 				//返回页面,此处应该防止表单重复提交
 				mv.setViewName("share/message");
 				mv.addObject("message", "注册成功!");
-				mv.addObject("urladdress", "/user/loginUI");
+				mv.addObject("urladdress", "/user/loginUI.html");
 			}
 		}
 		

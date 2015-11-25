@@ -43,6 +43,14 @@ public interface DAO<T> {
 	 * @return
 	 */
 	public T find(Serializable entityId);
+	/**
+	 * 根据属性来获取实体
+	 * @param <T>
+	 * @param wherejpql 查询条件  "o.email=? and o.account like ?"
+	 * @param attribute 实体的属性值
+	 * @return
+	 */
+	public T find(String wherejpql, Object attribute);
 	
 	/**
 	 * 根据条件分页查询，结果根据条件排序

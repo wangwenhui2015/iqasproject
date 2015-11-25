@@ -9,8 +9,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.ontology.ISentence;
-import com.cnu.iqas.bean.ontology.Iword;
 import com.cnu.iqas.bean.ontology.Word_simalgorithm;
 import com.cnu.iqas.listener.InitializedListener;
 import com.cnu.iqas.service.ontology.SentenceSim;

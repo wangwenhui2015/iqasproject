@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.ontology.ISentence;
-import com.cnu.iqas.bean.ontology.Iword;
 
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;

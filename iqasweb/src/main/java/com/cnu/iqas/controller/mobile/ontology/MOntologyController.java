@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cnu.iqas.bean.base.MyStatus;
+import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.ontology.ISentence;
-import com.cnu.iqas.bean.ontology.Iword;
 import com.cnu.iqas.service.ontology.SentenceSim;
 import com.cnu.iqas.utils.WebUtils;
 

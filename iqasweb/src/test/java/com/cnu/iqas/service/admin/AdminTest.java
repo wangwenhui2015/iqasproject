@@ -19,7 +19,7 @@ public class AdminTest extends AbstractTestNGSpringContextTests{//基于TestNG�
 	@Autowired  //注入Spring容器中的Bean
 	private  AdminService adminService;
 
-	@Test
+	@Test(enabled = false)
 	public void tt(){
 		System.out.println("dd");
 		Admin ad = new Admin();

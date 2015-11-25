@@ -24,11 +24,11 @@
     </Appenders>
     
     <Loggers>
-        <Logger name="com.cnu" level="info"
+        <Logger name="com.cnu" level="error"
             additivity="true">
             <AppenderRef ref="running-log" />
         </Logger>
-        <Root level="info ">
+        <Root level="error ">
             <AppenderRef ref="Console" />
         </Root>
     </Loggers>

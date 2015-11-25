@@ -64,7 +64,8 @@ function exit() {
 				<div>
 					<a class="one">单词资源管理</a>
 					<ul class="kid">
-						<li><b class="tip"></b><a target="Conframe" href="control/group/list">单词资源</a></li>
+						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/word/listUI.html'/>" >单词资源</a></li>
+						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/word/statistics.html'/>" >统计信息</a></li>
 					</ul>
 				</div>
 				<div id="datepicker"></div>
@@ -73,7 +74,9 @@ function exit() {
 		<!-- 左边菜单结束 -->
 		<!-- 右边框架开始 -->
 		<div class="right_c"> <!-- glyphicon glyphicon-chevron-left aria-hidden="true"-->
-			<div class="nav-tip"  onclick="javascript:void(0)"><</div>
+			<div class="nav-tip"  onclick="javascript:void(0)">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 
+			</div>
 		</div>
 		<div class="Conframe">
 			<iframe name="Conframe" id="Conframe"></iframe>
