@@ -96,9 +96,12 @@ public class MUserController {
 	 */
 	@SuppressWarnings("finally")
 	@RequestMapping(value="login")
-	public ModelAndView login(UserForm formbean){
+	public ModelAndView login(UserForm formbean,String username,String password){
 		ModelAndView mv = new ModelAndView("share/json");
-		System.out.println("dddddd");
+		System.out.println("dddddd+++++++"+new Date().toLocaleString());
+
+		System.out.println(username+":"+password);
+		System.out.println(formbean.getUsername()+formbean.getPassword());
 		int scode =MyStatus.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象

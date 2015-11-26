@@ -18,8 +18,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    
+    
+<script language="javascript">
+function playmusic(){
+var xx=document.getElementById("embed").src;
+var url="http://localhost:8088/iqasweb/voices/xiaobai.wav";
+//我叫小沈阳 dj
+	if(xx=="http://localhost:8088/iqasweb/"){
+	document.getElementById("embed").src=url;
+	document.getElementById("musicbtn").value="停止播放";
+	}else{
+	document.getElementById("embed").src="";
+	document.getElementById("musicbtn").value="播放音乐";
+	}
+}
+</script>
+
   </head>
   <body>
+  
+  <input id="musicbtn" onClick="playmusic()" value="播放音乐" type="button" />
+<embed src="" id="embed" loop=1 autostart=true width="0px" height="0px" />
+
+
 	<div class="container-fluid" style="text-align:left; width: 700px;border:solid red 1px;">
 	 	<div style="text-align: left;"> 
 	 		<h4>park</h4>
@@ -104,13 +126,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	
 	 	</div>
 	 	<div> 视频
-	 	 <div class="col-sm-6 col-md-3">
+			 	 <div class="col-sm-6 col-md-3">
 				    <div class="thumbnail">
 				      <img src="images/hbmonkey.jpeg" alt="...">
 				      <div class="caption" style="text-align: center;">
 				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
 				      </div>
-				    </div>
+				  </div>
 				  </div>
 				  <div class="col-sm-6 col-md-3">
 				    <div class="thumbnail" style="border:0px;">
