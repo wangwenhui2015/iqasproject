@@ -1,5 +1,8 @@
 package com.cnu.iqas.controller.web.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
@@ -8,11 +11,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.constant.PageViewConstant;
@@ -30,7 +35,7 @@ import riotcmd.infer;
 * 类说明  单词资源控制类，负责单词自身资源的增、删、查、改
 */
 @Controller
-@RequestMapping(value="/admin/control/wordresource")
+@RequestMapping(value="/admin/control/wordresource/")
 public class WordResourceController  implements ServletContextAware{
 	//日志类
 	private final static Logger logger = LogManager.getLogger(WordResourceController.class);
@@ -42,7 +47,7 @@ public class WordResourceController  implements ServletContextAware{
 	 private IwordService iwordService;
 	 
 	 //添加资源界面
-	 @RequestMapping(value="addResourceUI")
+	 @RequestMapping(value="addUI")
 	 public ModelAndView addResourceUI(String uuid){
 		 ModelAndView mv = new ModelAndView(PageViewConstant.ADDWORDRESOURCE);
 		 Iword word = iwordService.find(uuid);
@@ -55,6 +60,22 @@ public class WordResourceController  implements ServletContextAware{
 		 return mv;
 	 }
 	 
+	 /**
+	  * 根据资源id删除某个资源
+	  * @return
+	  */
+	 @RequestMapping(value="delete")
+	 public String delete(String id){
+		 if( BaseForm.validate(id)){
+			 WordResource wr =wordResourceService.find(id);
+			 //设置不可见
+			 wr.setVisible(false);
+			 //更新
+			 wordResourceService.update(wr);
+		 }
+		 return PageViewConstant.MESSAGE;
+	 }
+	 
 	 //进入资源详情界面
 	 @RequestMapping(value="resourceDetailUI")
 	 public ModelAndView resourceDetailUI(String uuid){
@@ -64,17 +85,42 @@ public class WordResourceController  implements ServletContextAware{
 			 mv.setViewName(PageViewConstant.MESSAGE);
 		      mv.addObject("message","该单词不存在！");
 		 }else{
-			 mv.addObject("word", word);}
+			 //根据单词uuid获取单词资源
+			 //构造查询条件和查询值
+			 StringBuilder wherejpql = new StringBuilder();
+			 List<Object> queryParams = new ArrayList<Object>();
+			 if( BaseForm.validate(uuid)){
+				 queryParams.add(uuid);
+				 wherejpql.append(" o.iword.uuid = ? ");
+			 }
+			 //查询可见的
+			 queryParams.add(true);
+			 if(!queryParams.isEmpty())
+				 wherejpql.append(" and ");
+			 wherejpql.append(" o.visible = ? ");
+			 
+			 //调用查询函数获取查询结果 
+			 QueryResult<WordResource> queryResult =wordResourceService.getScrollData(wherejpql.toString(), queryParams.toArray());
+			 List<WordResource> list = queryResult.getResultlist();
+			 for(WordResource wr : list){
+				 System.out.println(wr.toString());
+			 }
+			 mv.addObject("list", list);
+			 mv.addObject("word", word);
+		}
 		 
 		 return mv;
 	 }
+	 
+	 
 	 /**
 	  * 添加单词资源，该方法应该具有事务属性，暂时还未加
 	  * 
 	  * @return
 	  */
-	 @RequestMapping(value="/addResource")
-	 public ModelAndView addResource(WordResourceForm formbean,  @RequestParam("file") CommonsMultipartFile  file){
+	 @RequestMapping(value="add",method=RequestMethod.POST)
+	 public ModelAndView addResource(WordResourceForm formbean,@RequestParam(value="file")CommonsMultipartFile  file){
+		System.out.println("添加资源");
 		 //默认保存失败
 		 boolean flage = false;
 		 ModelAndView mv = new ModelAndView();
@@ -122,7 +168,7 @@ public class WordResourceController  implements ServletContextAware{
 			 mv.addObject("message", formbean.getErrors().get("error"));
 		 }
 		 //mv.addObject("uuid", word.getUuid());
-		 mv.addObject("urladdress", "/admin/control/wordresource/addResourceUI.html?uuid="+word.getUuid());
+		 mv.addObject("urladdress", "/admin/control/wordresource/addUI.html?uuid="+word.getUuid());
 		 return mv;
 	 }
 	 

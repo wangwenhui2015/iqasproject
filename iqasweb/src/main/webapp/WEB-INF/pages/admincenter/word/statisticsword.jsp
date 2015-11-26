@@ -93,7 +93,7 @@
    <!-- 查询参数 -->
     <input type="hidden" name="page">
     <input type="hidden" name="uuid">
-	<table class="table table-bordered">
+	<table class="table table-bordered  table-striped">
 		<thead>
 			<tr>
 				<td align="center" width="50%">版本信息</td>
@@ -103,12 +103,12 @@
 		<tbody>
 		<c:forEach items="${list }" var="entity">
 			<tr>
-				<td align="center">
+				<td align="right">
 				${entity.version==1?"北师大版":"" }${entity.version==2?"北京版":"" }
 				${entity.version==3?"外研社新标准":"" }${entity.version==4?"外研社一年级起":"" }
 				${entity.version==5?"人教版":"" }${entity.version==6?"朗文版":"" }
 				 </td>
-				<td align="center">${entity.sum}个 单词</td>
+				<td align="left"><span class="badge">${entity.sum}</span>个 单词</td>
 			</tr>
 		 </c:forEach>
 		</tbody>

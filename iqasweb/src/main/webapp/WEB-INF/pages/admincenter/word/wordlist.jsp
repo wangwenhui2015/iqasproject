@@ -93,15 +93,6 @@
    <!-- 查询参数 -->
     <input type="hidden" name="page">
     <input type="hidden" name="uuid">
-  <!--   <input type="hidden" name="qversion">
-    <input type="hidden" name="qbook">
-    <input type="hidden" name="qunit">
-    <input type="hidden" name="qrank"> -->
-	<!-- <s:hidden name="page"></s:hidden>
-	<s:hidden name="gcontent"></s:hidden>
-	<s:hidden name="qvisible"></s:hidden>
-	<s:hidden name="qname"></s:hidden>
-	<s:hidden name="qpage"></s:hidden> -->
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
@@ -128,8 +119,8 @@
 				${entity.book}册${entity.unit}单元第${entity.rank}个单词
 				 </td>
 				<td align="center">
-				<a class="btn btn-info btn-xs" href="<c:url value='admin/control/wordresource/addResourceUI.html?uuid=${entity.uuid }'/>">添加资源</a>
-				 <a class="btn btn-info btn-xs" href="<c:url value='admin/control/wordresource/resourceDetailUI.html?uuid=${entity.uuid }'/>">查看详情</a>
+				<a class="btn btn-info btn-xs" href="<c:url value='admin/control/wordresource/addUI.html?uuid=${entity.uuid }'/>">添加资源</a>
+				 <a class="btn btn-primary btn-xs" href="<c:url value='admin/control/wordresource/resourceDetailUI.html?uuid=${entity.uuid }'/>">查看详情</a>
 				 </td>
 				<td align="center"> </td>
 				<td align="center">${entity.createtime} </td>
@@ -142,7 +133,7 @@
 	</table>
 		<div align="center">
 		 <a href="<c:url value='admin/control/word/addUI.html'/>"  class="btn btn-info" >添加单词</a>
-		 <a href="<c:url value='admin/control/word/importUI.html'/>"  class="btn btn-info" >导入单词</a>
+		 <a href="<c:url value='admin/control/word/importUI.html'/>"  class="btn btn-primary" >导入单词</a>
 		</div>
 	</form>
   </div>

@@ -25,15 +25,15 @@ function dropLook() {
 </head>
 <body>
 单词信息
-<form action="<c:url value='admin/control/wordresource/addResource.html'/>"  method="post" enctype="multipart/form-data" class="form-inline">
+<form action="<c:url value='admin/control/wordresource/add.html'/>"  method="post" enctype="multipart/form-data" class="form-inline">
 	
 	<!-- 返回到原来界面是所需的条件 -->
-    <input type="hidden" name="page">
+     <!-- <input type="hidden" name="page">
     <input type="hidden" name="content">
-    <input type="hidden" name="version">
+   <input type="hidden" name="version">
     <input type="hidden" name="book">
     <input type="hidden" name="unit">
-    <input type="hidden" name="rank">
+    <input type="hidden" name="rank"> -->
     
 	<input type="hidden"  id="uuuid" name="uuid"  value="${word.uuid }" >
 	 <div class="form-group col-md-4">
@@ -63,7 +63,7 @@ function dropLook() {
 			</div>
 	  </div>
 	  <button type="submit" class="btn btn-warning">上传</button>
-	  <input type="button" value="返回" class="btn btn-info btn-xs" onclick="javascript:dropLook()">
+	   <input type="button" value="返回" class="btn btn-info " onclick="javascript:history.go(-1);"> 
 </form>
 </body>
 </html>

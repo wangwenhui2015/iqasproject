@@ -93,4 +93,10 @@ public class WordResource {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+	@Override
+	public String toString() {
+		return "WordResource [id=" + id + ", name=" + name + ", iword=" + iword + ", type=" + type + ", savepath="
+				+ savepath + ", visible=" + visible + "]";
+	}
+	
 }

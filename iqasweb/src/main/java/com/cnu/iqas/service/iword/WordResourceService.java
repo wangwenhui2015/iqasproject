@@ -1,5 +1,7 @@
 package com.cnu.iqas.service.iword;
 
+import java.util.List;
+
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.dao.base.DAO;
 
@@ -10,4 +12,5 @@ import com.cnu.iqas.dao.base.DAO;
 */
 public interface WordResourceService extends DAO<WordResource> {
 
+	public List<WordResource> findResources(String uuid);
 }
