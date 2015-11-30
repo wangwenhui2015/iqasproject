@@ -6,9 +6,9 @@ package com.cnu.iqas.constant;
 */
 public class ResourceConstant {
 	public final static int TYPE_IMAGE=1; //图片类型
-	public final static int TYPE_VIDEO=2;  //视频类型
+	public final static int TYPE_PICTUREBOOK=2; //绘本类型
 	public final static int TYPE_VOICE=3;  //声音类型
-	public final static int TYPE_PICTUREBOOK=4; //绘本类型
+	public final static int TYPE_VIDEO=4;  //视频类型
 	
 
 	public final static long UPLOAD_SIZE_IMAGE=1024*1024*2; //图片上传最大值,2M

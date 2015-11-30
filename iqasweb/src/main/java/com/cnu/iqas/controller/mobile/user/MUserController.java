@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cnu.iqas.bean.base.DateJsonValueProcessor;
 import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.user.User;
+import com.cnu.iqas.formbean.iword.WordResourceForm;
 import com.cnu.iqas.formbean.user.UserForm;
 import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.WebUtils;
@@ -79,6 +80,7 @@ public class MUserController {
 			return WebUtils.beforeReturn(scode, message, jsonObejct, null, mv);
 		}
 	}
+	
 	/**
 	 * 
 	 * @param formbean

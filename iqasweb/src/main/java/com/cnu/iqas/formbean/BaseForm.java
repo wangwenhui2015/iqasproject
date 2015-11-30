@@ -124,6 +124,7 @@ public class BaseForm {
 		if(!file.isEmpty() && file.getSize()>0){
 			//获取文件MIME类型，如image/pjpeg、text/plain
 			String fileContentType =file.getContentType();
+			System.out.println("类型："+type+"  格式："+fileContentType);
 			//上传文件原名
 			String fileName = file.getOriginalFilename();
 			//获取文件字节大小,单位byte
@@ -140,8 +141,14 @@ public class BaseForm {
 				if(!sizeresult)
 				    errors.put("error", "上传文件大小不能超过"+WebUtils.convertStorage(ResourceConstant.UPLOAD_SIZE_IMAGE));
 				break;
+			case ResourceConstant.TYPE_PICTUREBOOK://绘本
+				typeresult=validateImageFileType(fileName, fileContentType);
+				sizeresult = validateFileSize(filesize,ResourceConstant.UPLOAD_SIZE_PICTUREBOOK);
+				if(!sizeresult)
+				    errors.put("error", "上传文件大小不能超过"+WebUtils.convertStorage(ResourceConstant.UPLOAD_SIZE_PICTUREBOOK));
+				break;
 			case ResourceConstant.TYPE_VOICE://声音
-				//typeresult=validateImageFileType(fileName, fileContentType);
+				typeresult=validateVoiceFileType(fileName, fileContentType);
 				sizeresult = validateFileSize(filesize,ResourceConstant.UPLOAD_SIZE_VOICE);
 				if(!sizeresult)
 				    errors.put("error", "上传文件大小不能超过"+WebUtils.convertStorage(ResourceConstant.UPLOAD_SIZE_VOICE));
@@ -152,19 +159,14 @@ public class BaseForm {
 				if(!sizeresult)
 				    errors.put("error", "上传文件大小不能超过"+WebUtils.convertStorage(ResourceConstant.UPLOAD_SIZE_VIDEO));
 				break;
-			case ResourceConstant.TYPE_PICTUREBOOK://绘本
-				//typeresult=validateImageFileType(fileName, fileContentType);
-				sizeresult = validateFileSize(filesize,ResourceConstant.UPLOAD_SIZE_PICTUREBOOK);
-				if(!sizeresult)
-				    errors.put("error", "上传文件大小不能超过"+WebUtils.convertStorage(ResourceConstant.UPLOAD_SIZE_PICTUREBOOK));
-				break;
+			
 			}
 			//文件类型和大小都通过则返回正确
 			if( typeresult && sizeresult)
 				return true;
 			else{
 				if( !typeresult){
-					errors.put("error", "上传文件类型有误！");
+					errors.put("error", "上传文件格式有误！");
 				}
 			}
 		}else{
@@ -190,7 +192,23 @@ public class BaseForm {
 	public static boolean validateImageFileType(String fileFileName,String fileContentType){
 		
 			List<String> arrowType = Arrays.asList("image/bmp","image/png","image/gif","image/jpg","image/jpeg","image/pjpeg");
-			List<String> arrowExtension = Arrays.asList("gif","jpg","bmp","png");
+			List<String> arrowExtension = Arrays.asList("gif","jpg","bmp","png","jpeg");
+			String ext = getExt(fileFileName);
+			return arrowType.contains(fileContentType.toLowerCase()) && arrowExtension.contains(ext);
+		
+	}
+	
+	//audio/wav
+	/**
+	 * 验证上传文件类型是否属于声音格式
+	 * @param fileFileName  文件名
+	 * @param fileContentType 文件类型
+	 * @return true表示没错或者文件为null，false：有误
+	 */
+	public static boolean validateVoiceFileType(String fileFileName,String fileContentType){
+		
+			List<String> arrowType = Arrays.asList("audio/wav");
+			List<String> arrowExtension = Arrays.asList("wav");
 			String ext = getExt(fileFileName);
 			return arrowType.contains(fileContentType.toLowerCase()) && arrowExtension.contains(ext);
 		

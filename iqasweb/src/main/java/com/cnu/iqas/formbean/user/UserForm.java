@@ -15,7 +15,7 @@ public class UserForm extends BaseForm{
 	private String password;
 	
 	@NotEmpty(message="用户名不能为空")
-	@Pattern(regexp="\\w{5,15}",message="用户名长度为5~15")//通过正则表达式进行校验，匹配4~15个数字和字母以及下划线的字符
+	@Pattern(regexp="\\w{3,15}",message="用户名长度为3~15")//通过正则表达式进行校验，匹配4~15个数字和字母以及下划线的字符
 	public String getUsername() {
 		return username;
 	}
@@ -28,7 +28,7 @@ public class UserForm extends BaseForm{
 	//@NotNull(message="null")
 	//@Size(min=5,max=15,message="用户名长度范围在5~15")
 	@NotEmpty(message="密码不能为空")
-	@Pattern(regexp="\\S{5,15}",message="密码长度为5~15")//通过正则表达式进行校验，匹配4~15个非空白的字符
+	@Pattern(regexp="\\S{3,15}",message="密码长度为3~15")//通过正则表达式进行校验，匹配4~15个非空白的字符
 	public String getPassword() {
 		return password;
 	}
@@ -38,8 +38,8 @@ public class UserForm extends BaseForm{
 	
 	
 	public boolean validateNameAndPass(){
-		String passre = "\\S{5,15}";
-		String namere ="\\w{5,15}";
+		String passre = "\\S{3,15}";
+		String namere ="\\w{3,15}";
 		if(BaseForm.validate(username)&&BaseForm.validate(password)){
 			if(username.matches(namere)&&passre.matches(passre))
 			{

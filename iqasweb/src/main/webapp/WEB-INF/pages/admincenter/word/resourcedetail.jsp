@@ -19,22 +19,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     
-    
-<script language="javascript">
-function playmusic(){
-var xx=document.getElementById("embed").src;
-var url="http://localhost:8088/iqasweb/voices/xiaobai.wav";
-//我叫小沈阳 dj
-	if(xx=="http://localhost:8088/iqasweb/"){
-	document.getElementById("embed").src=url;
-	document.getElementById("musicbtn").value="停止播放";
-	}else{
-	document.getElementById("embed").src="";
-	document.getElementById("musicbtn").value="播放音乐";
-	}
-}
-</script>
-
   </head>
   <body>
 
@@ -51,71 +35,52 @@ var url="http://localhost:8088/iqasweb/voices/xiaobai.wav";
 			   <li ><a href="#">${word.unit}单元</a></li>
 			   <li><a href="javascript:void()">第${word.rank}个单词</a></li>
 			  
-			</ol>
+			</ol> 
 	 	</div>
-	 	<span>
-		 	<span style="margin-right: 30px;">
+	 	<span id="voicedata">
+		 	<!-- <span style="margin-right: 30px;" id="ying">
 		 		<small>英</small>
-		 		<a href="" ><img alt="" src="images/admin/word/voice.png"> </a>
+		 		<a href="javascript:playmusic();" ><img alt="" src="images/admin/word/voice.png"> </a>
+		 		
 		 	</span>
 		 	<span>
 		 		<small>美</small>
 		 		<a href=""> <img alt="" src="images/admin/word/voice.png"> </a>
 		 	</span>
-		 	 
+		 	  -->
 	 	</span>
 	 	<div> 
 	 	<span class="btn btn-primary">图片</span>
-	 		<div class="row">
-	 		<c:forEach  items="${list }" var="resource">
+	 		<div class="row" id="picturedata">
+	 		<%-- <c:forEach  items="${list }" var="resource">
 		 		<div class="col-sm-6 col-md-3">
 				    <div class="thumbnail">
 				      <img src="${resource.savepath }" alt="...">
 				      <div class="caption" style="text-align: center;">
-				         <a href="<c:url value='admin/control/wordresource/delete.html?id=${resource.id}'/>" class="btn btn-warning" role="button">删除</a></p>
+				         <a href="<c:url value='admin/control/wordresource/delete.html?id=${resource.id}'/>" class="btn btn-warning" role="button">删除</a>
 				      </div>
 				    </div>
 				  </div>
-	 		</c:forEach>
+	 		</c:forEach> --%>
 			  
 			  <div class="col-sm-6 col-md-3">
 			    <div class="thumbnail" style="border:0px;">
+			    <a  href="<c:url value='admin/control/wordresource/addUI.html?uuid=${word.uuid }'/>">
 			      <img src="images/add.jpg" class="img-circle btn" alt="...">
+			    </a>
 			    </div>
 			  </div>
 			</div>
 	 	</div>
 	 	<div>  
 	 	<span class="btn btn-primary">绘本</span>
-		 	<div class="row">
-				  <div class="col-sm-6 col-md-3">
-				    <div class="thumbnail">
-				      <img src="images/hbmonkey.jpeg" alt="...">
-				      <div class="caption" style="text-align: center;">
-				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col-sm-6 col-md-3">
-				    <div class="thumbnail">
-				      <img src="images/hbmonkey.jpeg" alt="...">
-				      <div class="caption" style="text-align: center;">
-				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
-				      </div>
-				    </div>
-				  </div>
-				  <div class="col-sm-6 col-md-3">
-				    <div class="thumbnail">
-				      <img src="images/hbmonkey.jpeg" alt="...">
-				      <div class="caption" style="text-align: center;">
-				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
-				      </div>
-				    </div>
-				  </div>
+		 	<div class="row" id="bookpicturedata">
 				 
 				  <div class="col-sm-6 col-md-3">
 				    <div class="thumbnail" style="border:0px;">
-				      <img src="images/add.jpg" class="img-circle btn" alt="...">
+				    <a  href="<c:url value='admin/control/wordresource/addUI.html?uuid=${word.uuid }'/>">
+				      <img src="images/add.jpg"  class="img-circle btn" alt="...">
+				    </a>
 				    </div>
 				  </div>
 			</div>
@@ -123,23 +88,8 @@ var url="http://localhost:8088/iqasweb/voices/xiaobai.wav";
 	 	</div>
 	 	<div> 
 	 	<span class="btn btn-primary">视频</span>
-	 		<div class="row">
-			 	 <div class="col-sm-6 col-md-3">
-				    <div class="thumbnail">
-				      <img src="images/hbmonkey.jpeg" alt="...">
-				      <div class="caption" style="text-align: center;">
-				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
-				      </div>
-				      </div>
-				  </div>
-			 	 <div class="col-sm-6 col-md-3">
-				    <div class="thumbnail">
-				      <img src="images/hbmonkey.jpeg" alt="...">
-				      <div class="caption" style="text-align: center;">
-				         <a href="#" class="btn btn-warning" role="button">删除</a></p>
-				      </div>
-				      </div>
-				  </div>
+	 		<div class="row" id="videodata">
+			 	
 			 	 <div class="col-sm-6 col-md-3">
 				    <div class="thumbnail">
 				      <img src="images/hbmonkey.jpeg" alt="...">
@@ -166,5 +116,121 @@ var url="http://localhost:8088/iqasweb/voices/xiaobai.wav";
     <script src="js/jquery-2.1.3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    
+<script  type="text/javascript">
+//单词id
+ var wordid ="${word.uuid}"; 
+//资源删除连接
+var deleteUrl = "admin/control/wordresource/delete.html?id=";
+ 
+
+function playmusic(id,savepath){
+	var nodeid= $("#"+id);
+	var str='<embed id="emv" src="'+savepath+'" autostart="true" loop="false"  hidden="true" volume="3">';
+	$("#"+id).append(str);
+
+} 
+//进入界面就开始运行
+$(function(){
+	//获取单词资源
+	getResource(wordid,1);//图片
+	getResource(wordid,2);//绘本
+	getResource(wordid,3);//声音
+	
+});
+
+/**通过ajax获取单词的图片、绘本、声音、视频
+ * uuid:单词id
+   type:资源类型，1：图片，2：绘本,3:声音,4:视频
+ */
+function getResource(uuid,type){
+	$.get("admin/control/wordresource/ajaxFetchResources.html",{uuid:uuid,type:type}, function(content) {
+		var data = content.result.data;
+		var count = content.result.count;
+		if( count > 0){
+			//将数据显示出来
+			switch(type){
+			case 1:	//图片
+				showPictureData(data);
+				break;
+			case 2: //绘本
+				showBookPictureData(data);
+				break;
+			case 3: //声音
+				showVioceData(data);
+				break;
+			case 4:  //视频
+				showVideoData(data);
+				break;
+			}
+		}
+	},"json"); 
+} 
+//显示图片
+function showPictureData(data){
+	var str="";
+	for(var i=0;i<data.length;i++)
+	{
+		  str+='<div class="col-sm-6 col-md-3"><div class="thumbnail">';
+		  str+='<img src="'+data[i].savepath+'" alt="...">';
+		  str+='<div class="caption" style="text-align: center;">';
+		  str+='<a href="'+deleteUrl+data[i].id+'" class="btn btn-warning" role="button">删除</a>';
+		  str+='</div>';
+		  str+='</div></div>';
+	}
+	//追加到图片的中内容的前面
+	$("#picturedata").prepend(str);
+}
+//显示绘本
+function showBookPictureData(data){
+	var str="";
+	for(var i=0;i<data.length;i++)
+	{
+		  str+='<div class="col-sm-6 col-md-3"><div class="thumbnail">';
+		  str+='<img src="'+data[i].savepath+'" alt="...">';
+		  str+='<div class="caption" style="text-align: center;">';
+		  str+='<a href="'+deleteUrl+data[i].id+'" class="btn btn-warning" role="button">删除</a>';
+		  str+='</div>';
+		  str+='</div></div>';
+	}
+	//追加到图片的中内容的前面
+	$("#bookpicturedata").prepend(str);
+}
+/**
+ * <span style="margin-right: 30px;">
+	<small>英</small>
+		<a href="" ><img alt="" src="images/admin/word/voice.png"> </a>
+	</span>
+ */
+//显示声音
+function showVioceData(data){
+	 var str="";
+		for(var i=0;i<data.length;i++)
+		{
+			//英式发音
+			if( i ==0){
+				 str+='<span style="margin-right: 30px;" id="ying">';
+				  str+='<small>英</small>';
+				  str+='<a href="javascript:playmusic(\'ying\',\''+data[i].savepath+'\');" >';
+				  str+='<img alt="" src="images/admin/word/voice.png"> </a>';
+				  str+='</span>';
+			}else{//美式发音
+				str+='<span style="margin-right: 30px;" id="mei">';
+				  str+='<small>美</small>';
+				  str+='<a href="javascript:playmusic(\'mei\',\''+data[i].savepath+'\');" >';
+				  str+='<img alt="" src="images/admin/word/voice.png"> </a>';
+				  str+='</span>';
+			}
+		}
+		//追加到图片的中内容的前面
+		$("#voicedata").append(str);
+}
+
+//显示视频
+function showVideoData(data){
+	
+	
+}
+</script>
   </body>
 </html>

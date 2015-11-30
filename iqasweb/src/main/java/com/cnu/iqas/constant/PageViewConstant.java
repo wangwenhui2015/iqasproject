@@ -11,6 +11,10 @@ public class PageViewConstant {
 	public final static String ADDWORDRESOURCE="admincenter/word/addresource"; 
 	//单词资源详情界面
 	public final static String WORD_RESOURCE_DETAILUI="admincenter/word/resourcedetail"; 
+	//显示json的界面
+	public final static String JSON="share/json"; 
+	
+	
 	
 	
 	

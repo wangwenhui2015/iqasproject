@@ -1,6 +1,7 @@
 package com.cnu.iqas.controller.web.admin;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +18,8 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cnu.iqas.bean.base.DateJsonValueProcessor;
+import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordResource;
@@ -26,7 +29,11 @@ import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.iword.WordResourceForm;
 import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordResourceService;
+import com.cnu.iqas.utils.JsonTool;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import riotcmd.infer;
 
 /**
@@ -112,7 +119,82 @@ public class WordResourceController  implements ServletContextAware{
 		 return mv;
 	 }
 	 
-	 
+	 /**
+		 * 通过ajax获取单词的某个类型资源
+		 * @param formbean  接收单词的uuid和获取资源的类型
+		 * @return
+		 * json数据
+		 * 返回内容：
+		 *{
+		 *  status:1,
+		 *  message:"ok",
+		 *  result:{
+		 *   count:2,
+		 *   data:[
+		 *    
+		 *		{id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
+		 *      {id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
+		 *      
+		 *   ]
+		 *  }
+		 * }
+		 */
+	 @RequestMapping(value="ajaxFetchResources")
+		public ModelAndView ajaxFetchResources(WordResourceForm  formbean){
+			ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+			//状态
+			MyStatus status = new MyStatus();
+			
+			Iword word =null;
+			String uuid = formbean.getUuid();
+			int type = formbean.getType();
+			 if(BaseForm.validate(uuid))
+			   word = iwordService.find(uuid);
+			 if( word == null){
+				 status.setStatus(0);
+			      status.setMessage("该单词不存在！");
+			 }else{
+				 //根据单词uuid获取单词资源
+				 //构造查询条件和查询值
+				 StringBuilder wherejpql = new StringBuilder();
+				 List<Object> queryParams = new ArrayList<Object>();
+				 //uuid
+				 if( BaseForm.validate(uuid)){
+					 queryParams.add(uuid);
+					 wherejpql.append(" o.iword.uuid = ? ");
+				 }
+				 //资源类型 type
+				 queryParams.add(type);
+				 if(!queryParams.isEmpty())
+					 wherejpql.append(" and ");
+				 wherejpql.append(" o.type = ? ");
+				 
+				 //查询可见的
+				 queryParams.add(true);
+				 if(!queryParams.isEmpty())
+					 wherejpql.append(" and ");
+				 wherejpql.append(" o.visible = ? ");
+				 
+				 //调用查询函数获取查询结果 
+				 QueryResult<WordResource> queryResult =wordResourceService.getScrollData(wherejpql.toString(), queryParams.toArray());
+				 List<WordResource> wordResources = queryResult.getResultlist();
+			
+				//配置
+				JsonConfig wrConfig = new JsonConfig();
+				//groupConfig.registerJsonValueProcessor(Date.class,new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
+				//排除属性
+				wrConfig.setExcludes(new String[]{"iword","visible"});
+				//生成最终的json语句
+				 String jsonString= JsonTool.createJson(wordResources,wrConfig, status);
+				
+					//添加到request中
+				 mv.addObject("json", jsonString);
+				 mv.addObject("word", word);
+			}
+			 
+			 return mv;
+		}
+		
 	 /**
 	  * 添加单词资源，该方法应该具有事务属性，暂时还未加
 	  * 

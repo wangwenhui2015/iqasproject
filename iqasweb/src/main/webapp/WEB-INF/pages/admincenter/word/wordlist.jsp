@@ -121,7 +121,7 @@
 				<td align="center">
 				<a class="btn btn-info btn-xs" href="<c:url value='admin/control/wordresource/addUI.html?uuid=${entity.uuid }'/>">添加资源</a>
 				 <a class="btn btn-primary btn-xs" href="<c:url value='admin/control/wordresource/resourceDetailUI.html?uuid=${entity.uuid }'/>">查看详情</a>
-				 </td>
+				  </td>
 				<td align="center"> </td>
 				<td align="center">${entity.createtime} </td>
 				<td align="center">

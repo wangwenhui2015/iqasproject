@@ -46,6 +46,8 @@ public class WordResource {
 	 */
 	private boolean visible=true;
 	
+	
+	
 	@Id @Column(nullable=false)@GeneratedValue(generator="uuidGenderator")
 	public String getId() {
 		return id;

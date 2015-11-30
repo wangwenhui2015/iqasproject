@@ -43,7 +43,7 @@ function exit() {
 		     </div>
 		  </header>
 			<div class="top-nav">
-				<span class="btn btn-info">欢迎您，${admin.account}&nbsp;&nbsp;</span> <a href='<c:url value="/admin/exit.html"/>' class="btn btn-warning" onclick="return exit()" >安全退出</a>
+				<span class="btn btn-info">欢迎您，${admin.account}&nbsp;&nbsp;</span> <a href='<c:url value="/admin/exit.html"/>' class="btn btn-success" onclick="return exit()" ><font color="black">安全退出</font></a>
 			</div>
 		</div>
 		<!-- 头部结束 -->
