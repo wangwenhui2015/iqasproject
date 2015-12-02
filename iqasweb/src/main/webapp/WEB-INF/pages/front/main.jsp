@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
 </head>
 <body>
-${user.username }登录成功
+${user.userName }登录成功
 <div id="container">
  <form action='<c:url value="/search/sentence.html"/>' class="form-inline" style="margin-top: 200px;" >
 	 <div class="form-group col-md-offset-4">

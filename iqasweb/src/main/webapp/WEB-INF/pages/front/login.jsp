@@ -43,8 +43,8 @@
 
 	<div class="row">
 	<div class="form-group col-md-2">
-	    <label for="username">用户名</label>
-	    <input type="text" name="username"  id="username" class="form-control"  placeholder="3-10">
+	    <label for="userName">用户名</label>
+	    <input type="text" name="userName"  id="userName" class="form-control"  placeholder="3-10">
   	</div>
   	</div>
   	<div class="row">

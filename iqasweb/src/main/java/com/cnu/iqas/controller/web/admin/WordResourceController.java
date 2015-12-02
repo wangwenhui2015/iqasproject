@@ -92,7 +92,7 @@ public class WordResourceController  implements ServletContextAware{
 			 mv.setViewName(PageViewConstant.MESSAGE);
 		      mv.addObject("message","该单词不存在！");
 		 }else{
-			 //根据单词uuid获取单词资源
+			 /*//根据单词uuid获取单词资源
 			 //构造查询条件和查询值
 			 StringBuilder wherejpql = new StringBuilder();
 			 List<Object> queryParams = new ArrayList<Object>();
@@ -112,7 +112,7 @@ public class WordResourceController  implements ServletContextAware{
 			 for(WordResource wr : list){
 				 System.out.println(wr.toString());
 			 }
-			 mv.addObject("list", list);
+			 mv.addObject("list", list);*/
 			 mv.addObject("word", word);
 		}
 		 

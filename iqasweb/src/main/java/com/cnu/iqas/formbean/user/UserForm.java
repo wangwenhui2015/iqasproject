@@ -11,16 +11,16 @@ import com.cnu.iqas.formbean.BaseForm;
 //关于用户的表单类
 public class UserForm extends BaseForm{
 	
-	private String username;
+	private String userName;
 	private String password;
 	
 	@NotEmpty(message="用户名不能为空")
 	@Pattern(regexp="\\w{3,15}",message="用户名长度为3~15")//通过正则表达式进行校验，匹配4~15个数字和字母以及下划线的字符
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String userName) {
+		this.userName = userName;
 	}
 	//@Pattern(regexp="S{4,10}")//通过正则表达式进行校验，匹配4~10个非空白的字符
 	
@@ -40,8 +40,8 @@ public class UserForm extends BaseForm{
 	public boolean validateNameAndPass(){
 		String passre = "\\S{3,15}";
 		String namere ="\\w{3,15}";
-		if(BaseForm.validate(username)&&BaseForm.validate(password)){
-			if(username.matches(namere)&&passre.matches(passre))
+		if(BaseForm.validate(userName)&&BaseForm.validate(password)){
+			if(userName.matches(namere)&&passre.matches(passre))
 			{
 				return true;
 			}

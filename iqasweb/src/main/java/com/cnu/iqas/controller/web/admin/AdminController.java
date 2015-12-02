@@ -81,6 +81,4 @@ public class AdminController {
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
 	}
-	
-	
 }

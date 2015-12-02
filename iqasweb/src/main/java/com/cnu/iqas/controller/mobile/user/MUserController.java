@@ -56,7 +56,7 @@ public class MUserController {
 			//参数校验
 			if(!bindingResult.hasErrors()){
 				//检查账号是否存在
-				if( null==userService.find(formbean.getUsername()))
+				if( null==userService.find(formbean.getUserName()))
 				{
 					//注册
 					User u = new User();
@@ -102,7 +102,7 @@ public class MUserController {
 		ModelAndView mv = new ModelAndView("share/json");
 		System.out.println("dddddd+++++++"+new Date().toLocaleString());
 
-		System.out.println(formbean.getUsername()+formbean.getPassword());
+		System.out.println(formbean.getUserName()+formbean.getPassword());
 		int scode =MyStatus.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象
@@ -120,7 +120,7 @@ public class MUserController {
 				//System.out.println(bindingResult.hasErrors()+":"+bindingResult.getFieldValue("username")+"："+bindingResult.getFieldValue("password"));
 				//检查账号是否存在
 				//User user = userService.find(formbean.getUsername());
-				User user= userService.validate(formbean.getUsername(), formbean.getPassword());
+				User user= userService.validate(formbean.getUserName(), formbean.getPassword());
 				if( null==user )
 				{
 					scode = MyStatus.PARAMERROR;

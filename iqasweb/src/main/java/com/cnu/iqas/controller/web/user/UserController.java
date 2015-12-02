@@ -33,11 +33,11 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("front/login");  //登录视图
 		//1.校验表单数据
-		if( !BaseForm.validate(formbean.getUsername()) || !BaseForm.validate(formbean.getPassword()) ){
+		if( !BaseForm.validate(formbean.getUserName()) || !BaseForm.validate(formbean.getPassword()) ){
 			mv.addObject("error", "请填写用户名和密码!");
 		}else{
 		 //2.检查用户是否存在
-			User u =userService.validate(formbean.getUsername(), formbean.getPassword());
+			User u =userService.validate(formbean.getUserName(), formbean.getPassword());
 			
 			if( null == u ){
 					mv.addObject("error", "用户名或密码有误!");
@@ -63,11 +63,11 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("front/register");  //注册视图
 		//1.校验表单数据是否正确
-		if( !BaseForm.validate(formbean.getUsername()) || !BaseForm.validate(formbean.getPassword()) ){
+		if( !BaseForm.validate(formbean.getUserName()) || !BaseForm.validate(formbean.getPassword()) ){
 			mv.addObject("error", "请填写用户名和密码!");
 		}else{
 			//2.查看用户是否已存在
-			User user =userService.find(formbean.getUsername());
+			User user =userService.find(formbean.getUserName());
 			if( user != null)
 				mv.addObject("error", "用户名已被注册!");
 			else{
