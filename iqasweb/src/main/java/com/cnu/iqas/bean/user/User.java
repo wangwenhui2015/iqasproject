@@ -52,6 +52,8 @@ public class User {
 	private String school;
 	//身份
 	private int role;
+	//测试一下
+	
 	
 	@Id  @Column(length=15,nullable=false)
 	public String getUserName() {
