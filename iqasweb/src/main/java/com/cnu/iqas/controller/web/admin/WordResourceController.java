@@ -53,6 +53,7 @@ public class WordResourceController  implements ServletContextAware{
 	 //单词服务类
 	 private IwordService iwordService;
 	 
+	 //测试一下000
 	 //添加资源界面
 	 @RequestMapping(value="addUI")
 	 public ModelAndView addResourceUI(String uuid){
