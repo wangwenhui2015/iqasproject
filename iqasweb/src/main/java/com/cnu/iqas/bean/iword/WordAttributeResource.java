@@ -1,14 +1,15 @@
 package com.cnu.iqas.bean.iword;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
 * @author 周亮 
@@ -17,11 +18,13 @@ import org.hibernate.annotations.ForeignKey;
 */
 @Entity
 @Table(name="t_attributeresource")
+@GenericGenerator(name="uuidGenderator",strategy="uuid")
 public class WordAttributeResource {
 	/**
 	 * 资源id
 	 */
 	private String id;
+
 	/**
 	 * 资源名称
 	 */
@@ -37,11 +40,11 @@ public class WordAttributeResource {
 	/**
 	 * 该资源所属单词中的某个属性名称。
 	 */
-	private String attribute;
+	private int attribute;
 	/**
 	 * 该资源所属单词中的某个属性下的某个具体的值。
 	 */
-	private String specific;
+	private String figure; 
 	/**
 	 * 资源保存路径集合，多条路径以英文分号隔开
 	 */
@@ -51,7 +54,7 @@ public class WordAttributeResource {
 	 */
 	private boolean visible=true;
 	
-	@Id @Column(nullable=false)
+	@Id @Column(nullable=false)@GeneratedValue(generator="uuidGenderator")
 	public String getId() {
 		return id;
 	}
@@ -86,18 +89,18 @@ public class WordAttributeResource {
 		this.type = type;
 	}
 	@Column(nullable=false,length=20)
-	public String getAttribute() {
+	public int getAttribute() {
 		return attribute;
 	}
-	public void setAttribute(String attribute) {
+	public void setAttribute(int  attribute) {
 		this.attribute = attribute;
 	}
 	@Column(nullable=true)
-	public String getSpecific() {
-		return specific;
+	public String getFigure() {
+		return figure;
 	}
-	public void setSpecific(String specific) {
-		this.specific = specific;
+	public void setFigure(String figure) {
+		this.figure = figure;
 	}
 	@Column(nullable=false,length=255)
 	public String getSavepath() {
@@ -112,4 +115,5 @@ public class WordAttributeResource {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+	
 }

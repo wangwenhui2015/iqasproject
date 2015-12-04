@@ -122,7 +122,13 @@
 				<a class="btn btn-info btn-xs" href="<c:url value='admin/control/wordresource/addUI.html?uuid=${entity.uuid }'/>">添加资源</a>
 				 <a class="btn btn-primary btn-xs" href="<c:url value='admin/control/wordresource/resourceDetailUI.html?uuid=${entity.uuid }'/>">查看详情</a>
 				  </td>
-				<td align="center"> </td>
+				
+				<td align="center">
+				<a class="btn btn-info btn-xs" href="<c:url value='admin/control/wordattributeresource/addUI.html?uuid=${entity.uuid }'/>">添加属性资源</a>
+				<a class="btn btn-primary btn-xs" href="<c:url value='admin/control/wordattributeresource/resourceDetailUI.html?uuid=${entity.uuid }'/>">查看详情</a>
+				</td>
+	
+				
 				<td align="center">${entity.createtime} </td>
 				<td align="center">
 				 <input type="button" value="编辑" class="btn btn-info btn-xs" onclick="javascript:_action('delete','${entity.uuid }')">

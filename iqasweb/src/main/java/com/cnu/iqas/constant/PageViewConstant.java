@@ -9,6 +9,8 @@ public class PageViewConstant {
 	public final static String MESSAGE="share/message"; 
 	//添加单词资源界面
 	public final static String ADDWORDRESOURCE="admincenter/word/addresource"; 
+	//添加单词属性资源界面 
+	public final static String ADDWORDATTRIBUTERESOURCE="admincenter/word/addattributeresource"; 
 	//单词资源详情界面
 	public final static String WORD_RESOURCE_DETAILUI="admincenter/word/resourcedetail"; 
 	//显示json的界面
