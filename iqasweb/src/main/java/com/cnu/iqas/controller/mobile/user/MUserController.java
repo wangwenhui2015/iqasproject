@@ -45,7 +45,11 @@ public class MUserController {
 	@SuppressWarnings("finally")
 	@RequestMapping(value="register")
 	public ModelAndView register(@Valid UserForm formbean,BindingResult bindingResult){
+		
 		ModelAndView mv = new ModelAndView("share/json");
+		
+		System.out.println(formbean.getPassword()+":"+formbean.getUserName()+":"+formbean.getSex()+":"+formbean.getGrade());
+		
 		int scode =MyStatus.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象
@@ -55,8 +59,8 @@ public class MUserController {
 		try{
 			//参数校验
 			if(!bindingResult.hasErrors()){
-				//检查账号是否存在
-				if( null==userService.find(formbean.getUserName()))
+				//检查用户名是否存在
+				if( null==userService.findByName(formbean.getUserName()))
 				{
 					//注册
 					User u = new User();
@@ -64,13 +68,11 @@ public class MUserController {
 					userService.save(u);
 				}else{
 					scode = MyStatus.USEREXIS;
-					message ="用户已存在!";
+					message ="用户名已存在!";
 				}
-				
 			}else{
 				scode = MyStatus.PARAMERROR;
-				message="用户名或密码不规范!";
-				
+				message="注册信息有误!";
 			}
 		}catch(Exception e ){
 			scode = MyStatus.PARAMERROR;
@@ -152,55 +154,6 @@ public class MUserController {
 	}
 	
 	
-	/**
-	 * public String register()
-	{
-		//总的json对象
-		JSONObject jsonObject = new JSONObject();
-		//状态对象
-		MyStatus status =new MyStatus();
-		try {
-			if( null != buyerService.find(formbean.getAccount()))
-			{
-				status.setStatus(0);
-				status.setMessage("账号已存在!");
-			}
-			else{
-				Buyer buyer = new Buyer();
-				WebUtils.copyBean(buyer, formbean);
-				buyer.setPicturepath(WebUtils.getZhuLogo());
-				buyerService.save(buyer);
-				//为用户初始化一个好友分类
-				BuyerType type = new BuyerType();
-				type.setName("好友");
-				type.setIsdefault(true);//设为默认分类，不可删除
-				type.setBuyer(buyer); //设置关系，有type一端维护关系
-				//为用户初始化一个文件夹
-				MyFile myFile = new MyFile();
-				myFile.setFileid(UUID.randomUUID().toString());
-				myFile.setIsfile(false);//设置为文件夹
-				myFile.setIsdefault(true);//设置为默认文件夹
-				myFile.setName("Code文件夹");
-				myFile.setBuyer(buyer);
-				
-				//保存
-				buyerTypeService.save(type);
-				myFileService.save(myFile);
-				//设置用户的默认文件夹和默认好友分类
-				buyer.setDeftype(type.getTypeid());
-				buyer.setDeffile(myFile.getFileid());
-				buyerService.update(buyer);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			status.setStatus(0);
-			status.setMessage("failure");
-		}
-		JsonTool.putStatusJson(status, jsonObject);
-		ServletActionContext.getRequest().setAttribute("json", jsonObject.toString());
-		return "json";
-	}
-	 */
 	public UserService getUserService() {
 		return userService;
 	}

@@ -16,5 +16,10 @@ public interface UserDao {
 	 * @return 返回用户实例
 	 */
 	public User validate(String username, String password);
-	
+	/**
+	 * 根据用户名查询用户是否存在
+	 * @param userName
+	 * @return
+	 */
+	public User findByName(String userName);
 }

@@ -13,13 +13,15 @@ public class UserForm extends BaseForm{
 	
 	private String userName;
 	private String password;
+	private int sex;
+	private String grade;
 	
 	@NotEmpty(message="用户名不能为空")
 	@Pattern(regexp="\\w{3,15}",message="用户名长度为3~15")//通过正则表达式进行校验，匹配4~15个数字和字母以及下划线的字符
 	public String getUserName() {
 		return userName;
 	}
-	public void setUsername(String userName) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 	//@Pattern(regexp="S{4,10}")//通过正则表达式进行校验，匹配4~10个非空白的字符
@@ -36,7 +38,19 @@ public class UserForm extends BaseForm{
 		this.password = password;
 	}
 	
-	
+	public int getSex() {
+		return sex;
+	}
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+	@NotEmpty(message="班级不能为空")
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 	public boolean validateNameAndPass(){
 		String passre = "\\S{3,15}";
 		String namere ="\\w{3,15}";

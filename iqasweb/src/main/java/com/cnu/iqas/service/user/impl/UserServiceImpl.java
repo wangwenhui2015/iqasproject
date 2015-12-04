@@ -21,13 +21,17 @@ public class UserServiceImpl extends DaoSupport<User>implements UserService {
 	}
 
 	@Override
-	public User validate(String account, String password) {
+	public User validate(String userName, String password) {
 		// TODO Auto-generated method stub
 		User user = null;
-		user =userDao.validate(account, WebUtils.MD5Encode(password.trim()));
+		user =userDao.validate(userName, WebUtils.MD5Encode(password.trim()));
 		return user;
 	}
 
+	public User findByName(String userName) {
+		// TODO Auto-generated method stub
+		return userDao.findByName(userName);
+	}
 	public UserDao getUserDao() {
 		return userDao;
 	}
@@ -35,4 +39,5 @@ public class UserServiceImpl extends DaoSupport<User>implements UserService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+
 }

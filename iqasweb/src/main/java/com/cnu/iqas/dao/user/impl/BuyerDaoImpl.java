@@ -32,14 +32,28 @@ public class BuyerDaoImpl implements UserDao {
 		this.ht = ht;
 	}
 	@Override
-	public User validate(final String username, final String password) {
+	public User validate(final String userName, final String password) {
 		User user = ht.execute(new HibernateCallback<User>() {
 			@Override
 			public User doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				User user = (User) session.createQuery("from User o where  o.username=:username and  o.password=:password")
-								.setParameter("username", username)
+				User user = (User) session.createQuery("from User o where  o.userName=:userName and  o.password=:password")
+								.setParameter("userName", userName)
 								.setParameter("password", password)
+								.uniqueResult();
+				return user;
+			}
+		});
+		return user;
+	}
+	@Override
+	public User findByName(final String userName) {
+		User user = ht.execute(new HibernateCallback<User>() {
+			@Override
+			public User doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				User user = (User) session.createQuery("from User o where  o.userName=:userName ")
+								.setParameter("userName", userName)
 								.uniqueResult();
 				return user;
 			}

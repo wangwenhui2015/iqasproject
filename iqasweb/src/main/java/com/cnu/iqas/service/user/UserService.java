@@ -11,5 +11,11 @@ public interface UserService extends DAO<User> {
 	 * @param password 密码
 	 * @return 返回用户实例
 	 */
-	public User validate(String username, String password);
+	public User validate(String userName, String password);
+	/**
+	 * 根据用户名查询用户是否存在
+	 * @param userName
+	 * @return
+	 */
+	public User findByName(String userName);
 }

@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * userId	int			主键
@@ -31,9 +34,10 @@ role	int	身份
  */
 @Entity
 @Table(name="t_user")
+@GenericGenerator(name="uuidGenderator",strategy="uuid")
 public class User {
 	//主键
-	private String userId;
+	private String userId;     
 	//用户名
 	private String userName;
 	//密码
@@ -43,7 +47,7 @@ public class User {
 	//性别
 	private int sex;
 	//年级
-	private int grade;
+	private String grade;
 	//班级
 	private int clas;
 	//出生年份
@@ -53,9 +57,15 @@ public class User {
 	//身份
 	private int role;
 	//测试一下
+	@Id @GeneratedValue(generator="uuidGenderator")
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	
-	
-	@Id  @Column(length=15,nullable=false)
+	@Column(length=15,nullable=false,unique=true)
 	public String getUserName() {
 		return userName;
 	}
@@ -69,5 +79,48 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+	public int getSex() {
+		return sex;
+	}
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public int getClas() {
+		return clas;
+	}
+	public void setClas(int clas) {
+		this.clas = clas;
+	}
+	public Date getBirthYear() {
+		return birthYear;
+	}
+	public void setBirthYear(Date birthYear) {
+		this.birthYear = birthYear;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school = school;
+	}
+	public int getRole() {
+		return role;
+	}
+	public void setRole(int role) {
+		this.role = role;
+	}
+	
 	
 }
