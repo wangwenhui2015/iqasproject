@@ -19,7 +19,7 @@ import com.cnu.iqas.service.iword.IwordService;
 * @version 创建时间：2015年11月16日 下午10:42:38
 * 类说明
 */
-@Service
+@Service("iwordService")
 public class IwordServiceImpl extends DaoSupport<Iword>  implements IwordService {
 
 	/**

@@ -3,6 +3,7 @@ package com.cnu.iqas.test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.cnu.iqas.bean.iword.WordThemeTypeEnum;
 import com.cnu.iqas.bean.user.User;
 
 /**
@@ -28,7 +29,13 @@ public class LogTest {
 		String rex2="\\d{1}";
 		String word = "67";
 		System.out.println(word.matches(rex2));
+		
+		testEnu();
 	}
 	
+	public static void testEnu(){
+		WordThemeTypeEnum en = WordThemeTypeEnum.PRAIRIE;
+		System.out.println(en.ordinal());
+	}
 	
 }
