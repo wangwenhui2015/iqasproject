@@ -1,9 +1,11 @@
 package com.cnu.iqas.service.iword.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 
 import com.cnu.iqas.bean.base.QueryResult;
@@ -12,6 +14,7 @@ import com.cnu.iqas.bean.iword.WordTheme;
 import com.cnu.iqas.bean.iword.WordThemeTypeEnum;
 import com.cnu.iqas.dao.iword.IwordDao;
 import com.cnu.iqas.dao.iword.WordThemeDao;
+import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.service.iword.WordThemeService;
 
 /**
@@ -49,13 +52,17 @@ public class WordThemeServiceImpl implements WordThemeService {
 
 	@Override
 	public void save(WordTheme entity) {
-		if( entity.getType()==null)
-			throw new RuntimeException("请确定主题类型！");
-		wordThemeDao.save(entity);
+		if( entity.getName()==null)
+			throw new RuntimeException("请确定主题名称！");
+		try {
+			wordThemeDao.save(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	@Override
-	public WordTheme findByType(int type) {
-			return wordThemeDao.findByType(type);
+	public WordTheme findByName(String name) {
+			return wordThemeDao.findByName(name);
 	}
 
 	
@@ -73,6 +80,23 @@ public class WordThemeServiceImpl implements WordThemeService {
 	@Resource
 	public void setIwordDao(IwordDao iwordDao) {
 		this.iwordDao = iwordDao;
+	}
+
+	@Override
+	public QueryResult<WordTheme> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,
+			LinkedHashMap<String, String> orderby) {
+		return wordThemeDao.getScrollData(firstindex, maxresult, wherejpql, queryParams, orderby);
+	}
+
+	@Override
+	public void update(WordTheme entity) {
+		wordThemeDao.update(entity);
+	}
+
+	@Override
+	public WordTheme find(String id) {
+		// TODO Auto-generated method stub
+		return wordThemeDao.find(id);
 	}
 
 }

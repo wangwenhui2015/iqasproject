@@ -33,17 +33,21 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 	//保存“太空”和“草原”两个主题
 	@Test(enabled = false)
 	public void saveWordTheme(){
-		WordTheme th = new WordTheme(WordThemeTypeEnum.SPACE.ordinal());//402880ed517c717701517c7179460000
+		String space = "太空主题";
+		String caoyuan ="大草原主题";
+		WordTheme th = new WordTheme(space);//402880ed517c717701517c7179460000
 		wordThemeService.save(th);
-		WordTheme th2 = new WordTheme(WordThemeTypeEnum.PRAIRIE.ordinal());//402880ed517c8cf501517c8cf80a0001
+		WordTheme th2 = new WordTheme(caoyuan);//402880ed517c8cf501517c8cf80a0001
 		wordThemeService.save(th2);
 	}
 	//为“太空主题”添加10个单词
 	@Test(enabled = false)
 	public void saveWordThemeRel(){
-		
+
+		String space = "太空主题";
+		String caoyuan ="大草原主题";
 		QueryResult<Iword> qr = iwordService.getScrollData(1, 10);
-		WordTheme theme= wordThemeService.findByType(WordThemeTypeEnum.SPACE.ordinal());
+		WordTheme theme= wordThemeService.findByName(space);
 		for( Iword word : qr.getResultlist()){
 			WordThemeWordRel entity = new WordThemeWordRel(word.getUuid(), theme.getId());
 			WordThemeWordRelService.save(entity);
@@ -52,8 +56,17 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 	//通过“太空”主题查询该主题下的所有单词
 	@Test(enabled = true)
 	public void getWordsByTheme(){
-		WordTheme theme= wordThemeService.findByType(WordThemeTypeEnum.SPACE.ordinal());
+		String space = "太空主题";
+		String caoyuan ="大草原主题";
+		WordTheme theme= wordThemeService.findByName(space);
 		QueryResult<Iword> qr= wordThemeService.getAllWords(theme.getId());
+		System.out.println(space+":包含的单词");
+		for( Iword word : qr.getResultlist()){
+			System.out.println(word.getContent()+":"+word.getId());
+		}
+		theme= wordThemeService.findByName(caoyuan);
+		qr= wordThemeService.getAllWords(theme.getId());
+		System.out.println(caoyuan+":包含的单词");
 		for( Iword word : qr.getResultlist()){
 			System.out.println(word.getContent()+":"+word.getId());
 		}

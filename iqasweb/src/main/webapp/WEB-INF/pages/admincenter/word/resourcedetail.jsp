@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <base href="<%=basePath%>">   
-	<title>标题</title> 
+	<title>${word.content}单词资源</title> 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -121,15 +121,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 //单词id
  var wordid ="${word.uuid}"; 
 //资源删除连接
-var deleteUrl = "admin/control/wordresource/delete.html?id=";
- 
+var deleteUrl = "admin/control/wordresource/ajaxDelete.html";
 
+//播放声音，每次点击都会产生一个声音，需要修复
 function playmusic(id,savepath){
 	var nodeid= $("#"+id);
 	var str='<embed id="emv" src="'+savepath+'" autostart="true" loop="false"  hidden="true" volume="3">';
 	$("#"+id).append(str);
 
 } 
+/**
+ * 删除资源，id为资源的id
+ */
+function deleteResource(id){
+	//确认是否删除
+	if( confirm("确定删除"))
+	{
+		//获取删除按钮
+		var deleteNode = $("#a"+id);
+		//现将删除按钮设为不可用,同时文字改为正在删除
+		deleteNode.addClass("disabled");
+		deleteNode.text("正在删除...");
+		
+		//确认删除则调用ajax删除
+		$.get(deleteUrl,{id:id}, function(content) {
+			var status = content.status;
+			var message = content.message;
+			if( status ==1){//删除成功
+				$("#"+id).remove();
+			}else{
+				alert(message);
+				//删除失败恢复按钮
+				deleteNode.removeClass("disabled");
+				deleteNode.text("删除");
+			}
+			
+		},"json"); 
+	}
+}
 //进入界面就开始运行
 $(function(){
 	//获取单词资源
@@ -166,22 +195,22 @@ function getResource(uuid,type){
 		}
 	},"json"); 
 } 
-//显示图片
+//通过ajax获取后台图片
 function showPictureData(data){
 	var str="";
 	for(var i=0;i<data.length;i++)
 	{
-		  str+='<div class="col-sm-6 col-md-3"><div class="thumbnail">';
+		  str+='<div id="'+data[i].id+'" class="col-sm-6 col-md-3"><div class="thumbnail">';
 		  str+='<img src="'+data[i].savepath+'" alt="...">';
 		  str+='<div class="caption" style="text-align: center;">';
-		  str+='<a href="'+deleteUrl+data[i].id+'" class="btn btn-warning" role="button">删除</a>';
+		  str+='<a href="javascript:deleteResource(\''+data[i].id+'\');" id="a'+data[i].id+'" class="btn btn-warning"  role="button">删除</a>';
 		  str+='</div>';
 		  str+='</div></div>';
 	}
 	//追加到图片的中内容的前面
 	$("#picturedata").prepend(str);
 }
-//显示绘本
+//通过ajax获取后台显示绘本
 function showBookPictureData(data){
 	var str="";
 	for(var i=0;i<data.length;i++)
@@ -196,13 +225,8 @@ function showBookPictureData(data){
 	//追加到图片的中内容的前面
 	$("#bookpicturedata").prepend(str);
 }
-/**
- * <span style="margin-right: 30px;">
-	<small>英</small>
-		<a href="" ><img alt="" src="images/admin/word/voice.png"> </a>
-	</span>
- */
-//显示声音
+
+//通过ajax获取后台显示声音
 function showVioceData(data){
 	 var str="";
 		for(var i=0;i<data.length;i++)
@@ -226,7 +250,7 @@ function showVioceData(data){
 		$("#voicedata").append(str);
 }
 
-//显示视频
+//通过ajax获取后台显示视频
 function showVideoData(data){
 	
 	

@@ -1,20 +1,13 @@
 package com.cnu.iqas.bean.iword;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 /**
@@ -28,16 +21,18 @@ import org.hibernate.annotations.GenericGenerator;
 public class WordTheme {
 	//id
 	private String id;
-	//类型
-	private Integer type;
+	//主题名称，唯一不可空
+	private String name;
+	//创建时间
+	private Date createTime=new Date();
 	
 	public WordTheme() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public WordTheme( int type) {
+	public WordTheme( String name) {
 		super();
-		this.type = type;
+		this.name = name;
 	}
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getId() {
@@ -46,11 +41,18 @@ public class WordTheme {
 	public void setId(String id) {
 		this.id = id;
 	}
-	@Column(nullable=false)
-	public Integer getType() {
-		return type;
+	@Column(nullable=false,length=20,unique=true)
+	public String getName() {
+		return name;
 	}
-	public void setType(Integer type) {
-		this.type = type;
+	public void setName(String name) {
+		this.name = name;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }

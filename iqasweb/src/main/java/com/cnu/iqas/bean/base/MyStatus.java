@@ -27,6 +27,9 @@ public class MyStatus {
 		this.status = status;
 		this.message = message;
 	}
+	/**
+	 * 默认构造函数，默认status=1,message="ok"
+	 */
 	public MyStatus() {
 		super();
 		this.status=1;

@@ -40,7 +40,7 @@ public class IwordForm extends BaseForm {
 	//序号,单词在本单元的序号
 	private Integer rank;
 	/*@NotEmpty(message="单词id不能为空")
-	@Pattern(regexp="\\S{1,15}",message="单词id长度为1~15")//通过正则表达式进行校验，匹配4~15个非空白的字符
+	@Pattern(regexp="\\S{1,15}",message="单词id长度为1~15")//通过正则表达式进行校验，匹配1~15个非空白的字符
 */	public String getId() {
 		return id;
 	}
@@ -48,7 +48,7 @@ public class IwordForm extends BaseForm {
 		this.id = id;
 	}
 	@NotEmpty(message="单词不能为空")
-	@Pattern(regexp="\\S{1,15}",message="单词长度为1~15")//通过正则表达式进行校验，匹配4~15个非空白的字符
+	@Pattern(regexp="\\S{1,15}",message="单词长度为1~15")//通过正则表达式进行校验，匹配1~15个非空白的字符
 	public String getContent() {
 		return content;
 	}

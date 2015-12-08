@@ -12,8 +12,16 @@ import com.cnu.iqas.dao.base.DAO;
 * 类说明
 */
 public interface WordThemeDao extends DAO<WordTheme> {
-
+	/**
+	 * 根据主题id查找该主题下所有单词
+	 * @param themeid
+	 * @return
+	 */
 	public QueryResult<Iword> getAllWords( String themeid);
-	
-	public WordTheme findByType(int type);
+	/**
+	 * 根据主题名称查找主题
+	 * @param name 主题名称
+	 * @return
+	 */
+	public WordTheme findByName(String  name);
 }

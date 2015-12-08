@@ -13,6 +13,14 @@ public class PageViewConstant {
 	public final static String ADDWORDATTRIBUTERESOURCE="admincenter/word/addattributeresource"; 
 	//单词资源详情界面
 	public final static String WORD_RESOURCE_DETAILUI="admincenter/word/resourcedetail"; 
+	
+	
+	//--------------单词主题涉及界面
+	//单词主题添加界面
+	public final static String WORDTHEME_ADD_UI="admincenter/wordtheme/addwordtheme"; 
+	//单词主题列表界面
+	public final static String WORDTHEME_LIST="admincenter/wordtheme/wordthemelist"; 
+	
 	//显示json的界面
 	public final static String JSON="share/json"; 
 	

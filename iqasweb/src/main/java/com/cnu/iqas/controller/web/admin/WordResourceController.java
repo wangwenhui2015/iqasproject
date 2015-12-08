@@ -74,16 +74,49 @@ public class WordResourceController  implements ServletContextAware{
 	  */
 	 @RequestMapping(value="delete")
 	 public String delete(String id){
+		 ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
 		 if( BaseForm.validate(id)){
 			 WordResource wr =wordResourceService.find(id);
-			 //设置不可见
-			 wr.setVisible(false);
-			 //更新
-			 wordResourceService.update(wr);
+			 if( wr !=null){
+				 //设置不可见
+				 wr.setVisible(false);
+				 //更新
+				 wordResourceService.update(wr);
+			 }else{
+				 mv.addObject("message","删除资源不存在!");
+			 }
+		 }else{
+			 mv.addObject("message","删除资源不存在!");
 		 }
+		 mv.addObject("urladdress", "");
 		 return PageViewConstant.MESSAGE;
 	 }
-	 
+	 /**
+	  * ajax根据资源id删除某个资源
+	  * @return
+	  */
+	 @RequestMapping(value="ajaxDelete")
+	 public ModelAndView ajaxDelete(String id){
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		 MyStatus status = new MyStatus();
+		 if( BaseForm.validate(id)){
+			 WordResource wr =wordResourceService.find(id);
+			 if( wr !=null){
+				 //设置不可见
+				 wr.setVisible(false);
+				 //更新
+				 wordResourceService.update(wr);
+			 }else{
+				 status.setMessage("删除资源不存在!");
+			 }
+		 }else{
+			 status.setMessage("删除资源不存在!");
+			 status.setStatus(0);
+		 }
+		 mv.addObject("json", JsonTool.createJson(null, null, status));
+		 return mv;
+	 }
+	
 	 //进入资源详情界面
 	 @RequestMapping(value="resourceDetailUI")
 	 public ModelAndView resourceDetailUI(String uuid){

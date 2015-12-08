@@ -23,6 +23,11 @@
 		else */
 			return true;
 	}
+	
+	function search(version){
+		$("#version").val(version);
+		topage(1);
+	}
 	function topage(page)
 	{
 		var form = document.forms[0];
@@ -64,7 +69,7 @@
            </td>
             <td>&nbsp;&nbsp;版本信息:</td>
            <td>
-	            <select  name="version" >
+	            <select id="version"  name="version" >
 				  <option value="0" ${formbean.version==0?"selected":"" }>---------------------</option>
 				  <option value="1" ${formbean.version==1?"selected":"" }>北师大版</option>
 				  <option value="2" ${formbean.version==2?"selected":"" }>北京版</option>
@@ -104,16 +109,21 @@
 		<c:forEach items="${list }" var="entity">
 			<tr>
 				<td align="right">
-				${entity.version==1?"北师大版":"" }${entity.version==2?"北京版":"" }
-				${entity.version==3?"外研社新标准":"" }${entity.version==4?"外研社一年级起":"" }
-				${entity.version==5?"人教版":"" }${entity.version==6?"朗文版":"" }
+				<a href="javascript:search('${entity.version }');" class="btn btn-default">
+					${entity.version==1?"北师大版":"" }${entity.version==2?"北京版":"" }
+					${entity.version==3?"外研社新标准":"" }${entity.version==4?"外研社一年级起":"" }
+					${entity.version==5?"人教版":"" }${entity.version==6?"朗文版":"" }
+				</a>
 				 </td>
 				<td align="left"><span class="badge">${entity.sum}</span>个 单词</td>
 			</tr>
 		 </c:forEach>
 		</tbody>
 	</table>
-		
+		<div align="center">
+		 <a href="<c:url value='admin/control/word/addUI.html'/>"  class="btn btn-info" >添加单词</a>
+		 <a href="<c:url value='admin/control/word/importUI.html'/>"  class="btn btn-primary" >导入单词</a>
+		</div>
 	</form>
   </div>
   <%--  <div class="panel-footer">

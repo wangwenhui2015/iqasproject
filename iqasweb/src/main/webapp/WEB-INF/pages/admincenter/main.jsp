@@ -62,10 +62,11 @@ function exit() {
 					</ul>
 				</div>-->
 				<div>
-					<a class="one">单词资源管理</a>
+					<a class="one">单词管理</a>
 					<ul class="kid">
 						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/word/listUI.html'/>" >单词资源</a></li>
 						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/word/statistics.html'/>" >统计信息</a></li>
+						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/wordtheme/list.html'/>" >单词主题</a></li>
 					</ul>
 				</div>
 				<div id="datepicker"></div>

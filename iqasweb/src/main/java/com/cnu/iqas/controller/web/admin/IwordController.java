@@ -304,9 +304,6 @@ public class IwordController {
 		return mv;
 	}
 	
-	public void dd() throws Exception{
-		
-	}
 	public IwordService getIwordService() {
 		return iwordService;
 	}

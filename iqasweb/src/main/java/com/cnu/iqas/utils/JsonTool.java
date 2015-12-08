@@ -62,16 +62,19 @@ public class JsonTool {
 		JSONObject resultObject = new JSONObject();
 		//数组json
 		JSONArray jsonArray = new JSONArray();
+		
 		int count =0;
-		for( T entity :list )
-		{
-			JSONObject entityJson;
-			if( config ==null)
-				 entityJson = JSONObject.fromObject(entity);
-			else
-			    entityJson = JSONObject.fromObject(entity, config);
-			jsonArray.add(entityJson);
-			count++;
+		if( list !=null ){
+			for( T entity :list )
+			{
+				JSONObject entityJson;
+				if( config ==null)
+					 entityJson = JSONObject.fromObject(entity);
+				else
+				    entityJson = JSONObject.fromObject(entity, config);
+				jsonArray.add(entityJson);
+				count++;
+			}
 		}
 		resultObject.put("count", count);
 		resultObject.put("data", jsonArray);
