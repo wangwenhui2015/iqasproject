@@ -23,7 +23,7 @@ public class AdminTest extends AbstractTestNGSpringContextTests{//基于TestNG�
 	public void tt(){
 		System.out.println("dd");
 		Admin ad = new Admin();
-		ad.setAccount("zhouliang");
+		ad.setAccount("liang");
 		ad.setPassword("123");
 		adminService.save(ad);
 	}

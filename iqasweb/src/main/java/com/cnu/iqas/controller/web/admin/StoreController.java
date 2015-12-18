@@ -21,9 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 * 11.修改商品价格
 */
 @Controller
-@RequestMapping(value="/admin/control/store")
+@RequestMapping(value="/admin/control/store/")
 public class StoreController {
 
+	@RequestMapping(value="storeUI")
+	public String storeUI()
+	{
+		return "admincenter/store/addcommoditytype";
+	}
 	
 	public ModelAndView list(){
 		

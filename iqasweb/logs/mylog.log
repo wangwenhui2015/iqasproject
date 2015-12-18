@@ -245,3 +245,4 @@
 2015-11-22 20:30:17.434 ERROR [btpool0-9][IwordController.java:169] - 单词Xi'an，id：6/10/7/7已经存在!
 2015-11-22 20:38:39.209 ERROR [btpool0-16][IwordController.java:137] - 第281行内人格式有误!
 2015-11-22 20:46:15.324 ERROR [btpool0-4][IwordController.java:137] - 第46行内容格式有误!
+2015-12-18 22:18:40.081 ERROR [btpool0-6][IwordController.java:209] - 导入单词：未知异常
