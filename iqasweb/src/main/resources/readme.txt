@@ -26,7 +26,7 @@
 访问路径：http://localhost:8088/iqasweb/
 
 2.项目发布到jetty容器上，实现修改代码后可以立即在网页上看到效果。（可以用于方便测试项目）
-方法：选中pom.xml文件右击->maven build  在Main页的Goals中输入：clean jetty:run   在JRE页的VM argument中输入：-Xms1024m -Xmx2048m   最后点击run。。下次在运行选中第一个maven build
+方法：选中pom.xml文件右击->maven build  在Main页的Goals中输入：clean jetty:run   在JRE页的VM argument中输入：-Xms900m -Xmx900m -XX:PermSize=900m -XX:MaxPermSize=900m   最后点击run。。下次在运行选中第一个maven build
 访问路径：http://localhost:8088/iqasweb/
 
 
@@ -41,11 +41,11 @@
 管理员登录连接：http://localhost:8088/iqasweb/admin/loginUI.html
 
 手机端访问连接：
-手机端统一访问网址：http://192.168.0.110:8080/iqasweb/mobile/**/**.html
+手机端统一访问网址：http://localhost:8080/iqasweb/mobile/**/**.html
 
 搜索单词：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=park
 搜索句子：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
-登录：http://localhost:192.168.0.121/iqasweb/mobile/user/login.html?password=12345&username=zhouliang
+登录：http://localhost:8080/iqasweb/mobile/user/login.html?password=12345&username=zhouliang
 注册：http://localhost:8088/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
 
 

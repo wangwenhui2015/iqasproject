@@ -23,6 +23,10 @@ public class WordTheme {
 	private String id;
 	//主题名称，唯一不可空
 	private String name;
+	/**
+	 * 是否有效,默认值为true：有效
+	 */
+	private boolean visible=true;
 	//创建时间
 	private Date createTime=new Date();
 	
@@ -55,4 +59,11 @@ public class WordTheme {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	public boolean isVisible() {
+		return visible;
+	}
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
 }

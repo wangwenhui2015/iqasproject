@@ -30,15 +30,17 @@ public class WordThemeServiceImpl implements WordThemeService {
 	private IwordDao iwordDao;
 	
 	/**
-	 * 根据主题类型获取该类型下所有单词
-	 * @param type  主题类型
-	 * @return  查询结果类
+	 * 根据主题id分页查找该主题下单词
+	 * @param themeid 主题id
+	 * @param firstindex 开始查询位置从0开始
+	 * @param maxresult  每页最大显示数
+	 * @return
 	 */
-	@Override
-	public QueryResult<Iword> getAllWords(String themeid) {
+	public QueryResult<Iword> getWords( String themeid, int firstindex,  int maxresult){
 		// TODO Auto-generated method stub
-		
-		return wordThemeDao.getAllWords(themeid);
+		if( !validateId(themeid))
+			return null;
+		return wordThemeDao.getWords(themeid, firstindex, maxresult);
 	}
 
 	/**
@@ -95,8 +97,55 @@ public class WordThemeServiceImpl implements WordThemeService {
 
 	@Override
 	public WordTheme find(String id) {
-		// TODO Auto-generated method stub
+		if( !validateId(id))
+			return null;
 		return wordThemeDao.find(id);
 	}
-
+	/**
+	 * 根据主题id使主题失效
+	 * @param id
+	 * @return 修改成功返回true
+	 */
+	@Override
+	public boolean disable(String id) {
+		return makeVisible(id, false);
+	}
+	/**
+	 * 根据主题id使主题有效
+	 * @param id
+	 * @return 修改成功返回true
+	 */
+	@Override
+	public boolean enable(String id) {
+		return makeVisible(id, true);
+	}
+	/**
+	 * 根据主题id来操作主题的是否有效，如果visible为true,则让主题变的有效
+	 * @param id	主题id0  
+	 * @param visible
+	 * @return
+	 */
+	private boolean makeVisible(String id,boolean visible){
+		// TODO Auto-generated method stub
+				if( validateId(id)){
+					WordTheme theme = wordThemeDao.find(id);
+					if( theme !=null){
+						theme.setVisible(visible);
+						 wordThemeDao.update(theme);
+						 return true;
+					}
+				}
+					return false;
+	}
+	
+	/**
+	 * 判断主题id是否为空或者空字符串
+	 * @param id
+	 * @return 合理返回true
+	 */
+	private boolean validateId(String id){
+		if( id==null || "".equals(id.trim()))
+			return false;
+		return true;
+	}
 }

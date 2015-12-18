@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>单词</title>
+<title>单词列表界面</title>
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="css/admin-all.css">
 <link rel="stylesheet" type="text/css" href="css/base.css">

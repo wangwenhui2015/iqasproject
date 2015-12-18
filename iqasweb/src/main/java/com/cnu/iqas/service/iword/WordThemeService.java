@@ -15,18 +15,31 @@ import com.cnu.iqas.bean.iword.WordTheme;
 */
 public interface WordThemeService {
 	/**
-	 * 根据主题类型获取该类型下所有单词
-	 * @param themeid  主题id
-	 * @return  查询结果类
+	 * 根据主题id分页查找该主题下单词
+	 * @param themeid 主题id
+	 * @param firstindex 开始查询位置从0开始
+	 * @param maxresult  每页最大显示数
+	 * @return
 	 */
-	public QueryResult<Iword> getAllWords(String themeid);
-	
+	public QueryResult<Iword> getWords(final String themeid,final int firstindex,final  int maxresult);
+	/**
+	 * 根据主题id使主题失效
+	 * @param id 主题id
+	 * @return
+	 */
+	public boolean disable(String id);
+	/**
+	 * 使主题有效
+	 * @param id 主题id
+	 * @return
+	 */
+	public boolean enable(String id);
 	/**
 	 * 查询所有主题
 	 * @return 查询结果类
 	 */
 	public QueryResult<WordTheme> getThemes();
-	
+
 	/**
 	 * 保存一个实体
 	 * @param entity
@@ -59,5 +72,6 @@ public interface WordThemeService {
 	 * @return 查询结果类
 	 */
 	public QueryResult<WordTheme> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,LinkedHashMap<String, String> orderby);
+
 
 }

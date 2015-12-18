@@ -9,7 +9,9 @@
   <context-param>
   	<param-name>contextConfigLocation</param-name>
   	<param-value>classpath:applicationContext.xml</param-value>  <!-- 如果有多个配置文件可用逗号（建议）、空格分隔 -->
+  	
   </context-param>
+  
   
   <!-- context-param -> listener -> filter -> servlet  -->
     <!-- 系统初始化过滤器，用于在系统初始化时启动JWS -->
@@ -35,6 +37,21 @@
     <filter-name>AdminLoginFilter</filter-name>
     <url-pattern>/admin/control/*</url-pattern>
   </filter-mapping> 
+  
+    <!-- 编码过滤器 -->
+  <filter>
+        <filter-name>codeFilter</filter-name>
+        <filter-class>com.cnu.iqas.filter.Encoding</filter-class>
+        <init-param>
+        	<param-name>charset</param-name>
+        	<param-value>UTF-8</param-value>
+        </init-param>
+ </filter>
+ <filter-mapping>
+      <filter-name>codeFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+ </filter-mapping>  
+ 
 	 <!-- 配置SpringMVC相关信息，SpringMVC像struts一样，也通过一个Servlet截获URL请求，然后再进行相关的处理 -->
 	 
 	 <!-- Spring MVC的主控Servlet,在spring-webmvc包中，

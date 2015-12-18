@@ -33,7 +33,6 @@ public class MUserController {
 
 	private UserService userService;
 	/**
-	 * 
 	 * @param formbean  用户注册表单类，用于接受前端穿过来的参数
 	 * @param bindingResult 存放校验结果
 	 * @return json格式数据

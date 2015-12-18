@@ -16,7 +16,7 @@ import com.cnu.iqas.bean.admin.Admin;
 /**
 * @author 周亮 
 * @version 创建时间：2015年11月16日 下午6:49:51
-* 类说明
+* 类说明 管理员登录过滤器，如果管理员未登录则不可以访问后台界面
 */
 public class AdminLoginFilter implements Filter {
 

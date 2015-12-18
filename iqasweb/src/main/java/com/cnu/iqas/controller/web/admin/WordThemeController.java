@@ -16,10 +16,13 @@ import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.bean.iword.WordTheme;
+import com.cnu.iqas.bean.iword.WordThemeWordRel;
 import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.iword.WordThemeForm;
+import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordThemeService;
+import com.cnu.iqas.service.iword.WordThemeWordRelService;
 import com.cnu.iqas.utils.JsonTool;
 
 /**
@@ -32,6 +35,10 @@ import com.cnu.iqas.utils.JsonTool;
 public class WordThemeController {
 	//主题服务类
 	private WordThemeService wordThemeService; 
+	//主题和单词关系服务类
+	private WordThemeWordRelService wordThemeWordRelService;
+	//单词服务类
+	private IwordService iwordService;
 	/**
 	 * 跳转到添加主题界面
 	 * @return
@@ -39,6 +46,18 @@ public class WordThemeController {
 	@RequestMapping(value="addUI")
 	public String addThemeUI(){
 		return PageViewConstant.WORDTHEME_ADD_UI;
+	}
+	/**
+	 * 根据主题id删除主题
+	 * @param id 主题id
+	 * @return
+	 */
+	public String ajaxDeleteTheme(String id){
+		
+		if( BaseForm.validate(id)){
+			wordThemeService.disable(id);
+		}
+		return "";
 	}
 	
 	/**
@@ -53,12 +72,68 @@ public class WordThemeController {
 			WordTheme theme = new WordTheme(formbean.getName());
 			wordThemeService.save(theme);
 		}
-		
-		mv.addObject("formbean", formbean);
-		mv.addObject("message", formbean.getErrors().get("name"));
+		mv.addObject("message", "添加成功！");
 		mv.addObject("urladdress","admin/control/wordtheme/addUI.html");
 		return mv;
 	}
+	/**
+	 * 为主题添加单词
+	 * 输入：单词uuid
+	 *      主题id
+	 * @return
+	 */
+	@RequestMapping(value="addword")
+	public ModelAndView addWord4Theme(WordThemeForm formbean){
+
+		ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
+		boolean success = false;
+		if( BaseForm.validate(formbean.getId())&& BaseForm.validate(formbean.getUuid())){
+			Iword word =iwordService.find(formbean.getUuid());
+			WordTheme theme = wordThemeService.find(formbean.getId());
+			if( word !=null&& theme!=null){
+
+				WordThemeWordRel entity = new WordThemeWordRel(word.getUuid(), theme.getId());
+				wordThemeWordRelService.save(entity);
+				success = true;
+			}
+		}
+		if( success){
+			mv.addObject("message", "添加成功！");
+		}else{
+			mv.addObject("message", "添加失败！");
+		}
+		mv.addObject("urladdress","admin/control/wordtheme/addUI.html");
+		return mv;
+	}
+	/**
+	 * 分页获取主题下的单词
+	 * 输入：第几页:page
+	 * 		主题id:id
+	 * @return
+	 */
+	@RequestMapping(value="wordlist")
+	public ModelAndView getWords4Theme(WordThemeForm formbean){
+
+		ModelAndView mv = new ModelAndView(PageViewConstant.WORDTHEME_WORDS_LIST);
+		QueryResult<Iword> queryResult=null;
+		//分页
+		PageView<Iword> pageView = new PageView<Iword>(10, formbean.getPage());
+		if( formbean.getId()!=null){
+			
+		    WordTheme theme=	wordThemeService.find(formbean.getId());
+		    if( theme!=null){
+			 queryResult= wordThemeService.getWords(formbean.getId(), pageView.getFirstResult(), pageView.getMaxresult());    
+			 mv.addObject("theme",theme);
+		    }
+		}
+		//将查询结果存到页面
+		pageView.setQueryResult(queryResult);
+		mv.addObject("pageView", pageView);
+		return mv;
+	}
+	
+	
+	
 	/**
 	 * 根据条件查询主题
 	 * @return
@@ -130,4 +205,23 @@ public class WordThemeController {
 	public void setWordThemeService(WordThemeService wordThemeService) {
 		this.wordThemeService = wordThemeService;
 	}
+
+	public WordThemeWordRelService getWordThemeWordRelService() {
+		return wordThemeWordRelService;
+	}
+
+	@Resource
+	public void setWordThemeWordRelService(WordThemeWordRelService wordThemeWordRelService) {
+		this.wordThemeWordRelService = wordThemeWordRelService;
+	}
+
+	public IwordService getIwordService() {
+		return iwordService;
+	}
+
+	@Resource
+	public void setIwordService(IwordService iwordService) {
+		this.iwordService = iwordService;
+	}
+	
 }

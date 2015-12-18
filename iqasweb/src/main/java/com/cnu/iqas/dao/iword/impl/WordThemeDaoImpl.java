@@ -27,7 +27,7 @@ import com.cnu.iqas.dao.iword.WordThemeDao;
 public class WordThemeDaoImpl extends DaoSupport<WordTheme>implements WordThemeDao {
 
 	@Override
-	public QueryResult<Iword> getAllWords(final String themeid) {
+	public QueryResult<Iword> getWords(final String themeid,final int firstindex,final  int maxresult) {
 		
 		QueryResult<Iword> qr =getHt().execute(new HibernateCallback<QueryResult<Iword>>() {
 			@Override
@@ -36,10 +36,17 @@ public class WordThemeDaoImpl extends DaoSupport<WordTheme>implements WordThemeD
 				String hql = "select o from Iword o where o.uuid in ( select wordId from WordThemeWordRel where wordThemeId =:wordThemeId)";
 				Query query =session.createQuery(hql);
 				query.setParameter("wordThemeId", themeid);
+				//分页
+				if(firstindex!=-1 && maxresult!=-1) 
+				query.setFirstResult(firstindex).setMaxResults(maxresult);
+				
 				List list = query.list();
 				q.setResultlist(list);
-				//String hqlcount = "select count(*) from Iword o where o.uuid in ( select wordId from WordThemeWordRel where wordThemeId =:wordThemeId)";
-				q.setTotalrecord(list.size());
+				 String hqlcount = "select count(*) from Iword o where o.uuid in ( select wordId from WordThemeWordRel where wordThemeId =:wordThemeId)";
+				
+				query = session.createQuery(hqlcount);
+				query.setParameter("wordThemeId", themeid);
+				q.setTotalrecord((Long)query.uniqueResult());
 				return q;
 			}
 		});
@@ -55,5 +62,6 @@ public class WordThemeDaoImpl extends DaoSupport<WordTheme>implements WordThemeD
 		else
 			return null;
 	}
+
 
 }

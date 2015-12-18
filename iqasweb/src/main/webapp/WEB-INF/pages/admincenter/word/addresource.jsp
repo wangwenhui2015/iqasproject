@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>标题</title> 
+<title>添加单词资源</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- 最新 Bootstrap 核心 CSS 文件 -->
