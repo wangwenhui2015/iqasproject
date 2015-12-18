@@ -37,7 +37,13 @@ import com.cnu.iqas.utils.WebUtils;
 /**
 * @author 周亮 
 * @version 创建时间：2015年11月16日 下午10:39:54
-* 类说明
+* 类说明 单词控制类，包含功能：
+* 1.跳转到单词添加界面
+* 2.添加单个单词
+* 3.跳转到单词列表界面
+* 4.分页查询并显示单词
+* 5.从execl中导入单词
+* 6.不同教材的单词个数统计
 */
 @Controller
 @RequestMapping(value="/admin/control/word")

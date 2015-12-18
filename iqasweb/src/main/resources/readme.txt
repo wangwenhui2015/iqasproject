@@ -21,6 +21,8 @@
 
 
 三、2中方式运行项目（开发阶段使用第二种）：
+前提：项目运行前先运行fuseki数据库。
+
 1.项目热部署到tomcat7上，但是在eclipse中修改代码信息，页面不会变化，需要重新发布才可以（重新发布不需要重启tomcat），所以对于一些信息可以业务方法的验证可以采用单元测试方法。
 方法：先运行tomcat，选中pom.xml文件右击->maven build（第二个）  在Goals中输入：tomcat7:deploy   最后点击run  。下次在运行选中第一个maven build
 访问路径：http://localhost:8088/iqasweb/

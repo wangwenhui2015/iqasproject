@@ -9,8 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cnu.iqas.bean.base.QueryResult;
 
 
-
-
+/**
+* @author 周亮 
+* @version 创建时间：2015年11月16日 下午10:39:54
+* 接口说明 操作数据库的类，包含的功能有：
+* 1.获取T类的的记录总数
+* 2.保存实体
+* 3.更新实体
+* 4.根据id属性查找实体
+* 5.根据id属性删除实体
+* 6.根据实体属性来查询实体
+* 7.根据条件分页查询实体
+ * @param <T> 数据库中表对应的类
+ */
 public interface DAO<T> {
 	/**
 	 * 获取记录总数

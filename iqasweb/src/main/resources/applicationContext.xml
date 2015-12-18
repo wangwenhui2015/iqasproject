@@ -67,13 +67,11 @@
 	<bean id="hibernateTemplate"
           class="org.springframework.orm.hibernate3.HibernateTemplate"
           p:sessionFactory-ref="sessionFactory"/>
-	<!-- 在Spring配置文件中配置Hibernate事务管理器，病启用注解驱动事务 -->
+	<!-- 在Spring配置文件中配置Hibernate事务管理器，并启用注解驱动事务 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory" />
 		<!-- 启用注解驱动事务 可以通过@Transactional注解服务类，从而使其中的方法都具有事务性-->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	
-
 	
 </beans>

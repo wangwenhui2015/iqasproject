@@ -12,7 +12,11 @@ import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.user.UserForm;
 import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.WebUtils;
-
+/**
+* @author 周亮 
+* @version 创建时间：2015年11月18日 下午2:01:06
+* 类说明  用户控制类
+*/
 @Controller
 @RequestMapping(value = "/user")  //在类前面定义，则将url和类绑定。
 @SessionAttributes({"user"})   //将ModelMap中属性名字为user的放入session中。这样，request和session中都有了。

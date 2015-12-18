@@ -18,7 +18,9 @@ import com.cnu.iqas.service.admin.AdminService;
 /**
 * @author 周亮 
 * @version 创建时间：2015年11月16日 上午10:52:52
-* 类说明
+* 类说明 管理员控制类，包含功能：
+* 1.登录
+* 2.退出
 */
 @Controller
 @RequestMapping(value="/admin")
