@@ -149,7 +149,7 @@ public class WordThemeController {
 	public ModelAndView list(WordThemeForm formbean){
 		ModelAndView mv = new ModelAndView(PageViewConstant.WORDTHEME_LIST);
 		//分页
-		PageView<WordTheme> pageView = new PageView<WordTheme>(10, formbean.getPage());
+		PageView<WordTheme> pageView = new PageView<WordTheme>(formbean.getMaxresult(), formbean.getPage());
 		//查询结果根据时间排序
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String,String>();
 		orderby.put("createTime", "asc");

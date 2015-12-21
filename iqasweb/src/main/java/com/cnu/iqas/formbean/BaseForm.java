@@ -20,6 +20,10 @@ import com.cnu.iqas.utils.WebUtils;
 public class BaseForm {
 	/*当前页*/
 	private int page = 1;  
+	/**
+	 * 每页显示最大数，默认10
+	 */
+	private int maxresult=10;
 	/*是否查询*/
 	private String query; 
 	/*错误集合*/
@@ -38,6 +42,12 @@ public class BaseForm {
 		this.page = page < 1 ? 1 : page;
 	}
 	
+	public int getMaxresult() {
+		return maxresult;
+	}
+	public void setMaxresult(int maxresult) {
+		this.maxresult = maxresult;
+	}
 	public Map<String, String> getErrors() {
 		return errors;
 	}

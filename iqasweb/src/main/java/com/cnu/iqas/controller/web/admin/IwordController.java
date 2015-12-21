@@ -277,7 +277,7 @@ public class IwordController {
 	@RequestMapping(value="/list")
 	public ModelAndView list(IwordForm formbean){
 		ModelAndView mv = new ModelAndView("admincenter/word/wordlist");
-		PageView<Iword> pageView = new PageView<Iword>(10, formbean.getPage());
+		PageView<Iword> pageView = new PageView<Iword>(formbean.getMaxresult(), formbean.getPage());
 		//根据创建日期降序
 		LinkedHashMap<String,String> orderby= new LinkedHashMap<String, String>();
 		orderby.put("createtime", "desc");

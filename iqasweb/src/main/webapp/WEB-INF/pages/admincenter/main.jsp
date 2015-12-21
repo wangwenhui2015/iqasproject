@@ -72,7 +72,7 @@ function exit() {
 				<div>
 					<a class="one">商店管理</a>
 					<ul class="kid">
-						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/store/storeUI.html'/>" >商品类型</a></li>
+						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/store/listtype.html'/>" >商品类型</a></li>
 						</ul>
 				</div>
 				<div id="datepicker"></div>

@@ -57,7 +57,7 @@ public interface DAO<T> {
 	/**
 	 * 根据属性来获取实体
 	 * @param <T>
-	 * @param wherejpql 查询条件  "o.email=? and o.account like ?"
+	 * @param wherejpql 查询条件  "o.email=? "
 	 * @param attribute 实体的属性值
 	 * @return
 	 */

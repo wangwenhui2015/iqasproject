@@ -24,13 +24,17 @@ public class CommodityType {
 	 */
 	private String id;
 	/**
-	 * 商品类型名称
+	 * 商品类型名称，唯一
 	 */
 	private String name;
 	/**
-	 * 包含商品数
+	 * 商品类型的等级，唯一，默认值为0
 	 */
-	private Integer count;
+	private Integer grade=0;
+	/**
+	 * 包含商品数，默认0
+	 */
+	private Integer count=0;
 	/**
 	 * 是否可见，默认可见值为true
 	 */
@@ -46,7 +50,7 @@ public class CommodityType {
 	public void setId(String id) {
 		this.id = id;
 	}
-	@Column(nullable=false)
+	@Column(nullable=false,unique=true)
 	public String getName() {
 		return name;
 	}
@@ -73,6 +77,13 @@ public class CommodityType {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	@Column(unique=true,nullable=false)
+	public Integer getGrade() {
+		return grade;
+	}
+	public void setGrade(Integer grade) {
+		this.grade = grade;
 	}
 	
 

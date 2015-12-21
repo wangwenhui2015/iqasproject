@@ -32,6 +32,18 @@ public class Commodity {
 	 */
 	private String name;
 	/**
+	 * 商品图片保存路径
+	 */
+	private String savePath;
+	/**
+	 * 图片大小
+	 */
+	private long picSize;
+	/**
+	 * 商品图片格式
+	 */
+	private String ext;
+	/**
 	 * 商品需要金币数
 	 */
 	private Integer coinCount;
@@ -84,6 +96,24 @@ public class Commodity {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getSavePath() {
+		return savePath;
+	}
+	public void setSavePath(String savePath) {
+		this.savePath = savePath;
+	}
+	public long getPicSize() {
+		return picSize;
+	}
+	public void setPicSize(long picSize) {
+		this.picSize = picSize;
+	}
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
 	}
 	
 }

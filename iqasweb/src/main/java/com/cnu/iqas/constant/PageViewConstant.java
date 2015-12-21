@@ -38,6 +38,20 @@ public class PageViewConstant {
 	 */
 	public final static String WORDTHEME_WORDS_LIST="admincenter/wordtheme/themewordlist"; 
 	
+	/*---------商店涉及界面--------------*/
+
+	/**
+	 * 添加商品类型界面
+	 */
+	public final static String COMMODITYTYPE_ADD_UI="admincenter/store/addcommoditytype"; 
+	/**
+	 * 商品类型列表界面
+	 */
+	public final static String COMMODITYTYPE_LIST="admincenter/store/commoditytypelist"; 
+	/**
+	 * 商品类型下的商品列表界面
+	 */
+	public final static String COMMODITYTYPE_COMMODITY_LIST="admincenter/store/commoditysoftype"; 
 	/**
 	 * 显示json的界面
 	 */
