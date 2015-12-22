@@ -1,5 +1,6 @@
 package com.cnu.iqas.service.stroe.impl;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import javax.annotation.Resource;
@@ -33,6 +34,37 @@ public class CommodityServiceImpl implements CommodityService {
 	@Resource
 	public void setCommodityDao(CommodityDao commodityDao) {
 		this.commodityDao = commodityDao;
+	}
+	@Override
+	public void save(Commodity entity) {
+		commodityDao.save(entity);
+		
+	}
+	@Override
+	public void update(Commodity entity) {
+		// TODO Auto-generated method stub
+		commodityDao.update(entity);
+	}
+	@Override
+	public void delete(Serializable... entityids) {
+		// TODO Auto-generated method stub
+		commodityDao.delete(entityids);
+	}
+	@Override
+	public Commodity find(Serializable entityId) {
+		// TODO Auto-generated method stub
+		return commodityDao.find(entityId);
+	}
+	@Override
+	public Commodity findByName(String name) {
+		// TODO Auto-generated method stub
+		return commodityDao.find("o.name=?", name);
+	}
+	@Override
+	public QueryResult<Commodity> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,
+			LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		return commodityDao.getScrollData(firstindex, maxresult, wherejpql, queryParams,orderby);
 	}
 
 }

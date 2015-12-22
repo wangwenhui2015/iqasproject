@@ -28,7 +28,7 @@ public class Commodity {
 	 */
 	private String typeid;
 	/**
-	 * 商品类型名称
+	 * 商品名称唯一
 	 */
 	private String name;
 	/**
@@ -62,7 +62,7 @@ public class Commodity {
 	public void setId(String id) {
 		this.id = id;
 	}
-	@Column(nullable=false)
+	@Column(nullable=false,unique=true)
 	public String getName() {
 		return name;
 	}

@@ -65,7 +65,10 @@ display: none;
 			<tr>
 				<td align="center"> ${type.name }</td> 
 				<td align="center">${entity.id}</td>
-				<td align="center">${entity.name} </td>
+				<td align="center">
+				   ${entity.name}
+				   <img src="${entity.savePath }" class="img-circle" style="width:30px;height: 30px;" alt="...">
+				 </td>
 				<td align="center">${entity.coinCount} </td>
 				<td align="center">${entity.createTime} </td>
 				<td align="center">
@@ -80,7 +83,7 @@ display: none;
 		</tbody>
 	</table>
 		<div align="center">
-		 <a href="<c:url value='admin/control/store/addCommodityUI.html'/>"  class="btn btn-info" >添加商品</a>
+		 <a href="<c:url value='admin/control/store/addCommodityUI.html?typeid=${type.id}'/>"  class="btn btn-info" >添加商品</a>
 		</div>
 	</form>
   </div>

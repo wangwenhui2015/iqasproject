@@ -51,7 +51,17 @@ public class PageViewConstant {
 	/**
 	 * 商品类型下的商品列表界面
 	 */
-	public final static String COMMODITYTYPE_COMMODITY_LIST="admincenter/store/commoditysoftype"; 
+	public final static String COMMODITYTYPE_COMMODITY_LIST="admincenter/store/commoditysoftype";
+	/**
+	 * 添加商品界面
+	 */
+	public final static String COMMODITY_ADD_UI="admincenter/store/addcommodity";
+	
+	
+	
+	
+	
+	
 	/**
 	 * 显示json的界面
 	 */

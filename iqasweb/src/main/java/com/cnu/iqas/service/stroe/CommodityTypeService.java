@@ -30,6 +30,12 @@ public interface CommodityTypeService {
 	 */
 	public CommodityType findByName(String name);
 	/**
+	 * 根据商品类型等级查看某个商品类型
+	 * @param grade  商品类型等级
+	 * @return
+	 */
+	public CommodityType findByGrade(Integer grade);
+	/**
 	 * 分页查询，结果根据条件排序
 	 * @param firstindex 开始查询位置从0开始
 	 * @param maxresult 一页的最大记录数

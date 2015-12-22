@@ -68,23 +68,55 @@ public class BaseForm {
 			return false;
 		}
 	}
-
 	/**
-	 * 保存文件，并返回保存的相对路径
+	 * 保存文件
+	 * @param relativedir 文件保存相对目录
+	 * @param file  保存的文件
+	 * @return  返回文件保存的带文件名的相对路径
+	 * @throws Exception
+	 */
+	public static  String saveFile(ServletContext servletContext,String relativedir, CommonsMultipartFile file) throws Exception{
+		//文件原名称
+	   String fileName = file.getOriginalFilename();
+	   //文件后缀名
+	   String fileExt = getExt(fileName);
+	   //生成随机的文件名
+	   String savefilename = UUID.randomUUID().toString()+ "."+fileExt;
+	  
+	   //获取保存的绝对路径
+	   String absolutepath=null;
+	   if( relativedir != null && !relativedir.equals("")){
+		   absolutepath=servletContext.getRealPath(relativedir);
+		   //生成保存路径文件
+		   File filedir = new File(absolutepath);
+		   //不存在生成
+		   if(!filedir.exists()){
+			   filedir.mkdirs();
+		   }
+		   File savefile = new File(filedir,savefilename); //新建保存的文件 
+		   try {//将上传的文件写入  新建的文件中
+			    file.getFileItem().write(savefile); 
+		   } catch (Exception e) {
+			    e.printStackTrace();
+		   }
+		  //相对路径   relativedir+"/"+filesavename
+		 return relativedir+"/"+savefilename;
+	   }else{
+		   System.out.println("保存路径未设置！");
+	   }
+	  return null;
+}
+	
+	/**
+	 * 保存单词资源文件，并返回保存的相对路径
 	 * @param servletContext    应用上下文
 	 * @param file				保存的文件
 	 * @param filetype			文件类型：图片、绘本、声音、视频
 	 * @return					返回文件在工程中的先对路径
 	 * @throws Exception
 	 */
-	public  String saveFile(ServletContext servletContext, CommonsMultipartFile file,int filetype) throws Exception{
-			//文件原名称
-		   String fileName = file.getOriginalFilename();
-		   //文件后缀名
-		   String fileExt = getExt(fileName);
-		   //生成随机的文件名
-		   String savefilename = UUID.randomUUID().toString()+ "."+fileExt;
-		   //根据类型选择保存的相对路径
+	public  String saveWordResourceFile(ServletContext servletContext, CommonsMultipartFile file,int filetype) throws Exception{
+		//获取单词资源的文件保存的相对路径
 		   String relativepath=null;
 		   switch(filetype){
 			    case ResourceConstant.TYPE_IMAGE: //上传图片类型文件
@@ -102,27 +134,7 @@ public class BaseForm {
 			    default:
 			    		break;
 		   }
-		   //获取保存的绝对路径
-		   String absolutepath=null;
-		   if( relativepath != null && !relativepath.equals("")){
-			   absolutepath=servletContext.getRealPath(relativepath);
-		   }else{
-			   errors.put("error", "保存路径未设置！");
-		   }
-		   //生成保存路径文件
-		   File filedir = new File(absolutepath);
-		   //不存在生成
-		   if(!filedir.exists()){
-			   filedir.mkdirs();
-		   }
-		   File savefile = new File(filedir,savefilename); //新建保存的文件 
-		   try {//将上传的文件写入  新建的文件中
-			    file.getFileItem().write(savefile); 
-		   } catch (Exception e) {
-			    e.printStackTrace();
-		   }
-		  //相对路径   relativepath+"/"+filesavename
-		return relativepath+"/"+savefilename;
+		return saveFile(servletContext, relativepath, file);
 	}
 	/**
 	 * 检验上传资源格式和大小是否合理

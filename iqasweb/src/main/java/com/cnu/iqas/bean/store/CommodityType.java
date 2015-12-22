@@ -28,9 +28,9 @@ public class CommodityType {
 	 */
 	private String name;
 	/**
-	 * 商品类型的等级，唯一，默认值为0
+	 * 商品类型的等级，唯一
 	 */
-	private Integer grade=0;
+	private Integer grade;
 	/**
 	 * 包含商品数，默认0
 	 */

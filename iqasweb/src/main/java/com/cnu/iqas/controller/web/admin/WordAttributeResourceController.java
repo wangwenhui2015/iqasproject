@@ -90,7 +90,7 @@ public class WordAttributeResourceController  implements ServletContextAware{
 				 //3.资源的保存相对路径
 				 String filesavepath=null;
 				 try {
-					 filesavepath=formbean.saveFile(servletContext, file, formbean.getType());
+					 filesavepath=formbean.saveWordResourceFile(servletContext, file, formbean.getType());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

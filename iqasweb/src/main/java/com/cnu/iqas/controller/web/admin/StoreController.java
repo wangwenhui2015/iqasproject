@@ -5,9 +5,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +25,11 @@ import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.store.StoreForm;
 import com.cnu.iqas.service.stroe.CommodityService;
 import com.cnu.iqas.service.stroe.CommodityTypeService;
+import com.cnu.iqas.service.stroe.StoreService;
+import com.cnu.iqas.utils.PropertyUtils;
+import com.cnu.iqas.utils.WebUtils;
+
+import jena.schemagen;
 
 /**
 * @author 周亮 
@@ -39,7 +49,11 @@ import com.cnu.iqas.service.stroe.CommodityTypeService;
 */
 @Controller
 @RequestMapping(value="/admin/control/store/")
-public class StoreController {
+public class StoreController   implements ServletContextAware{
+	
+	private Logger log = LogManager.getLogger(StoreController.class);
+	 //应用对象
+	 private ServletContext servletContext;
 	/**
 	 * 商品类型服务接口
 	 */
@@ -48,7 +62,10 @@ public class StoreController {
 	 * 商品服务接口
 	 */
 	private CommodityService commodityService;
-	
+	/**
+	 * 商店服务类，用于同时操作商品和商品类型
+	 */
+	private StoreService storeService;
 
 	/**
 	 * 分页获取某个商品类型下的所有商品
@@ -58,7 +75,7 @@ public class StoreController {
 	@RequestMapping(value="getCommoditysOfType")
 	public ModelAndView getCommoditysOfType(StoreForm formbean){
 
-		ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
+		ModelAndView mv = new ModelAndView(PageViewConstant.COMMODITYTYPE_COMMODITY_LIST);
 		//构造页面类
 		PageView<Commodity> pv = new PageView<Commodity>(formbean.getMaxresult(), formbean.getPage());
 		//构造查询条件
@@ -87,28 +104,83 @@ public class StoreController {
 	 * @return
 	 */
 	@RequestMapping(value="addCommodity")
-	public ModelAndView addCommodityForType(StoreForm formbean,CommonsMultipartFile  file){
+	public ModelAndView addCommodityForType(StoreForm formbean,@RequestParam(value="file")CommonsMultipartFile  file){
 		
-		return null;
+		ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
+		mv.addObject("urladdress", "admin/control/store/addCommodityUI.html?typeid="+formbean.getTypeid());
+		
+		Commodity commodity = new Commodity();
+		//保存商品，并获取商品的保存路径
+		String relativepath =null;
+		//商品图片的文件名和格式
+		String fileName = file.getOriginalFilename();
+		String fileContentType = file.getContentType();
+		
+		//商品类型是否存在
+		CommodityType type = commodityTypeService.find(formbean.getTypeid());
+		if( type ==null){
+			mv.addObject("message", "商品类型不存在!");
+			return  mv;
+		}
+		
+		//判断上传图片类型
+		if(!BaseForm.validateImageFileType(fileName, fileContentType)){
+			mv.addObject("message", "上传图片格式有误!");
+			return  mv;
+		}
+		//判断商品名称是否已经存在
+		if( commodityService.findByName(formbean.getName())!=null){
+			mv.addObject("message", "商品名称已存在!");
+			return  mv;
+		}
+		
+		//获取文件保存的相对路径
+		String relativedir= PropertyUtils.get(PropertyUtils.COMMODITY_PIC);
+		if( !BaseForm.validate(relativedir)){
+			mv.addObject("message", "商品图片存放的相对路径有误!");
+			log.error("商品图片存放的相对路径有误!");
+			//使用项目log图片
+			relativedir=PropertyUtils.get(PropertyUtils.LOG);;
+		}
+		
+		try {
+			relativepath=formbean.saveFile(servletContext, relativedir, file);
+			
+			if( relativepath!=null){
+				//设置商品参数
+				WebUtils.copyBean(commodity, formbean);
+				commodity.setExt(BaseForm.getExt(fileName));
+				commodity.setSavePath(relativepath);
+				commodity.setPicSize(file.getSize());
+				//商品类型的商品数加一
+				type.setCount(type.getCount()+1);
+				//这样可以保持事务性
+				storeService.saveCommodityAndUpdateType(commodity, type);
+				
+				mv.addObject("message", "保存商品成功!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("保存商品图片失败:"+e.getMessage());
+			mv.addObject("message", "保存商品失败!");
+		}
+
+		return mv;
 	}
-	
 	
 	/**
 	 * 添加商品界面
+	 * @param typeid  商品类型id
 	 * @return
 	 */
 	@RequestMapping(value="addCommodityUI")
-	public ModelAndView addCommodityUI(){
-		
-		return null;
+	public ModelAndView addCommodityUI(String typeid){
+		ModelAndView mv = new ModelAndView(PageViewConstant.COMMODITY_ADD_UI);
+		CommodityType type = commodityTypeService.find(typeid);
+		mv.addObject("type", type);
+		return mv;
 	}
 	
-	
-	@RequestMapping(value="storeUI")
-	public String storeUI()
-	{
-		return "admincenter/store/addcommoditytype";
-	}
 	/**
 	 * 添加商品类型界面
 	 * @return
@@ -207,6 +279,21 @@ public class StoreController {
 	@Resource
 	public void setCommodityService(CommodityService commodityService) {
 		this.commodityService = commodityService;
+	}
+
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		// TODO Auto-generated method stub
+		this.servletContext = servletContext;
+		
+	}
+
+	public StoreService getStoreService() {
+		return storeService;
+	}
+	@Resource
+	public void setStoreService(StoreService storeService) {
+		this.storeService = storeService;
 	}
 	
 	

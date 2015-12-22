@@ -4,8 +4,20 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyUtils {
+	
+	/**
+	 * 项目的log图片存放路径
+	 */
+	public static final String LOG ="log";
+	
 	public static final String JWSDIR ="jwsdir";
 	public static final String JWSVERSION = "jwsversion";
+	/**
+	 * 商品图片保存相对路径
+	 */
+	public static final String COMMODITY_PIC="commodity.picturesavedir";
+	
+	
 	private static Properties properties = new Properties();
 	static{
 		try {

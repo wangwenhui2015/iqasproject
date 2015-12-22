@@ -73,5 +73,13 @@ public class CommodityTypeServiceImpl implements CommodityTypeService {
 		}
 		
 	}
+
+
+	@Override
+	public CommodityType findByGrade(Integer grade) {
+		String wherejpql ="o.grade=?";
+		CommodityType ty = commodityTypeDao.find(wherejpql, grade);
+		return ty;
+	}
 	
 }
