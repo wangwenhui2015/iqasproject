@@ -67,6 +67,7 @@ public class StoreController   implements ServletContextAware{
 	 */
 	private StoreService storeService;
 
+	
 	/**
 	 * 分页获取某个商品类型下的所有商品
 	 * @param grade 商品类型id

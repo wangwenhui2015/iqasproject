@@ -45,9 +45,22 @@
 手机端访问连接：
 手机端统一访问网址：http://localhost:8080/iqasweb/mobile/**/**.html
 
+
+
 搜索单词：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=park
 搜索句子：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
 登录：http://localhost:8080/iqasweb/mobile/user/login.html?password=12345&username=zhouliang
 注册：http://localhost:8088/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
+购买商品;http://localhost:8088/iqasweb/mobile/store/buyCommodity.html  
+参数
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @param id 购买商品的id
+	 
+获取商店商品信息：http://localhost:8088/iqasweb/mobile/store/getStore.html 
+参数： * 获取商店的商品信息及用户的金币数
+	 * @param userName 用户名
+	 * @param password 密码
+
 
 

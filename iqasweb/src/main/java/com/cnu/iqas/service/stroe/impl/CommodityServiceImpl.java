@@ -2,6 +2,7 @@ package com.cnu.iqas.service.stroe.impl;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -65,6 +66,11 @@ public class CommodityServiceImpl implements CommodityService {
 			LinkedHashMap<String, String> orderby) {
 		// TODO Auto-generated method stub
 		return commodityDao.getScrollData(firstindex, maxresult, wherejpql, queryParams,orderby);
+	}
+	@Override
+	public List<Commodity> getAllData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		return commodityDao.getAllData(wherejpql, queryParams, orderby);
 	}
 
 }

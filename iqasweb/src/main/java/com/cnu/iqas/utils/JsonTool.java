@@ -83,8 +83,73 @@ public class JsonTool {
 		JsonTool.putStatusJson(status, jsonObject);
 		return jsonObject.toString();
 	}
+	/**
+	 * 将集合元素封装成json对象并返回
+	 * @param list  要封装的数组集合
+	 * @param config  类在转换成json数据时遵循的一些配置规则
+	 * @param status  状态标识
+	 * @return  json对象
+	 * 返回json对象的内部格式如下：data中的内容就是list集合中的内容，count表示data中的条数，也就是list集合中数据数
+	 * {
+		 *  status:1,
+		 *  message:"ok",
+		 *  result:{
+		 *   count:2,
+		 *   data:[
+		 *    
+		 *		{id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
+		 *      {id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
+		 *      
+		 *   ]
+		 *  }
+		 * }
+	 */
+	public static <T> JSONObject createJsonObject(List<T> list,JsonConfig config,MyStatus status){
+		
+		//整个json
+		JSONObject jsonObject = new JSONObject();
+		//result json
+		JSONObject resultObject = new JSONObject();
+		//数组json
+		JSONArray jsonArray = new JSONArray();
+		
+		int count =0;
+		if( list !=null ){
+			for( T entity :list )
+			{
+				JSONObject entityJson;
+				if( config ==null)
+					 entityJson = JSONObject.fromObject(entity);
+				else
+				    entityJson = JSONObject.fromObject(entity, config);
+				jsonArray.add(entityJson);
+				count++;
+			}
+		}
+		resultObject.put("count", count);
+		resultObject.put("data", jsonArray);
+		jsonObject.put("result", resultObject);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+		return jsonObject;
+	}	
+	/**
+	 * 将jsonArray和status对象按照格式封装到jsonObject中
+	 * @param jsonArray json数组对象
+	 * @param status  此次操作的描述
+	 * @return
+	 * 
+	 */
+  public static void putJsonObject( JSONObject jsonObject,JSONArray jsonArray,MyStatus status){
 	
-
+		//result json
+		JSONObject resultObject = new JSONObject();
+		resultObject.put("count", jsonArray.size());
+		resultObject.put("data", jsonArray);
+		jsonObject.put("result", resultObject);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+	}
 	/**
 	 * 
 	  * 将集合元素封装成json格式数据

@@ -10,7 +10,9 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.cnu.iqas.bean.store.CommodityType;
 import com.cnu.iqas.bean.user.User;
+import com.cnu.iqas.dao.base.DaoSupport;
 import com.cnu.iqas.dao.user.UserDao;
 import com.cnu.iqas.utils.WebUtils;
 
@@ -20,20 +22,11 @@ import com.cnu.iqas.utils.WebUtils;
 * 类说明
 */
 @Repository("userDao")
-public class BuyerDaoImpl implements UserDao {
-	//@PersistenceContext protected EntityManager em;
-	protected HibernateTemplate  ht;
-
-	public HibernateTemplate getHt() {
-		return ht;
-	}
-	@Resource(name="hibernateTemplate")
-	public void setHt(HibernateTemplate ht) {
-		this.ht = ht;
-	}
+public class UserDaoImpl  extends DaoSupport<User> implements UserDao {
+	
 	@Override
 	public User validate(final String userName, final String password) {
-		User user = ht.execute(new HibernateCallback<User>() {
+		User user = getHt().execute(new HibernateCallback<User>() {
 			@Override
 			public User doInHibernate(Session session)
 					throws HibernateException, SQLException {
@@ -48,7 +41,7 @@ public class BuyerDaoImpl implements UserDao {
 	}
 	@Override
 	public User findByName(final String userName) {
-		User user = ht.execute(new HibernateCallback<User>() {
+		User user = getHt().execute(new HibernateCallback<User>() {
 			@Override
 			public User doInHibernate(Session session)
 					throws HibernateException, SQLException {

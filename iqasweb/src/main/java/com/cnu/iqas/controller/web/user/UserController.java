@@ -71,7 +71,7 @@ public class UserController {
 			mv.addObject("error", "请填写用户名和密码!");
 		}else{
 			//2.查看用户是否已存在
-			User user =userService.find(formbean.getUserName());
+			User user =userService.findByName(formbean.getUserName());
 			if( user != null)
 				mv.addObject("error", "用户名已被注册!");
 			else{

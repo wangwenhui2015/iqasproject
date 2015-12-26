@@ -2,6 +2,10 @@ package com.cnu.iqas.service.stroe;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.store.Commodity;
@@ -32,6 +36,16 @@ public interface CommodityService {
 	 */
 	public QueryResult<Commodity> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,LinkedHashMap<String, String> orderby);
 	
+	
+
+	/**
+	 * 根据条件查询，结果根据条件排序
+	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
+	 * @param queryParams 查询条件占位符对应的参数值，
+	 * @param orderby 排序条件  Key为属性,Value为asc/desc
+	 */
+	public List<Commodity> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby);
+
 	/**
 	 * 保存实体
 	 * @param entity 实体id

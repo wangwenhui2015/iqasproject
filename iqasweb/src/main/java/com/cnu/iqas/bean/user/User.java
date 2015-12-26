@@ -11,24 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * userId	int			主键
-loginName	varchar	登录名	学生：学号
-password	varchar	密码	默认：000000	
-realName	varchar	姓名		
-sex	int	性别	1：男
-2：女	
-grade	int	年级		
-class	int	班级		
-birthyear	int	出生年份		
-golden	int	金币数	默认都置0	
-rank	int	排行	默认都置0	
-medal	int	勋章	默认都置0	
-loginTimes	int	登录次数	默认0	
-wordcount	int	已学习单词个数	默认0	
-workcount	int	作品个数	默认0	
-school	int	学校		
-role	int	身份		
-
  * @author dell
  *
  */
@@ -56,6 +38,16 @@ public class User {
 	private String school;
 	//身份
 	private int role;
+	/**
+	 * 用户在自适应学习系统中可查看的商品类型等级，默认值0
+	 */
+	private Integer storeGrade=0;
+	
+	/**
+	 * 用户在自适应学习系统中的获得的金币总数，初始值为0
+	 */
+	private Integer allCoins=0;
+	
 	//测试一下
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getUserId() {
@@ -121,6 +113,19 @@ public class User {
 	public void setRole(int role) {
 		this.role = role;
 	}
+	public Integer getStoreGrade() {
+		return storeGrade;
+	}
+	public void setStoreGrade(Integer storeGrade) {
+		this.storeGrade = storeGrade;
+	}
+	public Integer getAllCoins() {
+		return allCoins;
+	}
+	public void setAllCoins(Integer allCoins) {
+		this.allCoins = allCoins;
+	}
+	
 	
 	
 }

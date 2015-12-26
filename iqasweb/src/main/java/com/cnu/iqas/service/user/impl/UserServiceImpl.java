@@ -10,14 +10,13 @@ import com.cnu.iqas.dao.user.UserDao;
 import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.WebUtils;
 @Service("userService")
-public class UserServiceImpl extends DaoSupport<User>implements UserService {
+public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	
-	//重写父类方法给密码加密
-	@Override
+	//给密码加密
 	public void save(User entity) {
 		entity.setPassword(WebUtils.MD5Encode(entity.getPassword().trim()));
-		super.save(entity);
+		userDao.save(entity);
 	}
 
 	@Override

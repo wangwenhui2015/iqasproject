@@ -1,5 +1,6 @@
 package com.cnu.iqas.dao.user;
 
+import com.cnu.iqas.bean.store.Commodity;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.dao.base.DAO;
 
@@ -8,7 +9,7 @@ import com.cnu.iqas.dao.base.DAO;
 * @version 创建时间：2015年11月9日 下午8:39:09
 * 类说明
 */
-public interface UserDao {
+public interface UserDao  extends DAO<User>{
 	/**
 	 * 判断用户输入账号或密码是否正确
 	 * @param username 账号
