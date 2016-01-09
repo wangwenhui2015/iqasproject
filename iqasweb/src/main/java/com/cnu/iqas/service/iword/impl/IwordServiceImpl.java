@@ -1,17 +1,20 @@
 package com.cnu.iqas.service.iword.impl;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Service;
 
+import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.VersionWordCount;
-import com.cnu.iqas.dao.base.DaoSupport;
-import com.cnu.iqas.exception.IwordExistException;
+import com.cnu.iqas.dao.iword.IwordDao;
 import com.cnu.iqas.service.iword.IwordService;
 
 /**
@@ -20,38 +23,52 @@ import com.cnu.iqas.service.iword.IwordService;
 * 类说明
 */
 @Service("iwordService")
-public class IwordServiceImpl extends DaoSupport<Iword>  implements IwordService {
+public class IwordServiceImpl  implements IwordService {
 
+	private IwordDao iwordDao;
 	/**
 	 * 批量插入，
 	 */
 	@Override
 	public void batchSave(final List<Iword> iwords){
-		 getHt().execute(new HibernateCallback<Void>() {
-			@Override
-			public Void doInHibernate(Session session) throws HibernateException, SQLException {
-				for(Iword word:iwords){
-					session.save(word);
-				}
-				//将Session中的数据刷入数据库并情况Session缓存(一级缓存，此时二级缓存也应该是关闭的)
-				session.flush();
-				session.clear();
-				return null;
-			}
-		});
+		iwordDao.batchSave(iwords);
 	}
 
 	@Override
 	public List<VersionWordCount> statisticsVersionAndWordCount() {
-		List list =getHt().find("select new com.cnu.iqas.bean.iword.VersionWordCount(w.version as version, count(w) as sum ) from Iword w group by w.version");
-		/*getHt().execute(new HibernateCallback<List<VersionWordCount>>() {
-
-			@Override
-			public List<VersionWordCount> doInHibernate(Session session) throws HibernateException, SQLException {
-				
-				return null;
-			}
-		});*/
-		return list;
+		
+		return iwordDao.statisticsVersionAndWordCount();
 	}
+	@Override
+	public void save(Iword word) {
+		iwordDao.save(word);
+		
+	}
+
+	@Override
+	public QueryResult<Iword> getScrollData(int firstResult, int maxresult, String string, Object[] array,
+			LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		return iwordDao.getScrollData(firstResult, maxresult, string, array, orderby);
+	}
+
+	@Override
+	public Iword find(String uuid) {
+		// TODO Auto-generated method stub
+		return iwordDao.find(uuid);
+	}
+	public IwordDao getIwordDao() {
+		return iwordDao;
+	}
+	@Resource
+	public void setIwordDao(IwordDao iwordDao) {
+		this.iwordDao = iwordDao;
+	}
+
+	@Override
+	public QueryResult<Iword> getScrollData(int firstindex, int maxresult) {
+		// TODO Auto-generated method stub
+		return iwordDao.getScrollData(firstindex, maxresult);
+	}
+	
 }

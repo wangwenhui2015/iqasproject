@@ -11,8 +11,8 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.cnu.iqas.bean.admin.Admin;
-import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.dao.admin.AdminDao;
+import com.cnu.iqas.dao.base.DaoSupport;
 
 /**
 * @author 周亮 
@@ -20,18 +20,8 @@ import com.cnu.iqas.dao.admin.AdminDao;
 * 类说明
 */
 @Repository("adminDao")
-public class AdminDaoImpl implements AdminDao {
+public class AdminDaoImpl extends DaoSupport<Admin> implements AdminDao {
 
-	//@PersistenceContext protected EntityManager em;
-	protected HibernateTemplate  ht;
-
-	public HibernateTemplate getHt() {
-		return ht;
-	}
-	@Resource(name="hibernateTemplate")
-	public void setHt(HibernateTemplate ht) {
-		this.ht = ht;
-	}
 	
 	@Override
 	public Admin validate(final String account,final String password) {

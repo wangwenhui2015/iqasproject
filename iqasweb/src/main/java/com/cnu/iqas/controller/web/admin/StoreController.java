@@ -16,6 +16,7 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.base.PageView;
 import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.store.Commodity;
@@ -29,7 +30,7 @@ import com.cnu.iqas.service.stroe.StoreService;
 import com.cnu.iqas.utils.PropertyUtils;
 import com.cnu.iqas.utils.WebUtils;
 
-import jena.schemagen;
+import net.sf.json.JSONObject;
 
 /**
 * @author 周亮 
@@ -69,7 +70,7 @@ public class StoreController   implements ServletContextAware{
 
 	
 	/**
-	 * 分页获取某个商品类型下的所有商品
+	 * 获取某个商品类型下的所有商品
 	 * @param grade 商品类型id
 	 * @return
 	 */
@@ -87,9 +88,9 @@ public class StoreController   implements ServletContextAware{
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("createTime", "desc");
 		//查询
-		QueryResult<Commodity> query= commodityService.getScrollData(wherejpql, queryParams.toArray(), orderby);
+		List<Commodity> query= commodityService.getAllData(wherejpql, queryParams.toArray(), orderby);
 		//设置到页面类中
-		pv.setQueryResult(query);
+		pv.setRecords(query);
 		
 		mv.addObject("pageView", pv);
 
@@ -108,7 +109,7 @@ public class StoreController   implements ServletContextAware{
 	public ModelAndView addCommodityForType(StoreForm formbean,@RequestParam(value="file")CommonsMultipartFile  file){
 		
 		ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
-		mv.addObject("urladdress", "admin/control/store/addCommodityUI.html?typeid="+formbean.getTypeid());
+		mv.addObject("urladdress", PageViewConstant.generatorMessageLink("admin/control/store/addCommodityUI")+"?typeid="+formbean.getTypeid());
 		
 		Commodity commodity = new Commodity();
 		//保存商品，并获取商品的保存路径
@@ -217,12 +218,12 @@ public class StoreController   implements ServletContextAware{
 			mv.addObject("message", "请填写商品类型名称");
 		}
 		
-		mv.addObject("urladdress", "admin/control/store/addTypeUI.html");
+		mv.addObject("urladdress",PageViewConstant.generatorMessageLink("admin/control/store/addTypeUI"));
 		return mv;
 	}
 	/**
 	 * 分页查看所有商品类型
-	 * @return
+	 * @return 
 	 */
 	@RequestMapping(value="listtype")
 	public ModelAndView listType(StoreForm formbean){
@@ -250,21 +251,69 @@ public class StoreController   implements ServletContextAware{
 
 		commodityTypeService.makeVisible(id,false);
 	
-		return "redirect:/admin/control/store/listtype.html";
+		return PageViewConstant.generatorRedirect("admin/control/store/listtype") ;
 	}
 	
 	/**
 	 * 根据商品类型id使商品类型有效
 	 * @param id
 	 * @return
-	 */
+	 */   
 	@RequestMapping(value="enableType")
 	public String enableType(String id){
 		commodityTypeService.makeVisible(id,true);
 		
-		return "redirect:/admin/control/store/listtype.html";
+		return PageViewConstant.generatorRedirect("admin/control/store/listtype");
 	}
 
+	/**
+	 * 删除商品
+	 * @param id
+	 * @return
+	 */
+	public String disableCommodity(String id){
+		
+		return "";
+	}
+	/**
+	 * 删除商品
+	 * @param id
+	 * @return
+	 */
+	public String deleteCommodity(String id){
+		
+		MyStatus status = new MyStatus();
+		JSONObject json = new JSONObject();
+		
+		boolean flage = true;
+		//1.校验id是否正确，
+		if( BaseForm.validate(id)){
+			//2.调用服务方法删除商品，同时商品类型包含商品数减1.
+			flage =storeService.deleteCommodity(id);
+		}
+		
+		if( !flage ){
+			status.setStatus(0);
+			status.setMessage("删除失败!");
+		}
+			
+		
+		
+		//3.删除成功返回正确
+		
+		
+		
+		return "";
+	}
+	/**
+	 * 恢复商品
+	 * @param id
+	 * @return
+	 */
+	public String enableCommodity(String id){
+		
+		return "";
+	}
 	public CommodityTypeService getCommodityTypeService() {
 		return commodityTypeService;
 	}

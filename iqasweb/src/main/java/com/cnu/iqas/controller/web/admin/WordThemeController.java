@@ -80,7 +80,7 @@ public class WordThemeController {
 			wordThemeService.save(theme);
 		}
 		mv.addObject("message", "添加成功！");
-		mv.addObject("urladdress","admin/control/wordtheme/addUI.html");
+		mv.addObject("urladdress",PageViewConstant.generatorMessageLink("admin/control/wordtheme/addUI"));
 		return mv;
 	}
 	/**
@@ -109,7 +109,7 @@ public class WordThemeController {
 		}else{
 			mv.addObject("message", "添加失败！");
 		}
-		mv.addObject("urladdress","admin/control/wordtheme/addUI.html");
+		mv.addObject("urladdress",PageViewConstant.generatorMessageLink("admin/control/wordtheme/addUI"));
 		return mv;
 	}
 	/**

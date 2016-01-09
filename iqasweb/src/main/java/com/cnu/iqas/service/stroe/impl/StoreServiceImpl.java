@@ -92,5 +92,24 @@ public class StoreServiceImpl implements StoreService {
 		this.userDao = userDao;
 	}
 
+	@Override
+	public boolean deleteCommodity(String id) {
+		
+		Commodity com= commodityDao.find(id);
+		if( com !=null){
+			commodityDao.delete(id);
+			CommodityType type = commodityTypeDao.find(com.getTypeid());
+			if( type !=null){
+				int count =type.getCount();
+				if( count > 0){
+					 type.setCount(count-1);
+					 commodityTypeDao.update(type);
+					 return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	
 }

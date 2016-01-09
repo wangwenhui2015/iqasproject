@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cnu.iqas.bean.base.DateJsonValueProcessor;
-import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.user.User;
-import com.cnu.iqas.formbean.iword.WordResourceForm;
+import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.formbean.user.UserForm;
 import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.WebUtils;
@@ -49,7 +48,7 @@ public class MUserController {
 		
 		System.out.println(formbean.getPassword()+":"+formbean.getUserName()+":"+formbean.getSex()+":"+formbean.getGrade());
 		
-		int scode =MyStatus.OK;//结果
+		int scode =StatusConstant.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象
 		JSONObject jsonObejct = new JSONObject();
@@ -66,15 +65,15 @@ public class MUserController {
 					WebUtils.copyBean(u, formbean);
 					userService.save(u);
 				}else{
-					scode = MyStatus.USEREXIS;
+					scode = StatusConstant.USER_EXIST;
 					message ="用户名已存在!";
 				}
 			}else{
-				scode = MyStatus.PARAMERROR;
+				scode = StatusConstant.PARAM_ERROR;
 				message="注册信息有误!";
 			}
 		}catch(Exception e ){
-			scode = MyStatus.PARAMERROR;
+			scode = StatusConstant.PARAM_ERROR;
 			message = e.getMessage();
 		}finally{
 			//-------------------返回视图
@@ -104,7 +103,7 @@ public class MUserController {
 		System.out.println("dddddd+++++++"+new Date().toLocaleString());
 
 		System.out.println(formbean.getUserName()+formbean.getPassword());
-		int scode =MyStatus.OK;//结果
+		int scode =StatusConstant.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象
 		JSONObject jsonObejct = new JSONObject();
@@ -124,7 +123,7 @@ public class MUserController {
 				User user= userService.validate(formbean.getUserName(), formbean.getPassword());
 				if( null==user )
 				{
-					scode = MyStatus.PARAMERROR;
+					scode = StatusConstant.PARAM_ERROR;
 					message ="用户名或者密码有误!";
 				}else{
 					//过滤一些属性
@@ -140,11 +139,11 @@ public class MUserController {
 					resultObject.put("data", usersArray);
 				}
 			}else{
-				scode = MyStatus.PARAMERROR;
+				scode = StatusConstant.PARAM_ERROR;
 				message ="用户名或者密码有误!";
 			}
 		}catch(Exception e ){
-			scode = MyStatus.PARAMERROR;
+			scode = StatusConstant.PARAM_ERROR;
 			message = e.getMessage();
 		}finally{
 			//-------------------返回视图

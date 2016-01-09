@@ -1,18 +1,14 @@
 package com.cnu.iqas.dao.iword.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.cnu.iqas.bean.iword.WordResource;
+import com.cnu.iqas.dao.base.DaoSupport;
 import com.cnu.iqas.dao.iword.WordResourceDao;
 
 /**
@@ -21,7 +17,7 @@ import com.cnu.iqas.dao.iword.WordResourceDao;
 * 类说明
 */
 @Repository("wordResourceDao")
-public class WordResourceDaoImpl implements WordResourceDao{
+public class WordResourceDaoImpl extends DaoSupport<WordResource> implements WordResourceDao{
 
 	protected HibernateTemplate  ht;
 
@@ -32,9 +28,5 @@ public class WordResourceDaoImpl implements WordResourceDao{
 	public void setHt(HibernateTemplate ht) {
 		this.ht = ht;
 	}
-	@Override
-	public List<WordResource> findByWord(String uuid) {
-		
-		return null;
-	}
+	
 }

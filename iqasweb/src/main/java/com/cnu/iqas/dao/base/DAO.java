@@ -99,31 +99,6 @@ public interface DAO<T> {
 	 */
 	public QueryResult<T> getScrollData(int firstindex, int maxresult);
 	/**
-	 * 根据条件查询所有数据,过时，被getAllData方法取代
-	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
-	 * @param queryParams 查询条件占位符对应的参数值，
-	 * 
-	 */
-	@Deprecated
-	public QueryResult<T> getScrollData(String wherejpql, Object[] queryParams);
-
-	/**
-	 * 根据条件查询所有数据,根据条件排序，过时，被getAllData方法取代
-	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
-	 * @param queryParams 查询条件占位符对应的参数值，
-	 * @param orderby 排序条件  Key为属性,Value为asc/desc
-	 * @return
-	 */
-	@Deprecated
-	public QueryResult<T> getScrollData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby);
-	
-	/**
-	 * 查询所有数据，过时，被getAllData方法取代
-	 * @return
-	 */
-	@Deprecated
-	public QueryResult<T> getScrollData();
-	/**
 	 * 根据条件查询所有数据
 	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
 	 * @param queryParams 查询条件占位符对应的参数值，
@@ -138,5 +113,10 @@ public interface DAO<T> {
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<T> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby);
+	/**
+	 * 查询所有数据
+	 * @return
+	 */
+	public List<T> getAllData();
 }
 

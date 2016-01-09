@@ -48,8 +48,8 @@ public class WordThemeServiceImpl implements WordThemeService {
 	 * @return 查询结果类
 	 */
 	@Override
-	public QueryResult<WordTheme> getThemes() {
-		return wordThemeDao.getScrollData();
+	public List<WordTheme> getThemes() {
+		return wordThemeDao.getAllData();
 	}
 
 	@Override

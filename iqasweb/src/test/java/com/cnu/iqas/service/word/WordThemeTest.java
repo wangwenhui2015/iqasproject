@@ -41,7 +41,7 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 		wordThemeService.save(th2);
 	}
 	//为“太空主题”添加10个单词
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void saveWordThemeRel(){
 
 		String space = "太空主题";

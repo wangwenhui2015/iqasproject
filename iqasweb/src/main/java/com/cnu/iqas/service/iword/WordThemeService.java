@@ -1,8 +1,7 @@
 package com.cnu.iqas.service.iword;
 
 import java.util.LinkedHashMap;
-
-import org.apache.poi.ss.formula.functions.T;
+import java.util.List;
 
 import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
@@ -38,7 +37,7 @@ public interface WordThemeService {
 	 * 查询所有主题
 	 * @return 查询结果类
 	 */
-	public QueryResult<WordTheme> getThemes();
+	public List<WordTheme> getThemes();
 
 	/**
 	 * 保存一个实体

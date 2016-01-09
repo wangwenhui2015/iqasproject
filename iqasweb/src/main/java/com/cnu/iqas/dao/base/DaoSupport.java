@@ -109,35 +109,7 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	public QueryResult<T> getScrollData(int firstindex, int maxresult, LinkedHashMap<String, String> orderby) {
 		return getScrollData(firstindex,maxresult,null,null,orderby);
 	}
-	/**
-	 * 根据条件查询所有数据
-	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
-	 * @param queryParams 查询条件占位符对应的参数值，
-	 */
-	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
-	public QueryResult<T> getScrollData(String wherejpql, Object[] queryParams) {
-		return getScrollData(-1,-1,wherejpql,queryParams,null);
-	}
-
-	/**
-	 * 根据条件查询所有数据,根据条件排序
-	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
-	 * @param queryParams 查询条件占位符对应的参数值，
-	 * @param orderby 排序条件  Key为属性,Value为asc/desc
-	 * @return
-	 */
-	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
-	public QueryResult<T> getScrollData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby) {
-		return getScrollData(-1,-1,wherejpql,queryParams,orderby);
-	}
-	/**
-	 * 查询所有数据
-	 */
-	@Override
-	public QueryResult<T> getScrollData() {
-		// TODO Auto-generated method stub
-		return  getScrollData(-1,-1);
-	}
+	
 	/**
 	 * 根据条件分页查询
 	 * @param firstindex 开始查询位置从0开始
@@ -199,7 +171,6 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 		
 		return qr;
 	}
-	
 	/**
 	 * 根据条件查询，结果根据条件排序
 	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
@@ -231,6 +202,15 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	public List<T> getAllData(String wherejpql, Object[] queryParams) {
 		// TODO Auto-generated method stub
 		return getAllData(wherejpql, queryParams, null);
+	}
+	
+	/**
+	 * 查询所有数据
+	 */
+	@Override
+	public List<T> getAllData() {
+		// TODO Auto-generated method stub
+		return getAllData(null, null, null);
 	}
 	/**
 	 * 设置查询参数

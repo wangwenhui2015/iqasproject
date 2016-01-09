@@ -29,5 +29,11 @@ public interface StoreService {
 	 * @param ucRel 购买记录
 	 */
 	public void updateUserAndCommodity(User user, UserCommodityRel ucRel) ;
+	/**
+	 * 根据商品id删除商品
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteCommodity(String id);
 
 }

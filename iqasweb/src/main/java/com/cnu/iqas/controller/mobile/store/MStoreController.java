@@ -23,6 +23,7 @@ import com.cnu.iqas.bean.store.CommodityType;
 import com.cnu.iqas.bean.store.UserCommodityRel;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.constant.PageViewConstant;
+import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.service.stroe.CommodityService;
 import com.cnu.iqas.service.stroe.CommodityTypeService;
 import com.cnu.iqas.service.stroe.StoreService;
@@ -137,10 +138,10 @@ public class MStoreController {
 		
 		}else{
 				status.setMessage("用户名或密码不正确！");
-				status.setStatus(-1);
+				status.setStatus(StatusConstant.USER_NAME_OR_PASSWORD_ERROR);
 			}
 		} catch (Exception e) {
-			status.setStatus(0);
+			status.setStatus(StatusConstant.UNKONWN_EXECPTION);
 			status.setMessage("未知异常");
 			e.printStackTrace();
 		}finally{
@@ -205,28 +206,30 @@ public class MStoreController {
 								//数量加1
 								ucRel.setCount(ucRel.getCount()+1);
 							}
+							//购买记录修改日期设为当前日期
+							ucRel.setModifyTime(new Date());
 							//刷新用户和保存购买记录
 							storeService.updateUserAndCommodity(user,ucRel);
 							
 						}else{
-							status.setStatus(3);
+							status.setStatus(StatusConstant.USER_COINS_NOT_ENOUGH);
 							status.setMessage("您的金币数不足!");
 						}
 					 }else{
-						 status.setStatus(2);
+						 status.setStatus(StatusConstant.STORE_UNEXIST_COMMODITY);
 						 status.setMessage("该商品不存在!");
 					 }
 				}else{
 					status.setMessage("商品id参数有误！");
-					status.setStatus(4);
+					status.setStatus(StatusConstant.PARAM_ERROR);
 				}
 			}else{
 				status.setMessage("用户名或密码不正确！");
-				status.setStatus(-1);
+				status.setStatus(StatusConstant.USER_NAME_OR_PASSWORD_ERROR);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			status.setStatus(0);   
+			status.setStatus(StatusConstant.UNKONWN_EXECPTION);   
 			status.setMessage("未知异常啊！");
 		}finally{
 			JsonTool.putStatusJson(status, jsonObject);

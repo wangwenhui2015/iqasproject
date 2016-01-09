@@ -22,13 +22,7 @@ import com.cnu.iqas.service.stroe.CommodityService;
 public class CommodityServiceImpl implements CommodityService {
 
 	private CommodityDao commodityDao;
-	@Override
-	public QueryResult<Commodity> getScrollData(String wherejpql, Object[] queryParams,
-			LinkedHashMap<String, String> orderby) {
-		// TODO Auto-generated method stub
-		
-		return commodityDao.getScrollData(wherejpql, queryParams, orderby);
-	}
+	
 	public CommodityDao getCommodityDao() {
 		return commodityDao;
 	}

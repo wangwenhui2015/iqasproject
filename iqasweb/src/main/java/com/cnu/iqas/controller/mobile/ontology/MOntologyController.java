@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.ontology.ISentence;
+import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.service.ontology.SentenceSim;
 import com.cnu.iqas.utils.WebUtils;
 
@@ -44,7 +44,7 @@ public class MOntologyController {
 	@RequestMapping(value="/sentence")
 	public ModelAndView searchSentence(String text){
 		ModelAndView mv = new ModelAndView("share/json");
-		int scode =MyStatus.OK;//结果
+		int scode =StatusConstant.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象
 		JSONObject jsonObejct = new JSONObject();
@@ -77,7 +77,7 @@ public class MOntologyController {
 			resultObject.put("count", 1);
 			resultObject.put("data", usersArray);
     	}catch(Exception e ){
-			scode = MyStatus.PARAMERROR;
+			scode = StatusConstant.PARAM_ERROR;
 			message = e.getMessage();
 		}finally{
 			//-------------------返回视图

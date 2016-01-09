@@ -9,7 +9,7 @@ import com.cnu.iqas.dao.base.DAO;
 * @version 创建时间：2015年11月16日 上午10:57:05
 * 类说明
 */
-public interface AdminService extends DAO<Admin> {
+public interface AdminService  {
 	/**
 	 * 判断用户输入账号或密码是否正确
 	 * @param account 账号
@@ -17,4 +17,11 @@ public interface AdminService extends DAO<Admin> {
 	 * @return 返回用户实例
 	 */
 	public Admin validate(String account, String password);
+	/**
+	 * 保存管理员
+	 * @param ad
+	 */
+	public void save(Admin ad);
+	
+	
 }

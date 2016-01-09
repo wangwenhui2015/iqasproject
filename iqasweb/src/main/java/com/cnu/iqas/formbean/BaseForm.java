@@ -70,7 +70,8 @@ public class BaseForm {
 	}
 	/**
 	 * 保存文件
-	 * @param relativedir 文件保存相对目录
+	 * @param relativedir 文件保存相对目录，该相对目录的地址在savepath.properties配置文件中有配置，通过PropertyUtils.get(key)
+	 * 方法来获取文件的相对目录
 	 * @param file  保存的文件
 	 * @return  返回文件保存的带文件名的相对路径
 	 * @throws Exception
@@ -107,35 +108,7 @@ public class BaseForm {
 	  return null;
 }
 	
-	/**
-	 * 保存单词资源文件，并返回保存的相对路径
-	 * @param servletContext    应用上下文
-	 * @param file				保存的文件
-	 * @param filetype			文件类型：图片、绘本、声音、视频
-	 * @return					返回文件在工程中的先对路径
-	 * @throws Exception
-	 */
-	public  String saveWordResourceFile(ServletContext servletContext, CommonsMultipartFile file,int filetype) throws Exception{
-		//获取单词资源的文件保存的相对路径
-		   String relativepath=null;
-		   switch(filetype){
-			    case ResourceConstant.TYPE_IMAGE: //上传图片类型文件
-			    	relativepath = PropertyUtils.get("word.imagesavedir");  //获取本地存储路径
-			    	break;
-			    case ResourceConstant.TYPE_VOICE://声音
-			    	relativepath = PropertyUtils.get("word.voicesavedir");  //获取本地存储路径
-			    	break;
-			    case ResourceConstant.TYPE_VIDEO://视频
-			    	relativepath = PropertyUtils.get("word.videosavedir");  //获取本地存储路径
-			    	break;
-			    case ResourceConstant.TYPE_PICTUREBOOK://绘本
-			    	relativepath = PropertyUtils.get("word.picturebooksavedir");  //获取本地存储路径
-			    	break;
-			    default:
-			    		break;
-		   }
-		return saveFile(servletContext, relativepath, file);
-	}
+	
 	/**
 	 * 检验上传资源格式和大小是否合理
 	 * @param file  上传的文件

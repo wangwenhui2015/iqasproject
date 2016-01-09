@@ -17,14 +17,14 @@ import com.cnu.iqas.utils.WebUtils;
 * 类说明
 */
 @Service("adminService")
-public class AdminServiceImpl extends DaoSupport<Admin> implements AdminService{
+public class AdminServiceImpl  implements AdminService{
 	private AdminDao adminDao;
 	
 	//重写父类方法给密码加密
-	@Override
+
 	public void save(Admin entity) {
 		entity.setPassword(WebUtils.MD5Encode(entity.getPassword().trim()));
-		super.save(entity);
+		adminDao.save(entity);
 	}
 
 	@Override

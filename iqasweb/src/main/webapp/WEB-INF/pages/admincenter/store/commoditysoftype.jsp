@@ -27,15 +27,6 @@ display: none;
 }
 </style>
 <script type="text/javascript">
-
-	//查询
-	function topage(page)
-	{
-		var form = document.forms[0];
-		form.page.value= page;
-		form.submit();
-	}
-	
 </script>
 </head>
 <body>
@@ -87,9 +78,9 @@ display: none;
 		</div>
 	</form>
   </div>
-   <div class="panel-footer">
+  <%--  <div class="panel-footer">
      <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>
-   </div>
+   </div> --%>
 </div>
 </body>
 </html>

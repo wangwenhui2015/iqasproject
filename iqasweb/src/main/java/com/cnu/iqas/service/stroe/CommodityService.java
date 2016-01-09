@@ -18,14 +18,6 @@ import com.cnu.iqas.bean.store.Commodity;
 public interface CommodityService {
 
 	/**
-	 * 根据条件查询所有数据,根据条件排序
-	 * @param wherejpql 查询条件  "o.name=? and o.longSize=?"
-	 * @param queryParams 查询条件占位符对应的参数值，
-	 * @param orderby 排序条件  Key为属性,Value为asc/desc
-	 * @return
-	 */
-	public QueryResult<Commodity> getScrollData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby);
-	/**
 	 * 根据条件分页查询，结果根据条件排序
 	 * @param firstindex 开始查询位置从0开始
 	 * @param maxresult 一页的最大记录数
@@ -44,7 +36,7 @@ public interface CommodityService {
 	 * @param queryParams 查询条件占位符对应的参数值，
 	 * @param orderby 排序条件  Key为属性,Value为asc/desc
 	 */
-	public List<Commodity> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby);
+	public List<Commodity> getAllData(  String wherejpql,  Object[] queryParams, LinkedHashMap<String,String> orderby);
 
 	/**
 	 * 保存实体

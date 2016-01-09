@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cnu.iqas.bean.base.PageView;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.VersionWordCount;
+import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.controller.web.ontology.FileController;
 import com.cnu.iqas.exception.IwordExistException;
 import com.cnu.iqas.formbean.BaseForm;
@@ -46,7 +47,7 @@ import com.cnu.iqas.utils.WebUtils;
 * 6.不同教材的单词个数统计
 */
 @Controller
-@RequestMapping(value="/admin/control/word")
+@RequestMapping(value="/admin/control/word/")
 public class IwordController {
 	//日志类
 	private final static Logger logger = LogManager.getLogger(IwordController.class);
@@ -59,34 +60,34 @@ public class IwordController {
 	 * 单词列表界面
 	 * @return
 	 */
-	@RequestMapping(value="/listUI")
+	@RequestMapping(value="listUI")
 	public String listUI(){
-		return "admincenter/word/wordlist";
+		return PageViewConstant.WORD_LIST_UI;
 	}
 	/**
 	 * 添加一个单词界面
 	 * @return
 	 */
-	@RequestMapping(value="/addUI")
+	@RequestMapping(value="addUI")
 	public String addUI(){
-		return "admincenter/word/addword";
+		return PageViewConstant.WORD_ADD_UI;
 	}
 	/**
 	 * 从execl中导入单词界面
 	 * @return
 	 */
-	@RequestMapping(value="/importUI")
+	@RequestMapping(value="importUI")
 	public String importUI(){
 		
-		return "admincenter/word/importword";
+		return PageViewConstant.WORD_IMPORT_WORD_UI;
 	}
 	/**
 	 * 统计每个版本有多少单词
 	 * @return
 	 */
-	@RequestMapping(value="/statistics")
+	@RequestMapping(value="statistics")
 	public ModelAndView statisticsVersion(){
-		ModelAndView mv = new ModelAndView("admincenter/word/statisticsword");
+		ModelAndView mv = new ModelAndView(PageViewConstant.WORD_STATISTIC);
 		List<VersionWordCount> list =iwordService.statisticsVersionAndWordCount();
 		mv.addObject("list",list);
 		return mv;
@@ -96,9 +97,9 @@ public class IwordController {
 	 * @param file execl文件
 	 * @return
 	 */
-	@RequestMapping(value="/importword")
+	@RequestMapping(value="importword")
 	public ModelAndView importword( @RequestParam("wordfile") CommonsMultipartFile  file){
-		ModelAndView mv = new ModelAndView("share/message");
+		ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
 		
 		if( !file.isEmpty()){	
 				HSSFWorkbook hssfWorkbook=null;
@@ -213,7 +214,7 @@ public class IwordController {
 		}else{
 			mv.addObject("message", "文件不存在!");
 		}
-		mv.addObject("urladdress", "admin/control/word/importUI.html");
+		mv.addObject("urladdress",PageViewConstant.generatorMessageLink("admin/control/word/importUI"));
 		return mv;
 	}
 	/**
@@ -222,9 +223,9 @@ public class IwordController {
 	 * @param bindingResult
 	 * @return
 	 */
-	@RequestMapping(value="/add")
+	@RequestMapping(value="add")
 	public ModelAndView addSingle(@Valid IwordForm formbean,BindingResult bindingResult){
-		ModelAndView mv = new ModelAndView("admincenter/word/addword");
+		ModelAndView mv = new ModelAndView(PageViewConstant.WORD_ADD_UI);
 		if( !bindingResult.hasErrors()){
 			Iword word = new Iword();
 			formbean.generateid();
@@ -274,9 +275,9 @@ public class IwordController {
 	 * @param formbean
 	 * @return
 	 */
-	@RequestMapping(value="/list")
+	@RequestMapping(value="list")
 	public ModelAndView list(IwordForm formbean){
-		ModelAndView mv = new ModelAndView("admincenter/word/wordlist");
+		ModelAndView mv = new ModelAndView(PageViewConstant.WORD_LIST_UI);
 		PageView<Iword> pageView = new PageView<Iword>(formbean.getMaxresult(), formbean.getPage());
 		//根据创建日期降序
 		LinkedHashMap<String,String> orderby= new LinkedHashMap<String, String>();

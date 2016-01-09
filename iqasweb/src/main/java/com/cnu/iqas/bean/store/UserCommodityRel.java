@@ -1,10 +1,14 @@
 package com.cnu.iqas.bean.store;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -40,6 +44,19 @@ public class UserCommodityRel {
 	 */
 	private String typeId;
 	
+	/**
+	 * 该记录是否被删除
+	 */
+	private Boolean visible=true;
+	/**
+	 * 第一次购买时间，初始值为当前时间
+	 */
+	private Date createTime=new Date();
+	/**
+	 * 修改时间/最后一次购买时间
+	 */
+	private Date modifyTime;
+	
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getId() {
 		return id;
@@ -73,6 +90,29 @@ public class UserCommodityRel {
 	}
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
+	}
+	@Column(nullable=false)
+	public Boolean getVisible() {
+		return visible;
+	}
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+	@Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	@Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 	
 }

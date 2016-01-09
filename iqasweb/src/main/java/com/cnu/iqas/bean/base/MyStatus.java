@@ -8,10 +8,7 @@ package com.cnu.iqas.bean.base;
 */
 public class MyStatus {
 
-	public static int EXECPTION=0;//未知异常
-	public static int OK = 1;//正确
-	public static int PARAMERROR = 2;//参数有误
-	public static int USEREXIS =3;//用户已存在
+
 	/**
 	 * status为1表示传过来的数据有效，0为无效,默认为1
 	 */
@@ -38,7 +35,7 @@ public class MyStatus {
 	/**
 	 * status为1表示传过来的数据有效，-1为无效,默认为1
 	 */
-	public int getStatus() {
+	public int getStatus() {    
 		return status;
 	}
 	/**

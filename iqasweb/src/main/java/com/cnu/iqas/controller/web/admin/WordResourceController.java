@@ -57,7 +57,7 @@ public class WordResourceController  implements ServletContextAware{
 	 //添加资源界面
 	 @RequestMapping(value="addUI")
 	 public ModelAndView addResourceUI(String uuid){
-		 ModelAndView mv = new ModelAndView(PageViewConstant.ADDWORDRESOURCE);
+		 ModelAndView mv = new ModelAndView(PageViewConstant.WORDRESOURCE_ADD);
 		 Iword word = iwordService.find(uuid);
 		 if( word == null){
 			 mv.setViewName(PageViewConstant.MESSAGE);
@@ -154,7 +154,7 @@ public class WordResourceController  implements ServletContextAware{
 	 }
 	 
 	 /**
-		 * 通过ajax获取单词的某个类型资源
+		 * 通过ajax获取单词的某个类型的所有资源
 		 * @param formbean  接收单词的uuid和获取资源的类型
 		 * @return
 		 * json数据
@@ -180,7 +180,9 @@ public class WordResourceController  implements ServletContextAware{
 			MyStatus status = new MyStatus();
 			
 			Iword word =null;
+			//单词uuid
 			String uuid = formbean.getUuid();
+			//资源类型，图片、声音。。。
 			int type = formbean.getType();
 			 if(BaseForm.validate(uuid))
 			   word = iwordService.find(uuid);
@@ -210,8 +212,8 @@ public class WordResourceController  implements ServletContextAware{
 				 wherejpql.append(" o.visible = ? ");
 				 
 				 //调用查询函数获取查询结果 
-				 QueryResult<WordResource> queryResult =wordResourceService.getScrollData(wherejpql.toString(), queryParams.toArray());
-				 List<WordResource> wordResources = queryResult.getResultlist();
+				 List<WordResource> wordResources  =wordResourceService.getAllDatas(wherejpql.toString(), queryParams.toArray());
+				
 			
 				//配置
 				JsonConfig wrConfig = new JsonConfig();
@@ -254,7 +256,7 @@ public class WordResourceController  implements ServletContextAware{
 				 //3.资源的保存相对路径
 				 String filesavepath=null;
 				 try {
-					 filesavepath=formbean.saveWordResourceFile(servletContext, file, formbean.getType());
+					 filesavepath=wordResourceService.saveWordResourceFile(servletContext, file, formbean.getType());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -284,7 +286,7 @@ public class WordResourceController  implements ServletContextAware{
 			 mv.addObject("message", formbean.getErrors().get("error"));
 		 }
 		 //mv.addObject("uuid", word.getUuid());
-		 mv.addObject("urladdress", "/admin/control/wordresource/addUI.html?uuid="+word.getUuid());
+		 mv.addObject("urladdress",PageViewConstant.generatorMessageLink("admin/control/wordresource/addUI")+"?uuid="+word.getUuid());
 		 return mv;
 	 }
 	 

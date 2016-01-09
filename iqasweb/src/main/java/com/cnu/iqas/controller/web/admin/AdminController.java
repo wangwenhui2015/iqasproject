@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.cnu.iqas.bean.admin.Admin;
+import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.formbean.admin.AdminForm;
 import com.cnu.iqas.service.admin.AdminService;
 
@@ -23,29 +24,28 @@ import com.cnu.iqas.service.admin.AdminService;
 * 2.退出
 */
 @Controller
-@RequestMapping(value="/admin")
+@RequestMapping(value="/admin/")
 //@SessionAttributes({"admin"})   //将ModelMap中属性名字为admin的放入session中。这样，request和session中都有了。
 public class AdminController {
 	
 	private AdminService adminService;
 	
-	
 	/*管理员登录转发界面*/
-	@RequestMapping(value = "/loginUI") 
+	@RequestMapping(value = "loginUI") 
 	public String adminloginUI(){
-		return "admincenter/login";
+		return PageViewConstant.ADMIN_LOGIN_UI;
 	}
-	@RequestMapping(value="/control/main")
+	@RequestMapping(value="control/main")
 	public String adminmain(){
 		
-		return "admincenter/main";
+		return PageViewConstant.CONTROL_CENTER_MAIN;
 	}
 	/*登录*/
-	@RequestMapping(value="/login")
+	@RequestMapping(value="login")
 	public ModelAndView login( @Valid AdminForm formbean,BindingResult bindingResult,HttpServletRequest request){
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("admincenter/login");  //登录视图
+		mv.setViewName(PageViewConstant.ADMIN_LOGIN_UI);  //登录视图
 		//1.校验表单数据
 		if(!bindingResult.hasErrors()){
 			//mv.addObject("error", "请填写账号和密码!");
@@ -63,18 +63,18 @@ public class AdminController {
 				request.getSession().setAttribute("admin", admin);
 				//重定向到主界面front/main.jsp,先访问myforward方法，由该方法在访问main.jsp，因为jsp页面放置在WEB-INF下面，直接访问不了
 				//mv.setViewName("redirect:/base/myforward.html?page=admincenter/main");
-				mv.setViewName("redirect:/admin/control/main.html");
+				mv.setViewName(PageViewConstant.generatorRedirect("admin/control/main"));
 				//mv.setViewName("redirect:front/main");//主页视图
 			}
 		}
 		return mv;
 	}
-	@RequestMapping(value="/exit")
+	@RequestMapping(value="exit")
 	public String exit(HttpServletRequest request){
 		request.getSession().removeAttribute("admin");
 		request.getSession().invalidate();
 
-		return "redirect:/admin/loginUI.html";
+		return PageViewConstant.generatorRedirect("admin/loginUI");
 	}
 	public AdminService getAdminService() {
 		return adminService;

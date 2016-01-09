@@ -58,7 +58,7 @@ public class WordAttributeResourceController  implements ServletContextAware{
 	 //添加资源界面
 	 @RequestMapping(value="addUI")
 	 public ModelAndView addResourceUI(String uuid){
-		 ModelAndView mv = new ModelAndView(PageViewConstant.ADDWORDATTRIBUTERESOURCE);
+		 ModelAndView mv = new ModelAndView(PageViewConstant.WORDATTRIBUTERESOURCE_ADD);
 		 Iword word = iwordService.find(uuid);
 		 if(word == null){
 			  mv.setViewName(PageViewConstant.MESSAGE);
@@ -90,8 +90,8 @@ public class WordAttributeResourceController  implements ServletContextAware{
 				 //3.资源的保存相对路径
 				 String filesavepath=null;
 				 try {
-					 filesavepath=formbean.saveWordResourceFile(servletContext, file, formbean.getType());
-				} catch (Exception e) {
+					 filesavepath=wordAttributeResourceService.saveWordResourceFile(servletContext, file, formbean.getType());
+    				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					formbean.getErrors().put("error", "上传文件有误！");

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -95,6 +97,7 @@ public class User {
 	public void setClas(int clas) {
 		this.clas = clas;
 	}
+	@Temporal(TemporalType.DATE)
 	public Date getBirthYear() {
 		return birthYear;
 	}
