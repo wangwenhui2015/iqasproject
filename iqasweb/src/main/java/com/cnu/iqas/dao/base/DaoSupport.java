@@ -179,6 +179,10 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<T> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby) {
+		
+		if( ht ==null)
+			System.out.println("null--------------------------");
+		
 		List<T> qr = ht.execute(new HibernateCallback<List<T>>() {
 			@Override
 			public List<T> doInHibernate(Session session)
@@ -198,7 +202,7 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
 	 * @param queryParams 查询条件占位符对应的参数值，
 	 */
-	@Override
+	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<T> getAllData(String wherejpql, Object[] queryParams) {
 		// TODO Auto-generated method stub
 		return getAllData(wherejpql, queryParams, null);
@@ -207,7 +211,7 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	/**
 	 * 查询所有数据
 	 */
-	@Override
+	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<T> getAllData() {
 		// TODO Auto-generated method stub
 		return getAllData(null, null, null);

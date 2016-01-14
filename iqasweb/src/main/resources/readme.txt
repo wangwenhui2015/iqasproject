@@ -19,6 +19,8 @@
 1.在jdbc.properties中配置了本地mysql数据库的连接信息。
 2.savepath.properties文件中配置了wordnet在本地的存放路径和版本信息。
 
+三、配置文件
+savepath.properties文件中配置了图片、绘本、视频、声音等资源的存放路径。
 
 三、2中方式运行项目（开发阶段使用第二种）：
 前提：项目运行前先运行fuseki数据库。

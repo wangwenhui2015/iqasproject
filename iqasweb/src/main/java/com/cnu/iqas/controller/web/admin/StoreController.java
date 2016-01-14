@@ -137,12 +137,12 @@ public class StoreController   implements ServletContextAware{
 		}
 		
 		//获取文件保存的相对路径
-		String relativedir= PropertyUtils.get(PropertyUtils.COMMODITY_PIC);
+		String relativedir= PropertyUtils.getFileSaveDir(PropertyUtils.FIRST_COMMODITY_PIC);
 		if( !BaseForm.validate(relativedir)){
 			mv.addObject("message", "商品图片存放的相对路径有误!");
 			log.error("商品图片存放的相对路径有误!");
 			//使用项目log图片
-			relativedir=PropertyUtils.get(PropertyUtils.LOG);;
+			relativedir=PropertyUtils.getFileSaveDir(PropertyUtils.LOG);
 		}
 		
 		try {

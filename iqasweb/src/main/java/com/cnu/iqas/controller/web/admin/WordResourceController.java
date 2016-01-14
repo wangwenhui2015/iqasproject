@@ -1,7 +1,6 @@
 package com.cnu.iqas.controller.web.admin;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,7 +9,6 @@ import javax.servlet.ServletContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,23 +16,18 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cnu.iqas.bean.base.DateJsonValueProcessor;
 import com.cnu.iqas.bean.base.MyStatus;
-import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.constant.PageViewConstant;
-import com.cnu.iqas.controller.web.ontology.FileController;
+import com.cnu.iqas.exception.word.ResourceTypeNotExisting;
 import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.iword.WordResourceForm;
 import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.utils.JsonTool;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
-import riotcmd.infer;
 
 /**
 * @author 周亮 
@@ -154,7 +147,7 @@ public class WordResourceController  implements ServletContextAware{
 	 }
 	 
 	 /**
-		 * 通过ajax获取单词的某个类型的所有资源
+		 * 通过ajax获取单词的某个类型的所有可见资源,
 		 * @param formbean  接收单词的uuid和获取资源的类型
 		 * @return
 		 * json数据
@@ -184,50 +177,58 @@ public class WordResourceController  implements ServletContextAware{
 			String uuid = formbean.getUuid();
 			//资源类型，图片、声音。。。
 			int type = formbean.getType();
-			 if(BaseForm.validate(uuid))
-			   word = iwordService.find(uuid);
-			 if( word == null){
-				 status.setStatus(0);
-			      status.setMessage("该单词不存在！");
-			 }else{
-				 //根据单词uuid获取单词资源
-				 //构造查询条件和查询值
-				 StringBuilder wherejpql = new StringBuilder();
-				 List<Object> queryParams = new ArrayList<Object>();
-				 //uuid
-				 if( BaseForm.validate(uuid)){
-					 queryParams.add(uuid);
-					 wherejpql.append(" o.iword.uuid = ? ");
+			//资源类型是否有效
+			if( formbean.validateType()){
+				 if(BaseForm.validate(uuid)){
+					   word = iwordService.find(uuid);
 				 }
-				 //资源类型 type
-				 queryParams.add(type);
-				 if(!queryParams.isEmpty())
-					 wherejpql.append(" and ");
-				 wherejpql.append(" o.type = ? ");
-				 
-				 //查询可见的
-				 queryParams.add(true);
-				 if(!queryParams.isEmpty())
-					 wherejpql.append(" and ");
-				 wherejpql.append(" o.visible = ? ");
-				 
-				 //调用查询函数获取查询结果 
-				 List<WordResource> wordResources  =wordResourceService.getAllDatas(wherejpql.toString(), queryParams.toArray());
-				
-			
-				//配置
-				JsonConfig wrConfig = new JsonConfig();
-				//groupConfig.registerJsonValueProcessor(Date.class,new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
-				//排除属性
-				wrConfig.setExcludes(new String[]{"iword","visible"});
-				//生成最终的json语句
-				 String jsonString= JsonTool.createJson(wordResources,wrConfig, status);
-				
-					//添加到request中
-				 mv.addObject("json", jsonString);
-				 mv.addObject("word", word);
+					 if( word == null){
+						 status.setStatus(0);
+					      status.setMessage("该单词不存在！");
+					 }else{
+						 //根据单词uuid获取单词资源
+						 //构造查询条件和查询值
+						 StringBuilder wherejpql = new StringBuilder();
+						 List<Object> queryParams = new ArrayList<Object>();
+						 //uuid
+						 if( BaseForm.validate(uuid)){
+							 queryParams.add(uuid);
+							 wherejpql.append(" o.iword.uuid = ? ");
+						 }
+						 //资源类型 type
+						 queryParams.add(type);
+						 if(!queryParams.isEmpty())
+							 wherejpql.append(" and ");
+						 wherejpql.append(" o.type = ? ");
+						 
+						 //查询可见的
+						 queryParams.add(true);
+						 if(!queryParams.isEmpty())
+							 wherejpql.append(" and ");
+						 wherejpql.append(" o.visible = ? ");
+						 
+						 //调用查询函数获取查询结果 
+						 List<WordResource> wordResources  =wordResourceService.getAllData(wherejpql.toString(), queryParams.toArray());
+						
+					
+						//配置
+						JsonConfig wrConfig = new JsonConfig();
+						//groupConfig.registerJsonValueProcessor(Date.class,new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
+						//排除属性
+						wrConfig.setExcludes(new String[]{"iword","visible"});
+						//生成最终的json语句
+						 String jsonString= JsonTool.createJson(wordResources,wrConfig, status);
+						
+							//添加到request中
+						 mv.addObject("json", jsonString);
+						 mv.addObject("word", word);
+					}
+			}else{
+				status.setStatus(0);
+			    status.setMessage("资源类型无效！");
+			    logger.error("查找的单词资源类型 "+type+" 无效!");
 			}
-			 
+			
 			 return mv;
 		}
 		
@@ -238,7 +239,7 @@ public class WordResourceController  implements ServletContextAware{
 	  */
 	 @RequestMapping(value="add",method=RequestMethod.POST)
 	 public ModelAndView addResource(WordResourceForm formbean,@RequestParam(value="file")CommonsMultipartFile  file){
-		System.out.println("添加资源");
+		
 		 //默认保存失败
 		 boolean flage = false;
 		 ModelAndView mv = new ModelAndView();
@@ -257,22 +258,31 @@ public class WordResourceController  implements ServletContextAware{
 				 String filesavepath=null;
 				 try {
 					 filesavepath=wordResourceService.saveWordResourceFile(servletContext, file, formbean.getType());
-				} catch (Exception e) {
+				}catch(ResourceTypeNotExisting se){
+					logger.error("上传单词资源：单词资源文件类型未确定!");
+				}
+				 catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					formbean.getErrors().put("error", "上传文件有误！");
 					logger.error("上传单词资源：出现错误");
 				}
-				//4.建立资源类保存信息
-				 WordResource resource = new WordResource();
-				 //5.设置资源所属的单词
-				 resource.setIword(word);
-				 resource.setName(fileName);//单词原名称
-				 resource.setSavepath(filesavepath);//包含文件名的相对保存路径
-				 resource.setType(formbean.getType());//资源类型
-				 //保存到数据库
-				 wordResourceService.save(resource);
-				 flage = true;//保存成功
+				 
+				 if( filesavepath !=null){
+					//4.建立资源类保存信息
+					 WordResource resource = new WordResource();
+					 //5.设置资源所属的单词
+					 resource.setIword(word);
+					 resource.setName(fileName);//单词原名称
+					 resource.setSavepath(filesavepath);//包含文件名的相对保存路径
+					 resource.setType(formbean.getType());//资源类型
+					 //保存到数据库
+					 wordResourceService.save(resource);
+					 flage = true;//保存成功
+				 }else{
+					 formbean.getErrors().put("error", "保存资源文件路径有误!");
+				 }
+				
 			 }
 		 }else{
 			 formbean.getErrors().put("error", "该资源对应的单词不存在!");

@@ -19,14 +19,4 @@ import com.cnu.iqas.dao.iword.WordResourceDao;
 @Repository("wordResourceDao")
 public class WordResourceDaoImpl extends DaoSupport<WordResource> implements WordResourceDao{
 
-	protected HibernateTemplate  ht;
-
-	public HibernateTemplate getHt() {
-		return ht;
-	}
-	@Resource(name="hibernateTemplate")
-	public void setHt(HibernateTemplate ht) {
-		this.ht = ht;
-	}
-	
 }

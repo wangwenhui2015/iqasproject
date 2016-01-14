@@ -100,7 +100,6 @@ public class MUserController {
 	@RequestMapping(value="login")
 	public ModelAndView login(UserForm formbean){
 		ModelAndView mv = new ModelAndView("share/json");
-		System.out.println("dddddd+++++++"+new Date().toLocaleString());
 
 		System.out.println(formbean.getUserName()+formbean.getPassword());
 		int scode =StatusConstant.OK;//结果

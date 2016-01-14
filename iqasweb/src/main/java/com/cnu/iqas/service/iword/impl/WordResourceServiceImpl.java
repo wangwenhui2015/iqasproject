@@ -1,7 +1,5 @@
 package com.cnu.iqas.service.iword.impl;
 
-import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,11 +8,11 @@ import javax.servlet.ServletContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.constant.ResourceConstant;
-import com.cnu.iqas.dao.base.DaoSupport;
 import com.cnu.iqas.dao.iword.WordResourceDao;
+import com.cnu.iqas.exception.word.ResourceTypeNotExisting;
+import com.cnu.iqas.exception.word.SaveDirNoExsitingException;
 import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.utils.PropertyUtils;
@@ -35,19 +33,23 @@ public class WordResourceServiceImpl implements WordResourceService {
 		   String relativepath=null;
 		   switch(filetype){
 			    case ResourceConstant.TYPE_IMAGE: //上传图片类型文件
-			    	relativepath = PropertyUtils.get("word.imagesavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_IMAGE_DIR);  //获取本地存储路径
 			    	break;
 			    case ResourceConstant.TYPE_VOICE://声音
-			    	relativepath = PropertyUtils.get("word.voicesavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_VOICE_DIR);  //获取本地存储路径
 			    	break;
 			    case ResourceConstant.TYPE_VIDEO://视频
-			    	relativepath = PropertyUtils.get("word.videosavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_VIDEO_DIR);  //获取本地存储路径
 			    	break;
 			    case ResourceConstant.TYPE_PICTUREBOOK://绘本
-			    	relativepath = PropertyUtils.get("word.picturebooksavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_PICTUREBOOK_DIR);  //获取本地存储路径
 			    	break;
 			    default:
-			    		break;
+			    	throw new ResourceTypeNotExisting("单词资源文件类型未确定!");
+		   }
+		   if(relativepath==null){
+			   
+			   throw new SaveDirNoExsitingException(filetype+"类型单词资源保存的相对路径不存在!,请在savepath.properties中设置。");
 		   }
 		return BaseForm.saveFile(servletContext, relativepath, file);
 	}
@@ -70,9 +72,9 @@ public class WordResourceServiceImpl implements WordResourceService {
 		wordResourceDao.save(resource);
 	}
 	@Override
-	public List<WordResource> getAllDatas(String string, Object[] array) {
+	public List<WordResource> getAllData(String string, Object[] array) {
 		// TODO Auto-generated method stub
-		return getAllDatas(string, array);
+		return wordResourceDao.getAllData(string, array);
 	}
 
 	public WordResourceDao getWordResourceDao() {

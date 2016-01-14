@@ -36,16 +36,16 @@ public class WordAttributeResourceServiceImpl implements WordAttributeResourceSe
 		   String relativepath=null;
 		   switch(filetype){
 			    case ResourceConstant.TYPE_IMAGE: //上传图片类型文件
-			    	relativepath = PropertyUtils.get("word.imagesavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_IMAGE_DIR);  //获取本地存储路径
 			    	break;
 			    case ResourceConstant.TYPE_VOICE://声音
-			    	relativepath = PropertyUtils.get("word.voicesavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_VOICE_DIR);  //获取本地存储路径
 			    	break;
 			    case ResourceConstant.TYPE_VIDEO://视频
-			    	relativepath = PropertyUtils.get("word.videosavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_VIDEO_DIR);  //获取本地存储路径
 			    	break;
 			    case ResourceConstant.TYPE_PICTUREBOOK://绘本
-			    	relativepath = PropertyUtils.get("word.picturebooksavedir");  //获取本地存储路径
+			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_PICTUREBOOK_DIR);  //获取本地存储路径
 			    	break;
 			    default:
 			    		break;

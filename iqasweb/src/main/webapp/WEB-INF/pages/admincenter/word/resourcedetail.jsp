@@ -121,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 //单词id
  var wordid ="${word.uuid}"; 
 //资源删除连接
-var deleteUrl = "admin/control/wordresource/ajaxDelete.html";
+var deleteUrl = "admin/control/wordresource/ajaxDelete.html?id=";
 
 //播放声音，每次点击都会产生一个声音，需要修复
 function playmusic(id,savepath){

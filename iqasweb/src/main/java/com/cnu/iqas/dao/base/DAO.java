@@ -111,7 +111,6 @@ public interface DAO<T> {
 	 * @param queryParams 查询条件占位符对应的参数值，
 	 * @param orderby 排序条件  Key为属性,Value为asc/desc
 	 */
-	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<T> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby);
 	/**
 	 * 查询所有数据

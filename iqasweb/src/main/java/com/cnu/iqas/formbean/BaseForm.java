@@ -1,6 +1,7 @@
 package com.cnu.iqas.formbean;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -77,6 +78,8 @@ public class BaseForm {
 	 * @throws Exception
 	 */
 	public static  String saveFile(ServletContext servletContext,String relativedir, CommonsMultipartFile file) throws Exception{
+	
+		System.out.println(relativedir+"--------");
 		//文件原名称
 	   String fileName = file.getOriginalFilename();
 	   //文件后缀名
@@ -87,7 +90,10 @@ public class BaseForm {
 	   //获取保存的绝对路径
 	   String absolutepath=null;
 	   if( relativedir != null && !relativedir.equals("")){
-		   absolutepath=servletContext.getRealPath(relativedir);
+		   //项目实际根目录
+		   String fileSystemDir=PropertyUtils.get(PropertyUtils.IQASWEB_FILE_SYSTEM_DIR);
+		   
+		   absolutepath=fileSystemDir+relativedir;
 		   //生成保存路径文件
 		   File filedir = new File(absolutepath);
 		   //不存在生成
@@ -97,13 +103,16 @@ public class BaseForm {
 		   File savefile = new File(filedir,savefilename); //新建保存的文件 
 		   try {//将上传的文件写入  新建的文件中
 			    file.getFileItem().write(savefile); 
-		   } catch (Exception e) {
+			  //相对路径   relativedir+"/"+filesavename
+				 return relativedir+"/"+savefilename;
+		   }catch(FileNotFoundException fe){
+			   throw new RuntimeException("文件不存在！");
+		   }catch (Exception e) {
 			    e.printStackTrace();
+			    throw new RuntimeException("保存图片操作文件出错！");
 		   }
-		  //相对路径   relativedir+"/"+filesavename
-		 return relativedir+"/"+savefilename;
 	   }else{
-		   System.out.println("保存路径未设置！");
+		   new RuntimeException("保存路径未设置！");
 	   }
 	  return null;
 }
@@ -119,7 +128,7 @@ public class BaseForm {
 		if(!file.isEmpty() && file.getSize()>0){
 			//获取文件MIME类型，如image/pjpeg、text/plain
 			String fileContentType =file.getContentType();
-			System.out.println("类型："+type+"  格式："+fileContentType);
+			
 			//上传文件原名
 			String fileName = file.getOriginalFilename();
 			//获取文件字节大小,单位byte
@@ -202,9 +211,10 @@ public class BaseForm {
 	 */
 	public static boolean validateVoiceFileType(String fileFileName,String fileContentType){
 		
-			List<String> arrowType = Arrays.asList("audio/wav");
-			List<String> arrowExtension = Arrays.asList("wav");
+			List<String> arrowType = Arrays.asList("audio/wav","audio/mpeg");
+			List<String> arrowExtension = Arrays.asList("wav","mp3");
 			String ext = getExt(fileFileName);
+			System.out.println(ext+":"+fileContentType);
 			return arrowType.contains(fileContentType.toLowerCase()) && arrowExtension.contains(ext);
 		
 	}
@@ -216,6 +226,5 @@ public class BaseForm {
 	public static String getExt(String fileFileName){
 		return fileFileName.substring(fileFileName.lastIndexOf('.')+1).toLowerCase();
 	}
-	
 	
 }

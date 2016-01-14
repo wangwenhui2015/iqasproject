@@ -45,7 +45,7 @@ public interface WordResourceService {
 	 * @param array  查询语句中的查询条件
 	 * @return
 	 */
-	public List<WordResource> getAllDatas(String string, Object[] array);
+	public List<WordResource> getAllData(String string, Object[] array);
 	/**
 	 * 保存单词资源
 	 * @param resource

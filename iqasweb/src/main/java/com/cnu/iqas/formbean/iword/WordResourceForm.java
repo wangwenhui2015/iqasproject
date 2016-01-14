@@ -1,5 +1,7 @@
 package com.cnu.iqas.formbean.iword;
 
+import com.cnu.iqas.bean.iword.WordResource;
+import com.cnu.iqas.constant.ResourceConstant;
 import com.cnu.iqas.formbean.BaseForm;
 
 /**
@@ -32,6 +34,16 @@ public class WordResourceForm extends BaseForm {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+	/**
+	 * 判断资源类型是否有效
+	 * @return 有效返回true
+	 */
+	public boolean validateType() {
+		// TODO Auto-generated method stub
+		if( type ==ResourceConstant.TYPE_IMAGE ||type ==ResourceConstant.TYPE_PICTUREBOOK || type ==ResourceConstant.TYPE_VIDEO || type ==ResourceConstant.TYPE_VOICE)
+			return true;
+		return false;
 	}
 	
 	
