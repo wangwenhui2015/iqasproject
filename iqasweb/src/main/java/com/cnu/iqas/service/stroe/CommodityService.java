@@ -1,6 +1,7 @@
 package com.cnu.iqas.service.stroe;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -69,4 +70,12 @@ public interface CommodityService {
 	 * @return
 	 */
 	public Commodity findByName(String name);
+	
+	/**
+	 * 根据查询条件按时间降序排列查询可见商品。
+	 * @param key  查询字段，格式：o.typeid=?
+	 * @param value 查询字段对应查询值  
+	 * @return
+	 */
+	public List<Commodity> getCommodityByParam(String key,String value);
 }

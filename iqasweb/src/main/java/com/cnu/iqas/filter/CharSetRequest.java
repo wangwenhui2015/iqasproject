@@ -50,6 +50,7 @@ public class CharSetRequest extends HttpServletRequestWrapper{
 		// 遍历map，对每个值进行编码处理
 		for(String key : map.keySet()) {
 			String[] values = map.get(key);
+			if( values !=null)
 			for(int i = 0; i < values.length; i++) {
 				try {
 					values[i] = new String(values[i].getBytes("ISO-8859-1"), charset);
@@ -66,6 +67,7 @@ public class CharSetRequest extends HttpServletRequestWrapper{
 	@Override
 	public String[] getParameterValues(String name) {
 		String[] values = super.getParameterValues(name);
+		if( values !=null)
 		for(int i = 0; i < values.length; i++) {
 			try {
 				values[i] = new String(values[i].getBytes("ISO-8859-1"), charset);

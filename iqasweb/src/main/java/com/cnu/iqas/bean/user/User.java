@@ -44,12 +44,23 @@ public class User {
 	 * 用户在自适应学习系统中可查看的商品类型等级，默认值0
 	 */
 	private Integer storeGrade=0;
-	
+
+	/**
+	 * 用户在当前可查看商品类型中已购买的商品种数，该属性用于判断用户是否已购买完当前可查看的所有商品
+	 */
+	private int spieces =0;
 	/**
 	 * 用户在自适应学习系统中的获得的金币总数，初始值为0
 	 */
 	private Integer allCoins=0;
-	
+	/**
+	 * 用户当前已经开启的天数，默认第一天
+	 */
+	private int gameDay=1;
+	/**
+	 * 用户在当前游戏天数下的第几个场景，默认第一个场景
+	 */
+	private int gameScene=1;
 	//测试一下
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getUserId() {
@@ -128,7 +139,23 @@ public class User {
 	public void setAllCoins(Integer allCoins) {
 		this.allCoins = allCoins;
 	}
-	
-	
+	public int getSpieces() {
+		return spieces;
+	}
+	public void setSpieces(int spieces) {
+		this.spieces = spieces;
+	}
+	public int getGameDay() {
+		return gameDay;
+	}
+	public void setGameDay(int gameDay) {
+		this.gameDay = gameDay;
+	}
+	public int getGameScene() {
+		return gameScene;
+	}
+	public void setGameScene(int gameScene) {
+		this.gameScene = gameScene;
+	}
 	
 }

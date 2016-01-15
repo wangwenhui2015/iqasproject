@@ -27,11 +27,11 @@ savepath.properties文件中配置了图片、绘本、视频、声音等资源�
 
 1.项目热部署到tomcat7上，但是在eclipse中修改代码信息，页面不会变化，需要重新发布才可以（重新发布不需要重启tomcat），所以对于一些信息可以业务方法的验证可以采用单元测试方法。
 方法：先运行tomcat，选中pom.xml文件右击->maven build（第二个）  在Goals中输入：tomcat7:deploy   最后点击run  。下次在运行选中第一个maven build
-访问路径：http://localhost:8088/iqasweb/
+访问路径：http://localhost:8080/iqasweb/
 
 2.项目发布到jetty容器上，实现修改代码后可以立即在网页上看到效果。（可以用于方便测试项目）
 方法：选中pom.xml文件右击->maven build  在Main页的Goals中输入：clean jetty:run   在JRE页的VM argument中输入：-Xms900m -Xmx900m -XX:PermSize=900m -XX:MaxPermSize=900m   最后点击run。。下次在运行选中第一个maven build
-访问路径：http://localhost:8088/iqasweb/
+访问路径：http://localhost:8080/iqasweb/
 
 
 四、单元测试注意：
@@ -40,29 +40,34 @@ savepath.properties文件中配置了图片、绘本、视频、声音等资源�
                    --------------------------访问http连接----------------------------
 
 网页端访问：
-用户登录：http://192.168.0.100:8088/iqasweb/user/loginUI.html
-注册：http://localhost:8088/iqasweb/user/registerUI.html
-管理员登录连接：http://localhost:8088/iqasweb/admin/loginUI.html
+用户登录：http://localhost:8080/iqasweb/user/loginUI.html
+注册：http://localhost:8080/iqasweb/user/registerUI.html
+管理员登录连接：http://localhost:8080/iqasweb/admin/loginUI.html
 
 手机端访问连接：
 手机端统一访问网址：http://localhost:8080/iqasweb/mobile/**/**.html
 
 
 
-搜索单词：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=park
-搜索句子：http://localhost:8088/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
-登录：http://localhost:8080/iqasweb/mobile/user/login.html?password=12345&username=zhouliang
-注册：http://localhost:8088/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
-购买商品;http://localhost:8088/iqasweb/mobile/store/buyCommodity.html  
+搜索单词：http://localhost:8080/iqasweb/mobile/search/sentence.html?text=park
+搜索句子：http://localhost:8080/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
+登录：http://localhost:8080/iqasweb/mobile/user/login.html
+参数：
+     * @param userName 用户名
+	 * @param password 密码
+注册：http://localhost:8080/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
+购买商品;http://localhost:8080/iqasweb/mobile/store/buyCommodity.html  
 参数
 	 * @param userName 用户名
 	 * @param password 密码
 	 * @param id 购买商品的id
 	 
-获取商店商品信息：http://localhost:8088/iqasweb/mobile/store/getStore.html 
+获取商店商品信息：http://localhost:8080/iqasweb/mobile/store/getStore.html 
 参数： * 获取商店的商品信息及用户的金币数
 	 * @param userName 用户名
 	 * @param password 密码
-
-
+获取用户背包：http://localhost:8080/iqasweb/mobile/store/getBag.html
+参数： *
+	 * @param userName 用户名
+	 * @param password 密码
 

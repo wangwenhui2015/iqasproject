@@ -58,7 +58,7 @@ public class CommodityType {
 		this.name = name;
 	}
 	
-	public boolean isVisible() {
+	public boolean getVisible() {
 		return visible;
 	}
 	public void setVisible(boolean visible) {

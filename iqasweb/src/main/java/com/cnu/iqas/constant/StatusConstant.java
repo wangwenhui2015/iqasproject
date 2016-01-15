@@ -43,6 +43,10 @@ public class StatusConstant {
 	 * 商店商品不存在
 	 */
 	public static int STORE_UNEXIST_COMMODITY=5005;
+	/**
+	 * 购买商品不在你可以购买的商品类型之内,即你当前不能购买该类型下的商品!
+	 */
+	public static int STORE_OVER_COMMODITY_TYPE=5006;
 	
 
 }

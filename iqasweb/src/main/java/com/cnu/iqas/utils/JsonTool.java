@@ -96,7 +96,6 @@ public class JsonTool {
 		 *  result:{
 		 *   count:2,
 		 *   data:[
-		 *    
 		 *		{id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
 		 *      {id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
 		 *      
@@ -135,9 +134,21 @@ public class JsonTool {
 	}	
 	/**
 	 * 将jsonArray和status对象按照格式封装到jsonObject中
-	 * @param jsonArray json数组对象
+	 * @param jsonObject 要封装到的json对象
+	 * @param jsonArray json数组对象，对应data内容
 	 * @param status  此次操作的描述
 	 * @return
+	 * {
+	 *  status:1,
+	 *  message:"ok",
+	 *  result:{
+	 *   count:1,
+	 *   data:{
+	 *     ....
+	 *   }
+	 *  }
+	 *  
+	 * }
 	 * 
 	 */
   public static void putJsonObject( JSONObject jsonObject,JSONArray jsonArray,MyStatus status){
@@ -147,6 +158,31 @@ public class JsonTool {
 		resultObject.put("count", jsonArray.size());
 		resultObject.put("data", jsonArray);
 		jsonObject.put("result", resultObject);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+	}
+	/**
+	 * 将jsonArray和status对象按照格式封装到jsonObject中
+	 * @param jsonObject 要封装到的json对象
+	 * @param resultJson result对象
+	 * @param status  此次操作的描述
+	 * @return
+	 * {
+	 *  status:1,
+	 *  message:"ok",
+	 *  result:{
+	 *   count:1,
+	 *   data:{
+	 *     ....
+	 *   }
+	 *  }
+	 *  
+	 * }
+	 * 
+	 */
+  public static void putJsonObject( JSONObject jsonObject,JSONObject resultJson,MyStatus status){
+		//result json
+		jsonObject.put("result", resultJson);
 	 
 		JsonTool.putStatusJson(status, jsonObject);
 	}

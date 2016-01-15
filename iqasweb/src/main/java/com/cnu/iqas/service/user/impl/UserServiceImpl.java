@@ -23,7 +23,9 @@ public class UserServiceImpl implements UserService {
 	public User validate(String userName, String password) {
 		// TODO Auto-generated method stub
 		User user = null;
-		user =userDao.validate(userName, WebUtils.MD5Encode(password.trim()));
+		if( userName !=null &&!userName.equals("") && password!=null && !password.equals("")){
+			user =userDao.validate(userName, WebUtils.MD5Encode(password.trim()));
+		}
 		return user;
 	}
 
