@@ -35,8 +35,18 @@
     
     <!-- 配置数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
-		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
+		destroy-method="close" 
+		p:driverClassName="${jdbc.driverClassName}"
+		p:url="${jdbc.url}" 
+		p:username="${jdbc.username}" 
+		p:password="${jdbc.password}" 
+		p:maxIdle= "${jdbc.maxIdle}" 
+		p:initialSize="${jdbc.initialSize}" 
+		p:minIdle="${jdbc.minIdle}"
+		p:minEvictableIdleTimeMillis="${jdbc.minEvictableIdleTimeMillis}"
+		p:maxWait="${jdbc.maxWait}"
+		p:maxActive="${jdbc.maxActive}"
+		/>
 
 <!-- AnnotationSessionFactoryBean扩展了LocalSessionFactoryBean类，可以根据实体类的注解获取ORM（关系对象映射）的配置信息，也可以混合使用Xml配置和注解配置的关系对象映射-->
 	<bean id="sessionFactory"

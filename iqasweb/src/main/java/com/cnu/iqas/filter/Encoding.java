@@ -27,16 +27,16 @@ public class Encoding implements Filter {
 	/*	request.setCharacterEncoding(charset);//只处理了post请求
 		response.setContentType("text/html;charset="+charset);//处理响应编码
 		//放行时把request调包
-		chain.doFilter(request, response);//在目标中使用的request是调包后的request*/
-	
+		chain.doFilter(request, response);//在目标中使用的request是调包后的request
+*/	
 	HttpServletRequest req = (HttpServletRequest) request;
-		/*if(req.getMethod().equalsIgnoreCase("GET")) {
+		if(req.getMethod().equalsIgnoreCase("GET")) {
 			if(!(req instanceof CharSetRequest)) {
 				req = new CharSetRequest(req, charset);//处理get请求编码
 			}
 		} else {
 			req.setCharacterEncoding(charset);//处理post请求编码
-		}*/
+		}
 		chain.doFilter(req, response);
 	}
 
