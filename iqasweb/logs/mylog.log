@@ -1,1 +1,25 @@
 2016-01-13 13:47:43.624 ERROR [btpool0-3][StoreController.java:166] - 保存商品图片失败:文件不存在！
+2016-01-15 16:14:00.014 INFO [main][InitializedListener.java:35] - --初始化wordnet相关类
+2016-01-15 16:14:00.015 INFO [main][InitializedListener.java:36] - 加载模板！！！
+2016-01-15 16:14:00.911 INFO [main][InitializedListener.java:40] - JWs 初始化成功
+2016-01-15 16:14:00.911 INFO [main][InitializedListener.java:48] - ------path:C:/Users/dell/git/iqasproject/iqasweb/target/classes/english-left3words-distsim.tagger
+2016-01-15 16:14:01.354 INFO [main][InitializedListener.java:51] - MaxentTagger 初始化成功
+2016-01-15 16:14:02.399 INFO [main][InitializedListener.java:57] - StanfordCoreNLP 初始化成功
+2016-01-15 16:15:19.111 INFO [main][InitializedListener.java:35] - --初始化wordnet相关类
+2016-01-15 16:15:19.112 INFO [main][InitializedListener.java:36] - 加载模板！！！
+2016-01-15 16:15:20.019 INFO [main][InitializedListener.java:40] - JWs 初始化成功
+2016-01-15 16:15:20.019 INFO [main][InitializedListener.java:48] - ------path:C:/Users/dell/git/iqasproject/iqasweb/target/classes/english-left3words-distsim.tagger
+2016-01-15 16:15:20.456 INFO [main][InitializedListener.java:51] - MaxentTagger 初始化成功
+2016-01-15 16:15:21.787 INFO [main][InitializedListener.java:57] - StanfordCoreNLP 初始化成功
+2016-01-15 16:19:01.951 INFO [main][InitializedListener.java:35] - --初始化wordnet相关类
+2016-01-15 16:19:01.952 INFO [main][InitializedListener.java:36] - 加载模板！！！
+2016-01-15 16:19:02.891 INFO [main][InitializedListener.java:40] - JWs 初始化成功
+2016-01-15 16:19:02.891 INFO [main][InitializedListener.java:48] - ------path:C:/Users/dell/git/iqasproject/iqasweb/target/classes/english-left3words-distsim.tagger
+2016-01-15 16:19:03.332 INFO [main][InitializedListener.java:51] - MaxentTagger 初始化成功
+2016-01-15 16:19:04.767 INFO [main][InitializedListener.java:57] - StanfordCoreNLP 初始化成功
+2016-01-15 16:24:40.294 INFO [main][InitializedListener.java:35] - --初始化wordnet相关类
+2016-01-15 16:24:40.295 INFO [main][InitializedListener.java:36] - 加载模板！！！
+2016-01-15 16:24:41.154 INFO [main][InitializedListener.java:40] - JWs 初始化成功
+2016-01-15 16:24:41.154 INFO [main][InitializedListener.java:48] - ------path:C:/Users/dell/git/iqasproject/iqasweb/target/classes/english-left3words-distsim.tagger
+2016-01-15 16:24:41.599 INFO [main][InitializedListener.java:51] - MaxentTagger 初始化成功
+2016-01-15 16:24:43.012 INFO [main][InitializedListener.java:57] - StanfordCoreNLP 初始化成功

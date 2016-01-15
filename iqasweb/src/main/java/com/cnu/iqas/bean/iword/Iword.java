@@ -20,7 +20,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
 * @author 周亮 
-* @version 创建时间：2015年11月9日 下午9:45:48
+* @version 创建时间：2015年11月9日 
+* @author 王文辉(修改)
+* @version 创建时间：2016年1月15日 
 * 类说明:单词类。
 */
 @Entity
@@ -56,19 +58,31 @@ public class Iword {
 	private Set<Resource> resources = new HashSet<Resource>();
 	//单词属性所拥有的资源 1对多
 	private Set<AttributeResource> attributeresources = new HashSet<AttributeResource>();*/
-	//中文意思
-	private String propertyChinese;
-	//功能
-	private String propertyFunction;
-	//反义词
-	private String propertyAntonym;
+	
+	//课文原句
+	private String propertyText;
+	//情景段落
+	private String propertyScene;
+	//延伸例句
+	private String propertyExtend;
+	
+	//联想
+	private String propertyAssociate;
 	//同义词
 	private String propertySynonyms;
-
+	//反义词
+	private String propertyAntonym;
+	//拓展
+	private String propertyExpand; 
+	//常用  
+	private String propertyCommonUse;
+	
+	//百科
+	private String propertyNcyclopedia;
+	//用法   
+	private String propertyUse;
 	//创建时间
 	private Date createtime=new Date();
-	
-	
 	public Iword(String id, String content) {
 		super();
 		this.id = id;
@@ -84,16 +98,24 @@ public class Iword {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Iword(String propertyChinese, String propertyFunction, String propertyAntonym, String propertySynonyms) {
-		super();
-		this.propertyChinese = propertyChinese;
-		this.propertyFunction = propertyFunction;
-		this.propertyAntonym = propertyAntonym;
-		this.propertySynonyms = propertySynonyms;
-	}
 	@Id @Column(nullable=false) @GeneratedValue(generator="uuidGenderator")
 	public String getUuid() {
 		return uuid;
+	}
+	public Iword(String propertyText, String propertyScene, String propertyExtend, String propertyAssociate,
+			String propertySynonyms, String propertyAntonym, String propertyExpand, String propertyCommonUse,
+			String propertyNcyclopedia, String propertyUse) {
+		super();
+		this.propertyText = propertyText;
+		this.propertyScene = propertyScene;
+		this.propertyExtend = propertyExtend;
+		this.propertyAssociate = propertyAssociate;
+		this.propertySynonyms = propertySynonyms;
+		this.propertyAntonym = propertyAntonym;
+		this.propertyExpand = propertyExpand;
+		this.propertyCommonUse = propertyCommonUse;
+		this.propertyNcyclopedia = propertyNcyclopedia;
+		this.propertyUse = propertyUse;
 	}
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
@@ -127,23 +149,35 @@ public class Iword {
 	public void setAttributeresources(Set<AttributeResource> attributeresources) {
 		this.attributeresources = attributeresources;
 	}*/
-	public String getPropertyChinese() {
-		return propertyChinese;
+
+	@Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCreatetime() {
+		return createtime;
 	}
-	public void setPropertyChinese(String propertyChinese) {
-		this.propertyChinese = propertyChinese;
+	public String getPropertyText() {
+		return propertyText;
 	}
-	public String getPropertyFunction() {
-		return propertyFunction;
+	public void setPropertyText(String propertyText) {
+		this.propertyText = propertyText;
 	}
-	public void setPropertyFunction(String propertyFunction) {
-		this.propertyFunction = propertyFunction;
+	public String getPropertyScene() {
+		return propertyScene;
 	}
-	public String getPropertyAntonym() {
-		return propertyAntonym;
+	public void setPropertyScene(String propertyScene) {
+		this.propertyScene = propertyScene;
 	}
-	public void setPropertyAntonym(String propertyAntonym) {
-		this.propertyAntonym = propertyAntonym;
+	public String getPropertyExtend() {
+		return propertyExtend;
+	}
+	public void setPropertyExtend(String propertyExtend) {
+		this.propertyExtend = propertyExtend;
+	}
+	public String getPropertyAssociate() {
+		return propertyAssociate;
+	}
+	public void setPropertyAssociate(String propertyAssociate) {
+		this.propertyAssociate = propertyAssociate;
 	}
 	public String getPropertySynonyms() {
 		return propertySynonyms;
@@ -151,11 +185,35 @@ public class Iword {
 	public void setPropertySynonyms(String propertySynonyms) {
 		this.propertySynonyms = propertySynonyms;
 	}
-	
-	@Column(nullable=false)
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getCreatetime() {
-		return createtime;
+	public String getPropertyAntonym() {
+		return propertyAntonym;
+	}
+	public void setPropertyAntonym(String propertyAntonym) {
+		this.propertyAntonym = propertyAntonym;
+	}
+	public String getPropertyExpand() {
+		return propertyExpand;
+	}
+	public void setPropertyExpand(String propertyExpand) {
+		this.propertyExpand = propertyExpand;
+	}
+	public String getPropertyCommonUse() {
+		return propertyCommonUse;
+	}
+	public void setPropertyCommonUse(String propertyCommonUse) {
+		this.propertyCommonUse = propertyCommonUse;
+	}
+	public String getPropertyNcyclopedia() {
+		return propertyNcyclopedia;
+	}
+	public void setPropertyNcyclopedia(String propertyNcyclopedia) {
+		this.propertyNcyclopedia = propertyNcyclopedia;
+	}
+	public String getPropertyUse() {
+		return propertyUse;
+	}
+	public void setPropertyUse(String propertyUse) {
+		this.propertyUse = propertyUse;
 	}
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;

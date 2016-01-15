@@ -1,5 +1,9 @@
 package com.cnu.iqas.service.ontology.impl;
-
+/**
+* @author  王文辉
+* @version 创建时间：2016年1月15日
+* 类说明:单词类。
+*/
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -263,7 +267,7 @@ public class SentenceSimImpl implements SentenceSim  {
 		while (resultsInstance.hasNext()) {
 			QuerySolution solutionInstance = resultsInstance.next();
 			String stringInstanceLabel = solutionInstance.get("?instanceLabel").toString();
-	        System.out.println("++++++++++++++++++stringInstanceLabel是个"+stringInstanceLabel);
+	        //System.out.println("++++++++++++++++++stringInstanceLabel是个"+stringInstanceLabel);
 			String tempStr = stringInstanceLabel.replaceAll(",", "_").replaceAll("'", "_i").replaceAll("_", " ");
 			tempStr = tempStr.substring(0, tempStr.length() - 4);
 			String stringInstanceId = solutionInstance.get("?propertyID").toString();
@@ -370,20 +374,58 @@ public class SentenceSimImpl implements SentenceSim  {
 		System.out.println("进入checkword方法！！！");
 	    QueryIndividualAndProperty queryIndividualAndProperty=new QueryIndividualAndPropertyImpl();
 		ResultSet resultsWordProperty=queryIndividualAndProperty.checkProperty(str);
-		
 		 while (resultsWordProperty.hasNext()){
 			QuerySolution solutionInstance = resultsWordProperty.next();
+			//-----------------------------------how to use-------------------------
+			//课文原句 
+			String propertyText = solutionInstance.get("?propertyText").toString();
+			String temppropertyText = propertyText.substring(0, propertyText.length() - 3);
+			System.out.println("课文原句"+temppropertyText);
+			//情景段落
+			String propertyScene = solutionInstance.get("?propertyScene").toString();
+			String temppropertyScene = propertyScene.substring(0, propertyScene.length() - 3);
+			System.out.println("情景段落"+temppropertyScene);
+			//延伸例句 
+			String propertyExtend = solutionInstance.get("?propertyExtend").toString();
+			String temppropertyExtend = propertyExtend.substring(0, propertyExtend.length() - 3);
+			System.out.println("延伸例句 "+temppropertyExtend);
+			//-----------------------------------how to use-------------------------
 			
-			String stringChinese = solutionInstance.get("?propertyChinese").toString();
-			System.out.println("-----"+stringChinese);
-			String tempChinese = stringChinese.substring(0, stringChinese.length() - 3);
-			String stringFunction = solutionInstance.get("?propertyFunction").toString();
-			String tempFunction = stringFunction.substring(0, stringFunction.length() - 3);
-			String stringAntonym = solutionInstance.get("?propertyAntonym").toString();
-			String tempAntonym = stringAntonym.substring(0, stringAntonym.length() - 3);
-			String stringSynonyms = solutionInstance.get("?propertySynonyms").toString();
-			String tempSynonyms = stringSynonyms.substring(0, stringSynonyms.length() - 3);
-			word = new Iword(tempChinese, tempFunction, tempAntonym, tempSynonyms);
+			//-----------------------------------what else-------------------------
+			//联想
+			String propertyAssociate = solutionInstance.get("?propertyAssociate").toString();
+			String temppropertyAssociate = propertyAssociate.substring(0, propertyAssociate.length() - 3);
+			System.out.println("联想 "+temppropertyAssociate);
+			//同义词 
+			String propertySynonyms = solutionInstance.get("?propertySynonyms").toString();
+			String temppropertySynonyms = propertySynonyms.substring(0, propertySynonyms.length() - 3);
+			System.out.println("同义词 "+temppropertySynonyms);
+			//反义词 
+			String propertyAntonym = solutionInstance.get("?propertyAntonym").toString();
+			String temppropertyAntonym = propertyAntonym.substring(0, propertyAntonym.length() - 3);
+			System.out.println("反义词 "+temppropertyAntonym);
+		    //拓展  
+			String propertyExpand = solutionInstance.get("?propertyExpand").toString();
+			String temppropertyExpand = propertyExpand.substring(0, propertyExpand.length() - 3);
+			System.out.println("拓展 "+temppropertyExpand);
+			//常用
+			String propertyCommonUse = solutionInstance.get("?propertyCommonUse").toString();
+			String temppropertyCommonUse= propertyCommonUse.substring(0, propertyCommonUse.length() - 3);
+			System.out.println("常用 "+temppropertyCommonUse);
+			//-----------------------------------what else-------------------------
+			
+			//-----------------------------------do you know?-------------------------
+			//百科 
+			String propertyNcyclopedia = solutionInstance.get("?propertyNcyclopedia").toString();
+			String temppropertyNcyclopedia= propertyNcyclopedia.substring(0, propertyNcyclopedia.length() - 3);
+			System.out.println("百科 "+temppropertyNcyclopedia);
+			//用法 
+			String propertyUse = solutionInstance.get("?propertyUse").toString();
+			String temppropertyUse= propertyUse.substring(0, propertyUse.length() - 3);
+			System.out.println("用法 "+temppropertyUse);
+			//-----------------------------------do you know?-------------------------
+			word = new Iword(temppropertyText, temppropertyScene, temppropertyExtend, temppropertyAssociate,
+			temppropertySynonyms,temppropertyAntonym,temppropertyExpand,temppropertyCommonUse,temppropertyNcyclopedia,temppropertyUse);
 		    }
 		    return word;
 	}

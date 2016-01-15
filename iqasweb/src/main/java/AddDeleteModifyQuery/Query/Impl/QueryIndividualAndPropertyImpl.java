@@ -23,7 +23,7 @@ public class QueryIndividualAndPropertyImpl implements
 
 	public ResultSet checkProperty(String yourWord) {
 		// 输入找实例——————————————————————————————————————————————————————————————————————————————————————————————————
-		String string1 = "SELECT ?propertyClass ?propertyID ?propertyChinese ?propertyFunction ?propertyTopic ?propertyBook ?propertyAntonym ?propertySynonyms ?propertyCommonUse ?propertyExtend ?propertyScene ?propertyExpand ?propertyVersion ?propertyUse ?propertyNcyclopedia ?propertyAssociat ?propertyPartsOfSpeeche ?propertyWordProperty ?propertyText ?propertyDifficulty WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
+		String string1 = "SELECT ?propertyClass ?propertyID ?propertyChinese ?propertyFunction ?propertyTopic ?propertyBook ?propertyAntonym ?propertySynonyms ?propertyCommonUse ?propertyExtend ?propertyScene ?propertyExpand ?propertyVersion ?propertyUse ?propertyNcyclopedia ?propertyAssociate ?propertyPartsOfSpeeche ?propertyWordProperty ?propertyText ?propertyDifficulty WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
 		String string2 = "\"@zh."
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?class <http://www.w3.org/2000/01/rdf-schema#label> ?propertyClass."

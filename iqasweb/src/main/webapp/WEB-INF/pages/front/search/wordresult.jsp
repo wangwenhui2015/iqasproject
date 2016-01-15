@@ -23,13 +23,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
   </head>
   
-  <body>
-  
-         中文含义:<input type="text" style="height:30px;width:300px"name="text" value="${word.propertyChinese }"><br><br><br>
-         主题-功能意念：${word.propertyFunction }<br><br>    
-         反义词：${word.propertyAntonym }<br><br>   
-         同义词：${word.propertySynonyms }<br><br>     
-         
+   <body>
+         单词:<input type="text" style="height:30px;width:300px"name="text" value="${word.content}"><br><br><br>
+         课文原句：${word.propertyText}<br><br>   
+         情景段落：${word.propertyScene}<br><br>    
+          延伸例句：${word.propertyExtend}<br><br>   
+          联想：${word.propertyAssociate}<br><br> 
+          同义词 ：${word.propertySynonyms}<br><br> 
+         反义词：${word.propertyAntonym}<br><br> 
+         拓展：${word.propertyExpand}<br><br> 
+         常用：${word.propertyCommonUse}<br><br>     
+         百科：${word.propertyNcyclopedia}<br><br>       
+          用法：${word.propertyUse}<br><br>  
+                 
           <%-- <span class="btn btn-warning ">中文含义:</span><input type="text" style="height:30px;width:300px"name="text" value="${word.propertyChinese }"><br><br><br>
         <span class="btn btn-primary">主题-功能意念：</span>${word.propertyFunction }<br><br>    
          <span class="btn btn-success ">反义词：</span>${word.propertyAntonym }<br><br>   
