@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.xmlbeans.impl.jam.JSourcePosition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,7 @@ import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.PropertyUtils;
 import com.cnu.iqas.vo.mobile.FriendVoManage;
+import com.hp.hpl.jena.sparql.pfunction.library.listIndex;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -371,12 +373,16 @@ public class MFriendController {
 							fJson.put("picturecPath",picturecPath);
 							//好友金币
 							fJson.put("coins",fu.getAllCoins());
+							//勋章数
+							fJson.put("medals",fu.getStoreGrade());
 						}else{
 							status.setStatus(StatusConstant.FRIEND_NOT_EXIST);
 							status.setMessage("好友不存在!");
 						}
 						//添加到集合中
 						friendsJson.add(fJson);
+						//排序，将数据按金币、勋章数降序排序
+						sort(friendsJson,false);
 					}else{
 						status.setStatus(StatusConstant.FRIEND_NOT_EXIST);
 						 status.setMessage("好友不存在！");
@@ -393,6 +399,47 @@ public class MFriendController {
 		return JsonTool.generateModelAndView(friendsJson, status);
 	}
 	
+	/**
+	 * 将存放好友的集合按照金币和勋章进行排序，先进行金币数排，金币数相等再按勋章数排
+	 * @param friendsJson
+	 * @param flage
+	 */
+	private void sort(List<JSONObject> friendsJson, boolean flage) {
+		// TODO Auto-generated method stub
+		
+		
+		for(int i =0;i < friendsJson.size()-1;i++){
+			JSONObject a =friendsJson.get(i);
+			//金币数
+			int coins=a.getInt("coins");
+			//勋章数
+			int medals =a.getInt("medals");
+			
+			for( int j=i+1;j< friendsJson.size();j++){
+				JSONObject b =friendsJson.get(j);
+				//金币数
+				int bcoins=b.getInt("coins");
+				//勋章数
+				int bmedals =b.getInt("medals");
+				//比较,升序
+				if( flage==true){
+					//金币数大，或者金币数相等但是勋章数大
+					if(coins>bcoins  ||( coins==bcoins && medals>bmedals)){
+						friendsJson.set(i, b);
+						friendsJson.set(j,a);
+					}
+				}else{//降序
+					//金币数大，或者金币数相等但是勋章数大
+					if(coins<bcoins  ||( coins==bcoins && medals<bmedals)){
+						friendsJson.set(i, b);
+						friendsJson.set(j,a);
+					}
+				}
+			}
+		}
+	}
+
+
 	/**
 	 * 从好友关系记录中获取好友的用户名
 	 * @param friend 好友关系

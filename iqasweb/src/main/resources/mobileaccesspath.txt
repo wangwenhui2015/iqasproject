@@ -65,7 +65,7 @@ http://172.19.203.197:8080/iqasweb/mobile/friend/searchFriend.html
 	 
 * 2.发送好友添加请求sendRequest
 http://172.19.203.197:8080/iqasweb/mobile/friend/sendRequest.html
-@param userName 自己的用户名
+       @param userName 自己的用户名
 	 * @param password ,密码
 	 * @param friendUserName 好友的用户名
 	 * @param content, 备注
@@ -79,7 +79,7 @@ http://172.19.203.197:8080/iqasweb/mobile/friend/lookRequests.html
 	 
 * 4.接受好友请求receiveRequest
 http://172.19.203.197:8080/iqasweb/mobile/friend/receiveRequest.html
-     @param userName
+       @param userName
 	 * @param password
 	 * @param requestId 请求id
 	 

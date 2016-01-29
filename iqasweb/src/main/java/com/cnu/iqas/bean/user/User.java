@@ -41,7 +41,8 @@ public class User {
 	//身份
 	private int role;
 	/**
-	 * 用户在自适应学习系统中可查看的商品类型等级，默认值0
+	 * 用户在自适应学习系统中可查看的商品类型等级，默认值0'
+	 * 该值也表示用户的勋章个数及隐藏关闯关个数
 	 */
 	private Integer storeGrade=0;
 
