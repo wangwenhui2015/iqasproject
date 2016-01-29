@@ -371,7 +371,6 @@ public class SentenceSimImpl implements SentenceSim  {
 	@Override
 	public Iword findWordProperty(String str) {
 		Iword word  = null;
-		System.out.println("进入checkword方法！！！");
 	    QueryIndividualAndProperty queryIndividualAndProperty=new QueryIndividualAndPropertyImpl();
 		ResultSet resultsWordProperty=queryIndividualAndProperty.checkProperty(str);
 		 while (resultsWordProperty.hasNext()){

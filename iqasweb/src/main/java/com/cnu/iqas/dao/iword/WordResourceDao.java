@@ -13,9 +13,12 @@ import com.cnu.iqas.dao.base.DAO;
 public interface WordResourceDao  extends DAO<WordResource>{
 	
 	/**
-	 * 根据单词uuid查询该单词的所有单词资源
-	 * @param uuid
+	 * 根据单词id和资源类型查看单词资源
+	 * @param wordId
+	 * @param type
 	 * @return
 	 */
-	//public List<WordResource> findByWord(String uuid);
+	public List<WordResource> findByWord(String wordId,int type);
+	
+	
 }

@@ -112,9 +112,9 @@ public class BaseForm {
 			    throw new RuntimeException("保存图片操作文件出错！");
 		   }
 	   }else{
-		   new RuntimeException("保存路径未设置！");
+		  throw new RuntimeException("保存路径未设置！");
 	   }
-	  return null;
+	  //return null;
 }
 	
 	

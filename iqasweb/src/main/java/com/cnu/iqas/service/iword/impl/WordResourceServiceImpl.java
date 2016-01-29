@@ -14,6 +14,7 @@ import com.cnu.iqas.dao.iword.WordResourceDao;
 import com.cnu.iqas.exception.word.ResourceTypeNotExisting;
 import com.cnu.iqas.exception.word.SaveDirNoExsitingException;
 import com.cnu.iqas.formbean.BaseForm;
+import com.cnu.iqas.service.iword.IfetchResource;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.utils.PropertyUtils;
 
@@ -23,7 +24,7 @@ import com.cnu.iqas.utils.PropertyUtils;
 * 类说明 : 单词资源服务接口的实现类
 */
 @Service("wordResourceService")
-public class WordResourceServiceImpl implements WordResourceService {
+public class WordResourceServiceImpl implements WordResourceService{
 
 	private WordResourceDao wordResourceDao;
 
@@ -48,7 +49,6 @@ public class WordResourceServiceImpl implements WordResourceService {
 			    	throw new ResourceTypeNotExisting("单词资源文件类型未确定!");
 		   }
 		   if(relativepath==null){
-			   
 			   throw new SaveDirNoExsitingException(filetype+"类型单词资源保存的相对路径不存在!,请在savepath.properties中设置。");
 		   }
 		return BaseForm.saveFile(servletContext, relativepath, file);
@@ -84,4 +84,24 @@ public class WordResourceServiceImpl implements WordResourceService {
 	public void setWordResourceDao(WordResourceDao wordResourceDao) {
 		this.wordResourceDao = wordResourceDao;
 	}
+
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		this.wordResourceDao.delete(id);
+	}
+
+	public List<WordResource> findByWordId(String wordId, int type) {
+		// TODO Auto-generated method stub
+        if( wordId!=null && !wordId.equals("")){
+	    	 if( ResourceConstant.isResouceType(type)){
+	    		 return this.wordResourceDao.findByWord(wordId, type);
+	    	 }else{
+	    		 return null;
+	    	 }
+	     }
+		return null;
+	}
+	
+	
 }

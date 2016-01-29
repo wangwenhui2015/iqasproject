@@ -5,8 +5,11 @@ package com.cnu.iqas.utils;
 
 import java.util.List;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.iword.WordResource;
+import com.cnu.iqas.constant.PageViewConstant;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -30,9 +33,24 @@ public class JsonTool {
 		{
 			object.put("status", status.getStatus());
 			object.put("message", status.getMessage());
+		}else{
+			throw new RuntimeException("返回操作标识不能为空。");
 		}
 	}
-	
+	/**
+	 * 封装json返回视图
+	 * @param status
+	 * @return
+	 */
+	public static ModelAndView generateModelAndView(MyStatus status){
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		//整个json
+		JSONObject jsonObject = new JSONObject();
+		JsonTool.putStatusJson(status, jsonObject);
+		
+		mv.addObject("json", jsonObject.toString());
+		return mv;
+	}	
 	/**
 	 * 将集合元素封装成json格式数据
 	 * @param list  要封装的数组集合
@@ -132,6 +150,53 @@ public class JsonTool {
 		JsonTool.putStatusJson(status, jsonObject);
 		return jsonObject;
 	}	
+	
+	
+	/**
+	 * 将集合元素封装成json对象并生成返回视图
+	 * @param listJson 要封装的JSONObject集合
+	 * @param status 此次操作状态
+	 * @return：返回数据格式
+	 * {
+		 *  status:1,
+		 *  message:"ok",
+		 *  result:{
+		 *   count:2,
+		 *   data:[
+		 *		{id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
+		 *      {id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"},
+		 *      
+		 *   ]
+		 *  }
+		 * }
+	 */
+	public static ModelAndView generateModelAndView(List<JSONObject> listJson,MyStatus status){
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		
+		//整个json
+		JSONObject jsonObject = new JSONObject();
+		//result json
+		JSONObject resultObject = new JSONObject();
+		//数组json
+		JSONArray jsonArray = new JSONArray();
+		
+		int count =0;
+		if( listJson !=null ){
+			for( JSONObject entity :listJson )
+			{
+				jsonArray.add(entity);
+				count++;
+			}
+		}
+		resultObject.put("count", count);
+		resultObject.put("data", jsonArray);
+		
+		jsonObject.put("result", resultObject);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+		mv.addObject("json", jsonObject.toString());
+		return mv;
+	}	
 	/**
 	 * 将jsonArray和status对象按照格式封装到jsonObject中
 	 * @param jsonObject 要封装到的json对象
@@ -151,16 +216,21 @@ public class JsonTool {
 	 * }
 	 * 
 	 */
-  public static void putJsonObject( JSONObject jsonObject,JSONArray jsonArray,MyStatus status){
+  public static void createJsonObject( JSONObject jsonObject,JSONArray jsonArray,MyStatus status){
 	
 		//result json
 		JSONObject resultObject = new JSONObject();
+		if(jsonArray!=null){
 		resultObject.put("count", jsonArray.size());
 		resultObject.put("data", jsonArray);
 		jsonObject.put("result", resultObject);
+		}
 	 
 		JsonTool.putStatusJson(status, jsonObject);
 	}
+ 
+
+  
 	/**
 	 * 将jsonArray和status对象按照格式封装到jsonObject中
 	 * @param jsonObject 要封装到的json对象
@@ -180,7 +250,7 @@ public class JsonTool {
 	 * }
 	 * 
 	 */
-  public static void putJsonObject( JSONObject jsonObject,JSONObject resultJson,MyStatus status){
+  public static void createJsonObject( JSONObject jsonObject,JSONObject resultJson,MyStatus status){
 		//result json
 		jsonObject.put("result", resultJson);
 	 

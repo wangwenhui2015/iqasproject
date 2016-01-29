@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.iqas.bean.base.QueryResult;
+import com.cnu.iqas.bean.iword.WordAttributeResource;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.dao.base.DAO;
 
@@ -15,18 +16,19 @@ import com.cnu.iqas.dao.base.DAO;
 * @version 创建时间：2015年11月23日 上午11:34:22
 * 类说明  单词资源服务接口
 */
-public interface WordResourceService {
+public interface WordResourceService  extends IfetchResource<WordResource>{
 
 	/**
 	 * 保存单词资源文件，并返回保存的相对路径
 	 * @param servletContext    应用上下文
 	 * @param file				保存的文件
-	 * @param filetype			文件类型：图片、绘本、声音、视频
+	 * @param filetype			文件类型：1:图片、2:绘本、3:声音、4:视频
 	 * @return					返回文件在工程中的先对路径
 	 * @throws Exception
 	 */
 	public String saveWordResourceFile(ServletContext servletContext, CommonsMultipartFile file, int filetype) throws Exception;
 
+	
 	/**
 	 * 根据单词资源id查询单词资源
 	 * @param id
@@ -51,4 +53,11 @@ public interface WordResourceService {
 	 * @param resource
 	 */
 	public void save(WordResource resource);
+	/**
+	 * 根据id删除单词资源
+	 * @param id
+	 */
+	public void delete(String id);
+
+
 }

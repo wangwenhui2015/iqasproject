@@ -16,7 +16,10 @@ import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.constant.ResourceConstant;
 import com.cnu.iqas.dao.base.DaoSupport;
 import com.cnu.iqas.dao.iword.WordAttributeResourceDao;
+import com.cnu.iqas.exception.word.ResourceTypeNotExisting;
+import com.cnu.iqas.exception.word.SaveDirNoExsitingException;
 import com.cnu.iqas.formbean.BaseForm;
+import com.cnu.iqas.service.iword.IfetchResource;
 import com.cnu.iqas.service.iword.WordAttributeResourceService;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.utils.PropertyUtils;
@@ -48,7 +51,10 @@ public class WordAttributeResourceServiceImpl implements WordAttributeResourceSe
 			    	relativepath = PropertyUtils.getFileSaveDir(PropertyUtils.WORD_PICTUREBOOK_DIR);  //获取本地存储路径
 			    	break;
 			    default:
-			    		break;
+			    	throw new ResourceTypeNotExisting("单词属性资源文件类型未确定!");
+		   }
+		   if(relativepath==null){
+			   throw new SaveDirNoExsitingException(filetype+"类型单词属性资源保存的相对路径不存在!,请在savepath.properties中设置。");
 		   }
 		return BaseForm.saveFile(servletContext, relativepath, file);
 	}
@@ -66,5 +72,19 @@ public class WordAttributeResourceServiceImpl implements WordAttributeResourceSe
 	public void setWordAttributeResourceDao(WordAttributeResourceDao wordAttributeResourceDao) {
 		this.wordAttributeResourceDao = wordAttributeResourceDao;
 	}
+
+	@Override
+	public List<WordAttributeResource> findByWordId(String wordId, int type) {
+		// TODO Auto-generated method stub
+		 if( wordId!=null && !wordId.equals("")){
+	    	 if( ResourceConstant.isResouceType(type)){
+	    		 return this.wordAttributeResourceDao.findByWord(wordId, type);
+	    	 }else{
+	    		 return null;
+	    	 }
+	     }
+		return null;
+	}
+
 
 }

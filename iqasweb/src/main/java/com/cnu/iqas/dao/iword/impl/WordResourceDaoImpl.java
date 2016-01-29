@@ -19,4 +19,8 @@ import com.cnu.iqas.dao.iword.WordResourceDao;
 @Repository("wordResourceDao")
 public class WordResourceDaoImpl extends DaoSupport<WordResource> implements WordResourceDao{
 
+	@Override
+	public List<WordResource> findByWord(String wordId, int type) {
+		return getHt().find("From WordResource o where o.wordId=? and type=?", wordId,type);
+	}
 }

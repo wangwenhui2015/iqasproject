@@ -180,9 +180,6 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<T> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby) {
 		
-		if( ht ==null)
-			System.out.println("null--------------------------");
-		
 		List<T> qr = ht.execute(new HibernateCallback<List<T>>() {
 			@Override
 			public List<T> doInHibernate(Session session)

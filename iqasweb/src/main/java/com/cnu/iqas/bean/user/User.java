@@ -61,6 +61,10 @@ public class User {
 	 * 用户在当前游戏天数下的第几个场景，默认第一个场景
 	 */
 	private int gameScene=1;
+	/**
+	 * 用户通过率，默认1,即100%
+	 */
+	private Double successRate=1.0;
 	//测试一下
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getUserId() {
@@ -156,6 +160,12 @@ public class User {
 	}
 	public void setGameScene(int gameScene) {
 		this.gameScene = gameScene;
+	}
+	public Double getSuccessRate() {
+		return successRate;
+	}
+	public void setSuccessRate(Double successRate) {
+		this.successRate = successRate;
 	}
 	
 }

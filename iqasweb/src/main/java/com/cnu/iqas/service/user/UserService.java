@@ -23,4 +23,17 @@ public interface UserService  {
 	 * @return
 	 */
 	public User findByName(String userName);
+	/**
+	 * 更新用户
+	 * @param user
+	 */
+	public void update(User user);
+	/**
+	 * 登录
+	 * @param userName
+	 * @param password
+	 * @param ip   //登录ip地址
+	 * @return
+	 */
+	public User login(String userName, String password,String ip);
 }

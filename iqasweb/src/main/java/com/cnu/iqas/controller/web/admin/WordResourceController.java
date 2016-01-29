@@ -20,6 +20,7 @@ import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.constant.PageViewConstant;
+import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.exception.word.ResourceTypeNotExisting;
 import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.iword.WordResourceForm;
@@ -92,19 +93,23 @@ public class WordResourceController  implements ServletContextAware{
 	 public ModelAndView ajaxDelete(String id){
 		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
 		 MyStatus status = new MyStatus();
-		 if( BaseForm.validate(id)){
+		 
+		 if( null !=id && !"".equals(id.trim())){
 			 WordResource wr =wordResourceService.find(id);
 			 if( wr !=null){
 				 //设置不可见
 				 wr.setVisible(false);
-				 //更新
+				 //更新记录为删除状态
 				 wordResourceService.update(wr);
+				 //删除记录
+				 //wordResourceService.delete(wr.getId());
 			 }else{
+				 status.setStatus(StatusConstant.WORD_RESOURCE_NO_EXIST);
 				 status.setMessage("删除资源不存在!");
 			 }
-		 }else{
-			 status.setMessage("删除资源不存在!");
-			 status.setStatus(0);
+		 }else {
+			 status.setMessage("删除单词资源id不能为空！");
+			 status.setStatus(StatusConstant.PARAM_ERROR);
 		 }
 		 mv.addObject("json", JsonTool.createJson(null, null, status));
 		 return mv;
@@ -119,30 +124,8 @@ public class WordResourceController  implements ServletContextAware{
 			 mv.setViewName(PageViewConstant.MESSAGE);
 		      mv.addObject("message","该单词不存在！");
 		 }else{
-			 /*//根据单词uuid获取单词资源
-			 //构造查询条件和查询值
-			 StringBuilder wherejpql = new StringBuilder();
-			 List<Object> queryParams = new ArrayList<Object>();
-			 if( BaseForm.validate(uuid)){
-				 queryParams.add(uuid);
-				 wherejpql.append(" o.iword.uuid = ? ");
-			 }
-			 //查询可见的
-			 queryParams.add(true);
-			 if(!queryParams.isEmpty())
-				 wherejpql.append(" and ");
-			 wherejpql.append(" o.visible = ? ");
-			 
-			 //调用查询函数获取查询结果 
-			 QueryResult<WordResource> queryResult =wordResourceService.getScrollData(wherejpql.toString(), queryParams.toArray());
-			 List<WordResource> list = queryResult.getResultlist();
-			 for(WordResource wr : list){
-				 System.out.println(wr.toString());
-			 }
-			 mv.addObject("list", list);*/
 			 mv.addObject("word", word);
 		}
-		 
 		 return mv;
 	 }
 	 
@@ -271,8 +254,8 @@ public class WordResourceController  implements ServletContextAware{
 				 if( filesavepath !=null){
 					//4.建立资源类保存信息
 					 WordResource resource = new WordResource();
-					 //5.设置资源所属的单词
-					 resource.setIword(word);
+					 //5.设置资源所属的单词的id
+					 resource.setWordId(word.getId());
 					 resource.setName(fileName);//单词原名称
 					 resource.setSavepath(filesavepath);//包含文件名的相对保存路径
 					 resource.setType(formbean.getType());//资源类型
@@ -282,7 +265,6 @@ public class WordResourceController  implements ServletContextAware{
 				 }else{
 					 formbean.getErrors().put("error", "保存资源文件路径有误!");
 				 }
-				
 			 }
 		 }else{
 			 formbean.getErrors().put("error", "该资源对应的单词不存在!");

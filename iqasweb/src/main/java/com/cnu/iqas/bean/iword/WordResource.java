@@ -30,9 +30,9 @@ public class WordResource {
 	 */
 	private String name;
 	/**
-	 * 所属单词，单向多对一的关系
+	 * 所属单词uuid
 	 */
-	private Iword iword;
+	private String  wordId;
 	/**
 	 * 资源类型,有1图片、2视频、3声音、4绘本
 	 */
@@ -62,19 +62,7 @@ public class WordResource {
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * 单向N-1,而且只级联刷新操作，即当资源插入时，该资源所属单词必须存在，不然抛异常
-	 * @return
-	 */
-	@ManyToOne(cascade={CascadeType.REFRESH},optional=false) 
-	@JoinColumn(name="iworduuid")
-	@ForeignKey(name="FK_IWord_WordResource")
-	public Iword getIword() {
-		return iword;
-	}
-	public void setIword(Iword iword) {
-		this.iword = iword;
-	}
+
 	@Column(nullable=false)
 	public int getType() {
 		return type;
@@ -95,10 +83,13 @@ public class WordResource {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	@Override
-	public String toString() {
-		return "WordResource [id=" + id + ", name=" + name + ", iword=" + iword + ", type=" + type + ", savepath="
-				+ savepath + ", visible=" + visible + "]";
+	@Column(nullable=false)
+	public String getWordId() {
+		return wordId;
 	}
+	public void setWordId(String wordId) {
+		this.wordId = wordId;
+	}
+	
 	
 }

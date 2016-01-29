@@ -1,8 +1,13 @@
 package com.cnu.iqas.controller.mobile.user;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cnu.iqas.bean.base.DateJsonValueProcessor;
+import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.user.User;
+import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.constant.StatusConstant;
-import com.cnu.iqas.controller.web.admin.StoreController;
+import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.user.UserForm;
+import com.cnu.iqas.service.user.StudyDateService;
 import com.cnu.iqas.service.user.UserService;
+import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.WebUtils;
 
 import net.sf.json.JSONArray;
@@ -30,26 +39,111 @@ import net.sf.json.JsonConfig;
 * 类说明
 */
 @Controller
-@RequestMapping(value="/mobile/user")
+@RequestMapping(value="/mobile/user/")
 public class MUserController {
 	private Logger logger = LogManager.getLogger(MUserController.class);
 	private UserService userService;
 	/**
-	 * @param formbean  用户注册表单类，用于接受前端穿过来的参数
-	 * @param bindingResult 存放校验结果
-	 * @return json格式数据
+	 * 用户学习记录服务类
+	 */
+	private StudyDateService studyDateService;
+
+	/**
+	 * 检查用户名是否存在
+	 * @param userName
+	 * @return
 	 * {
-		  "status": 2,
-		  "message": "用户名不能为空 : 密码长度为5~15"
+		  "status": 1,
+		  "message": ""
 		}
 	 */
+	@SuppressWarnings("finally")
+	@RequestMapping(value="validateUserName")
+	public ModelAndView register(String userName){
+		
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		MyStatus status = new MyStatus();
+		//总的json对象
+		JSONObject jsonObejct = new JSONObject();
+		
+		//----以下为业务逻辑，
+		try{
+			if(userName!=null && !userName.trim().equals("")){
+				//检查用户名是否存在
+				if( null==userService.findByName(userName))
+				{
+					status.setMessage("用户名不存在!");
+					status.setStatus(StatusConstant.USER_NOT_EXIST);
+				}
+			}else{
+				status.setMessage("请输入用户名");
+				status.setStatus(StatusConstant.PARAM_ERROR);
+			}
+			
+		}catch(Exception e ){
+			status.setMessage("未知异常!");
+			status.setStatus(StatusConstant.UNKONWN_EXECPTION);
+		}finally{
+			//-------------------返回视图
+			JsonTool.putStatusJson(status, jsonObejct);
+			mv.addObject("json", jsonObejct.toString());
+			return mv;
+		}
+	}
+	
+
+	/**
+	 * 检查用户名是否存在
+	 * @param userName
+	 * @return
+	 * {
+		  "status": 1,
+		  "message": ""
+		}
+	 */
+	@SuppressWarnings("finally")
+	@RequestMapping(value="updatePassword")
+	public ModelAndView updatePassword(String userName,String password){
+		
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		MyStatus status = new MyStatus();
+		//总的json对象
+		JSONObject jsonObejct = new JSONObject();
+		
+		//----以下为业务逻辑，
+		try{
+			if(BaseForm.validate(userName)&& BaseForm.validate(password)){
+				User user =userService.findByName(userName);
+				//检查用户名是否存在
+				if( null==user)
+				{
+					status.setMessage("用户名不存在!");
+					status.setStatus(StatusConstant.USER_NOT_EXIST);
+				}else{
+					user.setPassword(WebUtils.MD5Encode(password));
+					userService.update(user);
+				}
+			}else{
+				status.setMessage("请输入完整信息");
+				status.setStatus(StatusConstant.PARAM_ERROR);
+			}
+			
+		}catch(Exception e ){
+			status.setMessage("未知异常!");
+			status.setStatus(StatusConstant.UNKONWN_EXECPTION);
+		}finally{
+			//-------------------返回视图
+			JsonTool.putStatusJson(status, jsonObejct);
+			mv.addObject("json", jsonObejct.toString());
+			return mv;
+		}
+	}
 	@SuppressWarnings("finally")
 	@RequestMapping(value="register")
 	public ModelAndView register(@Valid UserForm formbean,BindingResult bindingResult){
 		
-		ModelAndView mv = new ModelAndView("share/json");
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
 		
-		System.out.println(formbean.getPassword()+":"+formbean.getUserName()+":"+formbean.getSex()+":"+formbean.getGrade());
 		
 		int scode =StatusConstant.OK;//结果
 		String message ="ok";//结果说明
@@ -102,63 +196,70 @@ public class MUserController {
 	 */
 	@SuppressWarnings("finally")
 	@RequestMapping(value="login")
-	public ModelAndView login(UserForm formbean){
-		ModelAndView mv = new ModelAndView("share/json");
-
-		System.out.println(formbean.getUserName()+formbean.getPassword());
-		int scode =StatusConstant.OK;//结果
-		String message ="ok";//结果说明
-		//总的json对象
-		JSONObject jsonObejct = new JSONObject();
-		//result对象
-		JSONObject resultObject = new JSONObject();
+	public ModelAndView login(UserForm formbean,HttpServletRequest request){
+		MyStatus status = new MyStatus();
 		//用户对象
-		JSONObject userObject ;
+		List<JSONObject> userlist  =new ArrayList<>(); ;
 		//用户对象配置类
 		JsonConfig userConfig = new JsonConfig();
-		//------------------以下为业务逻辑，此处可以采用面向切面编程
 		try{
-				//System.out.println(bindingResult.hasErrors()+":"+bindingResult.getFieldValue("username")+"："+bindingResult.getFieldValue("password"));
 				//检查账号是否存在
-				//User user = userService.find(formbean.getUsername());
-				User user= userService.validate(formbean.getUserName(), formbean.getPassword());
+				User user= userService.login(formbean.getUserName(), formbean.getPassword(),request.getRemoteHost());
 				if( null==user )
 				{
-					scode = StatusConstant.USER_NAME_OR_PASSWORD_ERROR;
-					message ="用户名或者密码有误!";
+					status.setMessage("用户名或者密码有误!");
+					status.setStatus(StatusConstant.USER_NAME_OR_PASSWORD_ERROR);
 				}else{
 					//过滤一些属性
-					userConfig.setExcludes(new String[]{});
 					userConfig.registerJsonValueProcessor(Date.class,new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
+					JSONObject userObject= JSONObject.fromObject(user, userConfig);
+					//通关率
+					String successRate=getSuccessRate(user.getSuccessRate());
+					userObject.put("successRate", successRate);
+					//加入集合中
+					userlist.add(userObject);
 					
-					userObject= JSONObject.fromObject(user, userConfig);
-						
-					JSONArray usersArray = new JSONArray();
-					usersArray.add(userObject);
-					
-					resultObject.put("count", 1);
-					resultObject.put("data", usersArray);
 				}
 			
 		}catch(Exception e ){
-			scode = StatusConstant.UNKONWN_EXECPTION;
-			message ="未知异常";
+			status.setStatus(StatusConstant.UNKONWN_EXECPTION);
+			status.setMessage("未知异常");
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}finally{
 			//-------------------返回视图
-			return WebUtils.beforeReturn(scode, message, jsonObejct, resultObject, mv);
+			return JsonTool.generateModelAndView(userlist, status);
 		}
+	}
+	
+	/**
+	 * 将double类型通过率转换成带%号的通关率
+	 * @param successRate ，通过率，如：0.6
+	 * @return 60%
+	 */
+	private String getSuccessRate(Double successRate){
+		String strSuccessRate = "100%";
+		if(successRate!=null ){
+			//四舍五入只保留2位小数
+			Double d = successRate*100;;
+			DecimalFormat   df   =new   DecimalFormat("#"); 
+			//生成字符66%
+			 strSuccessRate =df.format(d) +"%";
+		}
+		return strSuccessRate;
 	}
 	/**
 	 * 根据用户名获取用户信息
 	 * @param userName
 	 * @return
 	 */
+	@SuppressWarnings("finally")
 	@RequestMapping(value="getUser")
-	public ModelAndView getUser(String  userName){
-		ModelAndView mv = new ModelAndView("share/json");
+	public ModelAndView getUser(String  userName,HttpServletRequest request){
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
 
+		String ip= request.getRemoteHost()+":"+request.getRemoteAddr();
+		System.out.println("host:address:  "+ip);
 		int scode =StatusConstant.OK;//结果
 		String message ="ok";//结果说明
 		//总的json对象
@@ -185,7 +286,16 @@ public class MUserController {
 					userConfig.registerJsonValueProcessor(Date.class,new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
 					
 					userObject= JSONObject.fromObject(user, userConfig);
-						
+					//通关率
+					String successRate = "100%";
+					if(user.getSuccessRate()!=null ){
+						//四舍五入只保留2位小数
+						Double d = user.getSuccessRate()*100;;
+						DecimalFormat   df   =new   DecimalFormat("#"); 
+						//生成字符66%
+						successRate =df.format(d) +"%";
+					}
+					userObject.put("successRate", successRate);
 					JSONArray usersArray = new JSONArray();
 					usersArray.add(userObject);
 					
@@ -202,6 +312,135 @@ public class MUserController {
 			//-------------------返回视图
 			return WebUtils.beforeReturn(scode, message, jsonObejct, resultObject, mv);
 		}
+	}
+	/**
+	 * 学习记录
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value="studyRecord")
+	public ModelAndView studyRecord(String userName,String password){
+    	return getStudyData(userName, password,1);
+	}
+	/**
+	 *  闯关类型对比
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value="gameTypeContrast")
+	public ModelAndView gameTypeContrast(String userName,String password){
+		return getStudyData(userName, password,2);
+	}
+
+	/**
+	 *  通过率对比
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value="successRate")
+	public ModelAndView successRate(String userName,String password){
+    	return getStudyData(userName, password,3);
+	}
+	/**
+	 * 最爱的闯关
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value="favoriteGameType")
+	public ModelAndView favoriteGameType(String userName,String password){
+		return getStudyData(userName, password,4);
+	}
+
+	/**
+	 * 玩游戏时间
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value="timeOfGame")
+	public ModelAndView timeOfGame(String userName,String password){
+    	return getStudyData(userName, password,5);
+	}
+	
+
+	private ModelAndView getStudyData(String userName, String password,int type) {
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		MyStatus status = new MyStatus();
+		//总的json对象
+		JSONObject jsonObejct = new JSONObject();
+		//result对象
+		JSONObject resultObject = new JSONObject();
+		//------------------以下为业务逻辑，此处可以采用面向切面编程
+		try{
+				User user= userService.validate(userName,password);
+				if( null==user )
+				{
+					status.setStatus(StatusConstant.USER_NAME_OR_PASSWORD_ERROR);
+					status.setMessage("用户名或者密码有误!");
+				}else{
+					JSONArray picArray = new JSONArray();
+					//存放一张图片的路径
+					//JSONObject pJson = new JSONObject();
+					
+					switch(type){
+					case 1://学习记录
+						String picPath = studyDateService.studyRecord(user);
+						//pJson.put("picturePath",picPath);
+						picArray.add(picPath);
+						break;
+					case 2://闯关类型对比
+						List<String> picPaths = studyDateService.gameTypeContrast(user);
+						for( String str :picPaths){
+							//JSONObject pJson2 = new JSONObject();
+							//pJson2.put("picturePath",str);
+							picArray.add(str);
+						}
+						break;
+					case 3://通过率对比
+						String sp =studyDateService.successRate(user);
+						//pJson.put("picturePath",sp);
+						picArray.add(sp);
+						break;
+					case 4://最爱的闯关
+						String fp =studyDateService.favoriteGameType(user);
+						//pJson.put("picturePath",fp);
+						picArray.add(fp);
+						break;
+					case 5://玩游戏时间
+						String tp =studyDateService.timeOfGame(user);
+						//pJson.put("picturePath",tp);
+						picArray.add(tp);
+						break;
+					}
+					
+					resultObject.put("count", picArray.size());
+					resultObject.put("data", picArray);
+				}
+			
+		}catch(Exception e ){
+			status.setStatus(StatusConstant.UNKONWN_EXECPTION);
+			status.setMessage("出现未知异常！");
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}finally{
+			//-------------------返回视图
+			JsonTool.createJsonObject(jsonObejct, resultObject, status);
+			mv.addObject("json",jsonObejct.toString());
+			return mv;
+		}
+	}
+    
+	public StudyDateService getStudyDateService() {
+		return studyDateService;
+	}
+
+	@Resource
+	public void setStudyDateService(StudyDateService studyDateService) {
+		this.studyDateService = studyDateService;
 	}
 	public UserService getUserService() {
 		return userService;

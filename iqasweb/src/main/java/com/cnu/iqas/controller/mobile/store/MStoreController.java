@@ -151,10 +151,10 @@ public class MStoreController {
 							}
 						}
 						
-						JSONObject typeJson = new JSONObject();
-						typeJson.put(type.getGrade(), typeJsonArray);
+						/*JSONObject typeJson = new JSONObject();
+						typeJson.put(type.getGrade(), typeJsonArray);*/
 						//将一种类型商品存放到data集合中
-						dataArray.add(typeJson);
+						dataArray.add(typeJsonArray);
 					}
 				}
 				resultJson.put("count", count);
@@ -169,7 +169,7 @@ public class MStoreController {
 			status.setStatus(StatusConstant.UNKONWN_EXECPTION);
 			status.setMessage("出现未知异常！");
 		}finally{
-			JsonTool.putJsonObject(jsonObject, resultJson, status);
+			JsonTool.createJsonObject(jsonObject, resultJson, status);
 			 mv.addObject("json", jsonObject.toString());
 			 return mv;
 		}
@@ -267,7 +267,7 @@ public class MStoreController {
 			 * 将此次操作描述,用户金币数、已买商品种数，商品数组，添加到json中
 			 */
 			jsonObject.put("userDes", jsonDes);
-			JsonTool.putJsonObject(jsonObject, jsonArrayCommoditys, status);
+			JsonTool.createJsonObject(jsonObject, jsonArrayCommoditys, status);
 			 mv.addObject("json", jsonObject.toString());
 			 return mv;
 		}

@@ -30,9 +30,9 @@ public class WordAttributeResource {
 	 */
 	private String name;
 	/**
-	 * 所属单词，单向多对一的关系
+	 * 所属单词id
 	 */
-	private Iword iword;
+	private String wordId;
 	/**
 	 * 资源类型,有1图片、2视频、3声音、4绘本
 	 */
@@ -68,22 +68,16 @@ public class WordAttributeResource {
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * 单向N-1,而且只级联刷新操作，即当资源插入时，该资源所属单词必须存在，不然抛异常
-	 * @return
-	 */
-	@ManyToOne(cascade=CascadeType.REFRESH,optional=false) //维护两端关系
-	@JoinColumn(name="iworduuid")
-	@ForeignKey(name="FK_IWord_WordAttributeResource")
-	public Iword getIword() {
-		return iword;
-	}
-	public void setIword(Iword iword) {
-		this.iword = iword;
-	}
 	@Column(nullable=false)
 	public int getType() {
 		return type;
+	}
+	public String getWordId() {
+		return wordId;
+	}
+	@Column(nullable=false)
+	public void setWordId(String wordId) {
+		this.wordId = wordId;
 	}
 	public void setType(int type) {
 		this.type = type;

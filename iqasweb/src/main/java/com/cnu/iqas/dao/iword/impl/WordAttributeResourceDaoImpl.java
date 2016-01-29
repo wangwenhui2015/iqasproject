@@ -19,5 +19,10 @@ import com.cnu.iqas.dao.iword.WordAttributeResourceDao;
 @Repository("wordAttributeResourceDao")
 public class WordAttributeResourceDaoImpl extends DaoSupport<WordAttributeResource>implements WordAttributeResourceDao {
 
+	@Override
+	public List<WordAttributeResource> findByWord(String wordId, int type) {
+		return getHt().find("From WordAttributeResource o where o.wordId=? and o.type=?", wordId,type);
+	}
+
 	
 }

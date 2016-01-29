@@ -121,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 //单词id
  var wordid ="${word.uuid}"; 
 //资源删除连接
-var deleteUrl = "admin/control/wordresource/ajaxDelete.html?id=";
+var deleteUrl = "admin/control/wordresource/ajaxDelete.html";
 
 //播放声音，每次点击都会产生一个声音，需要修复
 function playmusic(id,savepath){
@@ -142,7 +142,6 @@ function deleteResource(id){
 		//现将删除按钮设为不可用,同时文字改为正在删除
 		deleteNode.addClass("disabled");
 		deleteNode.text("正在删除...");
-		
 		//确认删除则调用ajax删除
 		$.get(deleteUrl,{id:id}, function(content) {
 			var status = content.status;
@@ -215,10 +214,10 @@ function showBookPictureData(data){
 	var str="";
 	for(var i=0;i<data.length;i++)
 	{
-		  str+='<div class="col-sm-6 col-md-3"><div class="thumbnail">';
+		  str+='<div id="'+data[i].id+'"  class="col-sm-6 col-md-3"><div class="thumbnail">';
 		  str+='<img src="'+data[i].savepath+'" alt="...">';
 		  str+='<div class="caption" style="text-align: center;">';
-		  str+='<a href="'+deleteUrl+data[i].id+'" class="btn btn-warning" role="button">删除</a>';
+		  str+='<a href="javascript:deleteResource(\''+data[i].id+'\');" class="btn btn-warning" role="button">删除</a>';
 		  str+='</div>';
 		  str+='</div></div>';
 	}

@@ -18,7 +18,15 @@ public class ResourceConstant {
 	
 	
 	
-	
-	
+	/**
+	 * 判断资源类型是否是图片、绘本、声音、视频
+	 * @param type
+	 * @return
+	 */
+	public static boolean isResouceType(int type){
+		if( type!=TYPE_IMAGE&& type!=TYPE_PICTUREBOOK&&type!=TYPE_VIDEO&& type!=TYPE_VOICE)
+			return false;
+		return true;
+	}
 
 }

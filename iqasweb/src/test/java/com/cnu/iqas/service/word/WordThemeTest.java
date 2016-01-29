@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordTheme;
-import com.cnu.iqas.bean.iword.WordThemeTypeEnum;
 import com.cnu.iqas.bean.iword.WordThemeWordRel;
 import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordThemeService;
@@ -20,7 +19,7 @@ import com.cnu.iqas.service.iword.WordThemeWordRelService;
 * @author 周亮 
 * @version 创建时间：2015年12月7日 下午8:12:36
 * 类说明
-*/
+*/ 
 @ContextConfiguration(locations = {"/applicationContext.xml"})//启动Spring容器
 public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于TestNG的spring测试框架
 	@Autowired  //注入Spring容器中的Bean  ,如果使用@Resource也可以

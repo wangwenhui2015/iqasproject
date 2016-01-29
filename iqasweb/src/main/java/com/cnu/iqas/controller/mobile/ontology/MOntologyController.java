@@ -25,6 +25,8 @@ import net.sf.json.JSONObject;
 public class MOntologyController {
 	private SentenceSim sentenceSim ;
 	
+	
+	
 	/**
 	 * 用户输入问句后首先进行判断，如果是单词跳转到查询单词的页面，如果是查询句子，跳转到查询句子的页面。
 	 * @param text 用户搜索的句子

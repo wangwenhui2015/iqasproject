@@ -72,7 +72,7 @@ public class WordAttributeResourceController  implements ServletContextAware{
 	  
 	 @RequestMapping(value="add",method=RequestMethod.POST)
 	 public ModelAndView addResourceAttribute(WordAttributeResourceForm formbean,@RequestParam(value="file")CommonsMultipartFile  file){
-		 System.out.println("添加资源");
+		
 		 //默认保存失败
 		 boolean flage = false;
 		 ModelAndView mv = new ModelAndView();
@@ -100,39 +100,27 @@ public class WordAttributeResourceController  implements ServletContextAware{
 				//4.建立资源类保存信息
 				 WordAttributeResource resourceattribute = new WordAttributeResource();
 				 //5.设置资源所属的单词
-				 System.out.println("111111添加单词属性信息");
-			   //resourceattribute.setIword(word);//单词名字
-			  // resourceattribute.setId(formbean.getUuid());//单词ID
-			  // System.out.println(formbean.getId());
 				 resourceattribute.setAttribute(formbean.getAttribute());//单词属性
-				 System.out.println(formbean.getAttribute());
 				 resourceattribute.setName(fileName);//单词原名称
-				 System.out.println(fileName);
 				 resourceattribute.setSavepath(filesavepath);//包含文件名的相对保存路径
-				 System.out.println(filesavepath);
 				 resourceattribute.setType(formbean.getType());//资源类型
-				 System.out.println(formbean.getType());
 				 resourceattribute.setFigure(formbean.getFigure());//属性值
-				 System.out.println(formbean.getFigure());
-				 resourceattribute.setIword(word);
-				 System.out.println(word);
+				 resourceattribute.setWordId(word.getId());
 				 wordAttributeResourceService.save(resourceattribute);//保存到数据库
 				 flage = true;//保存成功
 			 }
 		 }else{
 			 formbean.getErrors().put("error", "该资源对应的单词不存在!");
 		 }
-		 
 		 mv.setViewName(PageViewConstant.MESSAGE);
 		 if( flage ){
 			 mv.addObject("message","保存成功");
-		 }
-		 else{
+		 }else{
 			 mv.addObject("message", formbean.getErrors().get("error"));
 		 }
-		 //mv.addObject("uuid", word.getUuid());
-		// mv.addObject("urladdress", "/admin/control/wordresource/addUI.html?uuid="+word.getUuid());
-		   return mv;
+		 mv.addObject("urladdress",PageViewConstant.generatorMessageLink("admin/control/wordattributeresource/addUI")+"?uuid="+word.getUuid());
+			
+		 return mv;
 	 }
 	 
 	public WordAttributeResourceService getWordAttributeResourceService() {

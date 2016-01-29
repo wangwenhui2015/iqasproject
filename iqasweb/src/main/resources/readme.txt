@@ -20,7 +20,13 @@
 2.savepath.properties文件中配置了wordnet在本地的存放路径和版本信息。
 
 三、配置文件
-savepath.properties文件中配置了图片、绘本、视频、声音等资源的存放路径。
+log4j.properties和log4j2.xml：本体操作中使用的log4j，而项目的其它模块使用log4j2日志。     
+catalog-v001.xml、OnlyClass.owl、OnlyClassSentence.owl、Data文件夹：本体涉及到的文件
+english-left3words-distim.tagger：WordNet涉及到的文件。
+applicatonContext.xml：Spring配置文档。
+jdbc.properties：为数据源配置信息。
+savepath.properties：为资源实际存放路径的配置,包括项目文件存放跟路径、项目logo,单词的图片、绘本、视频、声音等资源的存放路径，通过PropertyUtils工具类读取。
+
 
 三、2中方式运行项目（开发阶段使用第二种）：
 前提：项目运行前先运行fuseki数据库。
@@ -44,30 +50,4 @@ savepath.properties文件中配置了图片、绘本、视频、声音等资源�
 注册：http://localhost:8080/iqasweb/user/registerUI.html
 管理员登录连接：http://localhost:8080/iqasweb/admin/loginUI.html
 
-手机端访问连接：
-手机端统一访问网址：http://localhost:8080/iqasweb/mobile/**/**.html
-
-
-
-搜索单词：http://localhost:8080/iqasweb/mobile/search/sentence.html?text=park
-搜索句子：http://localhost:8080/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
-登录：http://localhost:8080/iqasweb/mobile/user/login.html
-参数：
-     * @param userName 用户名
-	 * @param password 密码
-注册：http://localhost:8080/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
-购买商品;http://localhost:8080/iqasweb/mobile/store/buyCommodity.html  
-参数
-	 * @param userName 用户名
-	 * @param password 密码
-	 * @param id 购买商品的id
 	 
-获取商店商品信息：http://localhost:8080/iqasweb/mobile/store/getStore.html 
-参数： * 获取商店的商品信息及用户的金币数
-	 * @param userName 用户名
-	 * @param password 密码
-获取用户背包：http://localhost:8080/iqasweb/mobile/store/getBag.html
-参数： *
-	 * @param userName 用户名
-	 * @param password 密码
-

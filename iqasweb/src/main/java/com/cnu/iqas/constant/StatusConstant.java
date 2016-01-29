@@ -30,23 +30,61 @@ public class StatusConstant {
 	 */
 	public static int USER_EXIST =2002;
 	/**
+	 * 用户不存在
+	 */
+	public static int USER_NOT_EXIST =2003;
+	/**
 	 * 用户名或者密码有误
 	 */
-	public static int USER_NAME_OR_PASSWORD_ERROR =2003;
+	public static int USER_NAME_OR_PASSWORD_ERROR =2004;
+	/**
+	 * 用户名不存在
+	 */
+	public static int USER_NAME_ERROR =2005;
 	/**
 	 * 用户金币不足
 	 */
-	public static int USER_COINS_NOT_ENOUGH=5004;
+	public static int USER_COINS_NOT_ENOUGH=2006;
 
+	/**
+	 * 好友不存在
+	 */
+	public static int FRIEND_NOT_EXIST =2007;
+	/**
+	 * 好友已经存在
+	 */
+	public static int FRIEND_HAVE_EXIST =2008;
+	/**
+	 * 好友请求无效
+	 */
+	public static int FRIEND_REQUEST_INVAIN=2009;
+
+	
 	/* 商店状态信息*/
 	/**
 	 * 商店商品不存在
 	 */
-	public static int STORE_UNEXIST_COMMODITY=5005;
+	public static int STORE_UNEXIST_COMMODITY=3001;
 	/**
 	 * 购买商品不在你可以购买的商品类型之内,即你当前不能购买该类型下的商品!
 	 */
-	public static int STORE_OVER_COMMODITY_TYPE=5006;
+	public static int STORE_OVER_COMMODITY_TYPE=3002;
 	
 
+
+	/**
+	 * 知识本体库中没有此主题
+	 */
+	public static int NOUMENON_NO_THEME =4001;
+	/**
+	 * 知识本体库中没有此单词
+	 */
+	public static int NOUMENON_NO_WORD =4002;
+	
+	
+	/**
+	 * 单词资源不存在
+	 */
+	public static int WORD_RESOURCE_NO_EXIST=5001;
+	
 }
