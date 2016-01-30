@@ -73,84 +73,97 @@ public class MOntologyController {
 		JSONArray usersArray = new JSONArray();
     	try {
     		
-			if(text.trim().length()<15)
-			{
-				//根据单词进行查询
-				Iword iword=sentenceSim.findWordProperty(text);
-				/*if( iword !=null ){
-					mv.addObject("word", iword);
-				}*/
-				//senObject= JSONObject.fromObject(iword);
-				JSONObject reswordJson = new JSONObject();  
-				//课文原句+相关的图片
-				reswordJson.put("label", text);
-				reswordJson.put("propertyText", iword.getPropertyText());
-				Iword iwordtext=iwordService.find("o.content = ?",text);
-				String wordId=iwordtext.getId();
-				//根据单词id来查询单词的对象
-				WordResource wordpictrue=wordResourceService.find("o.wordId = ?", wordId);
-				//获取单词图片的保存路径
-				pictruepath=wordpictrue.getSavepath();
-				System.out.println("单词的保存路径"+pictruepath);
-				System.out.println("课文原句"+iword.getPropertyText());
-				reswordJson.put("pictruepath", pictruepath);
-				//情景段落
-				reswordJson.put("propertyScene", iword.getPropertyScene());
-				//延伸例句
-				reswordJson.put("propertyExtend", iword.getPropertyExtend());
-				//联想+相关图片 
-				reswordJson.put("propertyAssociate", iword.getPropertyAssociate());
-				List<Object>list=new ArrayList<Object>();
-				list.add(wordId);
-				list.add(13);
-				list.add(1);
-				List<WordAttributeResource>listwordAttributeAssociate=wordAttributeResourceService.getAllData("o.wordId = ? and o.attribute=? and o.type=?", list.toArray());
-				System.out.println("-----------"+listwordAttributeAssociate.get(0).getName());
-				StringBuilder str=new StringBuilder() ;
-				for(WordAttributeResource wa : listwordAttributeAssociate)
-				{
-					str.append(wa.getSavepath()+",");
-				   //a=wa.getSavepath();
-				}
-				String associatesavePath=str.substring(0, str.toString().length()-1);
-				System.out.println("++++++++++"+associatesavePath);
-				reswordJson.put("AssociatesavePath", associatesavePath);
-				//同义词
-				reswordJson.put("propertySynonyms", iword.getPropertySynonyms());
-				//反义词   
-				reswordJson.put("propertyAntonym", iword.getPropertyAntonym());
-				//拓展
-				reswordJson.put("propertyExpand",iword.getPropertyExpand());
-				//常用  
-				reswordJson.put("propertyCommonUse",iword.getPropertyCommonUse());
-				List<Object>listCommonUse=new ArrayList<Object>();
-				listCommonUse.add(wordId);
-				listCommonUse.add(20);
-				listCommonUse.add(1);
-				List<WordAttributeResource>listwordAttributeCommonUse=wordAttributeResourceService.getAllData("o.wordId = ? and o.attribute=? and o.type=?", list.toArray());
-				System.out.println("-----------"+listwordAttributeCommonUse.get(0).getName());
-				reswordJson.put("CommonUsesavePath", listwordAttributeCommonUse.get(0).getSavepath());
-				//百科
-				reswordJson.put("propertyNcyclopedia", iword.getPropertyNcyclopedia());
-				//用法
-				reswordJson.put("propertyUse", iword.getPropertyUse());
-				usersArray.add(reswordJson);
-			}
-			else
-			{	
-				//根据句子进行查询
-			    System.out.println("根据句子进行查询");
-			    ISentence sentence=sentenceSim.maxSimilar(text);
-				//senObject= JSONObject.fromObject(sentence);
-			    JSONObject restextJson = new JSONObject();  
-			    restextJson.put("text", text);
-				//reswordJson.put("pictruepath", pictruepath);
-			    usersArray.add(restextJson);
-			}	
-			//JSONArray usersArray = new JSONArray();
-			//usersArray.add(senObject);
-			//resultObject.put("count", 1);
-			//resultObject.put("data", usersArray);
+    		if( text!=null && !text.trim().equals("")){
+    			if(text.trim().length()<15)
+    			{
+    				//根据单词进行查询
+    				Iword iword=sentenceSim.findWordProperty(text);
+    				
+    				if( iword !=null ){
+    					JSONObject reswordJson = new JSONObject();  
+        				//课文原句+相关的图片
+        				reswordJson.put("label", text);
+        				reswordJson.put("propertyText", iword.getPropertyText());
+        				Iword iwordtext=iwordService.find("o.content = ?",text);
+        				String wordId=iwordtext.getId();
+        				//根据单词id来查询单词的对象
+        				WordResource wordpictrue=wordResourceService.find("o.wordId = ?", wordId);
+        				if( wordpictrue !=null){
+        					//获取单词图片的保存路径
+            				pictruepath=wordpictrue.getSavepath();
+            				System.out.println("单词的保存路径"+pictruepath);
+            				System.out.println("课文原句"+iword.getPropertyText());
+        				}
+        				
+        				reswordJson.put("pictruepath", pictruepath);
+        				//情景段落
+        				reswordJson.put("propertyScene", iword.getPropertyScene());
+        				//延伸例句
+        				reswordJson.put("propertyExtend", iword.getPropertyExtend());
+        				//联想+相关图片 
+        				reswordJson.put("propertyAssociate", iword.getPropertyAssociate());
+        				List<Object>list=new ArrayList<Object>();
+        				list.add(wordId);
+        				list.add(13);
+        				list.add(1);
+        				List<WordAttributeResource>listwordAttributeAssociate=wordAttributeResourceService.getAllData("o.wordId = ? and o.attribute=? and o.type=?", list.toArray());
+        				
+        				
+        				String associatesavePath=null;
+        				if(listwordAttributeAssociate!=null && listwordAttributeAssociate.size()>0){
+        					System.out.println("-----------"+listwordAttributeAssociate.get(0).getName());
+        					StringBuilder str=new StringBuilder() ;
+	        				for(WordAttributeResource wa : listwordAttributeAssociate)
+	        				{
+	        					str.append(wa.getSavepath()+",");
+	        				   //a=wa.getSavepath();
+	        				}
+	        				 associatesavePath=str.substring(0, str.toString().length()-1);
+	        				System.out.println("++++++++++"+associatesavePath);
+        				}
+        				reswordJson.put("AssociatesavePath", associatesavePath);
+        				//同义词
+        				reswordJson.put("propertySynonyms", iword.getPropertySynonyms());
+        				//反义词   
+        				reswordJson.put("propertyAntonym", iword.getPropertyAntonym());   
+        				//拓展
+        				reswordJson.put("propertyExpand",iword.getPropertyExpand());
+        				//常用  
+        				reswordJson.put("propertyCommonUse",iword.getPropertyCommonUse());
+        				List<Object>listCommonUse=new ArrayList<Object>();
+        				listCommonUse.add(wordId);
+        				listCommonUse.add(20);
+        				listCommonUse.add(1);
+        				List<WordAttributeResource> listwordAttributeCommonUse=wordAttributeResourceService.getAllData("o.wordId = ? and o.attribute=? and o.type=?", list.toArray());
+        				
+        				String CommonUsesavePath = null;
+        				if( listwordAttributeCommonUse!=null&&listwordAttributeCommonUse.size()>0 ){
+        				System.out.println("-----------"+listwordAttributeCommonUse.get(0).getName());
+        				CommonUsesavePath = listwordAttributeCommonUse.get(0).getSavepath();
+        				}
+        				reswordJson.put("CommonUsesavePath", CommonUsesavePath);
+        				//百科
+        				reswordJson.put("propertyNcyclopedia", iword.getPropertyNcyclopedia());
+        				//用法
+        				reswordJson.put("propertyUse", iword.getPropertyUse());
+        				usersArray.add(reswordJson);
+    				}
+    				
+    			}else{	
+    				//根据句子进行查询
+    			    System.out.println("根据句子进行查询");
+    			    ISentence sentence=sentenceSim.maxSimilar(text);
+    				//senObject= JSONObject.fromObject(sentence);
+    			    JSONObject restextJson = new JSONObject();  
+    			    restextJson.put("text", text);
+    				//reswordJson.put("pictruepath", pictruepath);
+    			    usersArray.add(restextJson);
+    			}
+    		}else{
+    			status.setMessage("请填写查询单词!");
+    			status.setStatus(StatusConstant.PARAM_ERROR);
+    		}
+				
     	}catch(Exception e ){
     		status.setMessage("未知异常");
     		status.setStatus(StatusConstant.UNKONWN_EXECPTION);

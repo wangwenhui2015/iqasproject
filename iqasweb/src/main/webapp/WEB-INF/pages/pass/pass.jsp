@@ -15,10 +15,8 @@
 </head>
 <body>
  <form action="<c:url value='/pass/control/passControll/listWordResource.html'/>"  class="form-inline">
-    <%String wordUuid =(String)request.getAttribute("wordUuid");%><br>
-            单词的wordUuid是:<%=wordUuid%><br><br>
-    <%String ResourceName =(String)request.getAttribute("ResourceName");%><br>
-            单词的ResourceName是:<%=ResourceName%><br><br>  
+    <%String wordId =(String)request.getAttribute("wordId");%><br>
+            单词的wordId是:<%=wordId%><br><br>
     <%String ResourcePath =(String)request.getAttribute("ResourcePath");%><br>
             单词的ResourcePath是:<%=ResourcePath%><br><br>
     <p>boat对应的图片：<img src="<%=ResourcePath%>" width="128" height="128"> </p>

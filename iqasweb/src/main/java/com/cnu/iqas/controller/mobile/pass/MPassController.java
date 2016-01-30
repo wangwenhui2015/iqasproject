@@ -24,6 +24,8 @@ public class MPassController {
 	String pictruepath;
 	String picwrongpath1;
 	String picwrongpath2;
+	String picwrongcontent1;
+	String picwrongcontent2;
 	private IwordService iwordService;
 	private WordResourceService wordResourceService;
 	private String content; 
@@ -69,44 +71,64 @@ public class MPassController {
 	JSONArray usersArray = new JSONArray();
 	try {
 		Iword iword=iwordService.find("o.content = ?",content);
-		String wordId=iword.getId();
-	do
-	  {	//根据单词id来查询单词的对象
-		WordResource wordpictrue=wordResourceService.find("o.wordId = ?", wordId);
-		//随机查询两个图片对象
-		WordResource wordpicwrong1=wordResourceService.findByContent();
-		WordResource wordpicwrong2=wordResourceService.findByContent();
-		//获取单词图片的保存路径
-	    pictruepath=wordpictrue.getSavepath();
-	    picwrongpath1=wordpicwrong1.getSavepath();
-	    picwrongpath2=wordpicwrong2.getSavepath();
-	  }while(pictruepath.equals(picwrongpath1)||picwrongpath1.equals(picwrongpath2)||pictruepath.equals(picwrongpath2));
-		//usersArray.add("wordpicture", wordpicture.getSavepath());
-	    boolean b=pictruepath.equals(picwrongpath1)||picwrongpath1.equals(picwrongpath2)||pictruepath.equals(picwrongpath2);
-	    System.out.println("---------------------------"+b);
-	    //根据单词资源的保存路径来查询单词
-	    WordResource wordpicwrongpath1=wordResourceService.find("o.savepath = ?", picwrongpath1);
-	    WordResource wordpicwrongpath2=wordResourceService.find("o.savepath = ?", picwrongpath2);
-	    //根据单词资源表中的资源路径来查询单词content属性？？？？
-	    Iword word1=iwordService.find("o.id=?", wordpicwrongpath1.getWordId());
-	    String picwrongcontent1=word1.getContent();
-	    Iword word2=iwordService.find("o.id=?", wordpicwrongpath2.getWordId());
-	    String picwrongcontent2=word2.getContent();
-	    System.out.println("原来的单词"+content);
-	    System.out.println("第一个错误图片对应的单词"+picwrongcontent1);
-	    System.out.println("第二个错误图片对应的单词"+picwrongcontent2);
-		JSONObject picJson = new JSONObject();  
-		//单词内容存放在容器
-		picJson.put("content",content);
-		picJson.put("wordpicture",pictruepath);
-		picJson.put("picwrongcontent1", picwrongcontent1);
-		picJson.put("wordpicture1",picwrongpath1);
-		picJson.put("picwrongcontent2", picwrongcontent2);
-		picJson.put("wordpicture2",picwrongpath2);
-		usersArray.add(picJson);
-		//usersArray.add(wordpicture.getSavepath());
-		//usersArray.add(wordpicture1.getSavepath());
-		//usersArray.add(wordpicture2.getSavepath());
+		if( iword !=null){
+			String wordId=iword.getId();
+			
+			do{	//根据单词id来查询单词的对象
+				WordResource wordpictrue=wordResourceService.find("o.wordId = ?", wordId);
+				if( wordpictrue !=null){
+					//随机查询两个图片对象
+					WordResource wordpicwrong1=wordResourceService.findByContent();
+					WordResource wordpicwrong2=wordResourceService.findByContent();
+					if(wordpicwrong1!=null&&wordpicwrong2!=null)
+					{
+						//获取单词图片的保存路径
+					    pictruepath=wordpictrue.getSavepath();
+					    picwrongpath1=wordpicwrong1.getSavepath();
+					    picwrongpath2=wordpicwrong2.getSavepath();
+						
+					}
+					else{
+						
+						break;
+					}
+					
+				}	else{
+					
+					break;
+				}
+			  }while(pictruepath.equals(picwrongpath1)||picwrongpath1.equals(picwrongpath2)||pictruepath.equals(picwrongpath2));
+				//usersArray.add("wordpicture", wordpicture.getSavepath());
+			   // boolean b=pictruepath.equals(picwrongpath1)||picwrongpath1.equals(picwrongpath2)||pictruepath.equals(picwrongpath2);
+			    //System.out.println("---------------------------"+b);
+			    //根据单词资源的保存路径来查询单词
+			    WordResource wordpicwrongpath1=wordResourceService.find("o.savepath = ?", picwrongpath1);
+			    WordResource wordpicwrongpath2=wordResourceService.find("o.savepath = ?", picwrongpath2);
+			    //根据单词资源表中的资源路径来查询单词content属性？？？？
+			    if(wordpicwrongpath1!=null&&wordpicwrongpath2!=null)	
+			    {   
+			      Iword word1=iwordService.find("o.id=?", wordpicwrongpath1.getWordId());
+			      Iword word2=iwordService.find("o.id=?", wordpicwrongpath2.getWordId());
+			      if(word1!=null&&word2!=null)
+			       {
+			    	picwrongcontent1=word1.getContent();
+				    picwrongcontent2=word2.getContent();
+				    System.out.println("原来的单词"+content);
+				    System.out.println("第一个错误图片对应的单词"+picwrongcontent1);
+				    System.out.println("第二个错误图片对应的单词"+picwrongcontent2);
+			    	}
+			    }
+				JSONObject picJson = new JSONObject();  
+				//单词内容存放在容器
+				picJson.put("content",content);
+				picJson.put("wordpicture",pictruepath);
+				picJson.put("picwrongcontent1", picwrongcontent1);
+				picJson.put("wordpicture1",picwrongpath1);
+				picJson.put("picwrongcontent2", picwrongcontent2);
+				picJson.put("wordpicture2",picwrongpath2);
+				usersArray.add(picJson);
+		}
+		
 	}catch(Exception e ){
 		status.setMessage("未知异常");
 		status.setStatus(StatusConstant.UNKONWN_EXECPTION);

@@ -20,6 +20,8 @@ import com.cnu.iqas.listener.InitializedListener;
 import com.cnu.iqas.service.ontology.SentenceSim;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.noumenon.AddDeleteModifyQuery.Query.QueryWithManyWays;
+import com.noumenon.AddDeleteModifyQuery.Query.Impl.QueryWithManyWaysImpl;
 
 import AddDeleteModifyQuery.Query.QueryIndividualAndId;
 import AddDeleteModifyQuery.Query.QueryIndividualAndProperty;
@@ -371,62 +373,70 @@ public class SentenceSimImpl implements SentenceSim  {
 	@Override
 	public Iword findWordProperty(String str) {
 		Iword word  = null;
-	    QueryIndividualAndProperty queryIndividualAndProperty=new QueryIndividualAndPropertyImpl();
+		QueryWithManyWays queryIndividualAndProperty = new QueryWithManyWaysImpl();
+	    //QueryIndividualAndProperty queryIndividualAndProperty=new QueryIndividualAndPropertyImpl();
 		ResultSet resultsWordProperty=queryIndividualAndProperty.checkProperty(str);
-		 while (resultsWordProperty.hasNext()){
+		 while (resultsWordProperty.hasNext()){ 
 			QuerySolution solutionInstance = resultsWordProperty.next();
 			//-----------------------------------how to use-------------------------
 			//课文原句 
 			String propertyText = solutionInstance.get("?propertyText").toString();
-			String temppropertyText = propertyText.substring(0, propertyText.length() - 3);
+			String temppropertyText =subStringManage(propertyText);
+			//String temppropertyText = propertyText.substring(0, propertyText.length() - 3);
 			System.out.println("课文原句"+temppropertyText);
 			//情景段落
 			String propertyScene = solutionInstance.get("?propertyScene").toString();
-			String temppropertyScene = propertyScene.substring(0, propertyScene.length() - 3);
+			String temppropertyScene =subStringManage(propertyScene); 
 			System.out.println("情景段落"+temppropertyScene);
 			//延伸例句 
 			String propertyExtend = solutionInstance.get("?propertyExtend").toString();
-			String temppropertyExtend = propertyExtend.substring(0, propertyExtend.length() - 3);
+			String temppropertyExtend =subStringManage(propertyExtend); 
 			System.out.println("延伸例句 "+temppropertyExtend);
 			//-----------------------------------how to use-------------------------
 			
 			//-----------------------------------what else-------------------------
 			//联想
 			String propertyAssociate = solutionInstance.get("?propertyAssociate").toString();
-			String temppropertyAssociate = propertyAssociate.substring(0, propertyAssociate.length() - 3);
+			String temppropertyAssociate =subStringManage(propertyAssociate);  
 			System.out.println("联想 "+temppropertyAssociate);
 			//同义词 
 			String propertySynonyms = solutionInstance.get("?propertySynonyms").toString();
-			String temppropertySynonyms = propertySynonyms.substring(0, propertySynonyms.length() - 3);
+			String temppropertySynonyms =subStringManage(propertySynonyms);  
 			System.out.println("同义词 "+temppropertySynonyms);
 			//反义词 
 			String propertyAntonym = solutionInstance.get("?propertyAntonym").toString();
-			String temppropertyAntonym = propertyAntonym.substring(0, propertyAntonym.length() - 3);
+			String temppropertyAntonym = subStringManage(propertyAntonym); 
 			System.out.println("反义词 "+temppropertyAntonym);
 		    //拓展  
 			String propertyExpand = solutionInstance.get("?propertyExpand").toString();
-			String temppropertyExpand = propertyExpand.substring(0, propertyExpand.length() - 3);
+			String temppropertyExpand =subStringManage(propertyExpand);  
 			System.out.println("拓展 "+temppropertyExpand);
 			//常用
 			String propertyCommonUse = solutionInstance.get("?propertyCommonUse").toString();
-			String temppropertyCommonUse= propertyCommonUse.substring(0, propertyCommonUse.length() - 3);
+			String temppropertyCommonUse=subStringManage(propertyCommonUse);  
 			System.out.println("常用 "+temppropertyCommonUse);
 			//-----------------------------------what else-------------------------
 			
 			//-----------------------------------do you know?-------------------------
 			//百科 
 			String propertyNcyclopedia = solutionInstance.get("?propertyNcyclopedia").toString();
-			String temppropertyNcyclopedia= propertyNcyclopedia.substring(0, propertyNcyclopedia.length() - 3);
+			String temppropertyNcyclopedia=subStringManage(propertyNcyclopedia);  
 			System.out.println("百科 "+temppropertyNcyclopedia);
 			//用法 
 			String propertyUse = solutionInstance.get("?propertyUse").toString();
-			String temppropertyUse= propertyUse.substring(0, propertyUse.length() - 3);
+			String temppropertyUse=subStringManage(propertyUse); 
 			System.out.println("用法 "+temppropertyUse);
 			//-----------------------------------do you know?-------------------------
 			word = new Iword(temppropertyText, temppropertyScene, temppropertyExtend, temppropertyAssociate,
 			temppropertySynonyms,temppropertyAntonym,temppropertyExpand,temppropertyCommonUse,temppropertyNcyclopedia,temppropertyUse);
 		    }
 		    return word;
+	}
+	  // 处理字符串
+	private static String subStringManage(String string) {
+		String newString = string.substring(string.indexOf(")") + 1,
+				string.lastIndexOf("@"));
+		return newString;
 	}
 	/**
 	  * 该方法用于通过传入一个问句，提取问句的疑问词，在本题库中进行查询，将查询结果保存在Map集合，然后将问句与集合中的问句进行对比计算相似度。

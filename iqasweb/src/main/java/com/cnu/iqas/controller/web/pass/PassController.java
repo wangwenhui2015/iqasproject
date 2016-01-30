@@ -24,7 +24,7 @@ public class PassController {
 	String wordPicture2;
 	private IwordService iwordService;
 	private WordResourceService wordResourceService;
-	private String horse; 
+	String horse; 
 	@RequestMapping(value="list")
 	public ModelAndView listWordResource(String content){
 	ModelAndView mv = new ModelAndView(PageViewConstant.PASS_LIST);
@@ -44,7 +44,7 @@ public class PassController {
 		//usersArray.add("wordpicture", wordpicture.getSavepath());
 	System.out.println("图片1"+wordPicture1);
 	System.out.println("图片2"+wordPicture2); 
-	mv.addObject("wordUuid", wordId);
+	mv.addObject("wordId", wordId);
 	mv.addObject("ResourcePath", ResourcePath);
 	mv.addObject("wordPicture1", wordPicture1);
 	mv.addObject("wordPicture2", wordPicture2);
@@ -56,12 +56,6 @@ public class PassController {
 	@Resource
 	public void setIwordService(IwordService iwordService) {
 		this.iwordService = iwordService;
-	}
-	public String getHorse() {
-		return horse;
-	}
-	public void setHorse(String horse) {
-		this.horse = horse;
 	}
 	public WordResourceService getWordResourceService() {
 		return wordResourceService;
