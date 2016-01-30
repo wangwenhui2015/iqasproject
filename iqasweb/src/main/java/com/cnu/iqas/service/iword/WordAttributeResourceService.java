@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.iqas.bean.iword.WordAttributeResource;
@@ -13,6 +15,7 @@ import com.cnu.iqas.dao.base.DAO;
 /**
 * @author 王文辉 
 * @version 创建时间：2015年12月2日 
+* @version 修改时间：2016年1月29号
 * 类说明  单词属性资源服务接口
 */
 public interface WordAttributeResourceService extends IfetchResource<WordAttributeResource>{
@@ -31,6 +34,21 @@ public interface WordAttributeResourceService extends IfetchResource<WordAttribu
 	 * @param resourceattribute
 	 */
 	public void save(WordAttributeResource resourceattribute);
-	
-	
+	/**
+	 * 根据属性来获取实体
+	 * @param <T>
+	 * @param wherejpql 查询条件  "o.email=? "
+	 * @param attribute 实体的属性值
+	 * @return
+	 */
+	public WordAttributeResource find(String wherejpql, Object attribute);
+	/**
+	 * 根据条件查询所有数据
+	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
+	 * @param queryParams 查询条件占位符对应的参数值，
+	 */
+	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
+	public List<WordAttributeResource> getAllData(String wherejpql, Object[] queryParams);
+
 }
+

@@ -256,6 +256,62 @@ public class JsonTool {
 	 
 		JsonTool.putStatusJson(status, jsonObject);
 	}
+    //已经被删除的方法
+  /**
+	 * 将jsonArray和status对象按照格式封装到jsonObject中
+	 * @param jsonObject 要封装到的json对象
+	 * @param jsonArray json数组对象，对应data内容
+	 * @param status  此次操作的描述
+	 * @return
+	 * {
+	 *  status:1,
+	 *  message:"ok",
+	 *  result:{
+	 *   count:1,
+	 *   data:{
+	 *     ....
+	 *   }
+	 *  }
+	 *  
+	 * }
+	 * 
+	 */
+ @Deprecated
+public static void putJsonObject( JSONObject jsonObject,JSONArray jsonArray,MyStatus status){
+	
+		//result json
+		JSONObject resultObject = new JSONObject();
+		resultObject.put("count", jsonArray.size());
+		resultObject.put("data", jsonArray);
+		jsonObject.put("result", resultObject);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+	}
+	/**
+	 * 将jsonArray和status对象按照格式封装到jsonObject中
+	 * @param jsonObject 要封装到的json对象
+	 * @param resultJson result对象
+	 * @param status  此次操作的描述
+	 * @return
+	 * {
+	 *  status:1,
+	 *  message:"ok",
+	 *  result:{
+	 *   count:1,
+	 *   data:{
+	 *     ....
+	 *   }
+	 *  }
+	 *  
+	 * }
+	 * 
+	 */
+public static void putJsonObject( JSONObject jsonObject,JSONObject resultJson,MyStatus status){
+		//result json
+		jsonObject.put("result", resultJson);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+	}
 	/**
 	 * 
 	  * 将集合元素封装成json格式数据

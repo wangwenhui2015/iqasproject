@@ -52,6 +52,18 @@ public interface IwordService {
 	 * @return 查询结果类
 	 */
 	public QueryResult<Iword> getScrollData(int firstindex, int maxresult);
+	/**
+	 * 根据属性来获取实体
+	 * @param <T>
+	 * @param wherejpql 查询条件  "o.email=? "
+	 * @param attribute 实体的属性值
+	 * @return
+	 */
+	public Iword find(String wherejpql, Object attribute);
 	
 	
 }
+
+	
+	
+

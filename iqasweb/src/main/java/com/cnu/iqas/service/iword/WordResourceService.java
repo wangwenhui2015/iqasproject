@@ -58,6 +58,18 @@ public interface WordResourceService  extends IfetchResource<WordResource>{
 	 * @param id
 	 */
 	public void delete(String id);
-
-
+	/**
+	 * 根据属性来获取实体
+	 * @param <T>
+	 * @param wherejpql 查询条件  "o.email=? "
+	 * @param attribute 实体的属性值
+	 * @return
+	 */
+	public WordResource find(String wherejpql, Object attribute);
+	/**
+	 * 根据单词内容查找一个单词资源对象
+	 * @return
+	 */
+	public WordResource findByContent();
+		
 }

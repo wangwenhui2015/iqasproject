@@ -102,6 +102,18 @@ public class WordResourceServiceImpl implements WordResourceService{
 	     }
 		return null;
 	}
+
+	@Override
+	public WordResource find(String wherejpql, Object attribute) {
+		// TODO Auto-generated method stub
+		return wordResourceDao.find(wherejpql, attribute);
+	}
+
+	@Override
+	public WordResource findByContent() {
+		// TODO Auto-generated method stub
+		return wordResourceDao.findByContent();
+	}
 	
 	
 }

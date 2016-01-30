@@ -27,6 +27,7 @@ import com.cnu.iqas.utils.PropertyUtils;
 /**
 * @author 王文辉
 * @version 创建时间：2015年12月2日 上午16:21:23
+* @version 修改时间：2016年1月29号
 * 类说明 : 单词属性资源服务接口的实现类
 */
 @Service("wordAttributeResourceService")
@@ -84,6 +85,18 @@ public class WordAttributeResourceServiceImpl implements WordAttributeResourceSe
 	    	 }
 	     }
 		return null;
+	}
+
+	@Override
+	public WordAttributeResource find(String wherejpql, Object attribute) {
+		// TODO Auto-generated method stub
+		return wordAttributeResourceDao.find(wherejpql, attribute);
+	}
+
+	@Override
+	public List<WordAttributeResource> getAllData(String wherejpql, Object[] queryParams) {
+		// TODO Auto-generated method stub
+		return wordAttributeResourceDao.getAllData(wherejpql, queryParams);
 	}
 
 

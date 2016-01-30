@@ -1,9 +1,11 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@page contentType="text/html; charset=utf-8"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -34,9 +36,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          拓展：${word.propertyExpand}<br><br> 
          常用：${word.propertyCommonUse}<br><br>     
          百科：${word.propertyNcyclopedia}<br><br>       
-          用法：${word.propertyUse}<br><br>  
-                 
-          <%-- <span class="btn btn-warning ">中文含义:</span><input type="text" style="height:30px;width:300px"name="text" value="${word.propertyChinese }"><br><br><br>
+          用法：${word.propertyUse}<br><br> 
+          
+    <input type="button" name="Log" value="单词属性" onclick="window.location.href='<%=basePath%>pass/control/passControl/list.html'">&nbsp;&nbsp; </td>
+                     
+          
+    <%-- <input type="button" name="button" value="查看" onclick=window.location.href="<%=basePath%>/pages/pass/pass.jsp";/>           
+           <span class="btn btn-warning ">中文含义:</span><input type="text" style="height:30px;width:300px"name="text" value="${word.propertyChinese }"><br><br><br>
         <span class="btn btn-primary">主题-功能意念：</span>${word.propertyFunction }<br><br>    
          <span class="btn btn-success ">反义词：</span>${word.propertyAntonym }<br><br>   
          <span class="btn btn-info">同义词：</span>同义词：${word.propertySynonyms }<br><br>       --%>  

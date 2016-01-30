@@ -255,7 +255,7 @@ public class WordResourceController  implements ServletContextAware{
 					//4.建立资源类保存信息
 					 WordResource resource = new WordResource();
 					 //5.设置资源所属的单词的id
-					 resource.setWordId(word.getId());
+				     resource.setWordId(word.getId());
 					 resource.setName(fileName);//单词原名称
 					 resource.setSavepath(filesavepath);//包含文件名的相对保存路径
 					 resource.setType(formbean.getType());//资源类型

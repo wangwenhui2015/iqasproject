@@ -70,5 +70,11 @@ public class IwordServiceImpl  implements IwordService {
 		// TODO Auto-generated method stub
 		return iwordDao.getScrollData(firstindex, maxresult);
 	}
+
+	@Override
+	public Iword find(String wherejpql, Object attribute) {
+		// TODO Auto-generated method stub
+		return iwordDao.find(wherejpql, attribute);
+	}
 	
 }

@@ -93,6 +93,14 @@ public class PageViewConstant {
 	 * 添加商品界面
 	 */
 	public final static String COMMODITY_ADD_UI="admincenter/store/addcommodity";
+	/**
+	 * 闯关列表界面
+	 */
+	public final static String PASS_LIST="pass/pass"; 
+	
+	
+	
+	
 	
 	
 	
