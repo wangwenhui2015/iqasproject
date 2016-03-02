@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.user.UserForm;
-import com.cnu.iqas.service.user.UserService;
+import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.utils.WebUtils;
 /**
 * @author 周亮 
@@ -22,7 +22,7 @@ import com.cnu.iqas.utils.WebUtils;
 @SessionAttributes({"user"})   //将ModelMap中属性名字为user的放入session中。这样，request和session中都有了。
 public class UserController {
 	
-	private UserService userService;
+	private IUserBaseService userService;
 	
 	
 	
@@ -41,7 +41,7 @@ public class UserController {
 			mv.addObject("error", "请填写用户名和密码!");
 		}else{
 		 //2.检查用户是否存在
-			User u =userService.validate(formbean.getUserName(), formbean.getPassword());
+			User u =(User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 			
 			if( null == u ){
 					mv.addObject("error", "用户名或密码有误!");
@@ -71,7 +71,7 @@ public class UserController {
 			mv.addObject("error", "请填写用户名和密码!");
 		}else{
 			//2.查看用户是否已存在
-			User user =userService.findByName(formbean.getUserName());
+			User user =(User) userService.findByName(formbean.getUserName());
 			if( user != null)
 				mv.addObject("error", "用户名已被注册!");
 			else{
@@ -91,11 +91,11 @@ public class UserController {
 	}
 	
 	
-	public UserService getUserService() {
+	public IUserBaseService getUserService() {
 		return userService;
 	}
 	@Resource
-	public void setUserService(UserService userService) {
+	public void setUserService(IUserBaseService userService) {
 		this.userService = userService;
 	}
 	

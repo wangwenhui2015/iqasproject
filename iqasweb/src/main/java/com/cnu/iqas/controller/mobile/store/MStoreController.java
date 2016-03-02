@@ -24,11 +24,11 @@ import com.cnu.iqas.bean.store.UserCommodityRel;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.constant.StatusConstant;
+import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.service.stroe.CommodityService;
 import com.cnu.iqas.service.stroe.CommodityTypeService;
 import com.cnu.iqas.service.stroe.StoreService;
 import com.cnu.iqas.service.stroe.UserCommodityRelService;
-import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.JsonTool;
 import com.hp.hpl.jena.sparql.pfunction.library.str;
 
@@ -58,7 +58,7 @@ public class MStoreController {
 	/**
 	 * 用户服务接口
 	 */
-	private UserService userService;
+	private IUserBaseService userService;
 	/**
 	 * 商店服务接口
 	 */
@@ -113,7 +113,7 @@ public class MStoreController {
 		
 		try {
 			//1.根据用户名密码查询用户是否存在
-			User user = userService.validate(userName, password);
+			User user = (User) userService.findUser(userName, password);
 			if( user !=null){
 				//2.查看用户购买记录
 				
@@ -220,7 +220,7 @@ public class MStoreController {
 		
 		try{
 		//1.根据用户名密码查询用户是否存在
-		User user = userService.validate(userName, password);
+		User user = (User) userService.findUser(userName, password);
 		if( user !=null){
 			jsonDes.put("coinCount", user.getAllCoins());//金币总数
 			//当前可查看商品类型下已购买商品种数
@@ -300,7 +300,7 @@ public class MStoreController {
 		boolean isOpen=false;
 		try {
 			//1.根据用户名密码查询用户是否存在
-			User user = userService.validate(userName, password);
+			User user = (User) userService.findUser(userName, password);
 			if( user !=null){
 				if( id!=null && !"".equals(id.trim())){
 					//1.查询商品
@@ -410,11 +410,11 @@ public class MStoreController {
 	public void setCommodityService(CommodityService commodityService) {
 		this.commodityService = commodityService;
 	}
-	public UserService getUserService() {
+	public IUserBaseService getUserService() {
 		return userService;
 	}
 	@Resource
-	public void setUserService(UserService userService) {
+	public void setUserService(IUserBaseService userService) {
 		this.userService = userService;
 	}
 	public StoreService getStoreService() {

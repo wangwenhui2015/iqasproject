@@ -72,6 +72,7 @@ public class JsonTool {
 		 *  }
 		 * }
 	 */
+	@Deprecated
 	public static <T> String createJson(List<T> list,JsonConfig config,MyStatus status){
 	
 		//整个json
@@ -121,6 +122,7 @@ public class JsonTool {
 		 *  }
 		 * }
 	 */
+	@Deprecated
 	public static <T> JSONObject createJsonObject(List<T> list,JsonConfig config,MyStatus status){
 		
 		//整个json
@@ -180,17 +182,44 @@ public class JsonTool {
 		//数组json
 		JSONArray jsonArray = new JSONArray();
 		
-		int count =0;
 		if( listJson !=null ){
 			for( JSONObject entity :listJson )
-			{
-				jsonArray.add(entity);
-				count++;
-			}
+			  jsonArray.add(entity);
 		}
-		resultObject.put("count", count);
+		resultObject.put("count", jsonArray.size());
 		resultObject.put("data", jsonArray);
 		
+		jsonObject.put("result", resultObject);
+	 
+		JsonTool.putStatusJson(status, jsonObject);
+		mv.addObject("json", jsonObject.toString());
+		return mv;
+	}	
+	
+	/**
+	 * 将一个对象封装成json对象并生成返回视图
+	 * @param key ，JSONObject对象对应的key值
+	 * @param singleObject 要封装的JSONObject对象
+	 * @param status 此次操作状态
+	 * @return：返回数据格式
+	 * {
+		 *  status:1,
+		 *  message:"ok",
+		 *  result:{
+		 *	  "key":{id:"2353sdkfhosdf",name:boat.jpg,type=1,savepath:"http://172.19.68.77:8080/zhushou/images/logo.jpg"}
+		 *      
+		 *  }
+		 * }
+	 */
+	public static ModelAndView generateModelAndView(String key,JSONObject singleObject,MyStatus status){
+		ModelAndView mv = new ModelAndView(PageViewConstant.JSON);
+		
+		//整个json
+		JSONObject jsonObject = new JSONObject();
+		//result json
+		JSONObject resultObject = new JSONObject();
+		//将单条记录存进result中
+		resultObject.put(key, singleObject);
 		jsonObject.put("result", resultObject);
 	 
 		JsonTool.putStatusJson(status, jsonObject);
@@ -250,6 +279,7 @@ public class JsonTool {
 	 * }
 	 * 
 	 */
+  @Deprecated
   public static void createJsonObject( JSONObject jsonObject,JSONObject resultJson,MyStatus status){
 		//result json
 		jsonObject.put("result", resultJson);
@@ -306,6 +336,7 @@ public static void putJsonObject( JSONObject jsonObject,JSONArray jsonArray,MySt
 	 * }
 	 * 
 	 */
+ @Deprecated
 public static void putJsonObject( JSONObject jsonObject,JSONObject resultJson,MyStatus status){
 		//result json
 		jsonObject.put("result", resultJson);
@@ -333,6 +364,7 @@ public static void putJsonObject( JSONObject jsonObject,JSONObject resultJson,My
 		 *  }
 		 * }
 	 */
+    @Deprecated
 	public static <T> String createJson(List<T> list,MyStatus status){
 		return JsonTool.createJson( list,null,status);
 	}

@@ -1,0 +1,16 @@
+
+登录
+http://172.19.203.92:8080/iqasweb/mobile/ios/user/login.html
+参数
+	 * @param userName 用户名
+	 * @param password 密码
+	 
+
+ 注册
+ http://172.19.203.92:8080/iqasweb/mobile/ios/user/register.html
+参数
+	 * @param userName 用户名，
+	 * @param password 密码，
+	 * @param sex 性别，0：男，1：女
+	 * @param grade 年级  范围1-6
+	 

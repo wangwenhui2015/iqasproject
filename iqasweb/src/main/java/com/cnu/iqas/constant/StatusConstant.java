@@ -45,19 +45,23 @@ public class StatusConstant {
 	 * 用户金币不足
 	 */
 	public static int USER_COINS_NOT_ENOUGH=2006;
+	/**
+	 * 用户注册信息无效
+	 */
+	public static int USER_REGISTERINFO_INVALIDATE=2007;
 
 	/**
 	 * 好友不存在
 	 */
-	public static int FRIEND_NOT_EXIST =2007;
+	public static int FRIEND_NOT_EXIST =3001;
 	/**
 	 * 好友已经存在
 	 */
-	public static int FRIEND_HAVE_EXIST =2008;
+	public static int FRIEND_HAVE_EXIST =3002;
 	/**
 	 * 好友请求无效
 	 */
-	public static int FRIEND_REQUEST_INVAIN=2009;
+	public static int FRIEND_REQUEST_INVAIN=3003;
 
 	
 	/* 商店状态信息*/

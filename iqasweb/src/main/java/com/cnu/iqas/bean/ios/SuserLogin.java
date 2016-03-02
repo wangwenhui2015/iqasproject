@@ -1,4 +1,4 @@
-package com.cnu.iqas.bean.user;
+package com.cnu.iqas.bean.ios;
 
 import java.util.Date;
 
@@ -14,14 +14,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
 * @author 周亮 
-* @version 创建时间：2016年1月27日 上午11:05:40
-* 类说明：用户登录记录表
-*/
+* @version 创建时间：2016年3月1日 上午10:13:47
+* 类说明: ios用户登录表
+* 
 
+*/
 @Entity
-@Table(name="t_userLogin")
+@Table(name="t_suserlogin")
 @GenericGenerator(name="uuidGenderator",strategy="uuid")
-public class UserLogin {
+public class SuserLogin {
 	/**
 	 * 登录中
 	 */
@@ -35,13 +36,13 @@ public class UserLogin {
 	 */
 	public static int UNNORMAL_NOLOGOUT=3;
 	/**
-	 * 标识id
+	 * 主键
 	 */
-	private String id;
+	private String userLoginId;
 	/**
-	 * 用户id
+	 * 用户id		外键User
 	 */
-	private String userId;
+	private String userId;	
 	/**
 	 * 用户名
 	 */
@@ -51,40 +52,38 @@ public class UserLogin {
 	 */
 	private String ip;
 	/**
-	 * 登录时间
+	 * 登录地区
+	 */
+	private String area;
+	/**
+	 * 登录时间,默认当前时间
 	 */
 	private Date loginTime=new Date();
+	
 	/**
 	 * 登出时间
 	 */
-	private Date logoutTime =null;
-	
-
+	private Date logoutTime;
 	/**
 	 * 登录状态	1：登录中 2：退出登录 3:非正常退出,默认值1
 	 */
 	private Integer loginState=LOGINING;
-	
 	@Id @GeneratedValue(generator="uuidGenderator")
-	public String getId() {
-		return id;
+	public String getUserLoginId() {
+		return userLoginId;
 	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	@Column(nullable=false)
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserLoginId(String userLoginId) {
+		this.userLoginId = userLoginId;
 	}
 	@Column(nullable=false)
-	public String getIp() {
-		return ip;
+	public String getUserId() {
+		return userId;
 	}
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public void setLoginState(Integer loginState) {
+		this.loginState = loginState;
 	}
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getLoginTime() {
@@ -100,18 +99,27 @@ public class UserLogin {
 	public void setLogoutTime(Date logoutTime) {
 		this.logoutTime = logoutTime;
 	}
-	
+	@Column(nullable=false)
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 	public Integer getLoginState() {
 		return loginState;
 	}
-	public void setLoginState(Integer loginState) {
-		this.loginState = loginState;
+	public String getUserName() {
+		return userName;
 	}
-	public String getUserId() {
-		return userId;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 	
 	

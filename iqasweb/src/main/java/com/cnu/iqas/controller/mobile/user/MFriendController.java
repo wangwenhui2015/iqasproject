@@ -15,8 +15,8 @@ import com.cnu.iqas.bean.user.Friend;
 import com.cnu.iqas.bean.user.FriendRequest;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.constant.StatusConstant;
+import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.service.user.FriendService;
-import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.PropertyUtils;
 import com.cnu.iqas.vo.mobile.FriendVoManage;
@@ -45,7 +45,7 @@ public class MFriendController {
 	/**
 	 * 用户服务类
 	 */
-	private UserService userService;
+	private IUserBaseService userService;
 	/**
 	 * 根据账号查找好友
 	 * @param userName
@@ -74,7 +74,7 @@ public class MFriendController {
 			//查找到的好友
 			JSONObject userJson=null;
 			//用户名查找用户
-			User user= userService.findByName(userName);
+			User user= (User) userService.findByName(userName);
 			if( user !=null){
 				userJson =new JSONObject();
 				userJson.put("userName", user.getUserName());
@@ -111,7 +111,7 @@ public class MFriendController {
 		
 		try {
 			//校验用户密码和用户名是否有效
-			User own = userService.validate(formbean.getUserName(), formbean.getPassword());
+			User own = (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 			if( own !=null){
 				//对方是否已经是好友
 				boolean isExist =friendService.isExistFriend(formbean.getUserName(), formbean.getFriendUserName());
@@ -129,7 +129,7 @@ public class MFriendController {
 						//之前未发起过请求
 						
 						//校验好友用户名是否有效
-						User friend= userService.findByName(formbean.getFriendUserName());
+						User friend= (User) userService.findByName(formbean.getFriendUserName());
 						
 						if( friend!=null){
 							//添加请求
@@ -176,7 +176,7 @@ public class MFriendController {
 		List<JSONObject> requestJsonList = new ArrayList<>();
 		try {
 			//校验用户密码和用户名是否有效
-			User own = userService.validate(formbean.getUserName(), formbean.getPassword());
+			User own = (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 			if( own !=null){
 				//查看别人发送来的添加请求,自己在表中应该是被请求方，所以对应表中friendUserName字段
 				List<FriendRequest> requests= friendService.fetchRequests(formbean.getUserName());
@@ -225,7 +225,7 @@ public class MFriendController {
 		
 		try {
 			//校验用户密码和用户名是否有效
-			User own = userService.validate(formbean.getUserName(), formbean.getPassword());
+			User own = (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 			if( own !=null){
 				
 			  //1.查看请求 
@@ -277,7 +277,7 @@ public class MFriendController {
 		
 		try {
 			//校验用户密码和用户名是否有效
-			User own = userService.validate(formbean.getUserName(), formbean.getPassword());
+			User own = (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 			if( own !=null){
 				
 			  //1.查看请求 
@@ -315,7 +315,7 @@ public class MFriendController {
 		MyStatus status = new MyStatus();
 		try {
 			//校验用户密码和用户名是否有效
-			User own = userService.validate(formbean.getUserName(), formbean.getPassword());
+			User own = (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 			if( own !=null){
 				//删除好友
 				friendService.deleteFriend(formbean.getFriendRelId());
@@ -346,7 +346,7 @@ public class MFriendController {
 		try {
 			String userName = formbean.getUserName();
 			//校验用户密码和用户名是否有效
-			User own = userService.validate(userName, formbean.getPassword());
+			User own = (User) userService.findUser(userName, formbean.getPassword());
 			if( own !=null){
 				//查看好友关系记录
 				List<Friend> friends= friendService.myFriends(userName);
@@ -364,7 +364,7 @@ public class MFriendController {
 						
 						//获取好友头像,金币
 						String picturecPath = null;
-						User fu = userService.findByName(friendUserName);
+						User fu = (User) userService.findByName(friendUserName);
 						
 						if( fu !=null ){
 							//目前存放项目logo图片
@@ -456,11 +456,11 @@ public class MFriendController {
 		}
 		return null;
 	}
-	public UserService getUserService() {
+	public IUserBaseService getUserService() {
 		return userService;
 	}
 	@Resource
-	public void setUserService(UserService userService) {
+	public void setUserService(IUserBaseService userService) {
 		this.userService = userService;
 	}
 

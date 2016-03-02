@@ -24,21 +24,7 @@ import com.cnu.iqas.utils.WebUtils;
 @Repository("userDao")
 public class UserDaoImpl  extends DaoSupport<User> implements UserDao {
 	
-	@Override
-	public User validate(final String userName, final String password) {
-		User user = getHt().execute(new HibernateCallback<User>() {
-			@Override
-			public User doInHibernate(Session session)
-					throws HibernateException, SQLException {
-				User user = (User) session.createQuery("from User o where  o.userName=:userName and  o.password=:password")
-								.setParameter("userName", userName)
-								.setParameter("password", password)
-								.uniqueResult();
-				return user;
-			}
-		});
-		return user;
-	}
+	
 	@Override
 	public User findByName(final String userName) {
 		User user = getHt().execute(new HibernateCallback<User>() {
@@ -47,6 +33,21 @@ public class UserDaoImpl  extends DaoSupport<User> implements UserDao {
 					throws HibernateException, SQLException {
 				User user = (User) session.createQuery("from User o where  o.userName=:userName ")
 								.setParameter("userName", userName)
+								.uniqueResult();
+				return user;
+			}
+		});
+		return user;
+	}
+	@Override
+	public User findByNameAndPas(final String userName,final  String password) {
+		User user = getHt().execute(new HibernateCallback<User>() {
+			@Override
+			public User doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				User user = (User) session.createQuery("from User o where  o.userName=:userName and  o.password=:password")
+								.setParameter("userName", userName)
+								.setParameter("password", password)
 								.uniqueResult();
 				return user;
 			}

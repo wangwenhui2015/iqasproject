@@ -24,8 +24,8 @@ import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.formbean.BaseForm;
 import com.cnu.iqas.formbean.user.UserForm;
+import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.service.user.StudyDateService;
-import com.cnu.iqas.service.user.UserService;
 import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.WebUtils;
 
@@ -42,7 +42,7 @@ import net.sf.json.JsonConfig;
 @RequestMapping(value="/mobile/user/")
 public class MUserController {
 	private Logger logger = LogManager.getLogger(MUserController.class);
-	private UserService userService;
+	private IUserBaseService userService;
 	/**
 	 * 用户学习记录服务类
 	 */
@@ -113,7 +113,7 @@ public class MUserController {
 		//----以下为业务逻辑，
 		try{
 			if(BaseForm.validate(userName)&& BaseForm.validate(password)){
-				User user =userService.findByName(userName);
+				User user =(User) userService.findByName(userName);
 				//检查用户名是否存在
 				if( null==user)
 				{
@@ -204,7 +204,7 @@ public class MUserController {
 		JsonConfig userConfig = new JsonConfig();
 		try{
 				//检查账号是否存在
-				User user= userService.login(formbean.getUserName(), formbean.getPassword(),request.getRemoteHost());
+				User user= (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
 				if( null==user )
 				{
 					status.setMessage("用户名或者密码有误!");
@@ -218,7 +218,7 @@ public class MUserController {
 					userObject.put("successRate", successRate);
 					//加入集合中
 					userlist.add(userObject);
-					
+					userService.addLoginRecord(user.getUserId(), formbean.getUserName(), request.getRemoteHost());
 				}
 			
 		}catch(Exception e ){
@@ -232,6 +232,27 @@ public class MUserController {
 		}
 	}
 	
+	
+	/**
+	 * 退出
+	 * 用户名，密码
+	 * @param formbean
+	 * @return
+	 */
+	@RequestMapping(value="exit")
+	public ModelAndView exit(String userName,String password,HttpServletRequest request){
+		
+		MyStatus status = new MyStatus();
+		//校验用户名，密码
+		if( !WebUtils.isNull(userName) && !WebUtils.isNull(password)){
+		    userService.logout(userName, password, request.getRemoteHost());
+		}else{
+			status.setStatus(StatusConstant.USER_NAME_OR_PASSWORD_ERROR);
+			status.setMessage("用户名或者密码有误");
+		}
+		//返回结果
+		return JsonTool.generateModelAndView( status);
+	}
 	/**
 	 * 将double类型通过率转换成带%号的通关率
 	 * @param successRate ，通过率，如：0.6
@@ -275,7 +296,7 @@ public class MUserController {
 				//System.out.println(bindingResult.hasErrors()+":"+bindingResult.getFieldValue("username")+"："+bindingResult.getFieldValue("password"));
 				//检查账号是否存在
 				//User user = userService.find(formbean.getUsername());
-				User user= userService.findByName(userName);
+				User user= (User) userService.findByName(userName);
 				if( null==user )
 				{
 					scode = StatusConstant.USER_NAME_OR_PASSWORD_ERROR;
@@ -376,7 +397,7 @@ public class MUserController {
 		JSONObject resultObject = new JSONObject();
 		//------------------以下为业务逻辑，此处可以采用面向切面编程
 		try{
-				User user= userService.validate(userName,password);
+				User user= (User) userService.findUser(userName,password);
 				if( null==user )
 				{
 					status.setStatus(StatusConstant.USER_NAME_OR_PASSWORD_ERROR);
@@ -442,11 +463,11 @@ public class MUserController {
 	public void setStudyDateService(StudyDateService studyDateService) {
 		this.studyDateService = studyDateService;
 	}
-	public UserService getUserService() {
+	public IUserBaseService getUserService() {
 		return userService;
 	}
 	@Resource
-	public void setUserService(UserService userService) {
+	public void setUserService(IUserBaseService userService) {
 		this.userService = userService;
 	}
 	

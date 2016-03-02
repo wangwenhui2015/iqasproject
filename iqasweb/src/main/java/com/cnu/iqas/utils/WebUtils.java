@@ -13,7 +13,12 @@ public class WebUtils {
 	//16进制字符
 	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
 			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
-	/*将表单类中的信息拷贝到对应的类中 */
+	
+	/**
+	 * 将表单类中的信息拷贝到对应的类中
+	 * @param dest  类
+	 * @param src  表单信息
+	 */
 	public static void copyBean(Object dest,Object src){
 		try {
 			// 通过BeanUtils类调用方法将表单类中的信息拷贝到对应的类中 ，拷贝过程中只支持8中基本数据类型
@@ -130,4 +135,16 @@ public class WebUtils {
         } else
             return String.format("%d B", size);
     }
+    
+    /**
+	 * 校验字符串是否为空或者空字符串
+	 * @param str
+	 * @return 空或者空字符串返回true
+	 */
+	public static boolean isNull(String str){
+		if( str!=null && str.trim()!="")
+			return false;
+		else
+			return true;
+	}
 }
