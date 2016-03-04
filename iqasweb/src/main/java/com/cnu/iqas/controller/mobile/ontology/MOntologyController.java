@@ -70,7 +70,7 @@ public class MOntologyController {
 		//JSONObject senObject ;
 		//总的json对象
 		JSONObject jsonObject = new JSONObject();
-		JSONArray usersArray = new JSONArray();
+		JSONArray usersArray = new JSONArray(); 
     	try {
     		
     		if( text!=null && !text.trim().equals("")){

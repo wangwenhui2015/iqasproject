@@ -2,7 +2,6 @@ package com.noumenon.OntologyManage.Impl;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,17 +15,11 @@ import java.util.Vector;
 
 import org.springframework.stereotype.Service;
 
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.InfModel;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.reasoner.rulesys.GenericRuleReasoner;
-import com.hp.hpl.jena.reasoner.rulesys.Rule;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
@@ -46,7 +39,6 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-
 @Service("ontologyManage")
 public class OntologyManageImpl implements OntologyManage {
 
@@ -459,6 +451,14 @@ public class OntologyManageImpl implements OntologyManage {
 
 		return resultsInstance;
 	}
+	
+	@Override
+	public ResultSet QueryIndividualAllId(String yourWord) {
+
+		ResultSet resultsInstance = queryWithManyWays.checkAllIdOfAnIndividual(yourWord);
+
+		return resultsInstance;
+	}
 
 	@Override
 	public ResultSet QuerySentenceIndividualDependOnId(String yourID) {
@@ -776,7 +776,37 @@ public class OntologyManageImpl implements OntologyManage {
 
 	@Override
 	public List<ResultSet> QueryBrotherIndividual(String yourTheme) {
-
+//		// 查找该单词的的主题属性值
+//		String[] theme = { "?propertyTopic", "?propertyFunction"};
+//		ResultSet resultsTopicValue = queryWithManyWays
+//				.checkTopicValue(yourWord);
+//		String yourThemeValue = null;
+//		String yourThemeValueFlag1 = null;
+//		String yourThemeValueFlag2 = null;
+//		String themeSPARQL = null;
+//		if (resultsTopicValue.hasNext()) {
+//			while (resultsTopicValue.hasNext()) {
+//				// QuerySolution next()
+//				// Moves onto the next result.
+//				// 移动到下个result上
+//				QuerySolution solutionPropertyValue = resultsTopicValue.next();
+//				for (int i = 0; i < theme.length; i++) {
+//					yourThemeValue = solutionPropertyValue.get(theme[i])
+//							.toString();
+//					if (yourThemeValue.contains("无")) {
+//						continue;
+//					} else {
+//						yourThemeValueFlag1 = substringManage3(yourThemeValue);
+//						yourThemeValueFlag2 = substringManage2(yourThemeValue);
+//						themeSPARQL = theme[i];
+//					}
+//				}
+//				System.out.println(yourWord + "的主题是： " + yourThemeValue);
+//			}
+//		} else {
+//			System.out.println("该单词无主题");
+//		}
+		
 		String yourThemeValueFlag1 = substringManage2(yourTheme);
 		String yourThemeValueFlag2 = substringManage3(yourTheme);
 		
@@ -813,7 +843,8 @@ public class OntologyManageImpl implements OntologyManage {
 
 	// 处理字符串：读取主题属性值中“(”之前的字符串
 	private static String substringManage2(String string) {
-		String newString = string.substring(0,string.lastIndexOf("("));
+		String newString = string.substring(0,
+				string.lastIndexOf("("));
 		return newString;
 	}
 	

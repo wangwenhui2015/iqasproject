@@ -31,7 +31,7 @@ import net.sf.json.JsonConfig;
 */
 @Controller
 @RequestMapping(value="/mobile/ios/user/")
-public class MLoginController {
+public class SLoginController {
 
 	/**
 	 * 用户基本服务接口

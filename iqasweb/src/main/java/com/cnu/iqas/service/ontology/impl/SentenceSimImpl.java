@@ -378,6 +378,10 @@ public class SentenceSimImpl implements SentenceSim  {
 		ResultSet resultsWordProperty=queryIndividualAndProperty.checkProperty(str);
 		 while (resultsWordProperty.hasNext()){ 
 			QuerySolution solutionInstance = resultsWordProperty.next();
+
+			//单词id
+			String propertyID = solutionInstance.get("?propertyID").toString();
+			String wordid=subStringManage(propertyID);
 			//-----------------------------------how to use-------------------------
 			//课文原句 
 			String propertyText = solutionInstance.get("?propertyText").toString();
@@ -427,7 +431,7 @@ public class SentenceSimImpl implements SentenceSim  {
 			String temppropertyUse=subStringManage(propertyUse); 
 			System.out.println("用法 "+temppropertyUse);
 			//-----------------------------------do you know?-------------------------
-			word = new Iword(temppropertyText, temppropertyScene, temppropertyExtend, temppropertyAssociate,
+			word = new Iword(wordid,temppropertyText, temppropertyScene, temppropertyExtend, temppropertyAssociate,
 			temppropertySynonyms,temppropertyAntonym,temppropertyExpand,temppropertyCommonUse,temppropertyNcyclopedia,temppropertyUse);
 		    }
 		    return word;

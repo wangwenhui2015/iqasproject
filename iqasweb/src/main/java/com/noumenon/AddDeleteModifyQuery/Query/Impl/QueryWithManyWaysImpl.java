@@ -114,6 +114,19 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultsInstance;
 	}
 
+	//查询一个单词对应的所有ID
+	@Override
+	public ResultSet checkAllIdOfAnIndividual(String yourWord) {
+		String string1 = "SELECT ?propertyID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
+		String string2 = "\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"单词ID\"@zh."
+				+ "?instance ?relationID ?propertyID.}";
+		String sparqlInstance = string1 + yourWord + string2;
+		System.out.println(sparqlInstance);
+
+		ResultSet resultsAllIdOfAInstance = Result(sparqlInstance);
+		return resultsAllIdOfAInstance;
+	}
 	// 根据实例名称查找句子所有属性值
 	@Override
 	public ResultSet checkSentenceProperty(String yourSentence) {

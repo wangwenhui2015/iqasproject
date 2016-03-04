@@ -91,4 +91,21 @@ public class StatusConstant {
 	 */
 	public static int WORD_RESOURCE_NO_EXIST=5001;
 	
+
+
+	/**
+	 * 上传文件失败
+	 */
+	public static int WORK_UPLOAD_FAILURE=6001;
+	/**
+	 * 上传作品为空
+	 */
+	public static int WORK_ISNULL=6002;
+	
+	/**
+	 *服务器学生作品保存路径未配置
+	 */
+	public static int WORK_SAVEDIR_NOT_CONFIGURE=6003;
+	
+	
 }

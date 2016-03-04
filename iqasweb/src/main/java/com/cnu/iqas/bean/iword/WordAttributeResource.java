@@ -38,7 +38,7 @@ public class WordAttributeResource {
 	 */
 	private int type;
 	/**
-	 * 该资源所属单词中的某个属性名称。
+	 * 该资源所属单词中的某个属性。
 	 */
 	private int attribute;
 	/**

@@ -39,7 +39,15 @@ public interface QueryWithManyWays {
 	 * @return
 	 */
 	public ResultSet checkProperty(String yourWord);
-
+	/**
+	 * 查询一个单词对应的所有ID
+	 * 
+	 * @param yourWord
+	 *            ：单词
+	 * @return
+	 */
+	public ResultSet checkAllIdOfAnIndividual(String yourWord);
+	
 	/**
 	 * 根据实例名称查找句子所有属性值：返回值ResultSet-----------------------------
 	 * 

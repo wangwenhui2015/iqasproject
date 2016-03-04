@@ -58,13 +58,12 @@ public class MainTest {
 
 	public static void read() throws FileNotFoundException, IOException {
 
-		ALLWORDS = new HashMap<String, Vector>();//Vector建议换成ArrayList
+		ALLWORDS = new HashMap<String, Vector>();
 		ALLMEANS = new HashMap<String, Vector>();
 		BufferedReader in = new BufferedReader(new FileReader(new File(
 				"Data/HowNet.txt")));
 		String temp = in.readLine();
 		while (temp != null) {
-			//建议用ArrayList
 			Vector<String> DEFS;
 			Vector<String> W_C;
 
@@ -365,7 +364,10 @@ public class MainTest {
 			sc = new Scanner(System.in);
 			System.out.println("请输入要查询的单词：\n");
 			String yourWord = sc.nextLine();
-			resultsInstance = ontologyManage.QueryIndividual(yourWord);
+			
+			//查该单词对应所有ID的结果集
+			resultsInstance = ontologyManage.QueryIndividualAllId(yourWord);
+			//resultsInstance = ontologyManage.QueryIndividual(yourWord);
 
 			if (resultsInstance.hasNext()) {
 				while (resultsInstance.hasNext()) {
@@ -373,13 +375,18 @@ public class MainTest {
 					// Moves onto the next result.
 					// 移动到下个result上
 					QuerySolution solutionInstance = resultsInstance.next();
+					
+					//找出该单词的对应的所有ID
+					ResultSet resultsAllPropertyOfThisId = ontologyManage.QueryIndividualDependOnId(solutionInstance.get("?propertyID").toString());
+					QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
 
+					//打印出每个ID对应的句子及其属性
 					System.out.println("实例：" + yourWord + "\n");
 					for (i = 0; i < propertyLabel.length; i++) {
 						System.out.println("    ————"
 								+ propertyLabel[i]
 								+ "："
-								+ subStringManage(solutionInstance.get(
+								+ subStringManage(solutionAllPropertyOfThisId.get(
 										propertySPARQLValue[i]).toString()));
 					}
 					System.out.println("\n");
@@ -454,8 +461,10 @@ public class MainTest {
 			sc = new Scanner(System.in);
 			System.out.println("请输入要查询的句子：\n");
 			String yourSentence = sc.nextLine();
-			resultsInstance = ontologyManage
-					.QuerySentenceIndividual(yourSentence);
+			
+			//查该单词对应所有ID的结果集
+			resultsInstance = ontologyManage.QueryIndividualAllId(yourSentence);
+			//resultsInstance = ontologyManage.QueryIndividual(yourWord);
 
 			if (resultsInstance.hasNext()) {
 				while (resultsInstance.hasNext()) {
@@ -463,14 +472,19 @@ public class MainTest {
 					// Moves onto the next result.
 					// 移动到下个result上
 					QuerySolution solutionInstance = resultsInstance.next();
+					
+					//找出该句子的对应的所有ID
+					ResultSet resultsAllPropertyOfThisId = ontologyManage.QueryIndividualDependOnId(solutionInstance.get("?propertyID").toString());
+					QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
 
+					//打印出每个ID对应的句子及其属性
 					System.out.println("句子：" + yourSentence + "\n");
 					for (i = 0; i < sentencePropertyLabel.length; i++) {
 
 						System.out.println("    ————"
 								+ sentencePropertyLabel[i]
 								+ "："
-								+ subStringManage(solutionInstance.get(
+								+ subStringManage(solutionAllPropertyOfThisId.get(
 										sentencePropertySPARQLValue[i])
 										.toString()));
 					}

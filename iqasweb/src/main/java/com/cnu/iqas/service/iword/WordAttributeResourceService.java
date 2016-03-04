@@ -11,6 +11,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.cnu.iqas.bean.iword.WordAttributeResource;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.dao.base.DAO;
+import com.cnu.iqas.enumtype.WordAttributeEnum;
 
 /**
 * @author 王文辉 
@@ -42,6 +43,15 @@ public interface WordAttributeResourceService extends IfetchResource<WordAttribu
 	 * @return
 	 */
 	public WordAttributeResource find(String wherejpql, Object attribute);
+	
+	/**
+	 * 查看单词的某个属性的某中类型的资源
+	 * @param wordId  单词id
+	 * @param attributeType 单词属性类型
+	 * @param resourceType  资源类型由ResourceConstant中的值提供
+	 * @return
+	 */
+	public List<WordAttributeResource> find(String wordId,WordAttributeEnum attributeType,int resourceType);
 	/**
 	 * 根据条件查询所有数据
 	 * @param wherejpql 查询条件  "o.email=? and o.account=?"

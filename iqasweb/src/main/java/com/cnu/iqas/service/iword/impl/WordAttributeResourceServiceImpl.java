@@ -1,6 +1,7 @@
 package com.cnu.iqas.service.iword.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.constant.ResourceConstant;
 import com.cnu.iqas.dao.base.DaoSupport;
 import com.cnu.iqas.dao.iword.WordAttributeResourceDao;
+import com.cnu.iqas.enumtype.WordAttributeEnum;
 import com.cnu.iqas.exception.word.ResourceTypeNotExisting;
 import com.cnu.iqas.exception.word.SaveDirNoExsitingException;
 import com.cnu.iqas.formbean.BaseForm;
@@ -97,6 +99,17 @@ public class WordAttributeResourceServiceImpl implements WordAttributeResourceSe
 	public List<WordAttributeResource> getAllData(String wherejpql, Object[] queryParams) {
 		// TODO Auto-generated method stub
 		return wordAttributeResourceDao.getAllData(wherejpql, queryParams);
+	}
+
+	@Override
+	public List<WordAttributeResource> find(String wordId, WordAttributeEnum attributeType, int resourceType) {
+		
+		List<Object> params = new ArrayList<>();
+		params.add(wordId);
+		params.add(attributeType.ordinal()+1);
+		params.add(resourceType);
+		return wordAttributeResourceDao.getAllData("o.wordId=? and o.attribute=? and type=?", params.toArray());
+		 
 	}
 
 

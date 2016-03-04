@@ -5,6 +5,7 @@ import java.util.Properties;
 
 /**
  * 包含项目中各个资源的key值和通过key值获取资源相对路径的方法。
+ * 具体路径在savepath.properties中配置
  * @author dell
  * 
  */
@@ -52,6 +53,14 @@ public class PropertyUtils {
 	 * 项目一：商品图片保存相对路径
 	 */
 	public static final String FIRST_COMMODITY_PIC="first.commodity.picturesavedir";
+	
+	
+	/**
+	 * 项目ios：学生作品图片保存相对路径
+	 */
+	public static final String IOS_WORK_PIC="ios.works.picturesavedir";
+	
+	
 	
 	
 	

@@ -14,7 +14,7 @@ public interface IfetchResource<T> {
 	/**
 	 * 根据单词id和资源类型查看单词资源
 	 * @param wordId
-	 * @param type
+	 * @param type,资源类型ResourceConstant中的值
 	 * @return
 	 */
 	public List<T> findByWordId(String wordId,int type);

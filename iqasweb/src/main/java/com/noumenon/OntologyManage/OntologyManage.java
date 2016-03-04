@@ -90,6 +90,14 @@ public interface OntologyManage {
 	 */
 	public ResultSet QueryIndividual(String yourWord);
 	
+	/**查询所有单词对应的ID
+	 * 
+	 * @param yourWord
+	 * @return
+	 */
+	public ResultSet QueryIndividualAllId(String yourWord);
+	
+	
 	/**根据ID查找该句子及其所有属性：返回结果集ResultSet-------------------------------------------
 	 * 
 	 * @param yourID

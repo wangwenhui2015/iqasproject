@@ -96,10 +96,11 @@ public class Iword {
 	public String getUuid() {
 		return uuid;
 	}
-	public Iword(String propertyText, String propertyScene, String propertyExtend, String propertyAssociate,
+	public Iword(String id,String propertyText, String propertyScene, String propertyExtend, String propertyAssociate,
 			String propertySynonyms, String propertyAntonym, String propertyExpand, String propertyCommonUse,
 			String propertyNcyclopedia, String propertyUse) {
 		super();
+		this.id =id;
 		this.propertyText = propertyText;
 		this.propertyScene = propertyScene;
 		this.propertyExtend = propertyExtend;

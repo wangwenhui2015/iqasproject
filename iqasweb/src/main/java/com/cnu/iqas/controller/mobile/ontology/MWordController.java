@@ -25,7 +25,7 @@ import com.noumenon.entity.PropertyEntity;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping(value="/mobile/word/")
+@RequestMapping(value="/mobile/ios/word/")
 public class MWordController {
 	//本体操作服务接口
 	private OntologyManage ontologyManage;

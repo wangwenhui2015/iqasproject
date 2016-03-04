@@ -32,7 +32,7 @@ import net.sf.json.JSONObject;
 */
 @Controller
 @RequestMapping(value="/mobile/ios/theme/")
-public class MThemeController {
+public class SThemeController {
 
 	/**
 	 * 单词资源服务接口

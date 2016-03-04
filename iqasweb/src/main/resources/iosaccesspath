@@ -14,3 +14,7 @@ http://172.19.203.92:8080/iqasweb/mobile/ios/user/login.html
 	 * @param sex 性别，0：男，1：女
 	 * @param grade 年级  范围1-6
 	 
+查询单词
+ http://172.19.203.92:8080/iqasweb/mobile/ios/word/findWord.html
+ 参数：
+ * @param text  查询的单词
