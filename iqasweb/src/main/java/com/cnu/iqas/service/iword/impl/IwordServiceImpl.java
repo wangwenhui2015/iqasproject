@@ -76,5 +76,12 @@ public class IwordServiceImpl  implements IwordService {
 		// TODO Auto-generated method stub
 		return iwordDao.find(wherejpql, attribute);
 	}
+
+	@Override
+	public Iword findWord(String wordStr) {
+		// TODO Auto-generated method stub
+		String sql ="o.content = ?";
+		return iwordDao.find(sql, wordStr);
+	}
 	
 }

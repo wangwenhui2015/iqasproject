@@ -60,8 +60,12 @@ public interface IwordService {
 	 * @return
 	 */
 	public Iword find(String wherejpql, Object attribute);
-	
-	
+	/**
+	 * 根据单词内容查单词
+	 * @param wordStr
+	 * @return
+	 */
+	public Iword findWord(String wordStr);
 }
 
 	

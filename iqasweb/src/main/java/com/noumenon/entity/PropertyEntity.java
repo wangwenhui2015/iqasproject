@@ -358,10 +358,14 @@ public class PropertyEntity {
 			 
 		return propertyEntity;
 	}
-	   // 处理字符串
-		private static String subStringManage(String string) {
-			String newString = string.substring(string.indexOf(")") + 1,
-					string.lastIndexOf("@"));
-			return newString;
-		}
+	/**
+	 * 将本体库中单词的属性值截取出来
+	 * @param string
+	 * @return
+	 */
+	public static String subStringManage(String string) {
+		String newString = string.substring(string.indexOf(")") + 1,
+				string.lastIndexOf("@"));
+		return newString;
+	}
 }

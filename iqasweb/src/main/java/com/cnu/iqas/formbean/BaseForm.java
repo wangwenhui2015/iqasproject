@@ -191,7 +191,7 @@ public class BaseForm {
 	 * 验证上传文件类型是否属于图片格式
 	 * @param fileFileName  文件名
 	 * @param fileContentType 文件类型
-	 * @return true表示没错或者文件为null，false：有误
+	 * @return true表示属于图片，false：有误
 	 */
 	public static boolean validateImageFileType(String fileFileName,String fileContentType){
 		

@@ -537,6 +537,16 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultBrotherIndividual;
 	}
 
+
+	@Override
+	public ResultSet checkBrotherID2(String yourTheme) {
+		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?relationTheme <http://www.w3.org/2000/01/rdf-schema#label> \"主题-话题\"@zh.?instance ?relationTheme ?propertyTheme FILTER regex(?propertyTheme,\""
+				+ yourTheme + "\"). }";
+
+		ResultSet resultBrotherIndividual = Result(sparqlBrotherIndividual);
+		return resultBrotherIndividual;
+	}
+	
 	// 静态方法：根据SPARQL语句查询，并返回相应结果集-----------------------------------------------------------------------------------------------------------
 	private static ResultSet Result(String sparql) {
 		// public static Query create(String queryString)

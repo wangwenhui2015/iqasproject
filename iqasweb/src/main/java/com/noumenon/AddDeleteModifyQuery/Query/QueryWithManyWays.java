@@ -117,6 +117,13 @@ public interface QueryWithManyWays {
 	 * @return
 	 */
 	public ResultSet checkBrotherID(String yourThemeValueFlag1, String yourThemeValueFlag2);
+	
+	/**
+	 * 根据主题属性值查找所有单词及其属性(主题为自己定义的)
+	 * @param yourTheme
+	 * @return
+	 */
+	public ResultSet checkBrotherID2(String yourTheme);
 	// -----------------------------------------------------------------------------------------
 	/**
 	 * 根据实例+某属性+属性值，查找该三元组：返回值ResultSet------------------------

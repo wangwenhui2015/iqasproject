@@ -53,6 +53,12 @@ public class PropertyUtils {
 	 * 项目一：商品图片保存相对路径
 	 */
 	public static final String FIRST_COMMODITY_PIC="first.commodity.picturesavedir";
+
+	/**
+	 * 项目一：学生头像图片保存相对路径
+	 */
+	public static final String FIRST_USER_LOG="first.user.logsavedir";
+	
 	
 	
 	/**
@@ -60,7 +66,10 @@ public class PropertyUtils {
 	 */
 	public static final String IOS_WORK_PIC="ios.works.picturesavedir";
 	
-	
+	/**
+	 * 项目ios：学生头像图片保存相对路径
+	 */
+	public static final String IOS_USER_LOG="ios.user.logsavedir";
 	
 	
 	

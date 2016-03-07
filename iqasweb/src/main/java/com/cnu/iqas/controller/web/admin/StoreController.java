@@ -107,24 +107,20 @@ public class StoreController   implements ServletContextAware{
 	 */
 	@RequestMapping(value="addCommodity")
 	public ModelAndView addCommodityForType(StoreForm formbean,@RequestParam(value="file")CommonsMultipartFile  file){
-		
 		ModelAndView mv = new ModelAndView(PageViewConstant.MESSAGE);
 		mv.addObject("urladdress", PageViewConstant.generatorMessageLink("admin/control/store/addCommodityUI")+"?typeid="+formbean.getTypeid());
-		
 		Commodity commodity = new Commodity();
 		//保存商品，并获取商品的保存路径
 		String relativepath =null;
 		//商品图片的文件名和格式
 		String fileName = file.getOriginalFilename();
 		String fileContentType = file.getContentType();
-		
 		//商品类型是否存在
 		CommodityType type = commodityTypeService.find(formbean.getTypeid());
 		if( type ==null){
 			mv.addObject("message", "商品类型不存在!");
 			return  mv;
 		}
-		
 		//判断上传图片类型
 		if(!BaseForm.validateImageFileType(fileName, fileContentType)){
 			mv.addObject("message", "上传图片格式有误!");
@@ -135,7 +131,6 @@ public class StoreController   implements ServletContextAware{
 			mv.addObject("message", "商品名称已存在!");
 			return  mv;
 		}
-		
 		//获取文件保存的相对路径
 		String relativedir= PropertyUtils.getFileSaveDir(PropertyUtils.FIRST_COMMODITY_PIC);
 		if( !BaseForm.validate(relativedir)){
@@ -144,7 +139,6 @@ public class StoreController   implements ServletContextAware{
 			//使用项目log图片
 			relativedir=PropertyUtils.getFileSaveDir(PropertyUtils.LOG);
 		}
-		
 		try {
 			relativepath=formbean.saveFile(servletContext, relativedir, file);
 			
@@ -158,7 +152,6 @@ public class StoreController   implements ServletContextAware{
 				type.setCount(type.getCount()+1);
 				//这样可以保持事务性
 				storeService.saveCommodityAndUpdateType(commodity, type);
-				
 				mv.addObject("message", "保存商品成功!");
 			}
 		} catch (Exception e) {
@@ -166,7 +159,6 @@ public class StoreController   implements ServletContextAware{
 			log.error("保存商品图片失败:"+e.getMessage());
 			mv.addObject("message", "保存商品失败!");
 		}
-
 		return mv;
 	}
 	

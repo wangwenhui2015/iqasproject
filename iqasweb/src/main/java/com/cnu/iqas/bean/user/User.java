@@ -12,6 +12,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.cnu.iqas.utils.PropertyUtils;
+
 /**
  * @author dell
  *
@@ -66,6 +68,10 @@ public class User {
 	 * 用户通过率，默认1,即100%
 	 */
 	private Double successRate=1.0;
+	/**
+	 * 头像保存路径，默认系统头像
+	 */
+	private String picturePath=PropertyUtils.get(PropertyUtils.LOG);
 	//测试一下
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getUserId() {
@@ -167,6 +173,12 @@ public class User {
 	}
 	public void setSuccessRate(Double successRate) {
 		this.successRate = successRate;
+	}
+	public String getPicturePath() {
+		return picturePath;
+	}
+	public void setPicturePath(String picturePath) {
+		this.picturePath = picturePath;
 	}
 	
 }

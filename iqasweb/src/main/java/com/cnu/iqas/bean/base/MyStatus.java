@@ -1,4 +1,7 @@
 package com.cnu.iqas.bean.base;
+
+import com.cnu.iqas.constant.StatusConstant;
+
 /**
 * @author 周亮 
 * @version 创建时间：2015年11月7日 下午8:05:08
@@ -50,5 +53,21 @@ public class MyStatus {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+	/**
+	 * 设置异常状态
+	 * @param statusCode
+	 * @param e
+	 */
+	public void setExecptionStatus(Exception e){
+		this.status = StatusConstant.UNKONWN_EXECPTION;
+		this.message = e.getMessage();
+		
+	}
+	/**
+	 * 参数有误
+	 */
+	public void setParamsError(){
+		this.status = StatusConstant.PARAM_ERROR;
+		this.message = "参数有误";
+	}
 }

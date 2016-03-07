@@ -1,7 +1,9 @@
 package com.cnu.iqas.controller.mobile.ios;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,13 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cnu.iqas.bean.base.MyStatus;
-import com.cnu.iqas.bean.iword.WordAttributeResource;
-import com.cnu.iqas.bean.iword.WordResource;
-import com.cnu.iqas.constant.ResourceConstant;
+import com.cnu.iqas.bean.ios.Suser;
+import com.cnu.iqas.bean.ios.SuserWord;
+import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.constant.StatusConstant;
+import com.cnu.iqas.service.common.IUserBaseService;
+import com.cnu.iqas.service.common.IUserWordService;
+import com.cnu.iqas.service.ios.impl.SUserBaseServiceImpl;
+import com.cnu.iqas.service.ios.impl.SUserWordServiceImpl;
+import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordAttributeResourceService;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.utils.JsonTool;
+import com.cnu.iqas.utils.WebUtils;
+import com.cnu.iqas.vo.mobile.ios.WordVoManage;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.noumenon.OntologyManage.OntologyManage;
@@ -27,13 +36,11 @@ import net.sf.json.JSONObject;
 /**
 * @author 周亮 
 * @version 创建时间：2016年1月26日 下午10:16:41
-* 类说明：苹果端根据服务主题
-* 一个单词的显示内容：词义，句子，故事（情景），绘本，图片
+* 类说明：苹果端根据服务主题查询单词
 */
 @Controller
 @RequestMapping(value="/mobile/ios/theme/")
 public class SThemeController {
-
 	/**
 	 * 单词资源服务接口
 	 */
@@ -42,36 +49,139 @@ public class SThemeController {
 	 * 单词属性资源服务接口
 	 */
 	private WordAttributeResourceService wordAttributeResourceService;
-	//本体操作服务接口
+	/**
+	 * 本体操作服务接口
+	 */
 	private OntologyManage ontologyManage;
 	/**
-	 * 发现主题下的所有单词:
-	 * @param theme：主题，如“20.自然-(69)山川与河流-山川”
+	 * 用户学习单词服务类
+	 */
+	private IUserWordService suserWordService;
+	/**
+	 * 用户基本服务接口
+	 */
+	private IUserBaseService suserBaseService;
+	/**
+	 * 单词服务
+	 */
+	private IwordService iwordService;
+	/**
+	 * 根据主题和用户id查询用户在该主题下的学习单词
+	 * @param theme    主题
+	 * @param userName 用户名
+	 * @param password 密码
 	 * @return
 	 */
-	@RequestMapping(value="findBrothers")
-	public ModelAndView findBrothers(String theme){
+	@RequestMapping(value="findWordsByTheme")
+	public ModelAndView findWordsByTheme(String theme,String userName,String password){
 		MyStatus status =new MyStatus();
 		//存放所有实体的json对象
 		List<JSONObject>  listJson = new ArrayList<>();
+		//用户学习单词
+		List<SuserWord> userWords=null;
+		if( !WebUtils.isNull(theme) &&!WebUtils.isNull(userName) &&!WebUtils.isNull(password) ){
+			//1.查询用户
+			Suser user = (Suser) suserBaseService.findUser(userName, password);
+			if( user !=null){
+				//2.先在本地查，如果本地没有该学生学习的主题单词再去本题库查，同时保存在本地。
+				userWords = suserWordService.getWords(theme, user.getUserId());
+				//3.本地不存在，查询本体库
+				if( userWords==null || userWords.size()<=0){
+					if( userWords==null)
+						userWords = new ArrayList<>();
+					 //查询主题下所有单词
+					List<ResultSet> resultsAllBrother = ontologyManage.QueryBrotherIndividual(theme);
+					//遍历单词
+					for (int i = 0; i < resultsAllBrother.size(); i++) {
+						if (resultsAllBrother.get(i).hasNext()) {
+							//获取一条实体记录
+							QuerySolution solutionEachBrother = resultsAllBrother.get(i).next();
+							//单词id 
+							String wordId =PropertyEntity.subStringManage(solutionEachBrother.get(PropertyEntity.propertySPARQLValue[0]).toString());
+							 // 单词
+							 String wordStr=PropertyEntity.subStringManage(solutionEachBrother.get(PropertyEntity.propertySPARQLValue[1]).toString());
+							 
+							 SuserWord  uW = new SuserWord();
+							 uW.setTheme(theme);
+							 uW.setWordId(wordId);
+							 uW.setUserId(user.getUserId());
+							 uW.setWord(wordStr);
+							 //保存用户学习单词
+							 suserWordService.save(uW);
+							 //收集
+							 userWords.add(uW);
+						} else {
+							status.setStatus(StatusConstant.NOUMENON_NO_THEME);
+							status.setMessage("知识本体库中没有此主题");
+						}
+					}
+				}
+			}else{
+				status.setStatus(StatusConstant.USER_NOT_EXIST);
+				status.setMessage("用户不存在!");
+			}
+		}else{
+			status.setParamsError();
+		}
+		//封装成json格式
+		if(userWords!=null)
+			for( SuserWord  uw: userWords){
+				JSONObject uwJson = JSONObject.fromObject(uw);
+				listJson.add(uwJson);
+			}
 		
+		return JsonTool.generateModelAndView(listJson, status);
+	}
+	
+	/**
+	 * 发现主题下的所有单词:
+	 * @param theme：主题，如“20.自然-(69)山川与河流-山川 ”或是"(69)"
+	 * @return
+	 */
+	/*@RequestMapping(value="findWordsByTheme")
+	public ModelAndView findWordsByTheme(String theme){
+		MyStatus status =new MyStatus();
+		//存放所有实体的json对象
+		List<JSONObject>  listJson = new ArrayList<>();
+		//存放所有查到的单词，key值为单词内容,value存放不同版本相同的单词
+		Map<String,List<PropertyEntity>> words = new HashMap<String,List<PropertyEntity>>();
 		try {
 			 if( theme ==null || !theme.trim().equals("")){
+				 //查询主题下所有单词
 				List<ResultSet> resultsAllBrother = ontologyManage.QueryBrotherIndividual(theme);
+				//遍历
 				for (int i = 0; i < resultsAllBrother.size(); i++) {
 					if (resultsAllBrother.get(i).hasNext()) {
 						//获取一条实体记录
 						QuerySolution solutionEachBrother = resultsAllBrother.get(i).next();
 						//封装成实体
 						PropertyEntity pe =PropertyEntity.generatePropertyEntity(solutionEachBrother);
-						//生成json对象
-						JSONObject peJson = JSONObject.fromObject(pe);
-						listJson.add(peJson);
+						//是否包含了该单词
+						if( words.containsKey(pe.getInstanceLabel())){
+							//包含了则加入
+							words.get(pe.getInstanceLabel()).add(pe);
+						}else{
+							//不包含则新建
+							List<PropertyEntity> listPe = new ArrayList<>();
+							listPe.add(pe);
+							words.put(pe.getInstanceLabel(), listPe);
+						}
 					} else {
 						status.setStatus(StatusConstant.NOUMENON_NO_THEME);
 						status.setMessage("知识本体库中没有此主题");
 					}
 				}
+				//将查询的单词封装成json
+				for(String word : words.keySet()){
+					//封装成WordVoMange
+					  //分隔符
+					 String splitChar="@";
+					WordVoManage mv = WordVoManage.generateWordVoManage(words.get(word), wordResourceService, wordAttributeResourceService, splitChar);
+					//生成json对象
+					JSONObject peJson = JSONObject.fromObject(mv);
+					listJson.add(peJson);
+				}
+				
 			 }else{
 				   status.setStatus(StatusConstant.PARAM_ERROR);
 					status.setMessage("请输入查看的主题！");
@@ -86,12 +196,12 @@ public class SThemeController {
 			status.setMessage("未知异常");
 		}
 		return JsonTool.generateModelAndView(listJson, status);
-	}
+	}*/
 	/**
-	 * 根据单词查看器所有属性值
+	 * 根据单词查看所有属性值
 	 * @param word
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="findWordProperty")
 	public ModelAndView findWordProperty(String word){
 		MyStatus status =new MyStatus();
@@ -122,11 +232,11 @@ public class SThemeController {
 
 		return JsonTool.generateModelAndView(listJson, status);
 	}
-	/**
+	*//**
 	 * 获取单词的图片
 	 * @param wordid  单词id
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="picturesOfword")
 	public ModelAndView getPictures(String wordid){
 		MyStatus status =new MyStatus();
@@ -147,11 +257,11 @@ public class SThemeController {
 		return JsonTool.generateModelAndView(listJson, status);
 	}
 	
-	/**
+	*//**
 	 * 获取单词的绘本
 	 * @param wordid
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="booksOfword")
 	public ModelAndView getBooks(String wordid){
 		MyStatus status =new MyStatus();
@@ -173,17 +283,12 @@ public class SThemeController {
 		return JsonTool.generateModelAndView(listJson, status);
 	}
     
-	
-	
-	
-	
-	
-	/**
+	*//**
 	 * 获取单词资源和单词属性资源特定类型资源
 	 * @param wordid
 	 * @param type
 	 * @return
-	 */
+	 *//*
 	public List<JSONObject> getResouces(String wordid,int type){
 		//存放所有实体的json对象
 		List<JSONObject>  listJson = new ArrayList<>();
@@ -206,7 +311,7 @@ public class SThemeController {
 			}
 		
 		return listJson;
-	}
+	}*/
 	
 	public WordResourceService getWordResourceService() {
 		return wordResourceService;
@@ -228,6 +333,30 @@ public class SThemeController {
 	@Resource
 	public void setOntologyManage(OntologyManage ontologyManage) {
 		this.ontologyManage = ontologyManage;
+	}
+
+	public IUserWordService getSuserWordService() {
+		return suserWordService;
+	}
+	@Resource
+	public void setSuserWordService(IUserWordService suserWordService) {
+		this.suserWordService = suserWordService;
+	}
+
+	public IUserBaseService getSuserBaseService() {
+		return suserBaseService;
+	}
+	@Resource
+	public void setSuserBaseService(IUserBaseService suserBaseService) {
+		this.suserBaseService = suserBaseService;
+	}
+
+	public IwordService getIwordService() {
+		return iwordService;
+	}
+	@Resource
+	public void setIwordService(IwordService iwordService) {
+		this.iwordService = iwordService;
 	}
 	
 }

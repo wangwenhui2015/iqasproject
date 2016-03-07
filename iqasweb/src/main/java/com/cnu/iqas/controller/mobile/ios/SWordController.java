@@ -22,6 +22,7 @@ import com.cnu.iqas.service.iword.WordAttributeResourceService;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.WebUtils;
+import com.cnu.iqas.vo.mobile.ios.WordVoManage;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.noumenon.OntologyManage.OntologyManage;
@@ -71,28 +72,16 @@ public class SWordController {
 		//分隔符
 		 String SPLIT_CHAR="@";
 		//单词json
-		JSONObject wordJson=new JSONObject();
+		JSONObject wordJson=null;
 		MyStatus status = new MyStatus();
-		
-		StringBuffer wordId= new StringBuffer();
-		//存放多个版本的词义
-		StringBuffer meanings= new StringBuffer();
-		//按钮2:单词本身的图片（图片）
-		StringBuffer pictures= new StringBuffer();
-		//按钮3:与单词有关的句子
-		StringBuffer sentences= new StringBuffer();
-		//按钮4:与单词有关的课文段落（图片）
-		StringBuffer dialogues= new StringBuffer();
-		//按钮5:与单词有关的动画（视频）
-		StringBuffer videos= new StringBuffer();
-		//按钮6:与单词有关的绘本（图片）
-		StringBuffer picturebooks= new StringBuffer();
 		
 		if( !WebUtils.isNull(text)){
 			try {
+				//从本体中查询出不同版本的单词
 				// 查该单词对应所有ID的结果集
 				ResultSet resultsIdofOneWord= ontologyManage.QueryIndividualAllId(text);
-				
+				//存放不同版本的单词
+				List<PropertyEntity> listPes =new ArrayList<PropertyEntity>();
 				if (resultsIdofOneWord.hasNext()) {
 					//将多个版本的相同单词封装成json
 					while (resultsIdofOneWord.hasNext()) {
@@ -102,94 +91,28 @@ public class SWordController {
 						QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
 						//从本体中解析出一个包含单词的23个属性的实体
 						PropertyEntity pe =PropertyEntity.generatePropertyEntity(solutionAllPropertyOfThisId);
-						//将一个单词的数据封装成要求的json格式
-						if( pe !=null){
-							wordId.append(pe.getPropertyID()+SPLIT_CHAR);
-							//1.词义
-							//中文意思
-							String mean = pe.getPropertySynonyms();
-							//2.与单词有关的句子
-							//课文原句
-							String sentence = pe.getPropertyText();
-							//情景段落
-							String scene = pe.getPropertyScene();
-							//延伸例句
-							String extend = pe.getPropertyExtend();
-							
-							meanings.append(mean).append(SPLIT_CHAR).append(sentence)
-							        .append(SPLIT_CHAR).append(scene).append(SPLIT_CHAR)
-									.append(extend).append(SPLIT_CHAR);
-							
-							//3.单词本身的图片（图片）
-							List<WordResource> wResouces= wordResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_IMAGE);
-							
-							for( WordResource wr : wResouces)
-								pictures.append(wr.getSavepath()+SPLIT_CHAR);
-							
-							//4.单词有关的课文段落（图片）
-							List<WordAttributeResource> wAtResouces =wordAttributeResourceService.find(pe.getPropertyID(), WordAttributeEnum.PROPERTYSCENE, ResourceConstant.TYPE_IMAGE);
-							
-							for( WordAttributeResource wr : wAtResouces)
-								dialogues.append(wr.getSavepath()+SPLIT_CHAR);
-							
-							//5:与单词有关的动画（视频）
-							   //5.1自身的相关视频
-							List<WordResource> ownVideos= wordResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_VIDEO);
-							   //5.2属性相关的视频
-							List<WordAttributeResource> attrVideos =wordAttributeResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_VIDEO);
-							
-							for( WordResource wr : ownVideos)
-								videos.append(wr.getSavepath()+SPLIT_CHAR);
-							
-							for( WordAttributeResource wr : attrVideos)
-								videos.append(wr.getSavepath()+SPLIT_CHAR);
-							
-							//6:与单词有关的绘本（图片）
-								//6.1自身的相关绘本
-							List<WordResource> ownBooks= wordResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_PICTUREBOOK);
-							   //6.2属性相关的绘本
-							List<WordAttributeResource> attrBooks =wordAttributeResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_PICTUREBOOK);
-							
-							for( WordResource wr : ownBooks)
-								picturebooks.append(wr.getSavepath()+SPLIT_CHAR);
-							
-							for( WordAttributeResource wr : attrBooks)
-								picturebooks.append(wr.getSavepath()+SPLIT_CHAR);
-						}
-						
+						listPes.add(pe);
 					}
 				}
-				//去掉最后的逗号
-				String wordIdstr= wordId.length()>0?wordId.toString().substring(0, wordId.length()-1):null;
-				String wordstr = text;
-				String meaning= meanings.length()>0?meanings.toString().substring(0, meanings.length()-1):null;
-				String picture= pictures.length()>0?pictures.toString().substring(0, pictures.length()-1):null;
-				String sentence= sentences.length()>0?sentences.toString().substring(0, sentences.length()-1):null;
-				String dialogue= dialogues.length()>0?dialogues.toString().substring(0, dialogues.length()-1):null;
-				String video= videos.length()>0?videos.toString().substring(0, videos.length()-1):null;
-				String picturebook=picturebooks.length()>0? picturebooks.toString().substring(0, picturebooks.length()-1):null;
-				
-
-				wordJson.put("wordId", wordIdstr);
-				wordJson.put("word", wordstr);
-				wordJson.put("meaning", meaning);
-				wordJson.put("picture", picture);
-				wordJson.put("sentence", sentence);
-				wordJson.put("dialogue",dialogue);
-				wordJson.put("video", video);
-				wordJson.put("picturebook", picturebook);
+				//将多个版本的单词整合成一个单词里
+				WordVoManage wv =WordVoManage.generateWordVoManage(listPes,wordResourceService, wordAttributeResourceService,SPLIT_CHAR);
+				//封装成json格式数据
+				wordJson = JSONObject.fromObject(wv);
 			} catch (Exception e) {
 				e.printStackTrace();
-				status.setStatus(StatusConstant.UNKONWN_EXECPTION);
-				status.setMessage("未知异常!");
+				status.setExecptionStatus(e);
 			}
 		}else{
 			status.setStatus(StatusConstant.PARAM_ERROR);
 			status.setMessage("参数有误!");
 		}
 		
-		return JsonTool.generateModelAndView("word", wordJson, status);
+		List<JSONObject> list = new ArrayList<>();
+		if( wordJson!=null)
+		list.add(wordJson);
+		return JsonTool.generateModelAndView(list, status);
 	}
+	
 	
 	public WordResourceService getWordResourceService() {
 		return wordResourceService;

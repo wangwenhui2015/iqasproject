@@ -13,8 +13,24 @@ http://172.19.203.92:8080/iqasweb/mobile/ios/user/login.html
 	 * @param password 密码，
 	 * @param sex 性别，0：男，1：女
 	 * @param grade 年级  范围1-6
-	 
+ 更新用户头像
+ http://172.19.203.92:8080/iqasweb/mobile/ios/user/update/logo.html
+ 参数：
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @param logo 头像文件 
 查询单词
  http://172.19.203.92:8080/iqasweb/mobile/ios/word/findWord.html
  参数：
  * @param text  查询的单词
+ 
+ 根据主题和用户id查询用户在该主题下的学习单词
+http://172.19.203.92:8080/iqasweb/mobile/ios/theme/findWordsByTheme.html
+ 参数：
+	 * @param theme   主题，如“17.旅游与交通-(58)交通运输方式 ”或是"58" 
+	 * @param userName 用户名
+	 * @param password 密码
+ 上传作品
+ http://172.19.203.92:8080/iqasweb/mobile/ios/work/uploadWork.html
+ 参数：
+  * @param file 上传文件

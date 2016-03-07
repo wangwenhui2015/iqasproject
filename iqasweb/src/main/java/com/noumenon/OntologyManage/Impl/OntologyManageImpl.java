@@ -807,12 +807,21 @@ public class OntologyManageImpl implements OntologyManage {
 //			System.out.println("该单词无主题");
 //		}
 		
-		String yourThemeValueFlag1 = substringManage2(yourTheme);
-		String yourThemeValueFlag2 = substringManage3(yourTheme);
+		String yourThemeValueFlag1 = null;
+		String yourThemeValueFlag2 = null;
+		ResultSet resultsAllBrotherID = null;
+		if(yourTheme.contains("-")){
+			yourThemeValueFlag1 = substringManage2(yourTheme);
+			yourThemeValueFlag2 = substringManage3(yourTheme);
+			
+			// 根据该主题属性值查找对应的URI
+			resultsAllBrotherID = queryWithManyWays.checkBrotherID(
+					yourThemeValueFlag1, yourThemeValueFlag2);
+		}else{
+			// 根据该主题属性值查找对应的URI（非课标定义主题）
+			resultsAllBrotherID = queryWithManyWays.checkBrotherID2(yourTheme);
+		}
 		
-		// 根据该主题属性值查找出所有单词ID
-		ResultSet resultsAllBrotherID = queryWithManyWays.checkBrotherID(
-				yourThemeValueFlag1, yourThemeValueFlag2);
 		List<ResultSet> brotherAllResultSet = new ArrayList<ResultSet>();
 		if (resultsAllBrotherID.hasNext()) {
 			while (resultsAllBrotherID.hasNext()) {
@@ -931,7 +940,7 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 		in.close();
 		System.out.println("HowNet Load Succeed!");
-		// findDEF("man");
+		// findDEF("man");   
 	}
 
 	// 查找Hownet中的父类

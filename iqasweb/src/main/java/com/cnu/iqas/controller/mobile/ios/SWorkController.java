@@ -37,7 +37,6 @@ public class SWorkController implements ServletContextAware{
 	
 	@RequestMapping(value="uploadWork")
 	public ModelAndView uploadWork(@RequestParam("file") CommonsMultipartFile  file){
-		System.out.println("jinlaile..........");
 		ModelAndView mv = new ModelAndView();
 		//保存作品，并获取作品的保存路径
 		String relativepath =null;

@@ -4,13 +4,29 @@
 
 
 
-搜索单词：http://localhost:8080/iqasweb/mobile/search/sentence.html?text=park
-搜索句子：http://localhost:8080/iqasweb/mobile/search/sentence.html?text=Excuse me,Where are you from,ok?
+搜索单词：http://localhost:8080/iqasweb/mobile/search/sentence.html
+参数：
+     * text
+搜索句子：http://localhost:8080/iqasweb/mobile/search/sentence.html
+参数：
+     * @param text=Excuse me,Where are you from,ok?
 登录：http://localhost:8080/iqasweb/mobile/user/login.html
 参数：
      * @param userName 用户名
 	 * @param password 密码
-注册：http://localhost:8080/iqasweb/mobile/user/register.html?username=yuanfang&password=123sdf
+注册：http://localhost:8080/iqasweb/mobile/user/register.html
+参数
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @param grade    班级 1-6
+	 * @param sex    性别  0:男 1：女
+修改头像
+注册：http://localhost:8080/iqasweb/mobile/user/updateLogo.html
+参数：
+       @param userName 用户名
+	 * @param password 密码
+	 * @param logo 头像文件
+	 
 购买商品;http://localhost:8080/iqasweb/mobile/store/buyCommodity.html  
 参数
 	 * @param userName 用户名

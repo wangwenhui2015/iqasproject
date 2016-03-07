@@ -12,6 +12,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.cnu.iqas.utils.PropertyUtils;
+
 /**
 * @author 周亮 
 * @version 创建时间：2016年3月1日 上午9:41:06
@@ -91,6 +93,10 @@ public class Suser {
 		 * 注册时间，默认当前日期
 		 */
 		private Date createTime = new Date();
+		/**
+		 * 头像保存路径，默认系统头像
+		 */
+		private String picturePath=PropertyUtils.get(PropertyUtils.LOG);
 		
 		@Id @GeneratedValue(generator="uuidGenderator")
 		public String getUserId() {
@@ -198,6 +204,12 @@ public class Suser {
 		}
 		public void setCreateTime(Date createTime) {
 			this.createTime = createTime;
+		}
+		public String getPicturePath() {
+			return picturePath;
+		}
+		public void setPicturePath(String picturePath) {
+			this.picturePath = picturePath;
 		}
 		
 }

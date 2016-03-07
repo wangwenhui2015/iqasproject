@@ -78,7 +78,8 @@ public class MFriendController {
 			if( user !=null){
 				userJson =new JSONObject();
 				userJson.put("userName", user.getUserName());
-				
+				userJson.put("picturePath",user.getPicturePath());
+				userJson.put("sex", user.getSex());
 				listJson.add(userJson);
 			}else{
 				//用户不存在
@@ -106,9 +107,7 @@ public class MFriendController {
 	 */
 	@RequestMapping(value="sendRequest")
 	public ModelAndView senRequest(FriendVoManage formbean){
-		
 		MyStatus status = new MyStatus();
-		
 		try {
 			//校验用户密码和用户名是否有效
 			User own = (User) userService.findUser(formbean.getUserName(), formbean.getPassword());
@@ -158,7 +157,6 @@ public class MFriendController {
 			 status.setStatus(StatusConstant.UNKONWN_EXECPTION);
 			 status.setMessage("未知异常");
 		}
-		
 		//返回结果
 		return JsonTool.generateModelAndView(status);
 	}
@@ -271,7 +269,6 @@ public class MFriendController {
 	 */
 	@RequestMapping(value="rejectRequest")
 	public ModelAndView rejectRequest(FriendVoManage formbean){
-		
 		//此处请求状态
 		MyStatus status = new MyStatus();
 		
@@ -298,7 +295,6 @@ public class MFriendController {
 			 status.setStatus(StatusConstant.UNKONWN_EXECPTION);
 			 status.setMessage("未知异常");
 		}
-		
 		return JsonTool.generateModelAndView(status);
 	}
 	/**

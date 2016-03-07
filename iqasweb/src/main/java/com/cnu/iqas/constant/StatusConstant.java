@@ -49,7 +49,16 @@ public class StatusConstant {
 	 * 用户注册信息无效
 	 */
 	public static int USER_REGISTERINFO_INVALIDATE=2007;
+	/**
+	 * 上传用户头像不是图片格式
+	 */
+	public static int USER_LOG_NOT_PICTURE=2008;
+	/**
+	 * 用户上传头像不能大于2M
+	 */
+	public static int USER_LOG_SIZE_OVER=2009;
 
+	
 	/**
 	 * 好友不存在
 	 */
