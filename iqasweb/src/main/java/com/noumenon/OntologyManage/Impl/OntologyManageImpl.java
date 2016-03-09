@@ -810,30 +810,38 @@ public class OntologyManageImpl implements OntologyManage {
 		String yourThemeValueFlag1 = null;
 		String yourThemeValueFlag2 = null;
 		ResultSet resultsAllBrotherID = null;
-		if(yourTheme.contains("-")){
+		if (yourTheme.contains("-")) {
 			yourThemeValueFlag1 = substringManage2(yourTheme);
 			yourThemeValueFlag2 = substringManage3(yourTheme);
-			
-			// 根据该主题属性值查找对应的URI
+
+			// 根据主题属性标记，找出所有包含该标记的属性值，该属性值中包含单词ID
 			resultsAllBrotherID = queryWithManyWays.checkBrotherID(
 					yourThemeValueFlag1, yourThemeValueFlag2);
-		}else{
-			// 根据该主题属性值查找对应的URI（非课标定义主题）
+		} else {
+			// 根据主题属性标记，找出所有包含该标记的属性值，该属性值中包含单词ID（非课标定义主题）
 			resultsAllBrotherID = queryWithManyWays.checkBrotherID2(yourTheme);
 		}
-		
+
 		List<ResultSet> brotherAllResultSet = new ArrayList<ResultSet>();
 		if (resultsAllBrotherID.hasNext()) {
 			while (resultsAllBrotherID.hasNext()) {
-				QuerySolution solutionBrotherID = resultsAllBrotherID.next();			
-				String brotherTheme = solutionBrotherID.get("?propertyTheme").toString();
-				
-				//提取ID
-				String brotherID = substringManage3(brotherTheme);
-				
-				//查找每个单词ID对应的所有属性
-				ResultSet resultsBrother = queryWithManyWays.checkPropertyDependOnId(brotherID);
-				brotherAllResultSet.add(resultsBrother);
+				QuerySolution solutionBrotherID = resultsAllBrotherID.next();
+				if (solutionBrotherID.get("?propertyTheme").toString()
+						.contains("|")) {
+					// 跳过，什么都不做
+				} else {
+					String brotherTheme = solutionBrotherID.get(
+							"?propertyTheme").toString();
+
+					// 提取ID
+					String brotherID = substringManage4(brotherTheme);
+
+					// 查找每个单词ID对应的所有属性
+					ResultSet resultsBrother = queryWithManyWays
+							.checkPropertyDependOnId(brotherID);
+					brotherAllResultSet.add(resultsBrother);
+				}
+
 			}
 		} else {
 			System.out.println("该主题无单词");
@@ -850,15 +858,25 @@ public class OntologyManageImpl implements OntologyManage {
 		return newString;
 	}
 
-	// 处理字符串：读取主题属性值中“(”之前的字符串
+	// 处理字符串：读取主题属性值中“.”和“-”之间的字符串
 	private static String substringManage2(String string) {
-		String newString = string.substring(0,
-				string.lastIndexOf("("));
+		String newString = string.substring(string.indexOf(".") + 1,
+				string.lastIndexOf("-"));
 		return newString;
 	}
-	
-	//处理字符串：读取主题属性值中第一个“(”和第一个“）”之间的字符串
+
+	// 处理字符串：读取主题属性值中“)”之后，或者“)”和“-”之间的字符串
 	private static String substringManage3(String string) {
+		String newString = string.substring(string.indexOf(")") + 1,
+				string.length());
+		if (newString.contains("-")) {
+			newString = newString.substring(0, newString.indexOf("-"));
+		}
+		return newString;
+	}
+
+	// 处理字符串：读取主题属性值中第一个“(”和第一个“)”之间的字符串
+	private static String substringManage4(String string) {
 		String newString = string.substring(string.indexOf("(") + 1,
 				string.indexOf(")"));
 		return newString;

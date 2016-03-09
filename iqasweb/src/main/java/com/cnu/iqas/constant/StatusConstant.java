@@ -100,8 +100,12 @@ public class StatusConstant {
 	 */
 	public static int WORD_RESOURCE_NO_EXIST=5001;
 	
-
-
+	
+	/**
+	 * 该主题不存在
+	 */
+	public static int WORD_THEME_NO_EXIST=6001;
+	
 	/**
 	 * 上传文件失败
 	 */

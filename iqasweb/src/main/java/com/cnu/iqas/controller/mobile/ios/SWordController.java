@@ -76,32 +76,35 @@ public class SWordController {
 		MyStatus status = new MyStatus();
 		
 		if( !WebUtils.isNull(text)){
-			try {
-				//从本体中查询出不同版本的单词
-				// 查该单词对应所有ID的结果集
-				ResultSet resultsIdofOneWord= ontologyManage.QueryIndividualAllId(text);
 				//存放不同版本的单词
-				List<PropertyEntity> listPes =new ArrayList<PropertyEntity>();
-				if (resultsIdofOneWord.hasNext()) {
-					//将多个版本的相同单词封装成json
-					while (resultsIdofOneWord.hasNext()) {
-						QuerySolution solutionInstance = resultsIdofOneWord.next();
-						//找出该单词的对应的所有ID
-						ResultSet resultsAllPropertyOfThisId = ontologyManage.QueryIndividualDependOnId(solutionInstance.get("?propertyID").toString());
-						QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
-						//从本体中解析出一个包含单词的23个属性的实体
-						PropertyEntity pe =PropertyEntity.generatePropertyEntity(solutionAllPropertyOfThisId);
-						listPes.add(pe);
+				List<PropertyEntity> listPes=null;
+				try {
+					//从本体中查询出不同版本的单词
+					// 查该单词对应所有ID的结果集
+					ResultSet resultsIdofOneWord= ontologyManage.QueryIndividualAllId(text);
+					listPes = new ArrayList<PropertyEntity>();
+					if (resultsIdofOneWord.hasNext()) {
+						//将多个版本的相同单词封装成json
+						while (resultsIdofOneWord.hasNext()) {
+							QuerySolution solutionInstance = resultsIdofOneWord.next();
+							//找出该单词的对应的所有ID
+							ResultSet resultsAllPropertyOfThisId = ontologyManage.QueryIndividualDependOnId(solutionInstance.get("?propertyID").toString());
+							QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
+							//从本体中解析出一个包含单词的23个属性的实体
+							PropertyEntity pe =PropertyEntity.generatePropertyEntity(solutionAllPropertyOfThisId);
+							listPes.add(pe);
+						}
 					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					status.setExecptionStatus(e);
 				}
 				//将多个版本的单词整合成一个单词里
 				WordVoManage wv =WordVoManage.generateWordVoManage(listPes,wordResourceService, wordAttributeResourceService,SPLIT_CHAR);
 				//封装成json格式数据
 				wordJson = JSONObject.fromObject(wv);
-			} catch (Exception e) {
-				e.printStackTrace();
-				status.setExecptionStatus(e);
-			}
+			
 		}else{
 			status.setStatus(StatusConstant.PARAM_ERROR);
 			status.setMessage("参数有误!");

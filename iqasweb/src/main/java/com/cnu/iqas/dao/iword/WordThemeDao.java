@@ -21,11 +21,7 @@ public interface WordThemeDao extends DAO<WordTheme> {
 	 * @return
 	 */
 	public QueryResult<Iword> getWords(final String themeid,final int firstindex,final  int maxresult);
-	/**
-	 * 根据主题名称查找主题
-	 * @param name 主题名称
-	 * @return
-	 */
-	public WordTheme findByName(String  name);
+	
 
+	
 }

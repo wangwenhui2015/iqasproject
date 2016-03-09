@@ -34,7 +34,7 @@ public class SuserWord {
 	 */
 	private String wordId;
 	/**
-	 * 所属主题
+	 * 所属主题编号
 	 */
 	private String theme;
 	/**

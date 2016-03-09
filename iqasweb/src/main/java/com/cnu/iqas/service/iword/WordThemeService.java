@@ -22,22 +22,17 @@ public interface WordThemeService {
 	 */
 	public QueryResult<Iword> getWords(final String themeid,final int firstindex,final  int maxresult);
 	/**
-	 * 根据主题id使主题失效
+	 * 根据主题id关闭主题
 	 * @param id 主题id
 	 * @return
 	 */
 	public boolean disable(String id);
 	/**
-	 * 使主题有效
+	 * 开启主题
 	 * @param id 主题id
 	 * @return
 	 */
 	public boolean enable(String id);
-	/**
-	 * 查询所有主题
-	 * @return 查询结果类
-	 */
-	public List<WordTheme> getThemes();
 
 	/**
 	 * 保存一个实体
@@ -45,11 +40,17 @@ public interface WordThemeService {
 	 */
 	public void save(WordTheme entity);
 	/**
-	 * 根据主题名称查找主题
-	 * @param name
+	 * 根据主题内容查找主题
+	 * @param content
 	 * @return
 	 */
-	public WordTheme findByName(String name);
+	public WordTheme findByContent(String content);
+	/**
+	 * 根据主题内容编号查找主题
+	 * @param number
+	 * @return
+	 */
+	public WordTheme findByNumber(String number);
 	/**
 	 * 更新主题
 	 * @param entity
@@ -71,6 +72,20 @@ public interface WordThemeService {
 	 * @return 查询结果类
 	 */
 	public QueryResult<WordTheme> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,LinkedHashMap<String, String> orderby);
-
+	
+	
+	
+	/**
+	 * 删除主题
+	 * @param id 主题id
+	 */
+	public void delete(String id);
+	/**
+	 * 根据条件查询数据
+	 * @param wherejpql 构造查询语句,如：“o.parentId =?"
+	 * @param queryParams,查询语句对应的查询参数，如“1234”；
+	 * @return
+	 */
+	List<WordTheme> getWordThemes(String wherejpql, Object[] queryParams);
 
 }

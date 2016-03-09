@@ -53,15 +53,4 @@ public class WordThemeDaoImpl extends DaoSupport<WordTheme>implements WordThemeD
 		return qr;
 	}
 
-	@Override
-	public WordTheme findByName(final String name) {
-		
-		List<WordTheme> list =getHt().find("From WordTheme Where name=?", name);
-		if( list !=null && list.size() ==1)
-			return list.get(0);
-		else
-			return null;
-	}
-
-
 }

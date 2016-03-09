@@ -142,7 +142,7 @@ public class WebUtils {
 	 * @return 空或者空字符串返回true
 	 */
 	public static boolean isNull(String str){
-		if( str!=null && str.trim()!="")
+		if( str!=null && !str.trim().equals(""))
 			return false;
 		else
 			return true;

@@ -66,6 +66,10 @@ public class PageViewConstant {
 	 */
 	public final static String WORDTHEME_ADD_UI="admincenter/wordtheme/addwordtheme"; 
 	/**
+	 * 单词主题编辑界面
+	 */
+	public final static String WORDTHEME_EDIT_UI="admincenter/wordtheme/editwordtheme"; 
+	/**
 	 * 单词主题列表界面
 	 */
 	public final static String WORDTHEME_LIST="admincenter/wordtheme/wordthemelist"; 
@@ -74,7 +78,11 @@ public class PageViewConstant {
 	 * 单词主题下的单词列表界面
 	 */
 	public final static String WORDTHEME_WORDS_LIST="admincenter/wordtheme/themewordlist"; 
-	
+
+	/**
+	 * 从execl中导入单词主题
+	 */
+	public final static String WORDTHEME_IMPORT_UI="admincenter/wordtheme/importtheme";
 	/*---------商店涉及界面--------------*/
 
 	/**

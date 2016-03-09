@@ -8,20 +8,87 @@ $(function(){
 		 }
 	 });
 });
-//访问methodName方法，参数为id,比如访问delete方法
+//访问methodName方法，参数为id,比如访问ajaxDelete方法
 function _action(methodName,id){
 	var form = document.forms[0];
 	form.action="admin/control/wordtheme/"+ methodName+".html?id="+id;
 	form.submit();
 }
-	 //分页查询单词主题，page:第几页
-	function topage(page)
-	{
-		var form = document.forms[0];
-		form.page.value= page;
-		form.submit();
+
+
+/**
+ * 屏蔽主题
+ * @param id
+ */
+function ajaxDisable(id) {
+	if( confirm("确定要屏蔽吗？")){
+		$.get("admin/control/wordtheme/ajaxDisable.html",{id:id},function(content){
+			var status = content.status;
+			var message = content.message;
+			if( status == 1){
+				//屏蔽成功，隐藏“已开启”，显示“已屏蔽”
+				var disInp=$("#disvisible"+id);
+				disInp.show();
+				var enInp=$("#envisible"+id);
+				enInp.hide();
+			}else{
+				//删除失败给出提示
+				alert(message);
+			}
+		},"json");
 	}
-	var count =0;
+}
+/**
+ * 开启主题
+ * @param id
+ */
+function ajaxEnable(id) {
+	if( confirm("确定要开启吗？")){
+		$.get("admin/control/wordtheme/ajaxEnable.html",{id:id},function(content){
+			var status = content.status;
+			var message = content.message;
+			if( status == 1){
+				//开启成功，隐藏“已屏蔽”，显示“已开启”
+				var disInp=$("#disvisible"+id);
+				disInp.hide();
+				var enInp=$("#envisible"+id);
+				enInp.show();
+			}else{
+				//删除失败给出提示
+				alert(message);
+			}
+		},"json");
+	}
+}
+
+/**
+ * 删除主题
+ * @param id
+ */
+function ajaxDelete(id) {
+	if( confirm("确定要删除吗？")){
+		$.get("admin/control/wordtheme/ajaxDelete.html",{id:id},function(content){
+			var status = content.status;
+			var message = content.message;
+			if( status == 1){
+				//删除成功，移除记录
+				var themeTr=$("#theme"+id);
+				themeTr.remove();
+			}else{
+				//删除失败给出提示
+				alert(message);
+			}
+		},"json");
+	}
+}
+ //分页查询单词主题，page:第几页
+function topage(page)
+{
+	var form = document.forms[0];
+	form.page.value= page;
+	form.submit();
+}
+var count =0;
 //编辑主题名,id：被编辑主题的id
 function editName(id) {
 	
@@ -129,7 +196,7 @@ function ajaxeditName(id) {
 		//判断是否超过20个字符
 		if( afterName.length<=20){
 			//修改
-			$.get("admin/control/wordtheme/ajaxeditName.html",{id:id,name:afterName},function(content){
+			$.get("admin/control/wordtheme/ajaxeditContent.html",{id:id,content:afterName},function(content){
 				var status = content.status;
 				var message = content.message;
 				if( status == 1){//修改成功，将原名称修改为新名称显示

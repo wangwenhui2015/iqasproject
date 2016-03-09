@@ -11,12 +11,12 @@ import com.cnu.iqas.bean.ios.SuserWord;
 */
 public interface IUserWordService<T> {
 	/**
-	 * 根据主题和用户id查询用户在该主题下的学习单词
-	 * @param theme  主题
+	 * 根据主题编号和用户id查询用户在该主题下的学习单词
+	 * @param themeNumber  主题编号
 	 * @param userId 用户id
 	 * @return
 	 */
-	public List<T> getWords(String theme,String userId);
+	public List<T> getWords(String themeNumber,String userId);
 	/**
 	 * 保存用户学习单词
 	 * @param entity

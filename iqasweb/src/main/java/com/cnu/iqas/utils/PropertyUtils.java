@@ -57,7 +57,7 @@ public class PropertyUtils {
 	/**
 	 * 项目一：学生头像图片保存相对路径
 	 */
-	public static final String FIRST_USER_LOG="first.user.logsavedir";
+	public static final String FIRST_USER_LOG="first.user.logosavedir";
 	
 	
 	
@@ -69,7 +69,11 @@ public class PropertyUtils {
 	/**
 	 * 项目ios：学生头像图片保存相对路径
 	 */
-	public static final String IOS_USER_LOG="ios.user.logsavedir";
+	public static final String IOS_USER_LOG="ios.user.logosavedir";
+	/**
+	 * 项目ios：单词主题图片保存相对路径
+	 */
+	public static final String IOS_WORD_THEME_LOG="ios.wordtheme.logosavedir";
 	
 	
 	
@@ -98,7 +102,7 @@ public class PropertyUtils {
 	}
 	/**
 	 * 根据PropertiesUtils中常量的值获取资源保存路径，该路径由整个项目文件系统的根文件夹名称和资源key值对应的相对路径构成。
-	 * @param key
+	 * @param key,系统中文件的存放路径，
 	 * @return
 	 */
 	public static String getFileSaveDir(String key){

@@ -145,7 +145,6 @@ public class IwordController {
 									//读出第一列、第二列数据
 									String id=row.getCell(0).getStringCellValue();
 									String content=row.getCell(1).getStringCellValue();
-									System.out.println(id+":"+content);
 									
 									//进行基本的校验
 									if(!IwordForm.validateWord(id,content)){

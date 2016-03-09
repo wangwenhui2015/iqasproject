@@ -1,9 +1,7 @@
 package com.cnu.iqas.controller.mobile.ios;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,18 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.ios.Suser;
 import com.cnu.iqas.bean.ios.SuserWord;
-import com.cnu.iqas.bean.iword.Iword;
+import com.cnu.iqas.bean.iword.WordTheme;
 import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.service.common.IUserWordService;
-import com.cnu.iqas.service.ios.impl.SUserBaseServiceImpl;
-import com.cnu.iqas.service.ios.impl.SUserWordServiceImpl;
 import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordAttributeResourceService;
 import com.cnu.iqas.service.iword.WordResourceService;
+import com.cnu.iqas.service.iword.WordThemeService;
 import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.WebUtils;
-import com.cnu.iqas.vo.mobile.ios.WordVoManage;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.noumenon.OntologyManage.OntologyManage;
@@ -66,55 +62,70 @@ public class SThemeController {
 	 */
 	private IwordService iwordService;
 	/**
-	 * 根据主题和用户id查询用户在该主题下的学习单词
-	 * @param theme    主题
+	 * 单词服务
+	 */
+	private WordThemeService wordThemeService;
+	/**
+	 * 根据主题编号和用户id查询用户在该主题下的学习单词
+	 * @param themeNumber    主题编号
 	 * @param userName 用户名
 	 * @param password 密码
 	 * @return
 	 */
 	@RequestMapping(value="findWordsByTheme")
-	public ModelAndView findWordsByTheme(String theme,String userName,String password){
+	public ModelAndView findWordsByTheme(String themeNumber,String userName,String password){
 		MyStatus status =new MyStatus();
 		//存放所有实体的json对象
 		List<JSONObject>  listJson = new ArrayList<>();
 		//用户学习单词
 		List<SuserWord> userWords=null;
-		if( !WebUtils.isNull(theme) &&!WebUtils.isNull(userName) &&!WebUtils.isNull(password) ){
+		if( !WebUtils.isNull(themeNumber) &&!WebUtils.isNull(userName) &&!WebUtils.isNull(password) ){
 			//1.查询用户
 			Suser user = (Suser) suserBaseService.findUser(userName, password);
 			if( user !=null){
-				//2.先在本地查，如果本地没有该学生学习的主题单词再去本题库查，同时保存在本地。
-				userWords = suserWordService.getWords(theme, user.getUserId());
-				//3.本地不存在，查询本体库
-				if( userWords==null || userWords.size()<=0){
-					if( userWords==null)
-						userWords = new ArrayList<>();
-					 //查询主题下所有单词
-					List<ResultSet> resultsAllBrother = ontologyManage.QueryBrotherIndividual(theme);
-					//遍历单词
-					for (int i = 0; i < resultsAllBrother.size(); i++) {
-						if (resultsAllBrother.get(i).hasNext()) {
-							//获取一条实体记录
-							QuerySolution solutionEachBrother = resultsAllBrother.get(i).next();
-							//单词id 
-							String wordId =PropertyEntity.subStringManage(solutionEachBrother.get(PropertyEntity.propertySPARQLValue[0]).toString());
-							 // 单词
-							 String wordStr=PropertyEntity.subStringManage(solutionEachBrother.get(PropertyEntity.propertySPARQLValue[1]).toString());
-							 
-							 SuserWord  uW = new SuserWord();
-							 uW.setTheme(theme);
-							 uW.setWordId(wordId);
-							 uW.setUserId(user.getUserId());
-							 uW.setWord(wordStr);
-							 //保存用户学习单词
-							 suserWordService.save(uW);
-							 //收集
-							 userWords.add(uW);
-						} else {
-							status.setStatus(StatusConstant.NOUMENON_NO_THEME);
-							status.setMessage("知识本体库中没有此主题");
+				//查询该主题
+				WordTheme theme = wordThemeService.findByNumber(themeNumber);
+				if( theme!=null){
+					//2.先在本地查，如果本地没有该学生学习的主题单词再去本题库查，同时保存在本地。
+					userWords = suserWordService.getWords(themeNumber, user.getUserId());
+					//3.本地不存在，查询本体库
+					if( userWords==null || userWords.size()<=0){
+						if( userWords==null)
+							userWords = new ArrayList<>();
+						 try {
+							//查询主题下所有单词
+							List<ResultSet> resultsAllBrother = ontologyManage.QueryBrotherIndividual(theme.getContent());
+							//遍历单词
+							if(resultsAllBrother!=null)
+							for (int i = 0; i < resultsAllBrother.size(); i++) {
+								if (resultsAllBrother.get(i).hasNext()) {
+									//获取一条实体记录
+									QuerySolution solutionEachBrother = resultsAllBrother.get(i).next();
+									//单词id 
+									String wordId =PropertyEntity.subStringManage(solutionEachBrother.get(PropertyEntity.propertySPARQLValue[0]).toString());
+									 // 单词
+									 String wordStr=PropertyEntity.subStringManage(solutionEachBrother.get(PropertyEntity.propertySPARQLValue[1]).toString());
+									 
+									 SuserWord  uW = new SuserWord();
+									 uW.setTheme(themeNumber);
+									 uW.setWordId(wordId);
+									 uW.setUserId(user.getUserId());
+									 uW.setWord(wordStr);
+									 //保存用户学习单词
+									 suserWordService.save(uW);
+									 //收集
+									 userWords.add(uW);
+								} 
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							status.setExecptionStatus(e);
 						}
 					}
+				}else{
+					status.setStatus(StatusConstant.WORD_THEME_NO_EXIST);
+					status.setMessage("没有此主题");
 				}
 			}else{
 				status.setStatus(StatusConstant.USER_NOT_EXIST);
@@ -132,7 +143,96 @@ public class SThemeController {
 		
 		return JsonTool.generateModelAndView(listJson, status);
 	}
+	/**
+	 * 查询子主题
+	 * @param themeNumber 主题id
+	 * @return
+	 */
+	@RequestMapping(value="findChilThemes")
+	public ModelAndView findThemeByParent(String themeNumber){
+		MyStatus status =new MyStatus();
+		//存放所有实体的json对象
+		List<JSONObject>  listJson = new ArrayList<>();
+		if( !WebUtils.isNull(themeNumber)  ){
+			try {
+				
+				//先查询服务主题
+				WordTheme parentTheme=wordThemeService.findByNumber(themeNumber);
+				if( parentTheme!=null){
+					//查询子主题构造条件
+					String sql = "o.parentId = ?";
+					List<Object> listParams= new ArrayList<>();
+					listParams.add(parentTheme.getId());
+					//1.查询子主题
+					List<WordTheme> wordThemes= wordThemeService.getWordThemes(sql, listParams.toArray());
+					//遍历生成json
+					if( wordThemes!=null)
+					for(WordTheme theme :wordThemes){
+						JSONObject themeJson= generatorThemeJson(theme);
+						listJson.add(themeJson);
+					}
+				}else{
+					status.setStatus(StatusConstant.WORD_THEME_NO_EXIST);
+					status.setMessage("主题不存在");
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				status.setExecptionStatus(e);
+			}
+		}else{
+			status.setParamsError();
+		}
+		
+		return JsonTool.generateModelAndView(listJson, status);
+	}
 	
+	/**
+	 * 查询一级主题,根主题
+	 * @return
+	 */
+	@RequestMapping(value="findRootThemes")
+	public ModelAndView findThemeByParent(){
+		MyStatus status =new MyStatus();
+		//存放所有实体的json对象
+		List<JSONObject>  listJson = new ArrayList<>();
+			try {
+				//查询根主题构造条件：可见
+				String sql = "o.parentId is Null and o.visible =?";
+				List<Object> listParams= new ArrayList<>();
+				listParams.add(true);
+				
+				//1.查询主题
+				List<WordTheme> wordThemes= wordThemeService.getWordThemes(sql, listParams.toArray());
+				//遍历生成json
+				if( wordThemes!=null)
+				for(WordTheme theme :wordThemes){
+					JSONObject themeJson= generatorThemeJson(theme);
+					listJson.add(themeJson);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				status.setExecptionStatus(e);
+			}
+		
+		return JsonTool.generateModelAndView(listJson, status);
+	}
+	/**
+	 * 根据主题生成想要的json
+	 * @param theme
+	 * @return
+	 */
+	private JSONObject generatorThemeJson(WordTheme theme) {
+		// TODO Auto-generated method stub
+		JSONObject json = new JSONObject();
+		json.put("number", theme.getNumber());
+		json.put("content", theme.getContent());
+		json.put("english", theme.getEnglish());
+		json.put("picturePath", theme.getPicturePath());
+		return json;
+	}
 	/**
 	 * 发现主题下的所有单词:
 	 * @param theme：主题，如“20.自然-(69)山川与河流-山川 ”或是"(69)"
@@ -357,6 +457,13 @@ public class SThemeController {
 	@Resource
 	public void setIwordService(IwordService iwordService) {
 		this.iwordService = iwordService;
+	}
+	public WordThemeService getWordThemeService() {
+		return wordThemeService;
+	}
+	@Resource
+	public void setWordThemeService(WordThemeService wordThemeService) {
+		this.wordThemeService = wordThemeService;
 	}
 	
 }

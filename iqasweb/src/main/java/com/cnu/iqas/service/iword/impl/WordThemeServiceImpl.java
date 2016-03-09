@@ -42,20 +42,10 @@ public class WordThemeServiceImpl implements WordThemeService {
 			return null;
 		return wordThemeDao.getWords(themeid, firstindex, maxresult);
 	}
-
-	/**
-	 * 查询所有主题
-	 * @return 查询结果类
-	 */
-	@Override
-	public List<WordTheme> getThemes() {
-		return wordThemeDao.getAllData();
-	}
-
 	@Override
 	public void save(WordTheme entity) {
-		if( entity.getName()==null)
-			throw new RuntimeException("请确定主题名称！");
+		if( entity==null)
+			throw new RuntimeException("主题不能为空！");
 		try {
 			wordThemeDao.save(entity);
 		} catch (Exception e) {
@@ -63,8 +53,9 @@ public class WordThemeServiceImpl implements WordThemeService {
 		}
 	}
 	@Override
-	public WordTheme findByName(String name) {
-			return wordThemeDao.findByName(name);
+	public WordTheme findByContent(String content) {
+		String  sql = "o.content = ?";
+		return wordThemeDao.find(sql, content);
 	}
 
 	
@@ -95,6 +86,11 @@ public class WordThemeServiceImpl implements WordThemeService {
 		wordThemeDao.update(entity);
 	}
 
+	@Override
+	public List<WordTheme> getWordThemes(String wherejpql,Object[] queryParams ){
+		
+		return wordThemeDao.getAllData(wherejpql, queryParams);
+	}
 	@Override
 	public WordTheme find(String id) {
 		if( !validateId(id))
@@ -127,17 +123,19 @@ public class WordThemeServiceImpl implements WordThemeService {
 	 */
 	private boolean makeVisible(String id,boolean visible){
 		// TODO Auto-generated method stub
-				if( validateId(id)){
-					WordTheme theme = wordThemeDao.find(id);
-					if( theme !=null){
-						theme.setVisible(visible);
-						 wordThemeDao.update(theme);
-						 return true;
-					}
-				}
-					return false;
+		WordTheme theme=wordThemeDao.find(id);
+		if( theme==null)
+			return false;
+		theme.setVisible(visible);
+		wordThemeDao.update(theme);
+		return true;
 	}
 	
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		wordThemeDao.delete(id);
+	}
 	/**
 	 * 判断主题id是否为空或者空字符串
 	 * @param id
@@ -147,5 +145,10 @@ public class WordThemeServiceImpl implements WordThemeService {
 		if( id==null || "".equals(id.trim()))
 			return false;
 		return true;
+	}
+	@Override
+	public WordTheme findByNumber(String number) {
+		String  sql = "o.number = ?";
+		return wordThemeDao.find(sql, number);
 	}
 }

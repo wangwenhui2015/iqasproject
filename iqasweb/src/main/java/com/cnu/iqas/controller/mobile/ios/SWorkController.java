@@ -58,7 +58,6 @@ public class SWorkController implements ServletContextAware{
 					status.setStatus(StatusConstant.WORK_SAVEDIR_NOT_CONFIGURE);
 					status.setMessage("服务器学生作品保存路径未配置");
 				}
-				
 			}else{
 				status.setStatus(StatusConstant.WORK_ISNULL);
 				status.setMessage("上传作品为空");
