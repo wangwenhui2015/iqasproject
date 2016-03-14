@@ -60,11 +60,19 @@ public class PropertyUtils {
 	public static final String FIRST_USER_LOG="first.user.logosavedir";
 	
 	
-	
+
 	/**
 	 * 项目ios：学生作品图片保存相对路径
 	 */
-	public static final String IOS_WORK_PIC="ios.works.picturesavedir";
+	public static final String IOS_WORK_IMAGE="ios.works.picturesavedir";
+	/**
+	 * 项目ios：学生作品视频保存相对路径
+	 */
+	public static final String IOS_WORK_VIDEO="ios.works.videosavedir";
+	/**
+	 * 项目ios：学生作品声音保存相对路径
+	 */
+	public static final String IOS_WORK_VOICE="ios.works.voicesavedir";
 	
 	/**
 	 * 项目ios：学生头像图片保存相对路径

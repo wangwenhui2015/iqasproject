@@ -19,6 +19,7 @@ import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.service.user.FriendService;
 import com.cnu.iqas.utils.JsonTool;
 import com.cnu.iqas.utils.PropertyUtils;
+import com.cnu.iqas.utils.WebUtils;
 import com.cnu.iqas.vo.mobile.FriendVoManage;
 import com.hp.hpl.jena.sparql.pfunction.library.listIndex;
 
@@ -40,7 +41,7 @@ import net.sf.json.JsonConfig;
 @Controller
 @RequestMapping(value="mobile/friend/")
 public class MFriendController {
-
+  
 	private FriendService friendService;
 	/**
 	 * 用户服务类
@@ -106,7 +107,7 @@ public class MFriendController {
 	 * @return
 	 */
 	@RequestMapping(value="sendRequest")
-	public ModelAndView senRequest(FriendVoManage formbean){
+	public ModelAndView sendRequest(FriendVoManage formbean){
 		MyStatus status = new MyStatus();
 		try {
 			//校验用户密码和用户名是否有效
@@ -122,6 +123,8 @@ public class MFriendController {
 					if( frequest!=null){
 						//改为未处理状态
 						frequest.setIsHandle(false);
+						if( !WebUtils.isNull(formbean.getContent()))
+						   frequest.setContent(formbean.getContent());
 						//更新请求
 						friendService.updateRequest(frequest);
 					}else{
@@ -189,7 +192,7 @@ public class MFriendController {
 						requestJson.put("content", request.getContent());
 						requestJson.put("picturePath", request.getPicturePath());
 						//因为我查看的请求时别人发来的，所以在FriendRequest类中friendUserName字段存放的是我的用户名，而ownUserName是好友的用户名
-						requestJson.put("friendUsrName", request.getOwnUserName());
+						requestJson.put("friendUserName", request.getOwnUserName());
 						//requestJson = JSONObject.fromObject(request,config);
 						requestJsonList.add(requestJson);
 					}
@@ -366,7 +369,7 @@ public class MFriendController {
 							//目前存放项目logo图片
 							picturecPath = PropertyUtils.get(PropertyUtils.LOG);
 							//头像
-							fJson.put("picturecPath",picturecPath);
+							fJson.put("picturePath",picturecPath);
 							//好友金币
 							fJson.put("coins",fu.getAllCoins());
 							//勋章数
@@ -379,11 +382,7 @@ public class MFriendController {
 						friendsJson.add(fJson);
 						//排序，将数据按金币、勋章数降序排序
 						sort(friendsJson,false);
-					}else{
-						status.setStatus(StatusConstant.FRIEND_NOT_EXIST);
-						 status.setMessage("好友不存在！");
 					}
-					
 				}
 			}
 		} catch (Exception e) {

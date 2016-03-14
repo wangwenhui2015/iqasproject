@@ -17,7 +17,7 @@ public class UserForm extends BaseForm{
 	private String grade;
 	
 	@NotEmpty(message="用户名不能为空")
-	@Pattern(regexp="\\w{3,15}",message="用户名长度为3~15")//通过正则表达式进行校验，匹配4~15个数字和字母以及下划线的字符
+	//@Pattern(regexp="\\w{3,15}",message="用户名长度为3~15")//通过正则表达式进行校验，匹配4~15个数字和字母以及下划线的字符
 	public String getUserName() {
 		return userName;
 	}

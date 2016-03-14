@@ -101,24 +101,30 @@ public class StatusConstant {
 	public static int WORD_RESOURCE_NO_EXIST=5001;
 	
 	
-	/**
-	 * 该主题不存在
-	 */
-	public static int WORD_THEME_NO_EXIST=6001;
 	
 	/**
-	 * 上传文件失败
+	 * 上传作品失败
 	 */
 	public static int WORK_UPLOAD_FAILURE=6001;
 	/**
 	 * 上传作品为空
 	 */
 	public static int WORK_ISNULL=6002;
-	
+
 	/**
 	 *服务器学生作品保存路径未配置
 	 */
 	public static int WORK_SAVEDIR_NOT_CONFIGURE=6003;
+	/**
+	 *确认学生作品类型
+	 */
+	public static int WORK_FILE_TYPE=6004;
 	
+	
+
+	/**
+	 * 该主题不存在
+	 */
+	public static int WORD_THEME_NO_EXIST=7001;
 	
 }

@@ -24,7 +24,7 @@ http://172.19.203.92:8080/iqasweb/mobile/ios/user/login.html
  参数：
  * @param text  查询的单词
  
- 根据主题编号和用户id查询用户在该主题下的学习单词
+ 根据主题编号和用户查询用户在该主题下的学习单词
  http://172.19.203.8:8080/iqasweb/mobile/ios/theme/findWordsByTheme.html
  参数：
 	* @param themeNumber    主题编号
@@ -33,8 +33,12 @@ http://172.19.203.92:8080/iqasweb/mobile/ios/user/login.html
 	 
  查询子主题
  http://172.19.203.8:8080/iqasweb/mobile/ios/theme/findChilThemes.html
-参数： * @param themeNumber 主题id
-	 
+参数： * @param themeNumber 主题编号
+
+查询一级主题,根主题
+ http://172.19.203.8:8080/iqasweb/mobile/ios/theme/findRootThemes.html
+ 无参：
+ 
  上传作品
  http://172.19.203.92:8080/iqasweb/mobile/ios/work/uploadWork.html
  参数：

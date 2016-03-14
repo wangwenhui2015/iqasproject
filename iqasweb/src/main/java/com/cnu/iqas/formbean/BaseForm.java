@@ -79,7 +79,6 @@ public class BaseForm {
 	 */
 	public static  String saveFile(ServletContext servletContext,String relativedir, CommonsMultipartFile file) throws Exception{
 	
-		System.out.println(relativedir+"--------");
 		//文件原名称
 	   String fileName = file.getOriginalFilename();
 	   //文件后缀名

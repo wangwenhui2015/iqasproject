@@ -1,18 +1,10 @@
 package com.cnu.iqas.dao.ios.impl;
 
-import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
-import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.bean.ios.Suser;
-import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.dao.base.DaoSupport;
 import com.cnu.iqas.dao.ios.SUserDao;
 

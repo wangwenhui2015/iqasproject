@@ -41,7 +41,10 @@ public class FriendServiceImpl implements FriendService{
 			//建立一个新的请求
 			FriendRequest addRequest = new FriendRequest();
 			//备注
-			addRequest.setContent(note);
+			if(note==null)
+			  addRequest.setContent("");
+			else
+			  addRequest.setContent(note);
 			addRequest.setFriendUserName(friendUserName);
 			addRequest.setOwnUserName(ownUserName);
 			friendRequestDao.save(addRequest);
