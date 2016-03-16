@@ -148,5 +148,17 @@ public interface QueryWithManyWays {
 	 * @return：标志（单词为“31”， 句子为“85”）
 	 */
 	public ResultSet checkAllID(String yourInstance, String flag);
+	/**
+	 * 查询所有的单词的ID
+	 * @return
+	 */
+	public ResultSet checkIdOfAllWords();
+	/**
+	 * 查询所有的句子的ID
+	 * @return
+	 */
+	public ResultSet checkIdOfAllSentences();
+
+
 
 }

@@ -113,4 +113,11 @@ public class UserServiceImpl implements IUserBaseService<User> {
 			}
 		}
 	}
+	//保存金币和场景
+	@Override
+	public void SaveCoinAndScene(User user) {
+		
+			userDao.update(user);
+		
+	}
 }

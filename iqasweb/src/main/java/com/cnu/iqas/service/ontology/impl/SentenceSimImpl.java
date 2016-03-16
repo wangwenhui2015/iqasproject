@@ -22,13 +22,8 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.noumenon.AddDeleteModifyQuery.Query.QueryWithManyWays;
 import com.noumenon.AddDeleteModifyQuery.Query.Impl.QueryWithManyWaysImpl;
-
-import AddDeleteModifyQuery.Query.QueryIndividualAndId;
-import AddDeleteModifyQuery.Query.QueryIndividualAndProperty;
-import AddDeleteModifyQuery.Query.QuerySentenceDependOnId;
-import AddDeleteModifyQuery.Query.Impl.QueryIndividualAndIdImpl;
-import AddDeleteModifyQuery.Query.Impl.QueryIndividualAndPropertyImpl;
-import AddDeleteModifyQuery.Query.Impl.QuerySentenceDependOnIdImpl;
+import com.noumenon.OntologyManage.OntologyManage;
+import com.noumenon.OntologyManage.Impl.OntologyManageImpl;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
@@ -259,24 +254,34 @@ public class SentenceSimImpl implements SentenceSim  {
 	  * @return 一个map集合
 	  */
 	public Map<String, String> saveInstanceAndId(String yourClass) {
-		Map<String, String> map = new HashMap();
-		QueryIndividualAndId queryIndividualAndId = new QueryIndividualAndIdImpl();
+		System.out.println("saveInstanceAndId!!!!!!!!!");
+		Map<String, String> map = new HashMap<String, String>();
+		OntologyManage om=new OntologyManageImpl();
+		ResultSet resultsInstance=om.QueryWord(yourClass);
 		long time1 = System.currentTimeMillis();
-  	System.out.println("================================saveInstanceAndId开始时间：" + time1);
-		ResultSet resultsInstance = queryIndividualAndId.checkInstanceAndId(yourClass);
+		System.out.println("!!!!!!!!!!"+resultsInstance);
+     	System.out.println("================================saveInstanceAndId开始时间：" + time1);
+		//ResultSet resultsInstance = queryIndividualAndId.checkInstanceAndId(yourClass);
 		long time2 = System.currentTimeMillis();
-  	System.out.println("================================查询数据 ： " + (time2 - time1));
-		while (resultsInstance.hasNext()) {
+  	    System.out.println("================================查询数据 ： " + (time2 - time1));
+  	    if(resultsInstance.hasNext())
+  	    {	
+		    while (resultsInstance.hasNext()) {
+			System.out.println("进入！！！！！！！");
 			QuerySolution solutionInstance = resultsInstance.next();
 			String stringInstanceLabel = solutionInstance.get("?instanceLabel").toString();
-	        //System.out.println("++++++++++++++++++stringInstanceLabel是个"+stringInstanceLabel);
+			System.out.println("--------------"+stringInstanceLabel);
 			String tempStr = stringInstanceLabel.replaceAll(",", "_").replaceAll("'", "_i").replaceAll("_", " ");
+			System.out.println("------------------"+tempStr);
 			tempStr = tempStr.substring(0, tempStr.length() - 4);
-			String stringInstanceId = solutionInstance.get("?propertyID").toString();
-			String InstanceId = stringInstanceId.substring(0,stringInstanceId.length() - 3);
-			map.put(InstanceId, tempStr);
-			System.out.println("例句：" + InstanceId + " " +  tempStr);
-		}
+			//String stringInstanceId = solutionInstance.get("?propertyID").toString();
+			//String InstanceId = stringInstanceId.substring(0,stringInstanceId.length() - 3);
+			map.put("tempStr", tempStr);
+			System.out.println("例句：" +  tempStr);
+		   }
+  	    }else{
+  	    	System.out.println("本体知识库没有这个示例！！！");
+  	    }
 		long time3 = System.currentTimeMillis();
   	System.out.println("================================保存时间：" + (time3-time2));
 		return map;
@@ -306,8 +311,12 @@ public class SentenceSimImpl implements SentenceSim  {
 	public ISentence findPropertyById(String key) {
 		ISentence sentence = null;
 		//List<String>list=new ArrayList();
-		QuerySentenceDependOnId querySentenceDependOnId=new QuerySentenceDependOnIdImpl();
-	    ResultSet resultsSentenceProperty = querySentenceDependOnId.checkSentencePropertyDependOnId(key);
+		
+		//QuerySentenceDependOnId querySentenceDependOnId=new QuerySentenceDependOnIdImpl();
+		OntologyManage om=new OntologyManageImpl();
+		ResultSet resultsSentenceProperty=om.QuerySentenceIndividualDependOnId(key);
+		
+	  //  ResultSet resultsSentenceProperty = querySentenceDependOnId.checkSentencePropertyDependOnId(key);
 	    while (resultsSentenceProperty.hasNext()) {
 			// QuerySolution next()
 			// Moves onto the next result.
@@ -378,10 +387,6 @@ public class SentenceSimImpl implements SentenceSim  {
 		ResultSet resultsWordProperty=queryIndividualAndProperty.checkProperty(str);
 		 while (resultsWordProperty.hasNext()){ 
 			QuerySolution solutionInstance = resultsWordProperty.next();
-
-			//单词id
-			String propertyID = solutionInstance.get("?propertyID").toString();
-			String wordid=subStringManage(propertyID);
 			//-----------------------------------how to use-------------------------
 			//课文原句 
 			String propertyText = solutionInstance.get("?propertyText").toString();
@@ -431,7 +436,7 @@ public class SentenceSimImpl implements SentenceSim  {
 			String temppropertyUse=subStringManage(propertyUse); 
 			System.out.println("用法 "+temppropertyUse);
 			//-----------------------------------do you know?-------------------------
-			word = new Iword(wordid,temppropertyText, temppropertyScene, temppropertyExtend, temppropertyAssociate,
+			word = new Iword(null,temppropertyText, temppropertyScene, temppropertyExtend, temppropertyAssociate,
 			temppropertySynonyms,temppropertyAntonym,temppropertyExpand,temppropertyCommonUse,temppropertyNcyclopedia,temppropertyUse);
 		    }
 		    return word;
@@ -505,7 +510,7 @@ public class SentenceSimImpl implements SentenceSim  {
 				System.out.print(ss + " ");
 			}
 			double similarityDegree= Sentence_similarity(t1, t2);
-			System.out.println(similarityDegree);
+			System.out.println("最大的相似度值为"+similarityDegree);
 			if(similarityDegree>max)
 			{
 				max=similarityDegree;

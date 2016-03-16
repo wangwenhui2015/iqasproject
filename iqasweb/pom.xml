@@ -283,6 +283,13 @@
 	            <artifactId>edu.mit.jwi_jdk</artifactId>
 	            <version>2.3.3</version>
 		</dependency>
+		
+		  <dependency>
+	            <groupId>local.Adaptive.Recommendation</groupId>
+	            <artifactId>Adaptive-Recommendation</artifactId>
+	            <version>1.9</version>
+		</dependency>
+		
 	<!-- fuseki数据库 -->
 	 <!-- dependency>
             <groupId>local.apache.jena.fuseki</groupId>

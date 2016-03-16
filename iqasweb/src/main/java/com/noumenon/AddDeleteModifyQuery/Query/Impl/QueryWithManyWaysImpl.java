@@ -522,19 +522,26 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 	@Override
 	public ResultSet checkBrotherID(String yourThemeValueFlag1,
 			String yourThemeValueFlag2) {
-		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?instance ?relationTheme ?propertyTheme.FILTER regex(?propertyTheme,\""
+		String sparqlBrotherIndividual = "SELECT ?propertyTheme"
+				+ " WHERE{"
+				+ "?instance ?relationTheme ?propertyTheme "
+				+ "FILTER regex(?propertyTheme,\""
 				+ yourThemeValueFlag1
-				+ "\") FILTER regex(?propertyTheme,\""
-				+ yourThemeValueFlag2 + "\").}";
+				+ "\")"
+				+ "FILTER regex(?propertyTheme,\""
+				+ yourThemeValueFlag2
+				+ "\")."
+				+ "}";
 
 		ResultSet resultBrotherIndividual = Result(sparqlBrotherIndividual);
 		return resultBrotherIndividual;
 	}
 
+
 	@Override
 	public ResultSet checkBrotherID2(String yourTheme) {
-		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?instance ?relationTheme ?propertyTheme.FILTER regex(?propertyTheme,\""
-				+ yourTheme + "\").}";
+		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?relationTheme <http://www.w3.org/2000/01/rdf-schema#label> \"主题-话题\"@zh.?instance ?relationTheme ?propertyTheme FILTER regex(?propertyTheme,\""
+				+ yourTheme + "\"). }";
 
 		ResultSet resultBrotherIndividual = Result(sparqlBrotherIndividual);
 		return resultBrotherIndividual;
@@ -564,6 +571,28 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		// over the results.
 		ResultSet results = qexecInstance.execSelect();
 		return results;
+	}
+
+	@Override
+	public ResultSet checkIdOfAllWords() {
+		// TODO Auto-generated method stub
+		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"单词ID\"@zh. ?instance ?relationID ?propertyID.}";
+
+		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
+
+		return resultsAllWordsOfThisGrade;
+
+	}
+
+	@Override
+	public ResultSet checkIdOfAllSentences() {
+		// TODO Auto-generated method stub
+		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"句子ID\"@zh. ?instance ?relationID ?propertyID.}";
+
+		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
+
+		return resultsAllWordsOfThisGrade;
+
 	}
 
 }

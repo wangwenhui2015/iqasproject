@@ -14,6 +14,11 @@ public interface IUserBaseService<T> {
 	 */
 	public void save(T user);
 	/**
+	 * 保存user属性
+	 * @param user
+	 */
+	public void SaveCoinAndScene(User user);
+	/**
 	 *查找用户
 	 * @param username 账号
 	 * @param password 密码

@@ -141,5 +141,19 @@ public interface OntologyManage {
 	 * @return
 	 */
 	public ArrayList<String> ReasonSameAs(String yourSentence);
+	/**根据年级随机找出5个单词----------------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @return
+	 */
+	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade);
+	
+	/**根据年级随机找出2个句子----------------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @return
+	 */
+	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade);
+
 
 }
