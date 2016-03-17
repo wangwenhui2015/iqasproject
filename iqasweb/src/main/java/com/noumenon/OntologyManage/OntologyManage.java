@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.hp.hpl.jena.query.ResultSet;
 
@@ -90,14 +91,20 @@ public interface OntologyManage {
 	 */
 	public ResultSet QueryIndividual(String yourWord);
 	
-	/**查询所有单词对应的ID
+	/**查询单词对应的所有ID-----------------------------------------------------------------
 	 * 
 	 * @param yourWord
 	 * @return
 	 */
-	public ResultSet QueryIndividualAllId(String yourWord);
+	public ResultSet QueryAWordAllId(String yourWord);
 	
-	
+	/**查询句子对应的所有ID-----------------------------------------------------------------
+	 * 
+	 * @param yourSentence
+	 * @return
+	 */
+	public ResultSet QueryASentenceAllId(String yourSentence);
+		
 	/**根据ID查找该句子及其所有属性：返回结果集ResultSet-------------------------------------------
 	 * 
 	 * @param yourID
@@ -105,19 +112,41 @@ public interface OntologyManage {
 	 */
 	public ResultSet QuerySentenceIndividualDependOnId(String yourID);
 
-	/**查一个句子的所有属性：返回结果集ResultSet--------------------------------------------------
+	/**查一个句子的所有属性：返回结果集ResultSet-------------------------------------------------
 	 * 
 	 * @param yourSentence
 	 * @return
 	 */
 	public ResultSet QuerySentenceIndividual(String yourSentence);
 	
-	/**根据单词查看所有同级单词及其属性：返回结果集ResultSet------------------------------------------
+	/**根据单词查看所有同级单词及其属性：返回结果集ResultSet-----------------------------------------
 	 * 
 	 * @param yourTheme
 	 * @return
 	 */
 	public List<ResultSet> QueryBrotherIndividual(String yourTheme);
+	
+	/**根据年级随机找出5个单词----------------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @return
+	 */
+	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade);
+	
+	/**根据年级随机找出2个句子----------------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @return
+	 */
+	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade);
+	
+	/**根据疑问词找出句子以及ID----------------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @return
+	 */
+	public Map<String, String>QuerySentenceAndId(String yourClass);
+	
 	
 	//-----------------------------------------------------------------------------------------
 	/**从Fuseki中写回OWL文件中，且单词和句子分开：无返回值-------------------------------------------
@@ -141,19 +170,5 @@ public interface OntologyManage {
 	 * @return
 	 */
 	public ArrayList<String> ReasonSameAs(String yourSentence);
-	/**根据年级随机找出5个单词----------------------------------------------------------------
-	 * 
-	 * @param yourGrade
-	 * @return
-	 */
-	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade);
-	
-	/**根据年级随机找出2个句子----------------------------------------------------------------
-	 * 
-	 * @param yourGrade
-	 * @return
-	 */
-	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade);
-
 
 }

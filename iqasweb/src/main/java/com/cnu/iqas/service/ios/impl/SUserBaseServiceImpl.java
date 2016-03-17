@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cnu.iqas.bean.ios.Suser;
 import com.cnu.iqas.bean.ios.SuserLogin;
+import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.dao.ios.SUserDao;
 import com.cnu.iqas.dao.ios.SUserLoginDao;
 import com.cnu.iqas.service.common.IUserBaseService;
@@ -130,5 +131,11 @@ public class SUserBaseServiceImpl implements IUserBaseService<Suser> {
 	@Resource
 	public void setSuserLoginDao(SUserLoginDao suserLoginDao) {
 		this.suserLoginDao = suserLoginDao;
+	}
+
+	@Override
+	public void SaveCoinAndScene(User user) {
+		// TODO Auto-generated method stub
+		
 	}
 }

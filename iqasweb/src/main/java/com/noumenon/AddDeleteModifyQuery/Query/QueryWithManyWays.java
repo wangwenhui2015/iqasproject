@@ -1,5 +1,4 @@
 package com.noumenon.AddDeleteModifyQuery.Query;
-
 import com.hp.hpl.jena.query.ResultSet;
 
 public interface QueryWithManyWays {
@@ -14,7 +13,7 @@ public interface QueryWithManyWays {
 	public ResultSet checkPropertyDependOnId(String yourId);
 
 	/**
-	 * 根据Id查找实例及其属性：返回值ResultSet---------------------------------
+	 * 根据Id查找句子及其属性：返回值ResultSet---------------------------------
 	 * 
 	 * @param yourId
 	 *            ：句子ID
@@ -39,6 +38,7 @@ public interface QueryWithManyWays {
 	 * @return
 	 */
 	public ResultSet checkProperty(String yourWord);
+	
 	/**
 	 * 查询一个单词对应的所有ID
 	 * 
@@ -46,8 +46,17 @@ public interface QueryWithManyWays {
 	 *            ：单词
 	 * @return
 	 */
-	public ResultSet checkAllIdOfAnIndividual(String yourWord);
+	public ResultSet checkAllIdOfAnWord(String yourWord);
 	
+	/**
+	 * 查询一个句子对应的所有ID
+	 * 
+	 * @param yourSentence
+	 *                ：句子
+	 * @return
+	 */
+	public ResultSet checkAllIdOfAnSentence(String yourSentence);
+
 	/**
 	 * 根据实例名称查找句子所有属性值：返回值ResultSet-----------------------------
 	 * 
@@ -111,7 +120,7 @@ public interface QueryWithManyWays {
 	public ResultSet checkTopicValue(String yourWord);
 	
 	/**
-	 * 根据属性值查找所有单词及其属性
+	 * 根据主题属性标记，找出所有包含该标记的属性值，该属性值中包含单词ID
 	 * @param yourThemeValueFlag1
 	 * @param yourThemeValueFlag2
 	 * @return
@@ -119,11 +128,31 @@ public interface QueryWithManyWays {
 	public ResultSet checkBrotherID(String yourThemeValueFlag1, String yourThemeValueFlag2);
 	
 	/**
-	 * 根据主题属性值查找所有单词及其属性(主题为自己定义的)
+	 * 根据主题属性标记，找出所有包含该标记的属性值，该属性值中包含单词ID(主题为自己定义的)
 	 * @param yourTheme
 	 * @return
 	 */
 	public ResultSet checkBrotherID2(String yourTheme);
+	
+	/**
+	 * 根据年级随机找出5个单词和2个句子
+	 * @param yourGrade
+	 * @return
+	 */
+	public ResultSet checkAllWordsOfThisGrade(String yourGrade);
+	
+	/**
+	 * 查询所有的单词的ID
+	 * @return
+	 */
+	public ResultSet checkIdOfAllWords();
+	
+	/**
+	 * 查询所有的句子的ID
+	 * @return
+	 */
+	public ResultSet checkIdOfAllSentences();
+	
 	// -----------------------------------------------------------------------------------------
 	/**
 	 * 根据实例+某属性+属性值，查找该三元组：返回值ResultSet------------------------
@@ -148,17 +177,6 @@ public interface QueryWithManyWays {
 	 * @return：标志（单词为“31”， 句子为“85”）
 	 */
 	public ResultSet checkAllID(String yourInstance, String flag);
-	/**
-	 * 查询所有的单词的ID
-	 * @return
-	 */
-	public ResultSet checkIdOfAllWords();
-	/**
-	 * 查询所有的句子的ID
-	 * @return
-	 */
-	public ResultSet checkIdOfAllSentences();
-
-
 
 }
+

@@ -156,6 +156,7 @@ public class MOntologyController {
     				//senObject= JSONObject.fromObject(sentence);
     			    JSONObject restextJson = new JSONObject();  
     			    restextJson.put("text", text);
+    			    restextJson.put("answer", sentence.getPropertyAnswer());
     				//reswordJson.put("pictruepath", pictruepath);
     			    usersArray.add(restextJson);
     			}

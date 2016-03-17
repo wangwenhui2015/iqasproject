@@ -1,5 +1,4 @@
 package com.noumenon.AddDeleteModifyQuery.Query.Impl;
-
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -21,7 +20,7 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel}";
 		String sparqlInstance = string1 + yourClass + string2;
-		System.out.println(sparqlInstance);
+		//System.out.println(sparqlInstance);
 
 		ResultSet resultsInstance = Result(sparqlInstance);
 		return resultsInstance;
@@ -114,9 +113,9 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultsInstance;
 	}
 
-	//查询一个单词对应的所有ID
+	// 查询一个单词对应的所有ID
 	@Override
-	public ResultSet checkAllIdOfAnIndividual(String yourWord) {
+	public ResultSet checkAllIdOfAnWord(String yourWord) {
 		String string1 = "SELECT ?propertyID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
 		String string2 = "\"@zh."
 				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"单词ID\"@zh."
@@ -127,6 +126,21 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		ResultSet resultsAllIdOfAInstance = Result(sparqlInstance);
 		return resultsAllIdOfAInstance;
 	}
+	
+	// 查询一个单词对应的所有ID
+	@Override
+	public ResultSet checkAllIdOfAnSentence(String yourSentence) {
+		String string1 = "SELECT ?propertyID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
+		String string2 = "\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"句子ID\"@zh."
+				+ "?instance ?relationID ?propertyID.}";
+		String sparqlInstance = string1 + yourSentence + string2;
+		//System.out.println(sparqlInstance);
+
+		ResultSet resultsAllIdOfAnSentence = Result(sparqlInstance);
+		return resultsAllIdOfAnSentence;
+	}
+
 	// 根据实例名称查找句子所有属性值
 	@Override
 	public ResultSet checkSentenceProperty(String yourSentence) {
@@ -450,6 +464,38 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultsClass_Label;
 	}
 
+	// 根据年级随机找出5个单词和2个句子
+	@Override
+	public ResultSet checkAllWordsOfThisGrade(String yourGrade) {
+		String string1 = "SELECT ?propertyBook ?instanceLabel WHERE{?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"单词册数\"@zh. ?instance ?relationBook ?propertyBook FILTER regex(?propertyBook, \"";
+
+		String string2 = "\"\"). ?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel.}";
+
+		String sparqlAllWordsOfThisGrade = string1 + yourGrade + string2;
+
+		ResultSet resultsAllWordsOfThisGrade = Result(sparqlAllWordsOfThisGrade);
+
+		return resultsAllWordsOfThisGrade;
+	}
+
+	// 查询所有的单词的ID
+	public ResultSet checkIdOfAllWords() {
+		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"单词ID\"@zh. ?instance ?relationID ?propertyID.}";
+
+		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
+
+		return resultsAllWordsOfThisGrade;
+	}
+
+	// 查询所有的单词的ID
+	public ResultSet checkIdOfAllSentences() {
+		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"句子ID\"@zh. ?instance ?relationID ?propertyID.}";
+
+		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
+
+		return resultsAllWordsOfThisGrade;
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 	// 根据实例+某属性+属性值，查找该三元组
 	@Override
@@ -522,31 +568,24 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 	@Override
 	public ResultSet checkBrotherID(String yourThemeValueFlag1,
 			String yourThemeValueFlag2) {
-		String sparqlBrotherIndividual = "SELECT ?propertyTheme"
-				+ " WHERE{"
-				+ "?instance ?relationTheme ?propertyTheme "
-				+ "FILTER regex(?propertyTheme,\""
+		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?instance ?relationTheme ?propertyTheme.FILTER regex(?propertyTheme,\""
 				+ yourThemeValueFlag1
-				+ "\")"
-				+ "FILTER regex(?propertyTheme,\""
-				+ yourThemeValueFlag2
-				+ "\")."
-				+ "}";
+				+ "\") FILTER regex(?propertyTheme,\""
+				+ yourThemeValueFlag2 + "\").}";
 
 		ResultSet resultBrotherIndividual = Result(sparqlBrotherIndividual);
 		return resultBrotherIndividual;
 	}
-
 
 	@Override
 	public ResultSet checkBrotherID2(String yourTheme) {
-		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?relationTheme <http://www.w3.org/2000/01/rdf-schema#label> \"主题-话题\"@zh.?instance ?relationTheme ?propertyTheme FILTER regex(?propertyTheme,\""
-				+ yourTheme + "\"). }";
+		String sparqlBrotherIndividual = "SELECT ?propertyTheme WHERE{?instance ?relationTheme ?propertyTheme.FILTER regex(?propertyTheme,\""
+				+ yourTheme + "\").}";
 
 		ResultSet resultBrotherIndividual = Result(sparqlBrotherIndividual);
 		return resultBrotherIndividual;
 	}
-	
+
 	// 静态方法：根据SPARQL语句查询，并返回相应结果集-----------------------------------------------------------------------------------------------------------
 	private static ResultSet Result(String sparql) {
 		// public static Query create(String queryString)
@@ -573,26 +612,5 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return results;
 	}
 
-	@Override
-	public ResultSet checkIdOfAllWords() {
-		// TODO Auto-generated method stub
-		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"单词ID\"@zh. ?instance ?relationID ?propertyID.}";
-
-		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
-
-		return resultsAllWordsOfThisGrade;
-
-	}
-
-	@Override
-	public ResultSet checkIdOfAllSentences() {
-		// TODO Auto-generated method stub
-		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"句子ID\"@zh. ?instance ?relationID ?propertyID.}";
-
-		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
-
-		return resultsAllWordsOfThisGrade;
-
-	}
-
 }
+

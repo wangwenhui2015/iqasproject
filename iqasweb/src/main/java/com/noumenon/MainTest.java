@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -19,6 +21,7 @@ import com.noumenon.OntologyManage.OntologyManage;
 import com.noumenon.OntologyManage.Impl.OntologyManageImpl;
 
 import jxl.read.biff.BiffException;
+
 
 public class MainTest {
 
@@ -156,11 +159,14 @@ public class MainTest {
 		System.out.println("12.根据类查看所有句子");
 		System.out.println("13.根据ID查看句子及其属性");
 		System.out.println("14.查看句子及其属性");
-		System.out.println("15.根据单词查看所有同级单词及其属性");
+		System.out.println("15.根据主题查看所有同级单词及其属性");
+		System.out.println("16.根据年级随机找出5个单词和2个句子");
+		System.out.println("17.根据类查询句子以及其所有ID");
 
-		System.out.println("16.把Fuseki数据库中的数据写回owl文件中");
-		System.out.println("17.批量添加等价关系");
-		System.out.println("18.推理等价关系");
+		System.out.println("18.把Fuseki数据库中的数据写回owl文件中");
+		System.out.println("19.批量添加等价关系");
+		System.out.println("20.推理等价关系");
+
 		Scanner option = new Scanner(System.in);
 		int operation = option.nextInt();
 
@@ -364,10 +370,10 @@ public class MainTest {
 			sc = new Scanner(System.in);
 			System.out.println("请输入要查询的单词：\n");
 			String yourWord = sc.nextLine();
-			
-			//查该单词对应所有ID的结果集
-			resultsInstance = ontologyManage.QueryIndividualAllId(yourWord);
-			//resultsInstance = ontologyManage.QueryIndividual(yourWord);
+
+			// 查该单词对应所有ID的结果集
+			resultsInstance = ontologyManage.QueryAWordAllId(yourWord);
+			// resultsInstance = ontologyManage.QueryIndividual(yourWord);
 
 			if (resultsInstance.hasNext()) {
 				while (resultsInstance.hasNext()) {
@@ -375,19 +381,24 @@ public class MainTest {
 					// Moves onto the next result.
 					// 移动到下个result上
 					QuerySolution solutionInstance = resultsInstance.next();
-					
-					//找出该单词的对应的所有ID
-					ResultSet resultsAllPropertyOfThisId = ontologyManage.QueryIndividualDependOnId(solutionInstance.get("?propertyID").toString());
-					QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
 
-					//打印出每个ID对应的句子及其属性
+					// 找出该单词的对应的所有ID
+					ResultSet resultsAllPropertyOfThisId = ontologyManage
+							.QueryIndividualDependOnId(solutionInstance.get(
+									"?propertyID").toString());
+					QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId
+							.next();
+
+					// 打印出每个ID对应的句子及其属性
 					System.out.println("实例：" + yourWord + "\n");
 					for (i = 0; i < propertyLabel.length; i++) {
-						System.out.println("    ————"
-								+ propertyLabel[i]
-								+ "："
-								+ subStringManage(solutionAllPropertyOfThisId.get(
-										propertySPARQLValue[i]).toString()));
+						System.out
+								.println("    ————"
+										+ propertyLabel[i]
+										+ "："
+										+ subStringManage(solutionAllPropertyOfThisId
+												.get(propertySPARQLValue[i])
+												.toString()));
 					}
 					System.out.println("\n");
 				}
@@ -461,10 +472,10 @@ public class MainTest {
 			sc = new Scanner(System.in);
 			System.out.println("请输入要查询的句子：\n");
 			String yourSentence = sc.nextLine();
-			
-			//查该单词对应所有ID的结果集
-			resultsInstance = ontologyManage.QueryIndividualAllId(yourSentence);
-			//resultsInstance = ontologyManage.QueryIndividual(yourWord);
+
+			// 查该单词对应所有ID的结果集
+			resultsInstance = ontologyManage.QueryASentenceAllId(yourSentence);
+			// resultsInstance = ontologyManage.QueryIndividual(yourWord);
 
 			if (resultsInstance.hasNext()) {
 				while (resultsInstance.hasNext()) {
@@ -472,20 +483,23 @@ public class MainTest {
 					// Moves onto the next result.
 					// 移动到下个result上
 					QuerySolution solutionInstance = resultsInstance.next();
-					
-					//找出该句子的对应的所有ID
-					ResultSet resultsAllPropertyOfThisId = ontologyManage.QueryIndividualDependOnId(solutionInstance.get("?propertyID").toString());
-					QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId.next();
 
-					//打印出每个ID对应的句子及其属性
+					// 找出该句子的对应的所有ID
+					ResultSet resultsAllPropertyOfThisId = ontologyManage
+							.QuerySentenceIndividualDependOnId(solutionInstance
+									.get("?propertyID").toString());
+					QuerySolution solutionAllPropertyOfThisId = resultsAllPropertyOfThisId
+							.next();
+
+					// 打印出每个ID对应的句子及其属性
 					System.out.println("句子：" + yourSentence + "\n");
 					for (i = 0; i < sentencePropertyLabel.length; i++) {
 
 						System.out.println("    ————"
 								+ sentencePropertyLabel[i]
 								+ "："
-								+ subStringManage(solutionAllPropertyOfThisId.get(
-										sentencePropertySPARQLValue[i])
+								+ subStringManage(solutionAllPropertyOfThisId
+										.get(sentencePropertySPARQLValue[i])
 										.toString()));
 					}
 					System.out.println("\n");
@@ -501,17 +515,20 @@ public class MainTest {
 			String yourTheme = sc.nextLine();
 			List<ResultSet> resultsAllBrother = ontologyManage
 					.QueryBrotherIndividual(yourTheme);
-			for (i = 0; i < resultsAllBrother.size(); i++) {		
+			for (i = 0; i < resultsAllBrother.size(); i++) {
 				if (resultsAllBrother.get(i).hasNext()) {
 					while (resultsAllBrother.get(i).hasNext()) {
-						QuerySolution solutionEachBrother = resultsAllBrother.get(i).next();
+						QuerySolution solutionEachBrother = resultsAllBrother
+								.get(i).next();
 
 						for (int j = 0; j < propertyLabel.length; j++) {
-							System.out.println("    ————"
-									+ propertyLabel[j]
-									+ "："
-									+ subStringManage(solutionEachBrother.get(
-											propertySPARQLValue[j]).toString()));
+							System.out
+									.println("    ————"
+											+ propertyLabel[j]
+											+ "："
+											+ subStringManage(solutionEachBrother
+													.get(propertySPARQLValue[j])
+													.toString()));
 						}
 						System.out.println("\n");
 					}
@@ -522,12 +539,97 @@ public class MainTest {
 
 			break;
 
-		// -------------------------------------------------------------------------
 		case 16:
+			// 根据年级随机找出5个单词和2个句子
+			sc = new Scanner(System.in);
+			System.out.println("请输入要查询年级：\n");
+			String yourGrade = sc.nextLine();
+
+			// 查询该年级随机5个单词
+			List<ResultSet> resultsFiveWordsOfThisGrade = ontologyManage
+					.QueryFiveWordsOfThisGrade(yourGrade);
+
+			if (resultsFiveWordsOfThisGrade.size() == 0) {
+				System.out.println("该年级的单词结果集为空！不打印！");
+			} else {
+				// 打印
+				System.out.println(yourGrade + "年级的5个单词:" + "\n");
+				for (int wordIndex = 0; wordIndex < resultsFiveWordsOfThisGrade
+						.size(); wordIndex++) {
+					while (resultsFiveWordsOfThisGrade.get(wordIndex).hasNext()) {
+						QuerySolution solutionFiveWordsOfThisGrade = resultsFiveWordsOfThisGrade
+								.get(wordIndex).next();
+
+						for (int j = 0; j < propertyLabel.length; j++) {
+							System.out
+									.println("    ————"
+											+ propertyLabel[j]
+											+ "："
+											+ subStringManage(solutionFiveWordsOfThisGrade
+													.get(propertySPARQLValue[j])
+													.toString()));
+						}
+						System.out.println("\n");
+					}
+				}
+			}
+
+			// 查询该年级随机2个句子
+			List<ResultSet> resultsTwoSentencesOfThisGrade = ontologyManage
+					.QueryTwoSentencesOfThisGrade(yourGrade);
+			if (resultsTwoSentencesOfThisGrade.size() == 0) {
+				System.out.println("该年级的句子结果集为空！不打印！");
+			} else {
+				// 打印
+				System.out.println(yourGrade + "年级的2个句子:" + "\n");
+				for (int sentenceIndex = 0; sentenceIndex < resultsTwoSentencesOfThisGrade
+						.size(); sentenceIndex++) {
+					while (resultsTwoSentencesOfThisGrade.get(sentenceIndex)
+							.hasNext()) {
+						QuerySolution solutionTwoSentencesOfThisGrade = resultsTwoSentencesOfThisGrade
+								.get(sentenceIndex).next();
+
+						for (int j = 0; j < sentencePropertyLabel.length; j++) {
+
+							System.out
+									.println("    ————"
+											+ sentencePropertyLabel[j]
+											+ "："
+											+ subStringManage(solutionTwoSentencesOfThisGrade
+													.get(sentencePropertySPARQLValue[j])
+													.toString()));
+						}
+						System.out.println("\n");
+					}
+				}
+			}
+
+			break;
+			
+		case 17:
+			sc = new Scanner(System.in);
+			System.out.println("请输入要查询的类：\n");
+			yourClass = sc.nextLine();
+
+			Map<String, String> resultsSentenceAndId = new HashMap<String, String>();
+			resultsSentenceAndId = ontologyManage.QuerySentenceAndId(yourClass);
+			
+			// 打印结果
+			if (resultsSentenceAndId.isEmpty()) {
+				System.out.println("无键值对");
+			} else {
+				for (Entry<String, String> s : resultsSentenceAndId.entrySet()) {
+					System.out.println("键值对:" + s);
+				}
+			}
+			break;
+
+		// -------------------------------------------------------------------------
+		case 18:
 			ontologyManage.WriteBackToOwl();
 			break;
 
-		case 17:
+		case 19:
 			sc = new Scanner(System.in);
 			System.out.println("请输入你想添等价关系加的excel路径:");
 			yourPath = sc.nextLine();
@@ -535,7 +637,7 @@ public class MainTest {
 			ontologyManage.InsertRelationSameAs(yourInputStream);
 			break;
 
-		case 18:
+		case 20:
 			// 推理之前要先拔掉Fuseki数据写回OWL中
 			// ontologyManage.WriteBackToOwl();
 

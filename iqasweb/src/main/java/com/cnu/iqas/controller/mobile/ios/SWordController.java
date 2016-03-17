@@ -81,7 +81,8 @@ public class SWordController {
 				try {
 					//从本体中查询出不同版本的单词
 					// 查该单词对应所有ID的结果集
-					ResultSet resultsIdofOneWord= ontologyManage.QueryIndividualAllId(text);
+					ResultSet resultsIdofOneWord= ontologyManage.QueryAWordAllId(text);
+					//QueryIndividualAllId(text);
 					listPes = new ArrayList<PropertyEntity>();
 					if (resultsIdofOneWord.hasNext()) {
 						//将多个版本的相同单词封装成json

@@ -1,5 +1,4 @@
 package com.noumenon.OntologyManage.Impl;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
@@ -21,6 +21,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
@@ -40,6 +41,7 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+
 @Service("ontologyManage")
 public class OntologyManageImpl implements OntologyManage {
 
@@ -79,7 +81,9 @@ public class OntologyManageImpl implements OntologyManage {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static HashMap<String, Vector> ALLWORDS;
+	@SuppressWarnings("rawtypes")
 	public static HashMap<String, Vector> ALLMEANS;
 
 	private static AddIndividualAndProperty addIndividualAndProperty = new AddIndividualAndPropertyImpl();
@@ -427,8 +431,16 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 	}
 
-	
+	// 根据类查找类下的所有单词Label
+	public ResultSet QueryWord(String yourClass) {
 
+		ResultSet resultsInstance = queryWithManyWays.checkInstance(yourClass);
+
+		return resultsInstance;
+
+	}
+
+	// 根据ID查找该单词及其所有属性
 	@Override
 	public ResultSet QueryIndividualDependOnId(String yourID) {
 
@@ -438,6 +450,7 @@ public class OntologyManageImpl implements OntologyManage {
 		return resultsInstance;
 	}
 
+	// 查一个单词的所有属性
 	@Override
 	public ResultSet QueryIndividual(String yourWord) {
 
@@ -445,15 +458,28 @@ public class OntologyManageImpl implements OntologyManage {
 
 		return resultsInstance;
 	}
-	
-	@Override
-	public ResultSet QueryIndividualAllId(String yourWord) {
 
-		ResultSet resultsInstance = queryWithManyWays.checkAllIdOfAnIndividual(yourWord);
+	// 查询单词对应的所有ID
+	@Override
+	public ResultSet QueryAWordAllId(String yourWord) {
+
+		ResultSet resultsInstance = queryWithManyWays
+				.checkAllIdOfAnWord(yourWord);
 
 		return resultsInstance;
 	}
 
+	// 查询句子对应的所有ID
+	@Override
+	public ResultSet QueryASentenceAllId(String yourSentence) {
+
+		ResultSet resultsInstance = queryWithManyWays
+				.checkAllIdOfAnSentence(yourSentence);
+
+		return resultsInstance;
+	}
+
+	// 根据ID查找该句子及其所有属性
 	@Override
 	public ResultSet QuerySentenceIndividualDependOnId(String yourID) {
 
@@ -470,6 +496,205 @@ public class OntologyManageImpl implements OntologyManage {
 				.checkSentenceProperty(yourSentence);
 
 		return resultsInstance;
+	}
+
+	// 根据年级随机找出5个单词
+	@Override
+	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade) {
+
+		// 查找所有单词的ID
+		ResultSet resultsIDOfAllWords = queryWithManyWays.checkIdOfAllWords();
+
+		// 用动态数组保存该年级单词ID
+		List<String> allIdOfThisGrade = new ArrayList<String>();
+
+		// 筛选该年级的ID
+		if (resultsIDOfAllWords.hasNext()) {
+			while (resultsIDOfAllWords.hasNext()) {
+				// QuerySolution next()
+				// Moves onto the next result.
+				// 移动到下个result上
+				QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
+				String propertyId = solutionIdOfAllWords.get("?propertyID")
+						.toString();
+				// 截取掉册数之前的信息
+				String stringOutOfVersion = propertyId.substring(propertyId
+						.indexOf("/") + 1);
+				String propertyBook = stringOutOfVersion.substring(0,
+						stringOutOfVersion.indexOf("/"));
+				// System.out.println("该单词的册数：" + propertyBook);
+				if (yourGrade.equals(propertyBook)) {
+					allIdOfThisGrade.add(solutionIdOfAllWords
+							.get("?propertyID").toString());
+				}
+			}
+		}
+
+		// 随机取5个单词ID，之后查找每个单词的属性
+		List<ResultSet> resultsFiveWordsOfThisGrade = new ArrayList<ResultSet>();
+		if (allIdOfThisGrade.isEmpty()) {
+			System.out.println("该年纪没有单词！");
+		} else {// 该年级有单词
+			System.out.println("该年级所有单词的个数：" + allIdOfThisGrade.size());
+
+			if (allIdOfThisGrade.size() < 5) {// 如果单词个数<5，保存所有单词
+				for (int i = 0; i < allIdOfThisGrade.size(); i++) {
+					resultsFiveWordsOfThisGrade.add(queryWithManyWays
+							.checkPropertyDependOnId(allIdOfThisGrade.get(i)
+									.toString()));
+				}
+			} else {// 如果单词个数>=5，从中选择不重复的5个单词
+					// 用数组保持随机ID，来判断是否有重复
+				List<String> randomIdList = new ArrayList<String>();
+				// 随机取5个单词ID，之后查找每个单词的属性
+				do {
+					Random ra = new Random();
+					int randomNum = ra.nextInt(allIdOfThisGrade.size() - 1);
+					System.out.println("随机索引为：" + randomNum);
+					String randomId = allIdOfThisGrade.get(randomNum)
+							.toString();
+					System.out.println("随机ID为：" + randomId);
+
+					int j;
+					// 遍历随机ID数组中的每一个元素
+					for (j = 0; j < randomIdList.size(); j++) {
+						// 判断是否有重复的
+						if (randomIdList.get(j).equals(randomId)) {
+							break;
+						}
+					}
+					if (j == randomIdList.size()) {// 无重复
+						// 把随机ID保存好
+						randomIdList.add(randomId);
+						resultsFiveWordsOfThisGrade.add(queryWithManyWays
+								.checkPropertyDependOnId(randomId));
+					} else {
+						continue;
+					}
+				} while (resultsFiveWordsOfThisGrade.size() < 5);
+			}
+		}
+		return resultsFiveWordsOfThisGrade;
+	}
+
+	@Override
+	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade) {
+
+		// 查找所有句子的ID
+		ResultSet resultsIDOfAllWords = queryWithManyWays
+				.checkIdOfAllSentences();
+
+		// 用动态数组保存该年级句子ID
+		List<String> allSentencesIdOfThisGrade = new ArrayList<String>();
+
+		// 筛选该年级的ID
+		if (resultsIDOfAllWords.hasNext()) {
+			while (resultsIDOfAllWords.hasNext()) {
+				// QuerySolution next()
+				// Moves onto the next result.
+				// 移动到下个result上
+				QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
+				String propertyId = solutionIdOfAllWords.get("?propertyID")
+						.toString();
+				// 截取掉册数之前的信息
+				String stringOutOfVersion = propertyId.substring(propertyId
+						.indexOf("/") + 1);
+				String propertyBook = stringOutOfVersion.substring(0,
+						stringOutOfVersion.indexOf("/"));
+				// System.out.println("该单词的册数：" + propertyBook);
+				if (yourGrade.equals(propertyBook)) {
+					allSentencesIdOfThisGrade.add(solutionIdOfAllWords.get(
+							"?propertyID").toString());
+				}
+			}
+		}
+
+		// 随机取2个句子ID，之后查找每个单词的属性
+		List<ResultSet> resultsTwoSentencesOfThisGrade = new ArrayList<ResultSet>();
+		if (allSentencesIdOfThisGrade.isEmpty()) {
+			System.out.println("该年纪没有句子！");
+		} else {// 该年级有句子
+			System.out
+					.println("该年级所有句子的个数：" + allSentencesIdOfThisGrade.size());
+
+			if (allSentencesIdOfThisGrade.size() < 2) {// 如果句子个数<2，即只有一个句子，则保存这1个句子并返回
+				resultsTwoSentencesOfThisGrade
+						.add(queryWithManyWays
+								.checkSentencePropertyDependOnId(allSentencesIdOfThisGrade
+										.get(0).toString()));
+			} else {// 如果句子个数>=2，选择不重复的2个句子
+				// 用数组保持随机ID，来判断是否有重复
+				List<String> randomIdList = new ArrayList<String>();
+
+				// 随机取2个句子ID，之后查找每个单词的属性
+				do {
+					Random ra = new Random();
+					int randomNum = ra
+							.nextInt(allSentencesIdOfThisGrade.size() - 1);
+					System.out.println("随机索引为：" + randomNum);
+					String randomId = allSentencesIdOfThisGrade.get(randomNum)
+							.toString();
+					System.out.println("随机ID为：" + randomId);
+
+					int j;
+					// 遍历随机ID数组中的每一个元素
+					for (j = 0; j < randomIdList.size(); j++) {
+						// 判断是否有重复的
+						if (randomIdList.get(j).equals(randomId)) {
+							break;
+						}
+					}
+					if (j == randomIdList.size()) {// 无重复
+						// 把随机ID保存好
+						randomIdList.add(randomId);
+
+						resultsTwoSentencesOfThisGrade.add(queryWithManyWays
+								.checkSentencePropertyDependOnId(randomId));
+					} else {
+						continue;
+					}
+				} while (resultsTwoSentencesOfThisGrade.size() < 2);
+			}
+		}
+		return resultsTwoSentencesOfThisGrade;
+	}
+
+	@Override
+	public Map<String, String> QuerySentenceAndId(String yourClass) {
+		//创建空Map以保存键值对<ID, instanceLabel>
+		Map<String, String> idAndInstancelabelOfAllInstance = new HashMap<String, String>();
+		
+		// 查找类下所有句子
+		ResultSet resultsInstance = queryWithManyWays.checkInstance(yourClass);
+
+		// 以键值对保存每一个
+		if (resultsInstance.hasNext()) {
+			while (resultsInstance.hasNext()) {
+				QuerySolution solutionInstance = resultsInstance.next();
+				//提取出当前句子
+			   int a=solutionInstance.get("?instanceLabel").toString().indexOf("@");
+               String thisSentence = solutionInstance.get("?instanceLabel").toString().substring(0,a);
+               String tempthisSentence=thisSentence.substring(0, thisSentence.length()-1);
+               String lastSentence = tempthisSentence.replaceAll(",", "_").replaceAll("'", "_i").replace("’", "_").replace("_", " ");
+				// 根据当前句子查找属性，取出所有ID
+				ResultSet resultsAllPropertiesOfAInstance = queryWithManyWays
+						.checkAllIdOfAnSentence(thisSentence);
+				//保存键值对<ID, instanceLabel>
+				while (resultsAllPropertiesOfAInstance.hasNext()) {
+					QuerySolution solutionAllPropertiesOfAInstance = resultsAllPropertiesOfAInstance.next();
+					//提取出当前句子的ID
+					String idOfThisSentence = solutionAllPropertiesOfAInstance.get("?propertyID").toString();
+					//去除“@zh”
+					idOfThisSentence = idOfThisSentence.substring(0, idOfThisSentence.indexOf("@"));
+					//保存到Map中
+					idAndInstancelabelOfAllInstance.put(idOfThisSentence, lastSentence);
+					
+				}
+			}
+		} else {
+			System.out.println("知识本体库中没有此实例");
+		}
+		return idAndInstancelabelOfAllInstance;
 	}
 
 	@Override
@@ -642,11 +867,12 @@ public class OntologyManageImpl implements OntologyManage {
 
 		InfModel inf = myReasoner.ReasonSameAs();
 
-		// 通过标签找URI
+		// 通过标签Label找URI
 		ResultSet result = queryWithManyWays.checkOnlyInstanceURI(yourSentence);
 
 		System.out.println(yourSentence + " * * =>\n");
-		Iterator list = null;
+		// Iterator list = null;
+		StmtIterator list = null;
 		if (result.hasNext()) {
 			while (result.hasNext()) {
 				// QuerySolution next()
@@ -655,12 +881,15 @@ public class OntologyManageImpl implements OntologyManage {
 				QuerySolution solution = result.next();
 				Resource yourSentenceSubject = solution.get("?instance")
 						.asResource();
+				// listStatements(Resource subject, Property predicate, RDFNode
+				// object, Model posit)
+				// Find all the statements matching a pattern.
 				list = inf.listStatements(yourSentenceSubject, null,
 						(RDFNode) null);
 			}
 		}
 
-		ArrayList<String> allString = new ArrayList();
+		ArrayList<String> allString = new ArrayList<String>();
 		int index = 0;
 		// while (list.hasNext()) {
 		// String[] listStringArray = list.next().toString().split(",");
@@ -720,7 +949,7 @@ public class OntologyManageImpl implements OntologyManage {
 			}
 		}
 
-		ArrayList<String> returnString = new ArrayList();
+		ArrayList<String> returnString = new ArrayList<String>();
 		for (int i = 0; i < index; i++) {
 			String everyString = allString.subList(i, i + 1).toString();
 			if (i % 3 == 1) {
@@ -768,66 +997,75 @@ public class OntologyManageImpl implements OntologyManage {
 		return returnString;
 	}
 
+	// 根据单词查看所有同级单词及其属性
 	@Override
 	public List<ResultSet> QueryBrotherIndividual(String yourTheme) {
-//		// 查找该单词的的主题属性值
-//		String[] theme = { "?propertyTopic", "?propertyFunction"};
-//		ResultSet resultsTopicValue = queryWithManyWays
-//				.checkTopicValue(yourWord);
-//		String yourThemeValue = null;
-//		String yourThemeValueFlag1 = null;
-//		String yourThemeValueFlag2 = null;
-//		String themeSPARQL = null;
-//		if (resultsTopicValue.hasNext()) {
-//			while (resultsTopicValue.hasNext()) {
-//				// QuerySolution next()
-//				// Moves onto the next result.
-//				// 移动到下个result上
-//				QuerySolution solutionPropertyValue = resultsTopicValue.next();
-//				for (int i = 0; i < theme.length; i++) {
-//					yourThemeValue = solutionPropertyValue.get(theme[i])
-//							.toString();
-//					if (yourThemeValue.contains("无")) {
-//						continue;
-//					} else {
-//						yourThemeValueFlag1 = substringManage3(yourThemeValue);
-//						yourThemeValueFlag2 = substringManage2(yourThemeValue);
-//						themeSPARQL = theme[i];
-//					}
-//				}
-//				System.out.println(yourWord + "的主题是： " + yourThemeValue);
-//			}
-//		} else {
-//			System.out.println("该单词无主题");
-//		}
-		
+		// // 查找该单词的的主题属性值
+		// String[] theme = { "?propertyTopic", "?propertyFunction"};
+		// ResultSet resultsTopicValue = queryWithManyWays
+		// .checkTopicValue(yourWord);
+		// String yourThemeValue = null;
+		// String yourThemeValueFlag1 = null;
+		// String yourThemeValueFlag2 = null;
+		// String themeSPARQL = null;
+		// if (resultsTopicValue.hasNext()) {
+		// while (resultsTopicValue.hasNext()) {
+		// // QuerySolution next()
+		// // Moves onto the next result.
+		// // 移动到下个result上
+		// QuerySolution solutionPropertyValue = resultsTopicValue.next();
+		// for (int i = 0; i < theme.length; i++) {
+		// yourThemeValue = solutionPropertyValue.get(theme[i])
+		// .toString();
+		// if (yourThemeValue.contains("无")) {
+		// continue;
+		// } else {
+		// yourThemeValueFlag1 = substringManage3(yourThemeValue);
+		// yourThemeValueFlag2 = substringManage2(yourThemeValue);
+		// themeSPARQL = theme[i];
+		// }
+		// }
+		// System.out.println(yourWord + "的主题是： " + yourThemeValue);
+		// }
+		// } else {
+		// System.out.println("该单词无主题");
+		// }
+
 		String yourThemeValueFlag1 = null;
 		String yourThemeValueFlag2 = null;
 		ResultSet resultsAllBrotherID = null;
-		if(yourTheme.contains("-")){
+		if (yourTheme.contains("-")) {
 			yourThemeValueFlag1 = substringManage2(yourTheme);
 			yourThemeValueFlag2 = substringManage3(yourTheme);
-			
-			// 根据该主题属性值查找对应的URI
+
+			// 根据主题属性标记，找出所有包含该标记的属性值，该属性值中包含单词ID
 			resultsAllBrotherID = queryWithManyWays.checkBrotherID(
 					yourThemeValueFlag1, yourThemeValueFlag2);
-		}else{
-			// 根据该主题属性值查找对应的URI（非课标定义主题）
+		} else {
+			// 根据主题属性标记，找出所有包含该标记的属性值，该属性值中包含单词ID（非课标定义主题）
 			resultsAllBrotherID = queryWithManyWays.checkBrotherID2(yourTheme);
 		}
-		
+
 		List<ResultSet> brotherAllResultSet = new ArrayList<ResultSet>();
 		if (resultsAllBrotherID.hasNext()) {
 			while (resultsAllBrotherID.hasNext()) {
-				QuerySolution solutionBrotherID = resultsAllBrotherID.next();			
-				String brotherTheme = solutionBrotherID.get("?propertyTheme").toString();
-				
-				//提取ID
-				String brotherID = substringManage3(brotherTheme);
-				
-				//查找每个单词ID对应的所有属性
-				ResultSet resultsBrother = queryWithManyWays.checkPropertyDependOnId(brotherID);
-				brotherAllResultSet.add(resultsBrother);
+				QuerySolution solutionBrotherID = resultsAllBrotherID.next();
+				if (solutionBrotherID.get("?propertyTheme").toString()
+						.contains("|")) {
+					// 跳过，什么都不做
+				} else {
+					String brotherTheme = solutionBrotherID.get(
+							"?propertyTheme").toString();
+
+					// 提取ID
+					String brotherID = substringManage4(brotherTheme);
+
+					// 查找每个单词ID对应的所有属性
+					ResultSet resultsBrother = queryWithManyWays
+							.checkPropertyDependOnId(brotherID);
+					brotherAllResultSet.add(resultsBrother);
+				}
+
 			}
 		} else {
 			System.out.println("该主题无单词");
@@ -844,15 +1082,25 @@ public class OntologyManageImpl implements OntologyManage {
 		return newString;
 	}
 
-	// 处理字符串：读取主题属性值中“(”之前的字符串
+	// 处理字符串：读取主题属性值中“.”和“-”之间的字符串
 	private static String substringManage2(String string) {
-		String newString = string.substring(0,
-				string.lastIndexOf("("));
+		String newString = string.substring(string.indexOf(".") + 1,
+				string.lastIndexOf("-"));
 		return newString;
 	}
-	
-	//处理字符串：读取主题属性值中第一个“(”和第一个“）”之间的字符串
+
+	// 处理字符串：读取主题属性值中“)”之后，或者“)”和“-”之间的字符串
 	private static String substringManage3(String string) {
+		String newString = string.substring(string.indexOf(")") + 1,
+				string.length());
+		if (newString.contains("-")) {
+			newString = newString.substring(0, newString.indexOf("-"));
+		}
+		return newString;
+	}
+
+	// 处理字符串：读取主题属性值中第一个“(”和第一个“)”之间的字符串
+	private static String substringManage4(String string) {
 		String newString = string.substring(string.indexOf("(") + 1,
 				string.indexOf(")"));
 		return newString;
@@ -868,6 +1116,7 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void read() throws FileNotFoundException, IOException {
 		ALLWORDS = new HashMap<String, Vector>();
 		ALLMEANS = new HashMap<String, Vector>();
@@ -934,7 +1183,7 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 		in.close();
 		System.out.println("HowNet Load Succeed!");
-		// findDEF("man");   
+		// findDEF("man");
 	}
 
 	// 查找Hownet中的父类
@@ -943,8 +1192,9 @@ public class OntologyManageImpl implements OntologyManage {
 			W_e = subStringManage(W_e);
 		}
 		String yourClass = null;
+		@SuppressWarnings("unchecked")
 		Vector<String> DEFS = ALLMEANS.get(W_e);
-		ArrayList<String> result = new ArrayList();
+		ArrayList<String> result = new ArrayList<String>();
 		if (DEFS == null || DEFS.size() <= 0) {
 			System.out.println(W_e + "的父类不在HowNet中");
 		} else {
@@ -1306,108 +1556,6 @@ public class OntologyManageImpl implements OntologyManage {
 			}
 		}
 		return label;
-	}
-
-	@Override
-	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade) {
-		//查找所有单词的ID
-				ResultSet resultsIDOfAllWords = queryWithManyWays
-						.checkIdOfAllWords();
-				
-				//用动态数组保存该年级单词ID
-				List<String> allIdOfThisGrade = new ArrayList<String>();
-
-				//筛选该年级的ID
-				if (resultsIDOfAllWords.hasNext()) {
-					while (resultsIDOfAllWords.hasNext()) {
-						// QuerySolution next()
-						// Moves onto the next result.
-						// 移动到下个result上
-						QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
-						String propertyId = solutionIdOfAllWords.get("?propertyID").toString();
-						//截取掉册数之前的信息
-						String stringOutOfVersion = propertyId.substring(propertyId.indexOf("/")+1);
-						String propertyBook = stringOutOfVersion.substring(0, stringOutOfVersion.indexOf("/"));
-						//System.out.println("该单词的册数：" + propertyBook);
-						if(yourGrade.equals(propertyBook)){
-							allIdOfThisGrade.add(solutionIdOfAllWords.get("?propertyID").toString());
-						}
-					}
-				} else {
-					System.out.println("该年级没有单词");
-				}
-				
-				System.out.println("该年级所有单词的个数：" + allIdOfThisGrade.size());
-				
-				//随机取5个单词ID，之后查找每个单词的属性
-				List<ResultSet> resultsFiveWordsOfThisGrade = new ArrayList<ResultSet>();
-				for(int i=0; i<5; i++){
-					Random ra =new Random();
-					int randomNum = ra.nextInt(allIdOfThisGrade.size()-1);
-					System.out.println("随机索引为：" + randomNum);
-					String randomId = allIdOfThisGrade.get(randomNum).toString();
-					System.out.println("随机ID为：" + randomId);
-					resultsFiveWordsOfThisGrade.add(queryWithManyWays.checkPropertyDependOnId(randomId));
-				}
-				
-				return resultsFiveWordsOfThisGrade;
-
-	}
-
-	@Override
-	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade) {
-		//查找所有句子的ID
-				ResultSet resultsIDOfAllWords = queryWithManyWays
-						.checkIdOfAllSentences();
-				
-				//用动态数组保存该年级句子ID
-				List<String> allSentencesIdOfThisGrade = new ArrayList<String>();
-				//筛选该年级的ID
-				if (resultsIDOfAllWords.hasNext()) {
-					while (resultsIDOfAllWords.hasNext()) {
-						// QuerySolution next()
-						// Moves onto the next result.
-						// 移动到下个result上
-						QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
-						String propertyId = solutionIdOfAllWords.get("?propertyID").toString();
-						//截取掉册数之前的信息
-						String stringOutOfVersion = propertyId.substring(propertyId.indexOf("/")+1);
-						String propertyBook = stringOutOfVersion.substring(0, stringOutOfVersion.indexOf("/"));
-						//System.out.println("该单词的册数：" + propertyBook);
-						if(yourGrade.equals(propertyBook)){
-							allSentencesIdOfThisGrade.add(solutionIdOfAllWords.get("?propertyID").toString());
-						}
-					}
-				} else {
-					System.out.println("该年级没有单词");
-				}
-				
-				System.out.println("该年级所有单词的个数：" + allSentencesIdOfThisGrade.size());
-				
-				//随机取5个单词ID，之后查找每个单词的属性
-				List<ResultSet> resultsFiveWordsOfThisGrade = new ArrayList<ResultSet>();
-				for(int i=0; i<2; i++){
-					Random ra =new Random();
-					int randomNum = ra.nextInt(allSentencesIdOfThisGrade.size()-1);
-					System.out.println("随机索引为：" + randomNum);
-					String randomId = allSentencesIdOfThisGrade.get(randomNum).toString();
-					System.out.println("随机ID为：" + randomId);
-					resultsFiveWordsOfThisGrade.add(queryWithManyWays.checkSentencePropertyDependOnId(randomId));
-				}
-				
-				return resultsFiveWordsOfThisGrade;
-	}
-
-	@Override
-	public ResultSet QueryWord(String yourClass) {
-
-		ResultSet resultsInstance = queryWithManyWays
-				.checkInstance(yourClass);
-
-		return resultsInstance;
-
-
-		
 	}
 
 }

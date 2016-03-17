@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.stereotype.Service;
 
@@ -254,37 +255,19 @@ public class SentenceSimImpl implements SentenceSim  {
 	  * @return 一个map集合
 	  */
 	public Map<String, String> saveInstanceAndId(String yourClass) {
-		System.out.println("saveInstanceAndId!!!!!!!!!");
-		Map<String, String> map = new HashMap<String, String>();
-		OntologyManage om=new OntologyManageImpl();
-		ResultSet resultsInstance=om.QueryWord(yourClass);
-		long time1 = System.currentTimeMillis();
-		System.out.println("!!!!!!!!!!"+resultsInstance);
-     	System.out.println("================================saveInstanceAndId开始时间：" + time1);
-		//ResultSet resultsInstance = queryIndividualAndId.checkInstanceAndId(yourClass);
-		long time2 = System.currentTimeMillis();
-  	    System.out.println("================================查询数据 ： " + (time2 - time1));
-  	    if(resultsInstance.hasNext())
-  	    {	
-		    while (resultsInstance.hasNext()) {
-			System.out.println("进入！！！！！！！");
-			QuerySolution solutionInstance = resultsInstance.next();
-			String stringInstanceLabel = solutionInstance.get("?instanceLabel").toString();
-			System.out.println("--------------"+stringInstanceLabel);
-			String tempStr = stringInstanceLabel.replaceAll(",", "_").replaceAll("'", "_i").replaceAll("_", " ");
-			System.out.println("------------------"+tempStr);
-			tempStr = tempStr.substring(0, tempStr.length() - 4);
-			//String stringInstanceId = solutionInstance.get("?propertyID").toString();
-			//String InstanceId = stringInstanceId.substring(0,stringInstanceId.length() - 3);
-			map.put("tempStr", tempStr);
-			System.out.println("例句：" +  tempStr);
-		   }
-  	    }else{
-  	    	System.out.println("本体知识库没有这个示例！！！");
-  	    }
-		long time3 = System.currentTimeMillis();
-  	System.out.println("================================保存时间：" + (time3-time2));
-		return map;
+		System.out.println("新方法！！！！");
+		Map<String, String> resultsSentenceAndId = new HashMap<String, String>();
+		OntologyManage ontologyManage = new OntologyManageImpl();
+		resultsSentenceAndId = ontologyManage.QuerySentenceAndId(yourClass);
+		// 打印结果
+		if (resultsSentenceAndId.isEmpty()) {
+			System.out.println("无键值对");
+		} else {
+			for (Entry<String, String> s : resultsSentenceAndId.entrySet()) {
+			System.out.println("键值对:" + s);
+			}
+		}
+		return resultsSentenceAndId;
 	}
 	/**
      * 根据值来查找键。及句子的id
@@ -331,36 +314,36 @@ public class SentenceSimImpl implements SentenceSim  {
 			
 			System.out.println("====================回答==========================");	
 			String stringAnswer = solutionInstance.get("?propertyAnswer").toString();
-		    String tempAnswer=stringAnswer.substring(0, stringAnswer.length() - 4);
+		    String tempAnswer=stringAnswer.substring(stringAnswer.lastIndexOf(")")+1, stringAnswer.length() - 4);
 			System.out.println("回答："+tempAnswer);
 			System.out.println("====================回答==========================");	
 			
 			System.out.println("====================教材版本==========================");	
 			String stringVersion = solutionInstance.get("?propertyVersion").toString();
-			String tempVersion=stringVersion.substring(0, stringVersion.length() - 3);
+			String tempVersion=stringVersion.substring(stringVersion.lastIndexOf(")")+1, stringVersion.length() - 3);
 			System.out.println("教材版本："+tempVersion);
 			System.out.println("====================教材版本==========================");
 			
 			System.out.println("====================册数==========================");	
 			String stringBook = solutionInstance.get("?propertyBook").toString();
-			String tempBook=stringBook.substring(0, stringBook.length() - 3);
+			String tempBook=stringBook.substring(stringBook.lastIndexOf(")")+1, stringBook.length() - 3);
 			System.out.println("册数："+tempBook);
 			System.out.println("====================册数==========================");	
 			
 			System.out.println("====================情境对话==========================");	
 			String stringScene = solutionInstance.get("?propertyScene").toString();
-			String tempScene=stringScene.substring(0, stringScene.length() - 3);
+			String tempScene=stringScene.substring(stringScene.lastIndexOf(")")+1, stringScene.length() - 3);
 			System.out.println("情境对话："+tempScene);
 			System.out.println("====================情境对话=========================");	
 			
 			System.out.println("====================重要句型=========================");	
 			String stringPattern = solutionInstance.get("?propertySentencePattern").toString();
-			String tempPattern=stringPattern.substring(0, stringPattern.length() - 3);
+			String tempPattern=stringPattern.substring(stringPattern.lastIndexOf(")")+1, stringPattern.length() - 3);
 			System.out.println("重要句型："+tempPattern);
 			System.out.println("====================重要句型=========================");	
 			
 			sentence = new ISentence(tempStr, tempAnswer, tempVersion, tempBook, tempScene, tempPattern);
-			System.out.println("================第2次打印=============");
+		  /*System.out.println("================第2次打印=============");
 			System.out.println("ID：" + key + "\n" + "    ————实例："
 					+ solutionInstance.get("?instanceLabel") + "\n"
 					+ "    ————回答：" + solutionInstance.get("?propertyAnswer")
@@ -370,7 +353,7 @@ public class SentenceSimImpl implements SentenceSim  {
 					+ solutionInstance.get("?propertyBook") + "\n"
 					+ "    ————情境对话：" + solutionInstance.get("?propertyScene")
 					+ "\n" + "    ————重要句型："
-					+ solutionInstance.get("?propertySentencePattern"));
+					+ solutionInstance.get("?propertySentencePattern"));*/
 		}
 		return sentence;
 	}
