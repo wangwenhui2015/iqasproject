@@ -30,7 +30,7 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 	private IwordService iwordService;
 
 	//保存“太空”和“草原”两个主题
-	@Test(enabled = false)
+	/*@Test(enabled = false)
 	public void saveWordTheme(){
 		String space = "太空主题";
 		String caoyuan ="大草原主题";
@@ -38,9 +38,9 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 		wordThemeService.save(th);
 		WordTheme th2 = new WordTheme(caoyuan);//402880ed517c8cf501517c8cf80a0001
 		wordThemeService.save(th2);
-	}
+	}*/
 	//为“太空主题”添加10个单词
-	@Test(enabled = false)
+	/*@Test(enabled = false)
 	public void saveWordThemeRel(){
 
 		String space = "太空主题";
@@ -72,5 +72,5 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 			System.out.println(word.getContent()+":"+word.getId());
 		}
 		
-	}
+	}*/
 }
