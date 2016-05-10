@@ -1,4 +1,4 @@
-package com.cnu.iqas.service.word;
+/*package com.cnu.iqas.service.word;
 
 import javax.annotation.Resource;
 
@@ -19,7 +19,7 @@ import com.cnu.iqas.service.iword.WordThemeWordRelService;
 * @author 周亮 
 * @version 创建时间：2015年12月7日 下午8:12:36
 * 类说明
-*/ 
+
 @ContextConfiguration(locations = {"/applicationContext.xml"})//启动Spring容器
 public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于TestNG的spring测试框架
 	@Autowired  //注入Spring容器中的Bean  ,如果使用@Resource也可以
@@ -72,5 +72,5 @@ public class WordThemeTest extends AbstractTestNGSpringContextTests{//基于Test
 			System.out.println(word.getContent()+":"+word.getId());
 		}
 		
-	}*/
-}
+	}
+}*/
