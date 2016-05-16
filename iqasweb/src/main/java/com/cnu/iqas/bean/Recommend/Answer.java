@@ -15,12 +15,12 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "t_answer")
-@GenericGenerator(strategy = "uuid", name = "uuidGenerator")
+/*@GenericGenerator(strategy = "uuid", name = "uuidGenerator")*/
 public class Answer {
 	/**
 	 * answerId，答案标识
 	 */
-	 private String answerId;
+	 private int answerId;
 	 /**
 		 * 内容
 		 */
@@ -40,33 +40,39 @@ public class Answer {
 	/**
 	 * 是否通过检查
 	 */
-	private boolean checked;
+	private String  checked;
 	/**
 	 * 添加类型  1.自动      2.人工
 	 */
 	private String addType;
 	/**
+	 * 媒体文件的路径
+	 */
+	private String mediaUrl;
+	/**
 	 * 创建日期
 	 */
 	private Date createDate= new Date();
+	private int questionId;
 	@Id
-	@GeneratedValue(generator = "uuidGenerator")
-	public String getAnswerId() {
+	/*@GeneratedValue(generator = "uuidGenerator")*/
+	public int getAnswerId() {
 		return answerId;
 	}
-	public void setAnswerId(String answerId) {
+	public void setAnswerId(int answerId) {
 		this.answerId = answerId;
 	}
 	public String getAttributes() {
 		return attributes;
 	}
+	
 	public void setAttributes(String attributes) {
 		this.attributes = attributes;
 	}
-	public boolean isChecked() {
+	public String getChecked() {
 		return checked;
 	}
-	public void setChecked(boolean checked) {
+	public void setChecked(String checked) {
 		this.checked = checked;
 	}
 	public Date getCreateDate() {
@@ -99,6 +105,19 @@ public class Answer {
 	public void setAddType(String addType) {
 		this.addType = addType;
 	}
+	public String getMediaUrl() {
+		return mediaUrl;
+	}
+	public void setMediaUrl(String mediaUrl) {
+		this.mediaUrl = mediaUrl;
+	}
+	public int getQuestionId() {
+		return questionId;
+	}
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+	
 	
 	
 }

@@ -15,43 +15,43 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "t_questionAnswer")
-@GenericGenerator(strategy = "uuid", name = "uuidGenerator")
+/*@GenericGenerator(strategy = "uuid", name = "uuidGenerator")*/
 public class QuestionAnswer {
 	/**
 	 * id，问题标识
 	 */
-	private String Id;
+	private int Id;
 	/**
 	 * 问题主键
 	 */
-	private String questionId;
+	private int questionId;
 	/**
 	 * 回答主键
 	 */
-	private String answerId;
+	private int answerId;
 	/**
 	 * 创建年月日
 	 */
 	private Date createDate= new Date();
 	@Id
-	@GeneratedValue(generator = "uuidGenerator")
-	public String getId() {
+	/*@GeneratedValue(generator = "uuidGenerator")*/
+	public int getId() {
 		return Id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		Id = id;
 	}
-	public String getQuestionId() {
+	public void setAnswerId(int i) {
+		this.answerId = i;
+	}
+	public int getQuestionId() {
 		return questionId;
 	}
-	public void setQuestionId(String questionId) {
+	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
-	public String getAnswerId() {
+	public int getAnswerId() {
 		return answerId;
-	}
-	public void setAnswerId(String answerId) {
-		this.answerId = answerId;
 	}
 	public Date getCreateDate() {
 		return createDate;

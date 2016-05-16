@@ -342,7 +342,14 @@ public class SentenceSimImpl implements SentenceSim  {
 			System.out.println("重要句型："+tempPattern);
 			System.out.println("====================重要句型=========================");	
 			
-			sentence = new ISentence(tempStr, tempAnswer, tempVersion, tempBook, tempScene, tempPattern);
+			System.out.println("====================相关单词=========================");	
+			String stringRelatedWords = solutionInstance.get("?propertyRelatedWords").toString();
+			String tempRelatedWords=stringRelatedWords.substring(stringRelatedWords.lastIndexOf(")")+1, stringRelatedWords.length() - 3);
+			System.out.println("相关单词："+tempRelatedWords);
+			System.out.println("====================相关单词=========================");	
+			
+			
+			sentence = new ISentence(tempStr, tempAnswer, tempVersion, tempBook, tempScene, tempPattern,tempRelatedWords);
 		  /*System.out.println("================第2次打印=============");
 			System.out.println("ID：" + key + "\n" + "    ————实例："
 					+ solutionInstance.get("?instanceLabel") + "\n"
