@@ -125,7 +125,7 @@
            <artifactId>spring-jdbc</artifactId>
            <version>${springframework.version}</version>
        </dependency>
-       <!-- Spring实现orm，提供了对hibernate的支持 -->
+       <!-- Spring实现orm，提供了对hibernate的支持，HibernateTemp -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -237,7 +237,7 @@
         <version>${jstl.version}</version>
     </dependency>
     
-    	<!-- 提供@Resource,@Entity注解等 -->
+    	<!-- 二进制字节码-->
 	    <dependency>
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
