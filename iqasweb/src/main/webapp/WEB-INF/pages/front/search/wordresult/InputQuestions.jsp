@@ -15,6 +15,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
+<base href="<%=basePath%>">
 <title>Input Questions</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <!-- Custom Theme files -->
@@ -28,13 +29,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </head>
 <body>
 <br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<div class="header">
-		  <h1>Input Questions: <input name="text1" type="text" value="123" style="width:400px; height:38px;"> <input name="" type="button" value="æ¥è¯¢" style="width:57px; height:45px;"></h1>
-		 
+		<div align="center" class="header">	
+		 <form action="search/sentence.html" method=post>	
+		 <p> 
+		     <input name="text" type="search" value="" style="margin-left:240px;width:450px; height:30px;"> 
+		     <input name="Search" type="submit" value="Search" style="margin-left:10px;width:60px; height:33px;">
+		 </p>
+	     </form>
 		  <br />
 		  <br /><br /><br />
 </div>
-		
-
 </body>
 </html>

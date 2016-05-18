@@ -39,9 +39,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="price-top">
 						<h2>课文原句</h2>
 					</div>
-					<div class="price-bottom" >
+					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:320px; height:230px;">${listResource.propertyText}</div>
+						<div  style="width:295px; height:230px; margin-top:-7px;background-color:#FF8C00">${listResource.propertyText}</div>
 						<a href="#" class="button">sign up</a>
 						<br />
 					</div>
@@ -52,7 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:320px; height:230px;">${listResource.propertyScene}</div>
+						<div style="width:295px; height:230px;margin-top:-7px;background-color:#ADEF2F">${listResource.propertyScene}</div>
 						<a href="#" class="button">sign up</a>
 						<br />
 					</div>
@@ -63,7 +63,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:320px; height:230px;">${listResource.propertyExtend}</div>
+						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00BFFF">${listResource.propertyExtend}</div>
 						<a href="#" class="button but1">sign up</a>
 						<br />
 					</div>
@@ -74,7 +74,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:320px; height:230px;">${listResource.propertyNcyclopedia}</div>
+						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00FFFF">${listResource.propertyNcyclopedia}</div>
 						<a href="#" class="button but2">sign up</a>
 						<br />
 					</div>
@@ -86,7 +86,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 				<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:320px; height:230px;">${listResource.propertyUse}</div>
+						<div style="width:295px; height:230px;margin-top:-7px;background-color:#CD853F">${listResource.propertyUse}</div>
 						<a href="#" class="button but3">sign up</a>
 						<br />
 					</div>

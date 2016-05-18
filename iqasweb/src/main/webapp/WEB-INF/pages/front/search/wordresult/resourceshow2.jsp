@@ -40,9 +40,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom" >
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:324px; height:230px;"><img src="${media.associationpic}"></div>
-						<div style="width:324px; height:30px; margin-top:35px; "><audio src="${media.associationaud}" controls="controls"></audio></div>
-						<div style="width:324px; height:40px; margin-top:20px; ">${media.associationtxt}</div>
+						<div style="width:324px; height:230px;margin-left:-17px;"><img src="${media.associationpic}"width="296" height="230" ></div>
+						<div style="width:324px; height:30px; margin-top:35px; margin-left:-17px;"><audio style="width:296px;" src="${media.associationaud}"controls="controls"></audio></div>
+						<div style="width:324px; height:40px; margin-top:20px; margin-left:-17px;">${media.associationtxt}</div>
 						<!-- <a href="#" class="button">sign up</a> -->
 						<br />
 					</div>
@@ -53,9 +53,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:324px; height:230px;"><img src="${media.Synonymspic}"></div>
-						<div style="width:324px; height:30px; margin-top:35px; "><audio src="${media.Synonymsaud}" controls="controls"></audio></div>
-						<div style="width:324px; height:40px; margin-top:20px;">${media.Synonymstxt}</div>
+						<div style="width:324px; height:230px;margin-left:-17px;"><img src="${media.Synonymspic}"width="296" height="230" ></div>
+						<div style="width:324px; height:30px; margin-top:35px; margin-left:-17px;"><audio style="width:296px;"  src="${media.Synonymsaud}" controls="controls"></audio></div>
+						<div style="width:324px; height:40px; margin-top:20px;margin-left:-17px;">${media.Synonymstxt}</div>
 						<!-- <a href="#" class="button">sign up</a> -->
 						<br />
 					</div>
@@ -66,9 +66,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:324px; height:230px;"><img src="${media.Antonympic}"></div>
-						<div style="width:324px; height:30px; margin-top:35px;"><audio src="${media.Antonymaud}" controls="controls"></audio></div>
-						<div style="width:324px; height:40px; margin-top:20px;">${media.Antonymtxt}</div>
+						<div style="width:324px; height:230px;margin-left:-17px;"><img src="${media.Antonympic}"width="296" height="230" ></div>
+						<div style="width:324px; height:30px; margin-top:35px;margin-left:-17px;"><audio style="width:296px;" src="${media.Antonymaud}" controls="controls"></audio></div>
+						<div style="width:324px; height:40px; margin-top:20px;margin-left:-17px;">${media.Antonymtxt}</div>
 						<!-- <a href="#" class="button">sign up</a> -->
 						<br />
 					</div>
@@ -79,9 +79,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:324px; height:230px;"><img src="${media.Expandpic}"></div>
-						<div style="width:324px; height:30px; margin-top:35px;"><audio src="${media.Expandaud}" controls="controls"></audio></div>
-						<div style="width:324px; height:40px;margin-top:20px;">${media.Expandtxt}</div>
+						<div style="width:324px; height:230px;margin-left:-17px;"><img src="${media.Expandpic}"width="296" height="230" ></div>
+						<div style="width:324px; height:30px; margin-top:35px;margin-left:-17px;"><audio style="width:296px;" src="${media.Expandaud}" controls="controls"></audio></div>
+						<div style="width:324px; height:40px;margin-top:20px;margin-left:-17px;">${media.Expandtxt}</div>
 						<!-- <a href="#" class="button">sign up</a> -->
 						<br />
 					</div>
@@ -93,9 +93,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 				<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:324px; height:230px;"><img src="${media.CommonUsepic}"></div>
-						<div style="width:324px; height:30px; margin-top:35px;"><audio src="${media.CommonUseaud}" controls="controls"></audio></div>
-						<div style="width:324px; height:40px;margin-top:20px;">${media.CommonUsetxt}</div>
+						<div style="width:324px; height:230px;margin-left:-17px;"><img src="${media.CommonUsepic}"width="296" height="230" ></div>
+						<div style="width:324px; height:30px; margin-top:35px;margin-left:-17px;"><audio style="width:296px;" src="${media.CommonUseaud}" controls="controls"></audio></div>
+						<div style="width:324px; height:40px;margin-top:20px;margin-left:-17px;">${media.CommonUsetxt}</div>
 						<!-- <a href="#" class="button">sign up</a> -->
 						<br />
 					</div>
