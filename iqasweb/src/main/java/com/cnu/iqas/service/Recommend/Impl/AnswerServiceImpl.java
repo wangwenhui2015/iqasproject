@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.cnu.iqas.bean.Recommend.Answer;
 import com.cnu.iqas.bean.Recommend.Question;
+import com.cnu.iqas.bean.base.QueryResult;
 import com.cnu.iqas.dao.Recommend.AnswerDao;
 import com.cnu.iqas.service.Recommend.AnswerService;
 @Service("answerService")
@@ -36,9 +37,15 @@ public class AnswerServiceImpl implements AnswerService{
 		return answerDao.getAllData(wherejpql, queryParams);
 	}
 	@Override
-	public void update(Answer answer) {
+	public int updateAnswer(Answer answer) {
 		// TODO Auto-generated method stub
-	    answerDao.update(answer);
+		return answerDao.updateAnswer(answer);
 	}
+	@Override
+	public QueryResult<Answer> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams) {
+		// TODO Auto-generated method stub
+		return answerDao.getScrollData(firstindex, maxresult, wherejpql, queryParams);
+	}
+	
 	
 }

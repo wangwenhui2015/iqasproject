@@ -35,8 +35,6 @@
 
 </head>
 <body>
-
-
 <div class="panel panel-default">
   <%-- <div class="panel-heading">
     <h3 class="panel-title">当前位置 &gt;热点话题管理 &gt;<a href='control/group/list'><font color="blue">热点话题信息</font></a>&gt;<font style="font-family:'楷体';font-weight: bold; ">${pageView.records[0].groupChat.name}</font></h3>
@@ -48,7 +46,7 @@
    <!-- 查询参数 -->
     <input type="hidden" name="page">
     <!-- 商品类型id，商品商品类型时需要 -->
-    <input type="hidden" name="id">
+    <input type="hidden" name="answerId">
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
@@ -63,7 +61,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${listcheckMessage}" var="entity">
+		<c:forEach items="${pageView.records}" var="entity">
 			<tr>
 				<td align="center">
 				${entity.answerId}

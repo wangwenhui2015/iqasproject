@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cnu.iqas.bean.Recommend.Answer;
+import com.cnu.iqas.bean.base.QueryResult;
 /**
 * @author  王文辉
 * @version 创建时间：2016年4月20日 下午10:41:18
@@ -32,6 +33,15 @@ public interface AnswerService {
 	 * 跟新实体
 	 * 
 	 */
-	public void update(Answer answer);
+	public int updateAnswer(Answer answer);
+	/**
+	 * 根据条件分页查询
+	 * @param firstindex 开始查询位置从0开始
+	 * @param maxresult 一页的最大记录数
+	 * @param wherejpql 查询条件  "o.email=? and o.account like ?"
+	 * @param queryParams  查询条件占位符对应的参数值，
+	 * @return 查询结果类
+	 */
+	public QueryResult<Answer> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams);
 
 }
