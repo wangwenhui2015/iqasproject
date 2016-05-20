@@ -87,6 +87,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					style="margin-left: 266px; margin-top: 90px;width: 85px; height: 35px;">
 			   <input name="text2" type="reset" value="重置"
 					style="margin-left: 176px; width: 85px; height: 35px;">
+				<input name="Search" type="button" value="教师审核" style="margin-left:100px;
+				margin-top:100px; height:50px;" onclick="window.location.href='check/showMessage.html'" /> 	
 			<p>
 			</p>
 		</form>

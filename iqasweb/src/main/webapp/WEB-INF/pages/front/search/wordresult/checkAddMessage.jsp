@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.cnu.iqas.bean.Recommend.Answer" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String path = request.getContextPath();
@@ -15,7 +17,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <base href="<%=basePath%>">
-<title>学生添加资源信息</title>
+<title>教师审核信息</title>
 <link href="css/addstyle.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -35,64 +37,39 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </head>
 <body>
 	<div align="center" class="header" style="margin-top:8cm;">
-		<form action="search/addResource.html" method=post enctype="multipart/form-data"> 		  
-         <%
-          HttpSession s = request.getSession(); 
-         %>
-			<p>
-				输入内容: <%=s.getAttribute("text")%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	
-				添加类型: <select name="type" style="width: 60px; height: 35px;">
-					     <option value="1">单词</option>
-					     <option value="2">句子</option>
-				       </select>
-			</p>
-			<br>
-			<p>
-			           添加内容:<input name="content" type="text" value=""
-					style="margin-left: 10px; width: 450px; height: 30px;">
-				添加属性: <select name="attributes" style="width: 120px; height: 35px;">
-					     <option value="课文原句">课文原句</option>
-					     <option value="情境段落">情境段落</option>
-					     <option value="延伸例句">延伸例句</option>
-					     <option value="百科">百科</option>
-					     <option value="用法">用法</option>					
-					     <option value="联想">联想</option>
-					     <option value="同义词">同义词</option>
-					     <option value="反义词">反义词</option>
-					     <option value="拓展">拓展</option>
-					     <option value="常用">常用</option>
-					  </select>		
-			       难度值:<select name="difficulty" style="width: 60px; height: 35px;">
-					     <option value="1">低</option>
-					     <option value="2">中</option>
-					      <option value="3">高</option>
-				       </select>
-			      媒体类型:<select name="mediaType" style="width: 60px; height: 35px;">
-					     <option value="文本">文本</option>
-					     <option value="图片">图片</option>
-					     <option value="绘本">绘本</option>
-					     <option value="音频">音频</option>		     
-				       </select>			
-			</p>
-			<br>
-			<br>
-			<p>			 
-			   上传文件 <input type="text" name="name" />
-			       <input type="file" name="file" style="margin-left: 6px; width: 150px; height: 35px;">			   
-			</p>
-			<br>
-			   <input name="text1" type="submit" value="提交"
-					style="margin-left: 266px; margin-top: 90px;width: 85px; height: 35px;">
-			   <input name="text2" type="reset" value="重置"
-					style="margin-left: 176px; width: 85px; height: 35px;">
-			<p>
-			</p>
-		</form>
-		<br /> <br />
-		<br />
-		<br />
+		<form action="check/updateMessage.html" method=post enctype="multipart/form-data"> 
+		   
+            <%-- <c:forEach items="${listcheckMessage}" var="item" >
+              ${item.content}
+                                           内容: <select name="content" style="width: 360px; height: 35px;">
+	         <option value="${item.content}"></option>
+			   </select>                
+           </c:forEach> --%>
+            <% 
+           	ArrayList<Answer> listcheck=(ArrayList<Answer>)request.getAttribute("listcheckMessage");  	
+             %>
+           <select name="content" style="width: 360px; height: 35px;">
+          <!--  <select name="attributes" style="width: 360px; height: 35px;"> -->
+           <% 
+           for(Answer temp:listcheck){
+           %>
+           <option value=""><%=temp.getContent() %></option>
+		  <%--  <option value=""><%=temp.getAttributes() %></option>    --%>
+           
+           <%   
+           } 
+           %>
+           
+           </select> 
+           
+           
+           
+           
+           
+           <input name="text1" type="submit" value="提交"
+		   style="margin-left: 266px; margin-top: 90px;width: 85px; height: 35px;">		 
+		    		
+		</form>		
 	</div>
 </body>
 </html>

@@ -83,7 +83,7 @@ public class SearchController implements ServletContextAware {
 		answer.setQuestionId(tempquestion.getQuestionId());
 		//上传文件
 		if (!file.isEmpty()) {
-			   String path = this.servletContext.getRealPath("/tmp/");  //获取本地存储路径
+			   String path = this.servletContext.getRealPath("/upload/Resource");  //获取本地存储路径
 			   System.out.println(path);
 			   String fileName = file.getOriginalFilename();
 			   String fileType = fileName.substring(fileName.lastIndexOf("."));

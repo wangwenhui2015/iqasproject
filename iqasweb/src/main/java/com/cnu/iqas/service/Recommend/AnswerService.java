@@ -28,5 +28,10 @@ public interface AnswerService {
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.NOT_SUPPORTED)
 	public List<Answer> getAllData(String wherejpql, Object[] queryParams);
+	/**
+	 * 跟新实体
+	 * 
+	 */
+	public void update(Answer answer);
 
 }

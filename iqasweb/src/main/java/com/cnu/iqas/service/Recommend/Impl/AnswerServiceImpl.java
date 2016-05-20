@@ -35,5 +35,10 @@ public class AnswerServiceImpl implements AnswerService{
 		// TODO Auto-generated method stub
 		return answerDao.getAllData(wherejpql, queryParams);
 	}
+	@Override
+	public void update(Answer answer) {
+		// TODO Auto-generated method stub
+	    answerDao.update(answer);
+	}
 	
 }

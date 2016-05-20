@@ -53,6 +53,10 @@ public class Answer {
 	 * 创建日期
 	 */
 	private Date createDate= new Date();
+	/**
+	 * 是否可见，默认可见值为true
+	 */
+	private boolean visible=true;
 	private int questionId;
 	@Id
 	/*@GeneratedValue(generator = "uuidGenerator")*/
@@ -117,7 +121,10 @@ public class Answer {
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
-	
-	
-	
+	public boolean isVisible() {
+		return visible;
+	}
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 }
