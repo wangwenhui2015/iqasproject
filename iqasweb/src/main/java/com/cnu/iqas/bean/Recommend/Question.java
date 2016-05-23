@@ -36,7 +36,7 @@ public class Question {
 	/**
 	 * 用户id 外键
 	 */
-    private String  Userid;
+    private String  userId;
     @Id
 	/*@GeneratedValue(generator = "uuidGenerator")*/
     public int getQuestionId() {
@@ -63,10 +63,11 @@ public class Question {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getUserid() {
-		return Userid;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserid(String userid) {
-		Userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
+
 }

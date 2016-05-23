@@ -71,7 +71,7 @@ public class SearchController implements ServletContextAware {
 		// 将数据保存在问题表
 		question.setContent(text);
 		question.setCreateDate(new Date());
-		question.setUserid("2141002068");
+		question.setUserId("2141002068");
 		questionService.save(question);
 		Question tempquestion = questionService.find("o.content = ?", text);
 		System.out.println("tempquestion"+tempquestion.getQuestionId());
@@ -331,7 +331,7 @@ public class SearchController implements ServletContextAware {
 		System.out.println("searchSentence!!!!");
 		httpSession.setAttribute("text", text);
 		ModelAndView mv = new ModelAndView();
-		if (text.trim().length() < 15) {
+		if (text.trim().length() < 25) {
 			Question question = questionService.find("o.content = ?", text);
 			if (question != null) {
 				System.out.println(question.getContent());

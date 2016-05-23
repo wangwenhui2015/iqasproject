@@ -6,7 +6,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ page isELIgnored="false" %>
+<%@ page isELIgnored="false"%>
 <!--Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -65,19 +65,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;">${media.associationtxt}</div>
-					 <c:set var="bl" value="${media.associationtxt}" scope="request"></c:set>
+						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.associationtxt} --%>
+					<c:set var="associationtxt" value="${media.associationtxt}"
+						scope="request"></c:set>
 					<% 
-						String a=(String)request.getAttribute("bl");
-						String[] b = a.split("/");
-						for (int i = 0; i < b.length; i++) {
-							b[i] = b[i].substring(0, b[i].indexOf("("));
-							System.out.print(b[i] + "");
+						String associationtxt=(String)request.getAttribute("associationtxt");
+					    if(associationtxt.contains("/")){
+					    String tempassociation [] =new String[5];
+						String[] tempassociationtxt = associationtxt.split("/");
+						for (int i = 0; i < tempassociationtxt.length; i++) {
+							tempassociation[i] = tempassociationtxt[i].substring(0, tempassociationtxt[i].indexOf("("));
+							System.out.print(tempassociationtxt[i] + "");
 					%>
-					<a href="javascript:to('<%=b[i]%>')"><%=b[i]%></a>
+					<a href="javascript:to('<%=tempassociation[i]%>')"><%=tempassociationtxt[i]%>/</a>
 					<%
 						}
-					%>
+					    }else{
+							%>
+							<a href="javascript:to('<%=associationtxt%>')"><%=associationtxt%></a>
+							<%}%>
+					</div>		
 					<!-- <a href="#" class="button">sign up</a> -->
 					<br />
 				</div>
@@ -97,7 +104,27 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;">${media.Synonymstxt}</div>
+						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Synonymstxt} --%>
+					<c:set var="Synonymstxt" value="${media.Synonymstxt}"
+						scope="request"></c:set>
+					   <% 
+						String Synonymstxt=(String)request.getAttribute("Synonymstxt");
+					    if(Synonymstxt.contains("/"))
+					    {
+					    	String[] tempSynonymstxt = Synonymstxt.split("/");
+					    	String tempSynonyms [] =new String[5];
+							for (int i = 0; i < tempSynonymstxt.length; i++) {
+								tempSynonyms[i] = tempSynonymstxt[i].substring(0, tempSynonymstxt[i].indexOf("("));
+								System.out.print(tempSynonymstxt[i] + "");
+						%>
+					    <a href="javascript:to('<%=tempSynonyms[i]%>')"><%=tempSynonymstxt[i]%>/</a>
+					   <%
+							}
+					    }else{
+						%>
+						<a href="javascript:to('<%=Synonymstxt%>')"><%=Synonymstxt%></a>
+						<%}%>
+					</div>
 					<!-- <a href="#" class="button">sign up</a> -->
 					<br />
 				</div>
@@ -117,7 +144,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;">${media.Antonymtxt}</div>
+						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Antonymtxt} --%>
+					<c:set var="Antonymtxt" value="${media.Antonymtxt}" scope="request"></c:set>
+					<% 
+				    String Antonymtxt=(String)request.getAttribute("Antonymtxt");
+					if(Antonymtxt.contains("/")){
+						String[] tempAntonymtxt = Antonymtxt.split("/");
+						String tempAntonym [] =new String[5];
+						for (int i = 0; i < tempAntonymtxt.length; i++) {
+							tempAntonym[i] = tempAntonymtxt[i].substring(0, tempAntonymtxt[i].indexOf("("));
+							System.out.print(tempAntonymtxt[i] + "");
+					%>
+					<a href="javascript:to('<%=tempAntonym[i]%>')"><%=tempAntonymtxt[i]%>/</a>
+					<%
+						}
+					}else{
+						%>
+						<a href="javascript:to('<%=Antonymtxt%>')"><%=Antonymtxt%></a>
+						<%}%>
+					</div>
 					<!-- <a href="#" class="button">sign up</a> -->
 					<br />
 				</div>
@@ -137,7 +182,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;">${media.Expandtxt}</div>
+						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Expandtxt} --%>
+					<c:set var="Expandtxt" value="${media.Expandtxt}" scope="request"></c:set>
+					<% 
+						String Expandtxt=(String)request.getAttribute("Expandtxt");
+					if(Expandtxt.contains("/")){
+						String[] tempExpandtxt = Expandtxt.split("/");
+						String tempExpand [] =new String[5];
+						for (int i = 0; i < tempExpandtxt.length; i++) {
+							tempExpand[i] = tempExpandtxt[i].substring(0, tempExpandtxt[i].indexOf("("));
+							System.out.print(tempExpand[i] + "");
+					%>
+					<a href="javascript:to('<%=tempExpand[i]%>')"><%=tempExpandtxt[i]%>/</a>
+					<%
+						}
+					}else{
+						%>
+						<a href="javascript:to('<%=Expandtxt%>')"><%=Expandtxt%></a>
+						<%}%>
+					</div>
 					<!-- <a href="#" class="button">sign up</a> -->
 					<br />
 				</div>
@@ -158,15 +221,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;">${media.CommonUsetxt}</div>
+						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.CommonUsetxt} --%>
+					<c:set var="CommonUsetxt" value="${media.CommonUsetxt}"
+						scope="request"></c:set>
+					<% 
+						String CommonUsetxt=(String)request.getAttribute("CommonUsetxt");
+					if(CommonUsetxt.contains("/")){
+						String[] tempCommonUsetxt = CommonUsetxt.split("/");
+						String tempCommonUse [] =new String[5];
+						for (int i = 0; i < tempCommonUsetxt.length; i++) {
+							tempCommonUse[i] = tempCommonUsetxt[i].substring(0, tempCommonUsetxt[i].indexOf("("));
+							System.out.print(tempCommonUse[i] + "");
+					%>
+					<a href="javascript:to('<%=tempCommonUse[i]%>')"><%=tempCommonUsetxt[i]%>/</a>
+					<%
+						}
+					}else{
+						%>
+						<a href="javascript:to('<%=Synonymstxt%>')"><%=Synonymstxt%></a>
+						<%}%>	
+					</div>				
 					<!-- <a href="#" class="button">sign up</a> -->
 					<br />
 				</div>
 			</div>
-
 			<div class="clear"></div>
 		</div>
-
 	</div>
 	<div class="footer">
 		<p>
