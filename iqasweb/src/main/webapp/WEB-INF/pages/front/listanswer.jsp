@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ include file="/WEB-INF/pages/share/taglib.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -41,13 +42,11 @@
   </div> --%>
   <div class="panel-body">
   
-	<%-- <form  action="<c:url value='/admin/control/qa/updatemessage.html'/>" method="post"> --%>
+<form  action="http://localhost:8080/iqasweb/admin/control/qa/listanswermessage.html" method="post">
 	
    <!-- 查询参数 -->
     <input type="hidden" name="page">
-    <!-- 商品类型id，商品商品类型时需要 -->
-    <input type="hidden" name="answerId">
-	<table class="table table-bordered table-striped"> <!-- table-bordered -->
+	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
 				<td align="center" width="10%">答案ID</td>
@@ -99,7 +98,7 @@
 		 </c:forEach>
 		</tbody>
 	</table>
-	<!-- </form> -->
+  </form> 
   </div>
    <div class="panel-footer">
      <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>

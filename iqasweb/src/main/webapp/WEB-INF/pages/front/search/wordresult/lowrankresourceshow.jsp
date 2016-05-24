@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-%>   
+%>  
 <!--Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -47,7 +46,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 				</div>
 				<div class="pricing">
-					<div class="price-top">
+					<%-- <div class="price-top">
+						<h2>情景段落</h2>
+					</div>
+					<div class="price-bottom">
+						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
+						<div style="width:295px; height:230px;margin-top:-7px;background-color:#ADEF2F">${listResource.propertyScene}</div>
+						<a href="#" class="button">sign up</a>
+						<br />
+					</div> --%>
+				</div>
+				<div class="pricing">
+					<div class="price-top top2">
 						<h2>情景段落</h2>
 					</div>
 					<div class="price-bottom">
@@ -58,18 +68,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 				</div>
 				<div class="pricing">
-					<div class="price-top top2">
-						<h2>延伸例句</h2>
-					</div>
-					<div class="price-bottom">
-						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00BFFF">${listResource.propertyExtend}</div>
-						<a href="#" class="button but1">sign up</a>
-						<br />
-					</div>
-				</div>
-				<div class="pricing">
-					<div class="price-top top3">
+					<%-- <div class="price-top top3">
 						<h2>百科</h2>
 					</div>
 					<div class="price-bottom">
@@ -77,27 +76,27 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00FFFF">${listResource.propertyNcyclopedia}</div>
 						<a href="#" class="button but2">sign up</a>
 						<br />
-					</div>
+					</div> --%>
 				</div>
 		
 				<div class="pricing" style="margin-left:30px;">
 					<div class="price-top top4" >
-						<h2>用法</h2>
+						<h2>情景段落</h2>
 					</div>
 					<div class="price-bottom">
 				<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:295px; height:230px;margin-top:-7px;background-color:#CD853F">${listResource.propertyUse}</div>
-						<a href="#" class="button but3">sign up</a>
+						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00BFFF">${listResource.propertyExtend}</div>
+						<a href="#" class="button but1">sign up</a>
 						<br />
 					</div>
 				</div>
-				
+		
 				<div class="clear"></div>
 			</div>
 			
 		</div>	
 		 <div align="center">
-		      <input type="submit" value="下一页" >       
+		      <!-- <input type="submit" value="下一页" >-->
 		 </div>
 		<div class="footer">
 			<p>&copy 2016 Capital Normal University . All rights reserved | Design by <a href="http://w3layouts.com">Open Learning.</a></p>

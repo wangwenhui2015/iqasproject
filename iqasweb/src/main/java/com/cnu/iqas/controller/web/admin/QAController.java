@@ -48,15 +48,10 @@ public class QAController implements ServletContextAware {
 		/*listcheckMessage = answerService.getAllData("o.checked= ?", checkMessage.toArray());*/
 		//查询结果存到页面类中
 	    pv.setQueryResult(query);
-		/*if (listcheckMessage != null && listcheckMessage.size() > 0) {
-			System.out.println(listcheckMessage.get(0).getContent());
-		}
-		mv.addObject("listcheckMessage", listcheckMessage);*/
-	  //页面类存放到request中
+	    //页面类存放到request中
 	  	mv.addObject("pageView", pv);
 		return mv;
 	}
-
 	@RequestMapping(value = "loadMessage")
 	public ModelAndView loadMessage(HttpSession httpSession, int id) {
 		ModelAndView mv = new ModelAndView(PageViewConstant.UPDATE_MESSAGE);

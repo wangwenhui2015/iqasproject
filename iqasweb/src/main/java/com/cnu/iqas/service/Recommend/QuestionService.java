@@ -22,5 +22,5 @@ public interface QuestionService {
 	 * @param questiuon
 	 */
 	public void save(Question questiuon);
-
+	
 }

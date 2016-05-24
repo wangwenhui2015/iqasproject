@@ -28,6 +28,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
+<br><br>
+${user.userName }，欢迎你！
 <br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<div align="center" class="header">	
 		 <form action="search/sentence.html" method=post>	

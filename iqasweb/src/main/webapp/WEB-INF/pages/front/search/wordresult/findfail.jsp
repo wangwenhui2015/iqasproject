@@ -42,7 +42,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
          </p> 
          <p>
              <input name="text" type="button" value="重新输入内容" style="margin-left:240px; margin-top:100px; width:100px; height:50px;" onclick="window.location.href='search/input.html'" /> 
-		     <input name="Search" type="button" value="友情添加资源" style="margin-left:100px;margin-top:100px; height:50px;" onclick="window.location.href='search/addResourceMessage.html'" /> 
+		     <input name="Search" type="button" value="友情添加资源" style="margin-left:100px;margin-top:100px; height:50px;" onclick="window.location.href='add/addResourceMessage.html'" /> 
          </p>                                      
 		</form>
 		<br/> <br/>

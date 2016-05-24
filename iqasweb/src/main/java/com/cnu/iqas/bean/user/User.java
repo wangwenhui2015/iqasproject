@@ -72,6 +72,10 @@ public class User {
 	 * 头像保存路径，默认系统头像
 	 */
 	private String picturePath=PropertyUtils.get(PropertyUtils.LOG);
+	/**
+	 * 用户的等级（有三种类型分别）
+	 */
+	private int userRank;
 	//测试一下
 	@Id @GeneratedValue(generator="uuidGenderator")
 	public String getUserId() {
@@ -180,5 +184,10 @@ public class User {
 	public void setPicturePath(String picturePath) {
 		this.picturePath = picturePath;
 	}
-	
+	public int getUserRank() {
+		return userRank;
+	}
+	public void setUserRank(int userRank) {
+		this.userRank = userRank;
+	}
 }

@@ -22,6 +22,7 @@
 			style="margin-left: 10px; width: 450px; height: 30px;"> 
 		添加属性:
 		<select name="attributes" style="width: 120px; height: 35px;">
+		    <option value="${answer.attributes}" selected="selected" >${answer.attributes}</option>
 			<option value="课文原句">课文原句</option>
 			<option value="情境段落">情境段落</option>
 			<option value="延伸例句">延伸例句</option>
@@ -37,11 +38,13 @@
 	<br>
 	<p>
 		难度值:<select name="difficulty" style="width: 60px; height: 35px;">
+		    <option value="${answer.difficulty}" selected="selected" >${answer.difficulty}</option>
 			<option value="1">低</option>
 			<option value="2">中</option>
 			<option value="3">高</option>
 		</select> 
-		媒体类型:<select name="mediaType" style="width: 60px; height: 35px;">
+		媒体类型:<select name="mediaType" style="width: 60px; height: 35px;">		    
+		    <option value="${answer.mediaType}" selected="selected">${answer.mediaType}</option>
 			<option value="文本">文本</option>
 			<option value="图片">图片</option>
 			<option value="绘本">绘本</option>
