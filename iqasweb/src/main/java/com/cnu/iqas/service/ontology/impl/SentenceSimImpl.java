@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 
 import com.cnu.iqas.bean.iword.Iword;
@@ -243,9 +246,10 @@ public class SentenceSimImpl implements SentenceSim  {
 	  * @return 首字母
 	  */
 	public String intercept(String s) {
-		int a = s.indexOf(",");
-		int b = s.lastIndexOf(",");
-		String ab = s.substring(a + 1, b);
+//		int a = s.indexOf(",");
+//		int b = s.lastIndexOf(",");
+//		String ab = s.substring(a + 1, b);
+		String ab=s;
 		String[] sss = ab.split(" ");
 		return sss[0];
 	}
@@ -264,7 +268,7 @@ public class SentenceSimImpl implements SentenceSim  {
 			System.out.println("无键值对");
 		} else {
 			for (Entry<String, String> s : resultsSentenceAndId.entrySet()) {
-			System.out.println("键值对:" + s);
+			System.out.println("ID以及对应的句子是:" + s);
 			}
 		}
 		return resultsSentenceAndId;
@@ -305,48 +309,48 @@ public class SentenceSimImpl implements SentenceSim  {
 			// Moves onto the next result.
 			// 移动到下个result上
 			QuerySolution solutionInstance = resultsSentenceProperty.next();
-		    System.out.println("====================实例==========================");	
+		   // System.out.println("====================实例==========================");	
 			String stringInstance = solutionInstance.get("?instanceLabel").toString();
 			String tempStr = stringInstance.replaceAll("_", " ");
 			tempStr = tempStr.substring(0, tempStr.length() - 4);
 			System.out.println("实例："+tempStr);
-			System.out.println("====================实例==========================");		
+			//System.out.println("====================实例==========================");		
 			
-			System.out.println("====================回答==========================");	
+			//System.out.println("====================回答==========================");	
 			String stringAnswer = solutionInstance.get("?propertyAnswer").toString();
 		    String tempAnswer=stringAnswer.substring(stringAnswer.lastIndexOf(")")+1, stringAnswer.length() - 4);
 			System.out.println("回答："+tempAnswer);
-			System.out.println("====================回答==========================");	
+			//System.out.println("====================回答==========================");	
 			
-			System.out.println("====================教材版本==========================");	
+		//	System.out.println("====================教材版本==========================");	
 			String stringVersion = solutionInstance.get("?propertyVersion").toString();
 			String tempVersion=stringVersion.substring(stringVersion.lastIndexOf(")")+1, stringVersion.length() - 3);
 			System.out.println("教材版本："+tempVersion);
-			System.out.println("====================教材版本==========================");
+			//System.out.println("====================教材版本==========================");
 			
-			System.out.println("====================册数==========================");	
+			//System.out.println("====================册数==========================");	
 			String stringBook = solutionInstance.get("?propertyBook").toString();
 			String tempBook=stringBook.substring(stringBook.lastIndexOf(")")+1, stringBook.length() - 3);
 			System.out.println("册数："+tempBook);
-			System.out.println("====================册数==========================");	
+			//System.out.println("====================册数==========================");	
 			
-			System.out.println("====================情境对话==========================");	
+		//	System.out.println("====================情境对话==========================");	
 			String stringScene = solutionInstance.get("?propertyScene").toString();
 			String tempScene=stringScene.substring(stringScene.lastIndexOf(")")+1, stringScene.length() - 3);
 			System.out.println("情境对话："+tempScene);
-			System.out.println("====================情境对话=========================");	
+		//	System.out.println("====================情境对话=========================");	
 			
-			System.out.println("====================重要句型=========================");	
+		//	System.out.println("====================重要句型=========================");	
 			String stringPattern = solutionInstance.get("?propertySentencePattern").toString();
 			String tempPattern=stringPattern.substring(stringPattern.lastIndexOf(")")+1, stringPattern.length() - 3);
 			System.out.println("重要句型："+tempPattern);
-			System.out.println("====================重要句型=========================");	
+		//	System.out.println("====================重要句型=========================");	
 			
-			System.out.println("====================相关单词=========================");	
+		//	System.out.println("====================相关单词=========================");	
 			String stringRelatedWords = solutionInstance.get("?propertyRelatedWords").toString();
 			String tempRelatedWords=stringRelatedWords.substring(stringRelatedWords.lastIndexOf(")")+1, stringRelatedWords.length() - 3);
 			System.out.println("相关单词："+tempRelatedWords);
-			System.out.println("====================相关单词=========================");	
+		//	System.out.println("====================相关单词=========================");	
 			
 			
 			sentence = new ISentence(tempStr, tempAnswer, tempVersion, tempBook, tempScene, tempPattern,tempRelatedWords);
@@ -446,7 +450,8 @@ public class SentenceSimImpl implements SentenceSim  {
 	  * @author  王文辉
 	  */
 	@Override
-	public ISentence maxSimilar(String str) {
+	public ISentence maxSimilar(String str,HttpServletRequest request){
+		double similarityDegree=0;
 		long time1 = System.currentTimeMillis();
     	System.out.println("================================CheckSimAction开始时间：" + time1);
 		String maxCompareString=null;
@@ -454,9 +459,11 @@ public class SentenceSimImpl implements SentenceSim  {
         double max=0;
       	Map<String,String> map = new HashMap(); 
       	//List<String>list=new ArrayList();
-		int a=str.indexOf(",");
+		/*int a=str.indexOf(",");
 		int b=str.lastIndexOf(",");
 		String string1=str.substring(a+1, b);
+		System.out.println("kkkkkkkkkkkkkkkkkk"+string1);*/
+      	String string1=str;
 	 	String yourClass=intercept(str);
 	    long time2 = System.currentTimeMillis();
     	System.out.println("==============================提取疑问词 ：" + yourClass + "," + (time2 - time1));
@@ -499,7 +506,7 @@ public class SentenceSimImpl implements SentenceSim  {
 			for (double ss : t2) {
 				System.out.print(ss + " ");
 			}
-			double similarityDegree= Sentence_similarity(t1, t2);
+		    similarityDegree= Sentence_similarity(t1, t2);
 			System.out.println("最大的相似度值为"+similarityDegree);
 			if(similarityDegree>max)
 			{
@@ -507,10 +514,12 @@ public class SentenceSimImpl implements SentenceSim  {
 				maxCompareString=string2;
 			}
 		   }
+		HttpSession session = request.getSession();
+		session.setAttribute("similarityDegree", similarityDegree);
 		long time6 = System.currentTimeMillis();
-	    System.out.println("========================================for循环：句子匹配：" + (time6 - time5)); 
+	 // System.out.println("========================================for循环：句子匹配：" + (time6 - time5)); 
         String key= (String)keyString(map,maxCompareString);
-	    System.out.println("最相似的句子的ID:"+key);
+	    System.out.println("查询到相似度最高的句子的ID:"+key);
 	    
 	    ISentence sentence=findPropertyById(key);
 	    //System.out.println(resultsSentenceProperty);		

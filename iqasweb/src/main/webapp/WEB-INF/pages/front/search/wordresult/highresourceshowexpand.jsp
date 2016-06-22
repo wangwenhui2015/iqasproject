@@ -65,7 +65,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.associationtxt} --%>
+						style="font-size:20px;width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.associationtxt} --%>
 					<c:set var="associationtxt" value="${media.associationtxt}"
 						scope="request"></c:set>
 					<% 
@@ -104,7 +104,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Synonymstxt} --%>
+						style="font-size:20px;width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Synonymstxt} --%>
 					<c:set var="Synonymstxt" value="${media.Synonymstxt}"
 						scope="request"></c:set>
 					   <% 
@@ -144,7 +144,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Antonymtxt} --%>
+						style="font-size:20px;width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Antonymtxt} --%>
 					<c:set var="Antonymtxt" value="${media.Antonymtxt}" scope="request"></c:set>
 					<% 
 				    String Antonymtxt=(String)request.getAttribute("Antonymtxt");
@@ -182,7 +182,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Expandtxt} --%>
+						style="font-size:18px;width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.Expandtxt} --%>
 					<c:set var="Expandtxt" value="${media.Expandtxt}" scope="request"></c:set>
 					<% 
 						String Expandtxt=(String)request.getAttribute("Expandtxt");
@@ -221,7 +221,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							controls="controls"></audio>
 					</div>
 					<div
-						style="width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.CommonUsetxt} --%>
+						style="font-size:18px;width: 324px; height: 40px; margin-top: 20px; margin-left: -17px;"><%-- ${media.CommonUsetxt} --%>
 					<c:set var="CommonUsetxt" value="${media.CommonUsetxt}"
 						scope="request"></c:set>
 					<% 

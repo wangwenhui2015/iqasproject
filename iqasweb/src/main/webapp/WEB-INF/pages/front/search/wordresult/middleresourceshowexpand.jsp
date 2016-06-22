@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <base href="<%=basePath%>">
 <title>Clean Plans and Pricing Tables Responsive Widget Template
 	| Home :: w3layouts</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/middlestyle.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"

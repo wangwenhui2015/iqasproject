@@ -85,7 +85,7 @@ public class SearchController {
 					List<Answer> listpropertyText = answerService
 							.getAllData("o.questionId = ? and o.checked= ? and o.attributes=?", propertyText.toArray());
 					if(listpropertyText!=null && listpropertyText.size()>0){
-						System.out.println(listpropertyText.get(0).getContent());
+						System.out.println("课文原句"+listpropertyText.get(0).getContent());
 						tempMap.put("propertyText", listpropertyText.get(0).getContent());
 					}
 					// 保存情景段落的text到Map中

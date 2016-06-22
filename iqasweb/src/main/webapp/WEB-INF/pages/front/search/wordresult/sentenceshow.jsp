@@ -41,7 +41,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom" >
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:295px; height:230px;margin-top:-7px;background-color:#CD853F">${listsentence.sentencequestion}</div>
+						<div style="font-size:30px;width:295px; height:230px;margin-top:-7px;background-color:#E8E8E8">${listsentence.sentencequestion}</div>
 						<a href="#" class="button">sign up</a>
 						<br />
 					</div>
@@ -52,7 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00FFFF">${listsentence.sentenceanswer}</div>
+						<div style="font-size:30px;width:295px; height:230px;margin-top:-7px;background-color:#E8E8E8">${listsentence.sentenceanswer}</div>
 						<a href="#" class="button">sign up</a>
 						<br />
 					</div>
@@ -63,7 +63,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:295px; height:230px;margin-top:-7px;background-color:#00BFFF">${listsentence.sentencedialogue}</div>
+						<div style="font-size:18px;width:295px; height:230px;margin-top:-7px;background-color:#E8E8E8">${listsentence.sentencedialogue}</div>
 						<a href="#" class="button but1">sign up</a>
 						<br />
 					</div>
@@ -74,7 +74,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 						<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div style="width:295px; height:230px;margin-top:-7px;background-color:#ADEF2F">${listsentence.sentencepattern}</div>
+						<div style="font-size:30px;width:295px; height:230px;margin-top:-7px;background-color:#E8E8E8">${listsentence.sentencepattern}</div>
 						<a href="#" class="button but2">sign up</a>
 						<br />
 					</div>
@@ -86,7 +86,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="price-bottom">
 				<!-- <input name="text1" type="text" value="This is my,,,," style="width:320px; height:230px;"> -->
-						<div  style="width:295px; height:230px; margin-top:-7px;background-color:#FF8C00">${listsentence.sentencerelatedwords}</div>
+						<div  style="font-size:30px;width:295px; height:230px; margin-top:-7px;background-color:#E8E8E8">${listsentence.sentencerelatedwords}</div>
 						<a href="#" class="button but3">sign up</a>
 						<br />
 					</div>
