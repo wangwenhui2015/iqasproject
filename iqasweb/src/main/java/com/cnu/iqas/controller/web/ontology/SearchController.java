@@ -195,7 +195,7 @@ public class SearchController {
 				   } else {
 					// 在二维数据表中无法查询的时候，在本体库中进行查询。根据句子进行查询
 					System.out.println("根据句子本体库查询");
-					ISentence sentence = sentenceSim.maxSimilar(text);
+					ISentence sentence = sentenceSim.maxSimilar(text, null);
 					if (sentence != null) {
 						System.out.println("进入本体查询！");
 						sentenceMap.put("sentencequestion",sentence.getInstanceLabel() );
@@ -367,7 +367,7 @@ public class SearchController {
 	    			} else {
 	    				// 在二维数据表中无法查询的时候，在本体库中进行查询。根据句子进行查询
 	    				System.out.println("根据句子本体库查询");
-	    				ISentence sentence = sentenceSim.maxSimilar(text);
+	    				ISentence sentence = sentenceSim.maxSimilar(text, null);
 	    				if (sentence != null) {
 	    					System.out.println("进入本体查询！");
 	    					sentenceMap.put("sentencequestion", sentence.getInstanceLabel());
@@ -539,7 +539,7 @@ public class SearchController {
 			} else {
 				// 在二维数据表中无法查询的时候，在本体库中进行查询。根据句子进行查询
 				System.out.println("根据句子本体库查询");
-				ISentence sentence = sentenceSim.maxSimilar(text);
+				ISentence sentence = sentenceSim.maxSimilar(text, null);
 				if (sentence != null) {
 					System.out.println("进入本体查询！");
 					sentenceMap.put("sentencequestion", sentence.getInstanceLabel());

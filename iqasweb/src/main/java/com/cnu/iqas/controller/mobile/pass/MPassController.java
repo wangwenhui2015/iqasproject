@@ -1,8 +1,8 @@
 package com.cnu.iqas.controller.mobile.pass;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,20 +10,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.cnu.iqas.bean.base.MyStatus;
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.iword.WordResource;
 import com.cnu.iqas.bean.ontology.ISentence;
 import com.cnu.iqas.bean.user.User;
-import com.cnu.iqas.constant.PageViewConstant;
 import com.cnu.iqas.constant.StatusConstant;
 import com.cnu.iqas.service.common.IUserBaseService;
 import com.cnu.iqas.service.iword.IwordService;
 import com.cnu.iqas.service.iword.WordResourceService;
 import com.cnu.iqas.service.ontology.SentenceSim;
-import com.cnu.iqas.service.user.impl.UserServiceImpl;
 import com.cnu.iqas.utils.JsonTool;
-import com.cnu.iqas.utils.WebUtils;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.lyt.TestFourGroup.TestFourGroup;
@@ -212,7 +210,7 @@ public class MPassController {
 							// 获取单词图片的保存路径
 							pictruepath = wordpictrue.getSavepath();
 							picwrongpath1 = wordpicwrong1.getSavepath();
-							picwrongpath2 = wordpicwrong2.getSavepath();
+							picwrongpath2 = wordpicwrong2.getSavepath(); 
 						} else {
 							break;
 						}

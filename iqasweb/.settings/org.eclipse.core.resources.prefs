@@ -1,6 +1,11 @@
 eclipse.preferences.version=1
 encoding//logs/mylog.log=gbk
 encoding//src/main/java=UTF-8
+encoding//src/main/java/com/noumenon/AddDeleteModifyQuery/Query/Impl/QueryWithManyWaysImpl.java=gbk
+encoding//src/main/java/com/noumenon/AddDeleteModifyQuery/Query/QueryWithManyWays.java=gbk
+encoding//src/main/java/com/noumenon/MainTest.java=gbk
+encoding//src/main/java/com/noumenon/OntologyManage/Impl/OntologyManageImpl.java=gbk
+encoding//src/main/java/com/noumenon/OntologyManage/OntologyManage.java=gbk
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/jdbc.properties=UTF-8
 encoding//src/test/java=UTF-8
