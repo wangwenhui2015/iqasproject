@@ -7,4 +7,7 @@ import com.cnu.iqas.dao.base.DAO;
 * 类说明
 * */
  public interface AnswerDao extends DAO<Answer> {	
+	 
+	 public int updateAnswer(Answer answer);
+	 
 }

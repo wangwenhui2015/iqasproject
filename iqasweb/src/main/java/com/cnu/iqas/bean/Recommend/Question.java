@@ -15,12 +15,12 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "t_question")
-@GenericGenerator(strategy = "uuid", name = "uuidGenerator")
+/*@GenericGenerator(strategy = "uuid", name = "uuidGenerator")*/
 public class Question {
 	/**
 	 * questionId，问题标识
 	 */
-	private String questionId;
+	private int questionId;
 	/**
 	 * 问题内容
 	 */
@@ -36,13 +36,13 @@ public class Question {
 	/**
 	 * 用户id 外键
 	 */
-    private String  Userid;
+    private String  userId;
     @Id
-	@GeneratedValue(generator = "uuidGenerator")
-	public String getQuestionId() {
+	/*@GeneratedValue(generator = "uuidGenerator")*/
+    public int getQuestionId() {
 		return questionId;
 	}
-	public void setQuestionId(String questionId) {
+	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
 	public String getContent() {
@@ -63,10 +63,11 @@ public class Question {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public String getUserid() {
-		return Userid;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserid(String userid) {
-		Userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
+
 }

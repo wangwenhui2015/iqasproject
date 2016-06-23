@@ -7,4 +7,6 @@ import com.cnu.iqas.dao.base.DAO;
 * 类说明
 * */
  public interface QuestionDao extends DAO<Question> {	
+	 
+	 
 }

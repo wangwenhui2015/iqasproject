@@ -17,9 +17,11 @@ public class ISentence {
 	private String propertyScene;
 	//重要句型
 	private String propertySentencePattern;
+	//相关单词
+	private String propertyRelatedWords;
 	
 	public ISentence(String instanceLabel, String propertyAnswer, String propertyVersion, String propertyBook,
-			String propertyScene, String propertySentencePattern) {
+			String propertyScene, String propertySentencePattern,String propertyRelatedWords ) {
 		super();
 		this.instanceLabel = instanceLabel;
 		this.propertyAnswer = propertyAnswer;
@@ -27,6 +29,7 @@ public class ISentence {
 		this.propertyBook = propertyBook;
 		this.propertyScene = propertyScene;
 		this.propertySentencePattern = propertySentencePattern;
+		this.propertyRelatedWords=propertyRelatedWords;
 	}
 	public String getInstanceLabel() {
 		return instanceLabel;
@@ -64,6 +67,11 @@ public class ISentence {
 	public void setPropertySentencePattern(String propertySentencePattern) {
 		this.propertySentencePattern = propertySentencePattern;
 	}
-	
+	public String getPropertyRelatedWords() {
+		return propertyRelatedWords;
+	}
+	public void setPropertyRelatedWords(String propertyRelatedWords) {
+		this.propertyRelatedWords = propertyRelatedWords;
+	}
 	
 }

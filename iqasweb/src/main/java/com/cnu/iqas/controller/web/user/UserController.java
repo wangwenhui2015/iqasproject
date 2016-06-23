@@ -49,7 +49,7 @@ public class UserController {
 				//将user信息保存到session中
 				mv.addObject("user", u);
 				//重定向到主界面front/main.jsp,先访问myforward方法，由该方法在访问main.jsp，因为jsp页面放置在WEB-INF下面，直接访问不了
-				mv.setViewName("redirect:/base/myforward.html?page=front/main");
+				mv.setViewName("redirect:/base/myforward.html?page=front/search/wordresult/InputQuestions");
 				//mv.setViewName("redirect:front/main");//主页视图
 			}
 		}

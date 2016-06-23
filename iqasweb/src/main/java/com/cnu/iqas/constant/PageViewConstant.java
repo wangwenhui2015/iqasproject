@@ -105,13 +105,12 @@ public class PageViewConstant {
 	 * 闯关列表界面
 	 */
 	public final static String PASS_LIST="pass/pass"; 
+	/*---------问答界面--------------*/
+	public final static String ANSWER_LIST="front/listanswer";
 	
+	public final static String SUCCESS="front/success";
 	
-	
-	
-	
-	
-	
+	public final static String UPDATE_MESSAGE="front/updateMessage";
 	
 	
 	

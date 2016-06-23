@@ -23,4 +23,9 @@ public class QuestionServiceImpl implements QuestionService{
 	public void setQuestionDao(QuestionDao questionDao) {
 		this.questionDao = questionDao;
 	}
+	@Override
+	public Question find(String wherejpql, Object attribute) {
+		// TODO Auto-generated method stub
+		return questionDao.find(wherejpql, attribute);
+	}
 }

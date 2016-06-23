@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.ontology.ISentence;
 
@@ -86,7 +88,7 @@ public interface SentenceSim {
 	  * @return  返回该字符串所对应的所有属性
 	  * @author  王文辉
 	  */
-	 public ISentence maxSimilar(String str);
+	 public ISentence maxSimilar(String str,HttpServletRequest request);
 	 
 	 
 }

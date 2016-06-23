@@ -97,7 +97,9 @@ public abstract class DaoSupport<T>   implements DAO<T>{
 	}
 	
 	public void update(T entity) {
-		ht.merge(entity);
+		/*ht.merge(entity);*/
+		/*ht.saveOrUpdate(entity);*/
+		ht.update(entity);
 	}
 
 	/**

@@ -75,6 +75,12 @@ function exit() {
 						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/store/listtype.html'/>" >商品类型</a></li>
 						</ul>
 				</div>
+				<div>
+					<a class="one">问答模块管理</a>
+					<ul class="kid">
+						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/qa/listanswermessage.html'/>" >答案信息审核</a></li>
+						</ul>
+				</div>
 				<div id="datepicker"></div>
 			</div>
 		</div>

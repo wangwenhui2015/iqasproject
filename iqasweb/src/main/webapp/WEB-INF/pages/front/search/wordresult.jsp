@@ -1,5 +1,6 @@
 <%@page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@page contentType="text/html; charset=utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -26,7 +27,10 @@
   </head>
   
    <body>
-         单词:<input type="text" style="height:30px;width:300px"name="text" value="${word.content}"><br><br><br>
+   
+  
+   
+        <%--  单词:<input type="text" style="height:30px;width:300px"name="text" value="${word.content}"><br><br><br>
          课文原句：${word.propertyText}<br><br>   
          情景段落：${word.propertyScene}<br><br>    
           延伸例句：${word.propertyExtend}<br><br>   
@@ -36,8 +40,14 @@
          拓展：${word.propertyExpand}<br><br> 
          常用：${word.propertyCommonUse}<br><br>     
          百科：${word.propertyNcyclopedia}<br><br>       
-          用法：${word.propertyUse}<br><br> 
-          
+          用法：${word.propertyUse}<br><br>  --%>
+         <%--   <c:forEach items="${listResource}" var="Answer">
+          <tr>
+              <td>${Answer.attributes}</td>
+          </tr>
+          </c:forEach> --%>
+        www ${listResource[0]} 
+            ${listResource[1]} 
     <input type="button" name="Log" value="单词属性" onclick="window.location.href='<%=basePath%>pass/control/passControl/list.html'">&nbsp;&nbsp; </td>
                      
           

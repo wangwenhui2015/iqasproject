@@ -152,7 +152,7 @@ public class MOntologyController {
     			}else{	
     				//根据句子进行查询
     			    System.out.println("根据句子进行查询");
-    			    ISentence sentence=sentenceSim.maxSimilar(text);
+    			    ISentence sentence=sentenceSim.maxSimilar(text, null);
     				//senObject= JSONObject.fromObject(sentence);
     			    JSONObject restextJson = new JSONObject();  
     			    restextJson.put("text", text);
