@@ -1,4 +1,5 @@
 package com.noumenon.AddDeleteModifyQuery.Query.Impl;
+
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -9,10 +10,12 @@ import com.noumenon.AddDeleteModifyQuery.Query.QueryWithManyWays;
 
 public class QueryWithManyWaysImpl implements QueryWithManyWays {
 
-	// å®šä¹‰fusekiæ•°æ®åº“è¿æ¥åœ°å€/EnglishLearningDataset query
-	private static String SERVER = "http://localhost:3030/EnglishLearningDataset/query";
+	// ¶¨ÒåfusekiÊı¾İ¿âÁ¬½ÓµØÖ·/EnglishLearningDataset query
+	// private static String SERVER =
+	// "http://localhost:3030/EnglishLearningDataset/query";
+	private static String SERVER = "http://localhost:3030/EnglishLearningDataset_FourthGrade/query";
 
-	// æ ¹æ®ç±»æŸ¥æ‰¾æ‰€æœ‰å®ä¾‹Label
+	// ¸ù¾İÀà²éÕÒËùÓĞÊµÀıLabel
 	@Override
 	public ResultSet checkInstance(String yourClass) {
 		String string1 = "SELECT ?instanceLabel WHERE{?class <http://www.w3.org/2000/01/rdf-schema#label> \"";
@@ -20,105 +23,119 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel}";
 		String sparqlInstance = string1 + yourClass + string2;
-		//System.out.println(sparqlInstance);
+		// System.out.println(sparqlInstance);
 
 		ResultSet resultsInstance = Result(sparqlInstance);
 		return resultsInstance;
 	}
 
-	// æ ¹æ®å®ä¾‹åç§°æŸ¥æ‰¾å•è¯æ‰€æœ‰å±æ€§å€¼
+	// ²éÕÒ¸Ã¸¸ÀàÏÂµÄËùÓĞID
+	public ResultSet checkIDDependOnClass(String yourClass) {
+		String string1 = "SELECT ?propertyID WHERE{?class <http://www.w3.org/2000/01/rdf-schema#label> \"";
+		String string2 = "\"@zh."
+				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh." 
+				+ "?instance ?relationID ?propertyID.}";
+		String sparqlIDDependOnClass = string1 + yourClass + string2;
+		// System.out.println(sparqlInstance);
+
+		ResultSet resultsIDDependOnClass = Result(sparqlIDDependOnClass);
+		return resultsIDDependOnClass;
+	}
+
+	// ¸ù¾İÊµÀıÃû³Æ²éÕÒµ¥´ÊËùÓĞÊôĞÔÖµ
 	@Override
 	public ResultSet checkProperty(String yourWord) {
 		if (yourWord.contains("@")) {
 			yourWord = yourWord.substring(0, yourWord.indexOf("@"));
 		}
 
-		// è¾“å…¥æ‰¾å®ä¾‹
+		// ÊäÈëÕÒÊµÀı
 		String string1 = "SELECT ?instanceLabel ?propertyClass ?propertyID ?propertyChinese ?propertyFunction ?propertyTopic ?propertyBook ?propertyAntonym ?propertySynonyms ?propertyCommonUse ?propertyExtend ?propertyScene ?propertyExpand ?propertyVersion ?propertyUse ?propertyNcyclopedia ?propertyAssociate ?propertyPartsOfSpeech ?propertyWordProperty ?propertyText ?propertyDifficulty "
-				+ "WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";// æ³¨æ„ä¸è¦å¿˜äº†ç©ºæ ¼ï¼
+				+ "WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";// ×¢Òâ²»ÒªÍüÁË¿Õ¸ñ£¡
 		String string2 = "\"@zh."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel."
 
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?class <http://www.w3.org/2000/01/rdf-schema#label> ?propertyClass."
 
-				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯ID\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh."
 				+ "?instance ?relationID ?propertyID."
 
-				+ "?relationChinese <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸­æ–‡å«ä¹‰\"@zh."
+				+ "?relationChinese <http://www.w3.org/2000/01/rdf-schema#label> \"ÖĞÎÄº¬Òå\"@zh."
 				+ "?instance ?relationChinese ?propertyChinese."
 
-				+ "?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸»é¢˜-åŠŸèƒ½æ„å¿µ\"@zh."
+				+ "?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-¹¦ÄÜÒâÄî\"@zh."
 				+ "?instance ?relationFunction ?propertyFunction."
 
-				+ "?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸»é¢˜-è¯é¢˜\"@zh."
+				+ "?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-»°Ìâ\"@zh."
 				+ "?instance ?relationTopic ?propertyTopic."
 
-				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯å†Œæ•°\"@zh."
+				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê²áÊı\"@zh."
 				+ "?instance ?relationBook ?propertyBook."
 
-				+ "?relationAntonym <http://www.w3.org/2000/01/rdf-schema#label> \"åä¹‰è¯\"@zh."
+				+ "?relationAntonym <http://www.w3.org/2000/01/rdf-schema#label> \"·´Òå´Ê\"@zh."
 				+ "?instance ?relationAntonym ?propertyAntonym."
 
-				+ "?relationSynonyms <http://www.w3.org/2000/01/rdf-schema#label> \"åŒä¹‰è¯\"@zh."
+				+ "?relationSynonyms <http://www.w3.org/2000/01/rdf-schema#label> \"Í¬Òå´Ê\"@zh."
 				+ "?instance ?relationSynonyms ?propertySynonyms."
 
-				+ "?relationCommonUse <http://www.w3.org/2000/01/rdf-schema#label> \"å¸¸ç”¨\"@zh."
+				+ "?relationCommonUse <http://www.w3.org/2000/01/rdf-schema#label> \"³£ÓÃ\"@zh."
 				+ "?instance ?relationCommonUse ?propertyCommonUse."
 
-				+ "?relationExtend <http://www.w3.org/2000/01/rdf-schema#label> \"å»¶ä¼¸ä¾‹å¥\"@zh."
+				+ "?relationExtend <http://www.w3.org/2000/01/rdf-schema#label> \"ÑÓÉìÀı¾ä\"@zh."
 				+ "?instance ?relationExtend ?propertyExtend."
 
-				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"æƒ…å¢ƒæ®µè½\"@zh."
+				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"Çé¾³¶ÎÂä\"@zh."
 				+ "?instance ?relationScene ?propertyScene."
 
-				+ "?relationExpand <http://www.w3.org/2000/01/rdf-schema#label> \"æ‹“å±•\"@zh."
+				+ "?relationExpand <http://www.w3.org/2000/01/rdf-schema#label> \"ÍØÕ¹\"@zh."
 				+ "?instance ?relationExpand ?propertyExpand."
 
-				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯æ•™æç‰ˆæœ¬\"@zh."
+				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê½Ì²Ä°æ±¾\"@zh."
 				+ "?instance ?relationVersion ?propertyVersion."
 
-				+ "?relationUse <http://www.w3.org/2000/01/rdf-schema#label> \"ç”¨æ³•\"@zh."
+				+ "?relationUse <http://www.w3.org/2000/01/rdf-schema#label> \"ÓÃ·¨\"@zh."
 				+ "?instance ?relationUse ?propertyUse."
 
-				+ "?relationNcyclopedia <http://www.w3.org/2000/01/rdf-schema#label> \"ç™¾ç§‘\"@zh."
+				+ "?relationNcyclopedia <http://www.w3.org/2000/01/rdf-schema#label> \"°Ù¿Æ\"@zh."
 				+ "?instance ?relationNcyclopedia ?propertyNcyclopedia."
 
-				+ "?relationAssociate <http://www.w3.org/2000/01/rdf-schema#label> \"è”æƒ³\"@zh."
+				+ "?relationAssociate <http://www.w3.org/2000/01/rdf-schema#label> \"ÁªÏë\"@zh."
 				+ "?instance ?relationAssociate ?propertyAssociate."
 
-				+ "?relationPartsOfSpeech <http://www.w3.org/2000/01/rdf-schema#label> \"è¯æ€§\"@zh."
+				+ "?relationPartsOfSpeech <http://www.w3.org/2000/01/rdf-schema#label> \"´ÊĞÔ\"@zh."
 				+ "?instance ?relationPartsOfSpeech ?propertyPartsOfSpeech."
 
-				+ "?relationWordProperty <http://www.w3.org/2000/01/rdf-schema#label> \"è¯æ€§å±æ€§\"@zh."
+				+ "?relationWordProperty <http://www.w3.org/2000/01/rdf-schema#label> \"´ÊĞÔÊôĞÔ\"@zh."
 				+ "?instance ?relationWordProperty ?propertyWordProperty."
 
-				+ "?relationText <http://www.w3.org/2000/01/rdf-schema#label> \"è¯¾æ–‡åŸå¥\"@zh."
+				+ "?relationText <http://www.w3.org/2000/01/rdf-schema#label> \"¿ÎÎÄÔ­¾ä\"@zh."
 				+ "?instance ?relationText ?propertyText."
 
-				+ "?relationDifficulty <http://www.w3.org/2000/01/rdf-schema#label> \"éš¾åº¦\"@zh."
+				+ "?relationDifficulty <http://www.w3.org/2000/01/rdf-schema#label> \"ÄÑ¶È\"@zh."
 				+ "?instance ?relationDifficulty ?propertyDifficulty." + "}";
 		String sparqlInstance = string1 + yourWord + string2;
 		// System.out.println(sparqlInstance);
 
 		// Results from a query in a table-like manner for SELECT queries.
-		// åœ¨SELECTæŸ¥è¯¢çš„ç±»è¡¨æ–¹æ³•ä¸­çš„æŸ¥è¯¢ç»“æœ
+		// ÔÚSELECT²éÑ¯µÄÀà±í·½·¨ÖĞµÄ²éÑ¯½á¹û
 		// Each row corresponds to a set of bindings which fulfil the conditions
 		// of the query.
-		// æ¯ä¸€åˆ—å¯¹åº”ä¸€ä¸ªç»‘å®šé›†ï¼Œå…¶ä¸­æ‰§è¡ŒæŸ¥è¯¢æ¡ä»¶
+		// Ã¿Ò»ÁĞ¶ÔÓ¦Ò»¸ö°ó¶¨¼¯£¬ÆäÖĞÖ´ĞĞ²éÑ¯Ìõ¼ş
 		// Access to the results is by variable name.
-		// é€šè¿‡å˜é‡åè®¿é—®ç»“æœ
+		// Í¨¹ı±äÁ¿Ãû·ÃÎÊ½á¹û
 		ResultSet resultsInstance = Result(sparqlInstance);
 
 		return resultsInstance;
 	}
 
-	// æŸ¥è¯¢ä¸€ä¸ªå•è¯å¯¹åº”çš„æ‰€æœ‰ID
+	// ²éÑ¯Ò»¸öµ¥´Ê¶ÔÓ¦µÄËùÓĞID
 	@Override
 	public ResultSet checkAllIdOfAnWord(String yourWord) {
 		String string1 = "SELECT ?propertyID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
 		String string2 = "\"@zh."
-				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯ID\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh."
 				+ "?instance ?relationID ?propertyID.}";
 		String sparqlInstance = string1 + yourWord + string2;
 		System.out.println(sparqlInstance);
@@ -126,29 +143,29 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		ResultSet resultsAllIdOfAInstance = Result(sparqlInstance);
 		return resultsAllIdOfAInstance;
 	}
-	
-	// æŸ¥è¯¢ä¸€ä¸ªå•è¯å¯¹åº”çš„æ‰€æœ‰ID
+
+	// ²éÑ¯Ò»¸öµ¥´Ê¶ÔÓ¦µÄËùÓĞID
 	@Override
 	public ResultSet checkAllIdOfAnSentence(String yourSentence) {
 		String string1 = "SELECT ?propertyID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
 		String string2 = "\"@zh."
-				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh."
 				+ "?instance ?relationID ?propertyID.}";
 		String sparqlInstance = string1 + yourSentence + string2;
-		//System.out.println(sparqlInstance);
+		// System.out.println(sparqlInstance);
 
 		ResultSet resultsAllIdOfAnSentence = Result(sparqlInstance);
 		return resultsAllIdOfAnSentence;
 	}
 
-	// æ ¹æ®å®ä¾‹åç§°æŸ¥æ‰¾å¥å­æ‰€æœ‰å±æ€§å€¼
+	// ¸ù¾İÊµÀıÃû³Æ²éÕÒ¾ä×ÓËùÓĞÊôĞÔÖµ
 	@Override
 	public ResultSet checkSentenceProperty(String yourSentence) {
 		if (yourSentence.contains("@")) {
 			yourSentence = yourSentence.substring(0, yourSentence.indexOf("@"));
 		}
 
-		// è¾“å…¥æ‰¾å®ä¾‹â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+		// ÊäÈëÕÒÊµÀı¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 		String string1 = "SELECT ?instance ?instanceLabel ?propertyClass ?propertyAnswer ?propertyID ?propertyVersion ?propertyBook ?propertyScene ?propertySentencePattern ?propertyRelatedWords ?relationAnswer ?relationID ?relationVersion ?relationBook ?relationScene ?relationSentencePattern ?relationRelatedWords WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \"";
 		String string2 = "\"@zh."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel."
@@ -156,88 +173,88 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?class <http://www.w3.org/2000/01/rdf-schema#label> ?propertyClass."
 
-				+ "?relationAnswer <http://www.w3.org/2000/01/rdf-schema#label> \"å›ç­”\"@zh."
+				+ "?relationAnswer <http://www.w3.org/2000/01/rdf-schema#label> \"»Ø´ğ\"@zh."
 				+ "?instance ?relationAnswer ?propertyAnswer."
 
-				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh."
 				+ "?instance ?relationID ?propertyID."
 
-				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­æ•™æç‰ˆæœ¬\"@zh."
+				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×Ó½Ì²Ä°æ±¾\"@zh."
 				+ "?instance ?relationVersion ?propertyVersio."
 
-				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­å†Œæ•°\"@zh."
+				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×Ó²áÊı\"@zh."
 				+ "?instance ?relationBook ?propertyBook."
 
-				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"æƒ…å¢ƒå¯¹è¯\"@zh."
+				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"Çé¾³¶Ô»°\"@zh."
 				+ "?instance ?relationScene ?propertyScene."
 
-				+ "?relationSentencePattern <http://www.w3.org/2000/01/rdf-schema#label> \"é‡è¦å¥å‹\"@zh."
+				+ "?relationSentencePattern <http://www.w3.org/2000/01/rdf-schema#label> \"ÖØÒª¾äĞÍ\"@zh."
 				+ "?instance ?relationSentencePattern ?propertySentencePattern."
 
-				+ "?relationRelatedWords <http://www.w3.org/2000/01/rdf-schema#label> \"ç›¸å…³å•è¯\"@zh."
+				+ "?relationRelatedWords <http://www.w3.org/2000/01/rdf-schema#label> \"Ïà¹Øµ¥´Ê\"@zh."
 				+ "?instance ?relationRelatedWords ?propertyRelatedWords.}";
 
 		String sparqlInstance = string1 + yourSentence + string2;
 		// System.out.println(sparqlInstance);
 
 		// Results from a query in a table-like manner for SELECT queries.
-		// åœ¨SELECTæŸ¥è¯¢çš„ç±»è¡¨æ–¹æ³•ä¸­çš„æŸ¥è¯¢ç»“æœ
+		// ÔÚSELECT²éÑ¯µÄÀà±í·½·¨ÖĞµÄ²éÑ¯½á¹û
 		// Each row corresponds to a set of bindings which fulfil the conditions
 		// of the query.
-		// æ¯ä¸€åˆ—å¯¹åº”ä¸€ä¸ªç»‘å®šé›†ï¼Œå…¶ä¸­æ‰§è¡ŒæŸ¥è¯¢æ¡ä»¶
+		// Ã¿Ò»ÁĞ¶ÔÓ¦Ò»¸ö°ó¶¨¼¯£¬ÆäÖĞÖ´ĞĞ²éÑ¯Ìõ¼ş
 		// Access to the results is by variable name.
-		// é€šè¿‡å˜é‡åè®¿é—®ç»“æœ
+		// Í¨¹ı±äÁ¿Ãû·ÃÎÊ½á¹û
 		ResultSet resultsInstance = Result(sparqlInstance);
 
 		return resultsInstance;
 	}
 
-	// æ ¹æ®IDæŸ¥è¯¢å¥å­åŠå…¶å±æ€§URI+å±æ€§å€¼
+	// ¸ù¾İID²éÑ¯¾ä×Ó¼°ÆäÊôĞÔURI+ÊôĞÔÖµ
 	@Override
 	public ResultSet checkSentencePropertyDependOnId(String yourId) {
 		if (yourId.contains("@")) {
 			yourId = yourId.substring(0, yourId.indexOf("@"));
 		}
 
-		// è¾“å…¥æ‰¾å®ä¾‹â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
-		String string1 = "SELECT ?instanceLabel ?propertyClass ?propertyAnswer ?propertyID ?propertyVersion ?propertyBook ?propertyScene ?propertySentencePattern ?propertyRelatedWords ?relationAnswer ?relationID ?relationVersion ?relationBook ?relationScene ?relationSentencePattern ?relationRelatedWords WHERE{ ?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh. ?instance ?relationID \"";
+		// ÊäÈëÕÒÊµÀı¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+		String string1 = "SELECT ?instanceLabel ?propertyClass ?propertyAnswer ?propertyID ?propertyVersion ?propertyBook ?propertyScene ?propertySentencePattern ?propertyRelatedWords ?relationAnswer ?relationID ?relationVersion ?relationBook ?relationScene ?relationSentencePattern ?relationRelatedWords WHERE{ ?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh. ?instance ?relationID \"";
 		String string2 = "\"@zh."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel."
 
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?class <http://www.w3.org/2000/01/rdf-schema#label> ?propertyClass."
 
-				+ "?relationAnswer <http://www.w3.org/2000/01/rdf-schema#label> \"å›ç­”\"@zh."
+				+ "?relationAnswer <http://www.w3.org/2000/01/rdf-schema#label> \"»Ø´ğ\"@zh."
 				+ "?instance ?relationAnswer ?propertyAnswer FILTER regex(?propertyAnswer, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh."
 				+ "?instance ?relationID ?propertyID FILTER regex(?propertyID, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­æ•™æç‰ˆæœ¬\"@zh."
+				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×Ó½Ì²Ä°æ±¾\"@zh."
 				+ "?instance ?relationVersion ?propertyVersion FILTER regex(?propertyVersion, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­å†Œæ•°\"@zh."
+				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×Ó²áÊı\"@zh."
 				+ "?instance ?relationBook ?propertyBook FILTER regex(?propertyBook, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"æƒ…å¢ƒå¯¹è¯\"@zh."
+				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"Çé¾³¶Ô»°\"@zh."
 				+ "?instance ?relationScene ?propertyScene FILTER regex(?propertyScene, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationSentencePattern <http://www.w3.org/2000/01/rdf-schema#label> \"é‡è¦å¥å‹\"@zh."
+				+ "?relationSentencePattern <http://www.w3.org/2000/01/rdf-schema#label> \"ÖØÒª¾äĞÍ\"@zh."
 				+ "?instance ?relationSentencePattern ?propertySentencePattern FILTER regex(?propertySentencePattern, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationRelatedWords <http://www.w3.org/2000/01/rdf-schema#label> \"ç›¸å…³å•è¯\"@zh."
+				+ "?relationRelatedWords <http://www.w3.org/2000/01/rdf-schema#label> \"Ïà¹Øµ¥´Ê\"@zh."
 				+ "?instance ?relationRelatedWords ?propertyRelatedWords FILTER regex(?propertyRelatedWords, \""
 				+ yourId + "\")." + "}";
 
@@ -245,18 +262,18 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		// System.out.println(sparqlInstance);
 
 		// Results from a query in a table-like manner for SELECT queries.
-		// åœ¨SELECTæŸ¥è¯¢çš„ç±»è¡¨æ–¹æ³•ä¸­çš„æŸ¥è¯¢ç»“æœ
+		// ÔÚSELECT²éÑ¯µÄÀà±í·½·¨ÖĞµÄ²éÑ¯½á¹û
 		// Each row corresponds to a set of bindings which fulfil the conditions
 		// of the query.
-		// æ¯ä¸€åˆ—å¯¹åº”ä¸€ä¸ªç»‘å®šé›†ï¼Œå…¶ä¸­æ‰§è¡ŒæŸ¥è¯¢æ¡ä»¶
+		// Ã¿Ò»ÁĞ¶ÔÓ¦Ò»¸ö°ó¶¨¼¯£¬ÆäÖĞÖ´ĞĞ²éÑ¯Ìõ¼ş
 		// Access to the results is by variable name.
-		// é€šè¿‡å˜é‡åè®¿é—®ç»“æœ
+		// Í¨¹ı±äÁ¿Ãû·ÃÎÊ½á¹û
 		ResultSet resultsInstance = Result(sparqlInstance);
 
 		return resultsInstance;
 	}
 
-	// æ ¹æ®IDæŸ¥è¯¢å•è¯åŠå…¶å±æ€§URI+å±æ€§å€¼
+	// ¸ù¾İID²éÑ¯µ¥´Ê¼°ÆäÊôĞÔURI+ÊôĞÔÖµ
 	@Override
 	public ResultSet checkPropertyDependOnId(String yourId) {
 
@@ -264,104 +281,104 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 			yourId = yourId.substring(0, yourId.indexOf("@"));
 		}
 
-		String string1 = "SELECT ?instance ?instanceLabel ?propertyClass ?propertyID ?propertyChinese ?propertyFunction ?propertyTopic ?propertyBook ?propertyAntonym ?propertySynonyms ?propertyCommonUse ?propertyExtend ?propertyScene ?propertyExpand ?propertyVersion ?propertyUse ?propertyNcyclopedia ?propertyAssociate ?propertyPartsOfSpeech ?propertyWordProperty ?propertyText ?propertyDifficulty ?relationID ?relationChinese ?relationFunction ?relationTopic ?relationBook ?relationAntonym ?relationSynonyms ?relationCommonUse ?relationExtend ?relationScene ?relationExpand ?relationVersion ?relationUse ?relationNcyclopedia ?relationAssociate ?relationPartsOfSpeech ?relationWordProperty ?relationText ?relationDifficulty WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯ID\"@zh. ?instance ?relationID \"";
+		String string1 = "SELECT ?instance ?instanceLabel ?propertyClass ?propertyID ?propertyChinese ?propertyFunction ?propertyTopic ?propertyBook ?propertyAntonym ?propertySynonyms ?propertyCommonUse ?propertyExtend ?propertyScene ?propertyExpand ?propertyVersion ?propertyUse ?propertyNcyclopedia ?propertyAssociate ?propertyPartsOfSpeech ?propertyWordProperty ?propertyText ?propertyDifficulty ?relationID ?relationChinese ?relationFunction ?relationTopic ?relationBook ?relationAntonym ?relationSynonyms ?relationCommonUse ?relationExtend ?relationScene ?relationExpand ?relationVersion ?relationUse ?relationNcyclopedia ?relationAssociate ?relationPartsOfSpeech ?relationWordProperty ?relationText ?relationDifficulty WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh. ?instance ?relationID \"";
 		String string2 = "\"@zh."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel."
 
 				+ "?instance <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?class."
 				+ "?class <http://www.w3.org/2000/01/rdf-schema#label> ?propertyClass."
 
-				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯ID\"@zh."
+				+ "?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh."
 				+ "?instance ?relationID ?propertyID FILTER regex(?propertyID, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationChinese <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸­æ–‡å«ä¹‰\"@zh."
+				+ "?relationChinese <http://www.w3.org/2000/01/rdf-schema#label> \"ÖĞÎÄº¬Òå\"@zh."
 				+ "?instance ?relationChinese ?propertyChinese FILTER regex(?propertyChinese, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸»é¢˜-åŠŸèƒ½æ„å¿µ\"@zh."
+				+ "?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-¹¦ÄÜÒâÄî\"@zh."
 				+ "?instance ?relationFunction ?propertyFunction FILTER regex(?propertyFunction, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸»é¢˜-è¯é¢˜\"@zh."
+				+ "?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-»°Ìâ\"@zh."
 				+ "?instance ?relationTopic ?propertyTopic FILTER regex(?propertyTopic, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯å†Œæ•°\"@zh."
+				+ "?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê²áÊı\"@zh."
 				+ "?instance ?relationBook ?propertyBook FILTER regex(?propertyBook, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationAntonym <http://www.w3.org/2000/01/rdf-schema#label> \"åä¹‰è¯\"@zh."
+				+ "?relationAntonym <http://www.w3.org/2000/01/rdf-schema#label> \"·´Òå´Ê\"@zh."
 				+ "?instance ?relationAntonym ?propertyAntonym FILTER regex(?propertyAntonym, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationSynonyms <http://www.w3.org/2000/01/rdf-schema#label> \"åŒä¹‰è¯\"@zh."
+				+ "?relationSynonyms <http://www.w3.org/2000/01/rdf-schema#label> \"Í¬Òå´Ê\"@zh."
 				+ "?instance ?relationSynonyms ?propertySynonyms FILTER regex(?propertySynonyms, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationCommonUse <http://www.w3.org/2000/01/rdf-schema#label> \"å¸¸ç”¨\"@zh."
+				+ "?relationCommonUse <http://www.w3.org/2000/01/rdf-schema#label> \"³£ÓÃ\"@zh."
 				+ "?instance ?relationCommonUse ?propertyCommonUse FILTER regex(?propertyCommonUse, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationExtend <http://www.w3.org/2000/01/rdf-schema#label> \"å»¶ä¼¸ä¾‹å¥\"@zh."
+				+ "?relationExtend <http://www.w3.org/2000/01/rdf-schema#label> \"ÑÓÉìÀı¾ä\"@zh."
 				+ "?instance ?relationExtend ?propertyExtend FILTER regex(?propertyExtend, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"æƒ…å¢ƒæ®µè½\"@zh."
+				+ "?relationScene <http://www.w3.org/2000/01/rdf-schema#label> \"Çé¾³¶ÎÂä\"@zh."
 				+ "?instance ?relationScene ?propertyScene FILTER regex(?propertyScene, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationExpand <http://www.w3.org/2000/01/rdf-schema#label> \"æ‹“å±•\"@zh."
+				+ "?relationExpand <http://www.w3.org/2000/01/rdf-schema#label> \"ÍØÕ¹\"@zh."
 				+ "?instance ?relationExpand ?propertyExpand FILTER regex(?propertyExpand, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯æ•™æç‰ˆæœ¬\"@zh."
+				+ "?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê½Ì²Ä°æ±¾\"@zh."
 				+ "?instance ?relationVersion ?propertyVersion FILTER regex(?propertyVersion, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationUse <http://www.w3.org/2000/01/rdf-schema#label> \"ç”¨æ³•\"@zh."
+				+ "?relationUse <http://www.w3.org/2000/01/rdf-schema#label> \"ÓÃ·¨\"@zh."
 				+ "?instance ?relationUse ?propertyUse FILTER regex(?propertyUse, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationNcyclopedia <http://www.w3.org/2000/01/rdf-schema#label> \"ç™¾ç§‘\"@zh."
+				+ "?relationNcyclopedia <http://www.w3.org/2000/01/rdf-schema#label> \"°Ù¿Æ\"@zh."
 				+ "?instance ?relationNcyclopedia ?propertyNcyclopedia FILTER regex(?propertyNcyclopedia, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationAssociate <http://www.w3.org/2000/01/rdf-schema#label> \"è”æƒ³\"@zh."
+				+ "?relationAssociate <http://www.w3.org/2000/01/rdf-schema#label> \"ÁªÏë\"@zh."
 				+ "?instance ?relationAssociate ?propertyAssociate FILTER regex(?propertyAssociate, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationPartsOfSpeech <http://www.w3.org/2000/01/rdf-schema#label> \"è¯æ€§\"@zh."
+				+ "?relationPartsOfSpeech <http://www.w3.org/2000/01/rdf-schema#label> \"´ÊĞÔ\"@zh."
 				+ "?instance ?relationPartsOfSpeech ?propertyPartsOfSpeech FILTER regex(?propertyPartsOfSpeech, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationWordProperty <http://www.w3.org/2000/01/rdf-schema#label> \"è¯æ€§å±æ€§\"@zh."
+				+ "?relationWordProperty <http://www.w3.org/2000/01/rdf-schema#label> \"´ÊĞÔÊôĞÔ\"@zh."
 				+ "?instance ?relationWordProperty ?propertyWordProperty FILTER regex(?propertyWordProperty, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationText <http://www.w3.org/2000/01/rdf-schema#label> \"è¯¾æ–‡åŸå¥\"@zh."
+				+ "?relationText <http://www.w3.org/2000/01/rdf-schema#label> \"¿ÎÎÄÔ­¾ä\"@zh."
 				+ "?instance ?relationText ?propertyText FILTER regex(?propertyText, \""
 				+ yourId
 				+ "\")."
 
-				+ "?relationDifficulty <http://www.w3.org/2000/01/rdf-schema#label> \"éš¾åº¦\"@zh."
+				+ "?relationDifficulty <http://www.w3.org/2000/01/rdf-schema#label> \"ÄÑ¶È\"@zh."
 				+ "?instance ?relationDifficulty ?propertyDifficulty FILTER regex(?propertyDifficulty, \""
 				+ yourId + "\")." + "}";
 
@@ -369,18 +386,18 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		// System.out.println(sparqlInstance);
 
 		// Results from a query in a table-like manner for SELECT queries.
-		// åœ¨SELECTæŸ¥è¯¢çš„ç±»è¡¨æ–¹æ³•ä¸­çš„æŸ¥è¯¢ç»“æœ
+		// ÔÚSELECT²éÑ¯µÄÀà±í·½·¨ÖĞµÄ²éÑ¯½á¹û
 		// Each row corresponds to a set of bindings which fulfil the conditions
 		// of the query.
-		// æ¯ä¸€åˆ—å¯¹åº”ä¸€ä¸ªç»‘å®šé›†ï¼Œå…¶ä¸­æ‰§è¡ŒæŸ¥è¯¢æ¡ä»¶
+		// Ã¿Ò»ÁĞ¶ÔÓ¦Ò»¸ö°ó¶¨¼¯£¬ÆäÖĞÖ´ĞĞ²éÑ¯Ìõ¼ş
 		// Access to the results is by variable name.
-		// é€šè¿‡å˜é‡åè®¿é—®ç»“æœ
+		// Í¨¹ı±äÁ¿Ãû·ÃÎÊ½á¹û
 		ResultSet resultsInstance = Result(sparqlInstance);
 
 		return resultsInstance;
 	}
 
-	// åˆ¤æ–­æ•°æ®åº“ä¸­æ˜¯å¦å­˜åœ¨æ­¤å®ä¾‹
+	// ÅĞ¶ÏÊı¾İ¿âÖĞÊÇ·ñ´æÔÚ´ËÊµÀı
 	@Override
 	public boolean checkIfInDB(String Instance) {
 		String sqarqlCheckIfInDB = "SELECT ?instance WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \""
@@ -398,7 +415,7 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 	public ResultSet checkAllTriple() {
 
 		String sparql = "SELECT ?s ?o WHERE{?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o}";
-		ResultSet resultsAllTriple = Result(sparql);// æŠŠæŸ¥è¯¢åˆ°çš„æ‰€æœ‰å®ä¾‹?så’Œç±»?oæ”¾åœ¨ç»“æœé›†é‡Œ
+		ResultSet resultsAllTriple = Result(sparql);// °Ñ²éÑ¯µ½µÄËùÓĞÊµÀı?sºÍÀà?o·ÅÔÚ½á¹û¼¯Àï
 
 		return resultsAllTriple;
 	}
@@ -406,7 +423,7 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 	public ResultSet checkAllSameVersion_SameBook_SameUnit_ID(
 			String yourInstance) {
 		String sparql = "SELECT ?s ?o WHERE{?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o}";
-		ResultSet resultsAllTriple = Result(sparql);// æŠŠæŸ¥è¯¢åˆ°çš„æ‰€æœ‰å®ä¾‹?så’Œç±»?oæ”¾åœ¨ç»“æœé›†é‡Œ
+		ResultSet resultsAllTriple = Result(sparql);// °Ñ²éÑ¯µ½µÄËùÓĞÊµÀı?sºÍÀà?o·ÅÔÚ½á¹û¼¯Àï
 
 		return resultsAllTriple;
 	}
@@ -422,25 +439,25 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 				+ "\"@zh. ?instance <"
 				+ OWL.sameAs
 				+ "> ?objectSameAs}";
-		ResultSet resultsAllTriple = Result(sparql);// æŠŠæŸ¥è¯¢åˆ°çš„æ‰€æœ‰å®ä¾‹?så’Œç±»?oæ”¾åœ¨ç»“æœé›†é‡Œ
+		ResultSet resultsAllTriple = Result(sparql);// °Ñ²éÑ¯µ½µÄËùÓĞÊµÀı?sºÍÀà?o·ÅÔÚ½á¹û¼¯Àï
 
 		return resultsAllTriple;
 
 	}
 
-	// åªæ‰¾å±æ€§åç§°
+	// Ö»ÕÒÊôĞÔÃû³Æ
 	@Override
 	public ResultSet checkOnlyPropertyLabel(String yourPropertyURI) {
 
 		String sparql = "SELECT ?propertyLabel WHERE{<"
 				+ yourPropertyURI
 				+ "> <http://www.w3.org/2000/01/rdf-schema#label> ?propertyLabel}";
-		ResultSet resultsPropertyLabel = Result(sparql);// æŠŠæŸ¥è¯¢åˆ°çš„æ‰€æœ‰å®ä¾‹?så’Œç±»?oæ”¾åœ¨ç»“æœé›†é‡Œ
+		ResultSet resultsPropertyLabel = Result(sparql);// °Ñ²éÑ¯µ½µÄËùÓĞÊµÀı?sºÍÀà?o·ÅÔÚ½á¹û¼¯Àï
 
 		return resultsPropertyLabel;
 	}
 
-	// æ ¹æ®IDæŸ¥æ‰¾å…¶çˆ¶ç±»+æ ‡ç­¾Label+IDçš„ä¸‰å…ƒç»„(ä¸ºä¿®æ”¹ç‰¹ä¾‹è®¾è®¡çš„)
+	// ¸ù¾İID²éÕÒÆä¸¸Àà+±êÇ©Label+IDµÄÈıÔª×é(ÎªĞŞ¸ÄÌØÀıÉè¼ÆµÄ)
 	@Override
 	public ResultSet checkClass_Label(String yourID) {
 
@@ -448,7 +465,7 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 			yourID = yourID.substring(0, yourID.indexOf("@"));
 		}
 
-		String string1 = "SELECT ?instance ?instanceLabel ?propertyClass ?relationID ?propertyID WHERE{ ?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh. ?instance ?relationID \"";
+		String string1 = "SELECT ?instance ?instanceLabel ?propertyClass ?relationID ?propertyID WHERE{ ?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh. ?instance ?relationID \"";
 		String string2 = "\"@zh."
 				+ "?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel."
 
@@ -464,10 +481,10 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultsClass_Label;
 	}
 
-	// æ ¹æ®å¹´çº§éšæœºæ‰¾å‡º5ä¸ªå•è¯å’Œ2ä¸ªå¥å­
+	// ¸ù¾İÄê¼¶ËùÓĞµ¥´Ê
 	@Override
 	public ResultSet checkAllWordsOfThisGrade(String yourGrade) {
-		String string1 = "SELECT ?propertyBook ?instanceLabel WHERE{?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯å†Œæ•°\"@zh. ?instance ?relationBook ?propertyBook FILTER regex(?propertyBook, \"";
+		String string1 = "SELECT ?propertyBook ?instanceLabel WHERE{?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê²áÊı\"@zh. ?instance ?relationBook ?propertyBook FILTER regex(?propertyBook, \"";
 
 		String string2 = "\"\"). ?instance <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel.}";
 
@@ -478,26 +495,76 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultsAllWordsOfThisGrade;
 	}
 
-	// æŸ¥è¯¢æ‰€æœ‰çš„å•è¯çš„ID
+	// ²éÑ¯ËùÓĞµÄµ¥´ÊµÄID
 	public ResultSet checkIdOfAllWords() {
-		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯ID\"@zh. ?instance ?relationID ?propertyID.}";
+		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh. ?instance ?relationID ?propertyID.}";
 
 		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
 
 		return resultsAllWordsOfThisGrade;
 	}
 
-	// æŸ¥è¯¢æ‰€æœ‰çš„å•è¯çš„ID
+	// ²éÑ¯ËùÓĞµÄ¾ä×ÓµÄID
 	public ResultSet checkIdOfAllSentences() {
-		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh. ?instance ?relationID ?propertyID.}";
+		String sparqlIdOfAllWords = "SELECT ?propertyID WHERE{?relationID <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh. ?instance ?relationID ?propertyID.}";
 
 		ResultSet resultsAllWordsOfThisGrade = Result(sparqlIdOfAllWords);
 
 		return resultsAllWordsOfThisGrade;
+	}
+
+	// ²éÑ¯Ä³Äê¼¶µÄËùÓĞµ¥´ÊID
+	public ResultSet checkAllIdOfThisGrade(String yourGrade) {
+		int yourGradeInt = Integer.parseInt(yourGrade);
+		yourGradeInt = yourGradeInt * 2;
+		String sparqlIdOfAllIdOfThisGrade = "SELECT ?propertyBook"
+				+ "WHERE{?relationBook <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê²áÊı\"@zh."
+				+ "?instance ?relationBook ?propertyBook.FILTER regex(?propertyBook,\""
+				+ Integer.valueOf(yourGradeInt - 1)
+				+ "\").FILTER regex(?propertyBook,\""
+				+ Integer.valueOf(yourGradeInt) + "\").}";
+
+		ResultSet resultsIdOfAllIdOfThisGrade = Result(sparqlIdOfAllIdOfThisGrade);
+
+		return resultsIdOfAllIdOfThisGrade;
+	}
+
+	// ²éÑ¯Ä³Ö÷Ìâ-¹¦ÄÜÒâÄîµÄËùÓĞµ¥´ÊµÄID
+	public ResultSet checkAllIdOfThisPropertyFunction(
+			String yourPropertyFunction) {
+		String sparqlAllIdOfThisPropertyFunction = "SELECT ?instance ?propertyFunction"
+				+ "WHERE{?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-¹¦ÄÜÒâÄî\"@zh."
+				+ "?instance ?relationFunction ?propertyFunction.FILTER regex(?propertyFunction,\""
+				+ yourPropertyFunction + "\").}";
+		ResultSet resultAllIdOfThisPropertyFunction = Result(sparqlAllIdOfThisPropertyFunction);
+
+		return resultAllIdOfThisPropertyFunction;
+	}
+
+	// ²éÑ¯Ä³Ö÷Ìâ-»°ÌâµÄËùÓĞµ¥´ÊµÄID
+	public ResultSet checkAllIdOfThisPropertyTopic(String yourPropertyTopic) {
+		String sparqlAllIdOfThisPropertyTopic = "SELECT ?instance ?propertyTopic"
+				+ "WHERE{?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-»°Ìâ\"@zh."
+				+ "?instance ?relationTopic ?propertyTopic.FILTER regex(?propertyTopic,\""
+				+ yourPropertyTopic + "\").}";
+		ResultSet resultAllIdOfThisPropertyTopic = Result(sparqlAllIdOfThisPropertyTopic);
+
+		return resultAllIdOfThisPropertyTopic;
+	}
+
+	// ¸ù¾İ°æ±¾²éÕÒ¸Ã°æ±¾ËùÓĞµ¥´Ê
+	public ResultSet checkAllWordsOfAVersion(String yourVersion) {
+		String sparqlAllWordsOfAVersion = "SELECT ?propertyVersion"
+				+ " WHERE{?relationVersion <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´Ê½Ì²Ä°æ±¾\"@zh."
+				+ "?instance ?relationVersion ?propertyVersion FILTER regex(?propertyVersion, \""
+				+ yourVersion + "\").}";
+		ResultSet resultAllWordsOfAVersion = Result(sparqlAllWordsOfAVersion);
+
+		return resultAllWordsOfAVersion;
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	// æ ¹æ®å®ä¾‹+æŸå±æ€§+å±æ€§å€¼ï¼ŒæŸ¥æ‰¾è¯¥ä¸‰å…ƒç»„
+	// ¸ù¾İÊµÀı+Ä³ÊôĞÔ+ÊôĞÔÖµ£¬²éÕÒ¸ÃÈıÔª×é
 	@Override
 	public ResultSet checkThisTriple(String yourID, String propertyLabel,
 			String flag) {
@@ -519,7 +586,7 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return result;
 	}
 
-	// æ ¹æ®å®ä¾‹LabelæŸ¥å…¶æ‰€æœ‰ID
+	// ¸ù¾İÊµÀıLabel²éÆäËùÓĞID
 	@Override
 	public ResultSet checkAllID(String yourInstance, String flag) {
 
@@ -528,13 +595,13 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 			sparql = "SELECT ?allID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \""
 					+ yourInstance
 					+ "\"@zh."
-					+ "?relation <http://www.w3.org/2000/01/rdf-schema#label> \"å•è¯ID\"@zh."
+					+ "?relation <http://www.w3.org/2000/01/rdf-schema#label> \"µ¥´ÊID\"@zh."
 					+ "?instance ?relation ?allID.}";
 		} else {
 			sparql = "SELECT ?allID WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \""
 					+ yourInstance
 					+ "\"@zh."
-					+ "?relation <http://www.w3.org/2000/01/rdf-schema#label> \"å¥å­ID\"@zh."
+					+ "?relation <http://www.w3.org/2000/01/rdf-schema#label> \"¾ä×ÓID\"@zh."
 					+ "?instance ?relation ?allID.}";
 		}
 
@@ -558,8 +625,8 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 
 		String sparqlTopicValue = "SELECT ?propertyTopic ?propertyFunction ?relationTopic ?relationFunction WHERE{?instance <http://www.w3.org/2000/01/rdf-schema#label> \""
 				+ yourWord
-				+ "\"@zh. ?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸»é¢˜-è¯é¢˜\"@zh. ?instance ?relationTopic ?propertyTopic."
-				+ "?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"ä¸»é¢˜-åŠŸèƒ½æ„å¿µ\"@zh."
+				+ "\"@zh. ?relationTopic <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-»°Ìâ\"@zh. ?instance ?relationTopic ?propertyTopic."
+				+ "?relationFunction <http://www.w3.org/2000/01/rdf-schema#label> \"Ö÷Ìâ-¹¦ÄÜÒâÄî\"@zh."
 				+ "?instance ?relationFunction ?propertyFunction.}";
 		ResultSet resultTopicValue = Result(sparqlTopicValue);
 		return resultTopicValue;
@@ -586,21 +653,21 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 		return resultBrotherIndividual;
 	}
 
-	// é™æ€æ–¹æ³•ï¼šæ ¹æ®SPARQLè¯­å¥æŸ¥è¯¢ï¼Œå¹¶è¿”å›ç›¸åº”ç»“æœé›†-----------------------------------------------------------------------------------------------------------
+	// ¾²Ì¬·½·¨£º¸ù¾İSPARQLÓï¾ä²éÑ¯£¬²¢·µ»ØÏàÓ¦½á¹û¼¯-----------------------------------------------------------------------------------------------------------
 	private static ResultSet Result(String sparql) {
 		// public static Query create(String queryString)
 		// Create a SPARQL query from the given string.
-		// ä»ç»™å®šçš„stringä¸­åˆ›å»ºä¸€ä¸ªSPARQLæŸ¥è¯¢
+		// ´Ó¸ø¶¨µÄstringÖĞ´´½¨Ò»¸öSPARQL²éÑ¯
 		Query queryInstance = QueryFactory.create(sparql);
 		// public static QueryExecution sparqlService(String service,Query
 		// query)
 		// Create a QueryExecution that will access a SPARQL service over HTTP
-		// åˆ›å»ºä¸€ä¸ªQueryExecutionï¼Œå®ƒå°†åœ¨HTTPä¸Šè®¿é—®SPARQLæœåŠ¡
+		// ´´½¨Ò»¸öQueryExecution£¬Ëü½«ÔÚHTTPÉÏ·ÃÎÊSPARQL·şÎñ
 		QueryExecution qexecInstance = QueryExecutionFactory.sparqlService(
 				SERVER, queryInstance);
 		// ResultSet execSelect()
 		// Execute a SELECT query
-		// æ‰§è¡Œä¸€ä¸ªSELECTæŸ¥è¯¢
+		// Ö´ĞĞÒ»¸öSELECT²éÑ¯
 		// Important: The name of this method is somewhat of a misnomer in that
 		// depending on the underlying implementation this typically does not
 		// execute the SELECT query but rather answers a wrapper over an
@@ -613,4 +680,3 @@ public class QueryWithManyWaysImpl implements QueryWithManyWays {
 	}
 
 }
-

@@ -1,4 +1,4 @@
-package com.noumenon.OntologyManage;
+package com.noumenon.OntologyManage; 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -12,27 +12,37 @@ import jxl.read.biff.BiffException;
 
 
 public interface OntologyManage {
-	/**æ·»åŠ ä¸€ä¸ªå•è¯åŠå…¶å±æ€§ï¼šæ— è¿”å›å€¼----------------------------------------------------------
+	/**Ìí¼ÓÒ»¸öµ¥´Ê¼°ÆäÊôĞÔ£ºÎŞ·µ»ØÖµ----------------------------------------------------------
 	 * 
 	 * @param parameter
 	 */
+	@Deprecated
 	public void Add(String[] parameter);
 
-	/**æ·»åŠ ä¸€ä¸ªå¥å­åŠå…¶å±æ€§ï¼šæ— è¿”å›å€¼----------------------------------------------------------
+	/**Ìí¼ÓÒ»¸ö¾ä×Ó¼°ÆäÊôĞÔ£ºÎŞ·µ»ØÖµ----------------------------------------------------------
 	 * 
 	 * @param parameter
 	 */
 	public void AddSentence(String[] parameter);
 	
-	/**ä»Excelä¸­æ‰¹é‡æ·»åŠ å•è¯ï¼šæ— è¿”å›å€¼--------------------------------------------------------
+	/**´ÓExcelÖĞÅúÁ¿Ìí¼Óµ¥´Ê£ºÎŞ·µ»ØÖµ--------------------------------------------------------
 	 * 
 	 * @param yourPath
 	 * @throws BiffException
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void AddBatch(InputStream yourPath) throws BiffException, IOException;
+	
+	/**´ÓExcelÖĞÅúÁ¿Ìí¼Óµ¥´Ê£ºÎŞ·µ»ØÖµ--------------------------------------------------------
+	 * 
+	 * @param yourPath
+	 * @throws BiffException
+	 * @throws IOException
+	 */
+	public void AddWordBatch(InputStream yourPath) throws BiffException, IOException;
 
-	/**ä»Excelä¸­æ‰¹é‡æ·»åŠ å¥å­ï¼šæ— è¿”å›å€¼--------------------------------------------------------
+	/**´ÓExcelÖĞÅúÁ¿Ìí¼Ó¾ä×Ó£ºÎŞ·µ»ØÖµ--------------------------------------------------------
 	 * 
 	 * @param yourPath
 	 * @throws BiffException
@@ -40,19 +50,19 @@ public interface OntologyManage {
 	 */
 	public void AddSentenceBatch(InputStream yourPath) throws BiffException, IOException;
 
-	/**åˆ é™¤ä¸€ä¸ªå•è¯åŠå…¶å±æ€§ï¼šæ— è¿”å›å€¼----------------------------------------------------------
+	/**É¾³ıÒ»¸öµ¥´Ê¼°ÆäÊôĞÔ£ºÎŞ·µ»ØÖµ----------------------------------------------------------
 	 * 
 	 * @param yourInstanceID
 	 */
 	public void Delete(String yourInstanceID);
 	
-	/**åˆ é™¤ä¸€ä¸ªå¥å­åŠå…¶å±æ€§ï¼šæ— è¿”å›å€¼----------------------------------------------------------
+	/**É¾³ıÒ»¸ö¾ä×Ó¼°ÆäÊôĞÔ£ºÎŞ·µ»ØÖµ----------------------------------------------------------
 	 * 
 	 * @param yourInstanceID
 	 */
 	public void DeleteSentence(String yourInstanceID);
 
-	/**ä¿®æ”¹ä¸€ä¸ªå•è¯çš„æŸä¸ªå±æ€§ï¼šæ— è¿”å›å€¼----------------------------------------------------------
+	/**ĞŞ¸ÄÒ»¸öµ¥´ÊµÄÄ³¸öÊôĞÔ£ºÎŞ·µ»ØÖµ----------------------------------------------------------
 	 * 
 	 * @param yourProperty
 	 * @param yourPropertyLabel
@@ -61,7 +71,7 @@ public interface OntologyManage {
 	 */
 	public void Modify(String yourProperty, String yourPropertyLabel, String yourSPARQLProperty, String yourRelationProperty);
 	
-	/**ä¿®æ”¹ä¸€ä¸ªå¥å­åŠå…¶å±æ€§ï¼šæ— è¿”å›å€¼----------------------------------------------------------
+	/**ĞŞ¸ÄÒ»¸ö¾ä×Ó¼°ÆäÊôĞÔ£ºÎŞ·µ»ØÖµ----------------------------------------------------------
 	 * 
 	 * @param yourProperty
 	 * @param yourPropertyLabel
@@ -70,92 +80,161 @@ public interface OntologyManage {
 	 */
 	public void ModifySentence(String yourProperty, String yourPropertyLabel, String yourSPARQLProperty, String yourRelationProperty);
 	
-	/**æ ¹æ®ç±»æŸ¥æ‰¾ç±»ä¸‹çš„æ‰€æœ‰å•è¯Labelï¼šè¿”å›ç»“æœé›†ResultSet-----------------------------------------
+	/**¸ù¾İÀà²éÕÒÀàÏÂµÄËùÓĞµ¥´ÊLabel£º·µ»Ø½á¹û¼¯ResultSet-----------------------------------------
 	 * 
 	 * @param yourClass
 	 * @return
 	 */
 	public ResultSet QueryWord(String yourClass);
+	
+	/**¸ù¾İHowNet¸¸Àà²é¿´ËùÓĞµ¥´Ê¼°ÆäÊôĞÔ£º·µ»Ø½á¹û¼¯ResultSet-----------------------------------------
+	 * 
+	 * @param yourClass
+	 * @return
+	 */
+	public List<ResultSet> QueryWordAndPropertiesDependOnClass(String yourClass);
 
-	/**æ ¹æ®IDæŸ¥æ‰¾è¯¥å•è¯åŠå…¶æ‰€æœ‰å±æ€§ï¼šè¿”å›ç»“æœé›†ResultSet-------------------------------------------
+	/**¸ù¾İID²éÕÒ¸Ãµ¥´Ê¼°ÆäËùÓĞÊôĞÔ£º·µ»Ø½á¹û¼¯ResultSet-------------------------------------------
 	 * 
 	 * @param yourID
 	 * @return
 	 */
 	public ResultSet QueryIndividualDependOnId(String yourID);
 
-	/**æŸ¥ä¸€ä¸ªå•è¯çš„æ‰€æœ‰å±æ€§ï¼šè¿”å›ç»“æœé›†ResultSet------------------------------------------------
+	/**²éÒ»¸öµ¥´ÊµÄËùÓĞÊôĞÔ£º·µ»Ø½á¹û¼¯ResultSet------------------------------------------------
 	 * 
 	 * @param yourWord
 	 * @return
 	 */
 	public ResultSet QueryIndividual(String yourWord);
 	
-	/**æŸ¥è¯¢å•è¯å¯¹åº”çš„æ‰€æœ‰ID-----------------------------------------------------------------
+	/**²éÑ¯µ¥´Ê¶ÔÓ¦µÄËùÓĞID-----------------------------------------------------------------
 	 * 
 	 * @param yourWord
 	 * @return
 	 */
 	public ResultSet QueryAWordAllId(String yourWord);
 	
-	/**æŸ¥è¯¢å¥å­å¯¹åº”çš„æ‰€æœ‰ID-----------------------------------------------------------------
+	/**²éÑ¯¾ä×Ó¶ÔÓ¦µÄËùÓĞID-----------------------------------------------------------------
 	 * 
 	 * @param yourSentence
 	 * @return
 	 */
 	public ResultSet QueryASentenceAllId(String yourSentence);
 		
-	/**æ ¹æ®IDæŸ¥æ‰¾è¯¥å¥å­åŠå…¶æ‰€æœ‰å±æ€§ï¼šè¿”å›ç»“æœé›†ResultSet-------------------------------------------
+	/**¸ù¾İID²éÕÒ¸Ã¾ä×Ó¼°ÆäËùÓĞÊôĞÔ£º·µ»Ø½á¹û¼¯ResultSet-------------------------------------------
 	 * 
 	 * @param yourID
 	 * @return
 	 */
 	public ResultSet QuerySentenceIndividualDependOnId(String yourID);
 
-	/**æŸ¥ä¸€ä¸ªå¥å­çš„æ‰€æœ‰å±æ€§ï¼šè¿”å›ç»“æœé›†ResultSet-------------------------------------------------
+	/**²éÒ»¸ö¾ä×ÓµÄËùÓĞÊôĞÔ£º·µ»Ø½á¹û¼¯ResultSet-------------------------------------------------
 	 * 
 	 * @param yourSentence
 	 * @return
 	 */
 	public ResultSet QuerySentenceIndividual(String yourSentence);
 	
-	/**æ ¹æ®å•è¯æŸ¥çœ‹æ‰€æœ‰åŒçº§å•è¯åŠå…¶å±æ€§ï¼šè¿”å›ç»“æœé›†ResultSet-----------------------------------------
+	/**¸ù¾İµ¥´Ê²é¿´ËùÓĞÍ¬¼¶µ¥´Ê¼°ÆäÊôĞÔ£º·µ»Ø½á¹û¼¯ResultSet-----------------------------------------
 	 * 
 	 * @param yourTheme
 	 * @return
 	 */
 	public List<ResultSet> QueryBrotherIndividual(String yourTheme);
 	
-	/**æ ¹æ®å¹´çº§éšæœºæ‰¾å‡º5ä¸ªå•è¯----------------------------------------------------------------
+	/**¸ù¾İ°æ±¾ºÍµ¥Ôª²éÑ¯ËùÓĞµ¥´Ê¼°ÆäÊôĞÔ
+	 * 
+	 * @param yourBook
+	 * @param yourGrade
+	 * @param yourUnit
+	 * @return
+	 */
+	public List<ResultSet> QueryAllWordsOfAUnit(String yourBook, String yourGrade, String yourUnit);
+	
+
+	// ²âÊÔËùĞè---------------------------------------------------------------------------------
+	/**¸ù¾İÄê¼¶Ëæ»úÕÒ³ö5¸öµ¥´Ê----------------------------------------------------------------
 	 * 
 	 * @param yourGrade
 	 * @return
 	 */
 	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade);
 	
-	/**æ ¹æ®å¹´çº§éšæœºæ‰¾å‡º2ä¸ªå¥å­----------------------------------------------------------------
+	/**¸ù¾İÄê¼¶Ëæ»úÕÒ³ö2¸ö¾ä×Ó----------------------------------------------------------------
 	 * 
 	 * @param yourGrade
 	 * @return
 	 */
 	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade);
 	
-	/**æ ¹æ®ç–‘é—®è¯æ‰¾å‡ºå¥å­ä»¥åŠID----------------------------------------------------------------
+	/**¸ù¾İÄê¼¶Ëæ»úÕÒ³ö3¸ö¾ä×Ó----------------------------------------------------------------
 	 * 
 	 * @param yourGrade
 	 * @return
 	 */
+	public List<ResultSet> QueryThreeSentencesOfThisGrade(String yourGrade);
+	
+	/**¸ù¾İÒÉÎÊ´ÊÕÒ³ö¾ä×ÓÒÔ¼°ID----------------------------------------------------------------
+	 * 
+	 * @param yourClass
+	 * @return
+	 */
 	public Map<String, String>QuerySentenceAndId(String yourClass);
+	
+	/**¸ù¾İÄê¼¶²éÑ¯Óë¸Ãµ¥´ÊÖ÷Ìâ²»Í¬µÄËæ»ú2¸öµ¥´Ê----------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @param yourWord
+	 * @return
+	 */
+	public List<String> QueryTwoDifferentThemeWordsOfThisGrade(String yourGrade, String yourWord);
+	
+	/**¸ù¾İÄê¼¶¡¢Á½¸öµ¥´ÊµÄÄÑ¶ÈËæ»ú¸ø³öÁ½¸öµ¥´Ê---------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @param yourDifficultyOfWord1
+	 * @param yourDifficultyOfWord2
+	 * @return
+	 */
+	public List<String> QueryTwoWordsDependOnDifficulty(String yourGrade, String yourDifficultyOfWord1, String yourDifficultyOfWord2);
+	
+	/**¸ù¾İÄê¼¶Ëæ»ú¸ø³öÁ½¸öµ¥´Ê--------------------------------------------------------------------
+	 * 
+	 * @param yourGrade
+	 * @return
+	 */
+	public List<ResultSet> TwoRandomWordsOfThisGrade(String yourGrade);
+	
+	/**ÅĞ¶ÏÄ³µ¥´ÊÊÇ·ñ´æÔÚÓÚ±¾Ìå¿âÖĞ
+	 * 
+	 * @return
+	 */
+	public Boolean IfExistInFuseki(String yourWord);
+	
+	/**²éÑ¯Óë¸Ãµ¥´Ê¾ßÓĞÒ»ÑùÄê¼¶ºÍÖ÷ÌâµÄÁíÍâÁ½¸öµ¥´Ê
+	 * 
+	 * @param yourWord
+	 * @return
+	 */
+	public List<String> QueryTheTextOFThisWord(String yourWord, String yourGrade, String themeOfThisWord);
 	
 	
 	//-----------------------------------------------------------------------------------------
-	/**ä»Fusekiä¸­å†™å›OWLæ–‡ä»¶ä¸­ï¼Œä¸”å•è¯å’Œå¥å­åˆ†å¼€ï¼šæ— è¿”å›å€¼-------------------------------------------
+	/**´ÓFusekiÖĞĞ´»ØOWLÎÄ¼şÖĞ£¬ÇÒµ¥´ÊºÍ¾ä×Ó·Ö¿ª£ºÎŞ·µ»ØÖµ-------------------------------------------
 	 * 
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void WriteBackToOwl() throws IOException;
 	
-	/**ä»Excelä¸­æ·»åŠ ç­‰ä»·å…³ç³»SameAsï¼šæ— è¿”å›å€¼---------------------------------------------------
+	/**´ÓFusekiÖĞĞ´»ØOWLÎÄ¼şÖĞ£¬ÇÒµ¥´ÊºÍ¾ä×Ó·Ö¿ª£ºÎŞ·µ»ØÖµ-------------------------------------------
+	 * 
+	 * @throws IOException
+	 */
+	public void WriteBackToRespectiveOwl() throws IOException;
+
+	/**´ÓExcelÖĞÌí¼ÓµÈ¼Û¹ØÏµSameAs£ºÎŞ·µ»ØÖµ---------------------------------------------------
 	 * 
 	 * @param yourPath
 	 * @throws BiffException
@@ -164,7 +243,7 @@ public interface OntologyManage {
 	public void InsertRelationSameAs(InputStream yourPath) throws BiffException, IOException;
 	
 	/**
-	 * æ¨ç†ç­‰ä»·å…³ç³»
+	 * ÍÆÀíµÈ¼Û¹ØÏµ
 	 * 
 	 * @param yourWord
 	 * @return

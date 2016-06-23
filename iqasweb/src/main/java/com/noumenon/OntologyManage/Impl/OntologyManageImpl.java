@@ -1,4 +1,4 @@
-package com.noumenon.OntologyManage.Impl;
+package com.noumenon.OntologyManage.Impl; 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
-
-import org.springframework.stereotype.Service;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -42,17 +40,16 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
-@Service("ontologyManage")
 public class OntologyManageImpl implements OntologyManage {
 
-	private static String[] propertyLabel = new String[] { "å•è¯ID", "å•è¯",
-			"ä¸»é¢˜-åŠŸèƒ½æ„å¿µ", "ä¸»é¢˜-è¯é¢˜", "Hownetä¸­çš„çˆ¶ç±»", "è¯æ€§", "è¯æ€§å±æ€§", "ä¸­æ–‡å«ä¹‰", "å•è¯æ•™æç‰ˆæœ¬",
-			"å•è¯å†Œæ•°", "éš¾åº¦", "è¯¾æ–‡åŸå¥", "æƒ…å¢ƒæ®µè½", "è”æƒ³", "åŒä¹‰è¯", "åä¹‰è¯", "æ‹“å±•", "ç™¾ç§‘", "ç”¨æ³•",
-			"å»¶ä¼¸ä¾‹å¥", "å¸¸ç”¨" };
+	private static String[] propertyLabel = new String[] { "µ¥´ÊID", "µ¥´Ê",
+			"Ö÷Ìâ-¹¦ÄÜÒâÄî", "Ö÷Ìâ-»°Ìâ", "HownetÖĞµÄ¸¸Àà", "´ÊĞÔ", "´ÊĞÔÊôĞÔ", "ÖĞÎÄº¬Òå", "µ¥´Ê½Ì²Ä°æ±¾",
+			"µ¥´Ê²áÊı", "ÄÑ¶È", "¿ÎÎÄÔ­¾ä", "Çé¾³¶ÎÂä", "ÁªÏë", "Í¬Òå´Ê", "·´Òå´Ê", "ÍØÕ¹", "°Ù¿Æ", "ÓÃ·¨",
+			"ÑÓÉìÀı¾ä", "³£ÓÃ" };
 	private static String[] propertySPARQLValue = { "?propertyID",
 			"?instanceLabel", "?propertyFunction", "?propertyTopic",
 			"?propertyClass", "?propertyPartsOfSpeech",
-			"?propertyWordProperty", "?propertyChinese", "?propertyVersion",
+			"?propertyWordProperty", "?propertyChinese", "?property",
 			"?propertyBook", "?propertyDifficulty", "?propertyText",
 			"?propertyScene", "?propertyAssociate", "?propertyAntonym",
 			"?propertySynonyms", "?propertyExtend", "?propertyNcyclopedia",
@@ -65,8 +62,8 @@ public class OntologyManageImpl implements OntologyManage {
 			"?relationScene", "?relationAssociate", "?relationAntonym",
 			"?relationSynonyms", "?relationExtend", "?relationNcyclopedia",
 			"?relationUse", "?relationExpand", "?relationCommonUse" };
-	private static String[] sentencePropertyLabel = new String[] { "å¥å­ID",
-			"å¥å­æ•™æç‰ˆæœ¬", "å¥å­å†Œæ•°", "é—®é¢˜", "é—®é¢˜å¥å‹", "å›ç­”", "æƒ…å¢ƒå¯¹è¯", "é‡è¦å¥å‹", "ç›¸å…³å•è¯" };
+	private static String[] sentencePropertyLabel = new String[] { "¾ä×ÓID",
+			"¾ä×Ó½Ì²Ä°æ±¾", "¾ä×Ó²áÊı", "ÎÊÌâ", "ÎÊÌâ¾äĞÍ", "»Ø´ğ", "Çé¾³¶Ô»°", "ÖØÒª¾äĞÍ", "Ïà¹Øµ¥´Ê" };
 	private static String[] sentencePropertySPARQLValue = { "?propertyID",
 			"?propertyVersion", "?propertyBook", "?propertyClass",
 			"?instanceLabel", "?propertyAnswer", "?propertyScene",
@@ -76,7 +73,7 @@ public class OntologyManageImpl implements OntologyManage {
 			"?instanceLabel", "?relationAnswer", "?relationScene",
 			"?relationSentencePattern", "?relationRelatedWords" };
 
-	// æ„é€ å‡½æ•°
+	// ¹¹Ôìº¯Êı
 	public OntologyManageImpl() {
 
 	}
@@ -95,18 +92,18 @@ public class OntologyManageImpl implements OntologyManage {
 	@Override
 	public void Add(String[] parameter) {
 
-		// æ·»åŠ å•è¯çˆ¶ç±»å’ŒLabel
+		// Ìí¼Óµ¥´Ê¸¸ÀàºÍLabel
 		addIndividualAndProperty.addClass(parameter[4], parameter[1]);
 		addIndividualAndProperty.addLabel(parameter[1]);
 
-		// æ·»åŠ å•è¯å±æ€§
+		// Ìí¼Óµ¥´ÊÊôĞÔ
 		int i = 0;
 		for (i = 0; i < parameter.length; i++) {
 			System.out.println(i + parameter[i]);
 			if (i == 1 || i == 4) {
 
 			} else {
-				// è°ƒç”¨public void addProperty(String propertyLabel, String
+				// µ÷ÓÃpublic void addProperty(String propertyLabel, String
 				// yourInstance,String yourProperty)
 				addIndividualAndProperty.addProperty(propertyLabel[i],
 						parameter[1], parameter[i]);
@@ -118,18 +115,18 @@ public class OntologyManageImpl implements OntologyManage {
 	@Override
 	public void AddSentence(String[] parameter) {
 
-		// æ·»åŠ å•è¯çˆ¶ç±»å’ŒLabel
+		// Ìí¼Óµ¥´Ê¸¸ÀàºÍLabel
 		addIndividualAndProperty.addSentenceClass(parameter[4], parameter[3]);
 		addIndividualAndProperty.addSentenceLabel(parameter[3]);
 
-		// æ·»åŠ å•è¯å±æ€§
+		// Ìí¼Óµ¥´ÊÊôĞÔ
 		int i = 0;
 		for (i = 0; i < parameter.length; i++) {
 			System.out.println(i + parameter[i]);
 			if (i == 3 || i == 4) {
 
 			} else {
-				// è°ƒç”¨public void addProperty(String propertyLabel, String
+				// µ÷ÓÃpublic void addProperty(String propertyLabel, String
 				// yourInstance,String yourProperty)
 				addIndividualAndProperty.addSentenceProperty(
 						sentencePropertyLabel[i], parameter[3], parameter[i]);
@@ -146,29 +143,30 @@ public class OntologyManageImpl implements OntologyManage {
 		for (int i = 0; i < list.size(); i++) {
 			str = (String[]) list.get(i);
 			for (int j = 0; j < str.length; j++) {
-				System.out.println("è¦æ·»åŠ çš„Excelä¸­çš„å†…å®¹" + str[j]);
+				System.out.println("ÒªÌí¼ÓµÄExcelÖĞµÄ" + propertyLabel[j] + "ÄÚÈİ:"
+						+ str[j]);
 			}
 
-			// æˆ‘è‡ªå·±çš„excelä¸è¦æ³¨é‡Šæ‰ä»¥ä¸‹ä¸‰å¥
+			// ÎÒ×Ô¼ºµÄexcel²»Òª×¢ÊÍµôÒÔÏÂÈı¾ä
 			String yourClass = null;
 			yourClass = str[4];
-			System.out.println("ä½ æƒ³æ·»åŠ çš„ç±»:" + yourClass);
+			System.out.println("ÄãÏëÌí¼ÓµÄÀà:" + yourClass);
 
 			String yourInstance = null;
 			yourInstance = str[1];
-			System.out.println("ä½ æƒ³æ·»åŠ çš„å®ä¾‹:" + yourInstance);
+			System.out.println("ÄãÏëÌí¼ÓµÄÊµÀı:" + yourInstance);
 
-			// æˆ‘è‡ªå·±çš„excelä¸è¦æ³¨é‡Šæ‰ä»¥ä¸‹
-			if (yourClass.equals("ï¼ˆå…ˆä¸åœ¨ProtÃ©gÃ©ä¸­å¡«å†™ï¼‰")) {
+			// ÎÒ×Ô¼ºµÄexcel²»Òª×¢ÊÍµôÒÔÏÂ
+			if (yourClass.equals("£¨ÏÈ²»ÔÚProt¨¦g¨¦ÖĞÌîĞ´£©")) {
 
 			} else {
 				addIndividualAndProperty.addClass(yourClass, yourInstance);
 				addIndividualAndProperty.addLabel(yourInstance);
 				String yourProperty;
 				for (int k = 0; k < 21; k++) {
-					if (propertyLabel[k].equals("å•è¯")
-							|| propertyLabel[k].equals("Hownetä¸­çš„çˆ¶ç±»")) {
-						// å½“ä¸ºâ€œå•è¯â€æˆ–â€œHownetä¸­çš„çˆ¶ç±»â€æ—¶ï¼Œä»€ä¹ˆéƒ½ä¸åš
+					if (propertyLabel[k].equals("µ¥´Ê")
+							|| propertyLabel[k].equals("HownetÖĞµÄ¸¸Àà")) {
+						// µ±Îª¡°µ¥´Ê¡±»ò¡°HownetÖĞµÄ¸¸Àà¡±Ê±£¬Ê²Ã´¶¼²»×ö
 					} else {
 						yourProperty = null;
 						yourProperty = str[k];
@@ -177,20 +175,83 @@ public class OntologyManageImpl implements OntologyManage {
 					}
 				}
 			}
-			// åˆ°è¿™é‡Œ
+			// µ½ÕâÀï
 
-			// æˆ‘è‡ªå·±çš„excelè¦æ³¨é‡Šæ‰ä»¥ä¸‹
+			// ÎÒ×Ô¼ºµÄexcelÒª×¢ÊÍµôÒÔÏÂ
 			// String yourClass = findDEF(yourInstance);
-			// System.out.println("ä½ é€‰æ‹©çš„çˆ¶ç±»ï¼ˆè¿”å›ï¼‰ï¼š" + yourClass);
+			// System.out.println("ÄãÑ¡ÔñµÄ¸¸Àà£¨·µ»Ø£©£º" + yourClass);
 
 			// if (yourClass == null) {
-			// System.out.println(yourInstance + "çš„çˆ¶ç±»ä¸åœ¨HowNetä¸­");
+			// System.out.println(yourInstance + "µÄ¸¸Àà²»ÔÚHowNetÖĞ");
 			// } else {
 			// addIndividualAndProperty.addInstance(yourClass, yourInstance);
 			// }
-			// åˆ°è¿™é‡Œ
+			// µ½ÕâÀï
 		}
-		System.out.println("æ‰¹é‡å•è¯æ’å…¥æˆåŠŸï¼");
+		System.out.println("ÅúÁ¿µ¥´Ê²åÈë³É¹¦£¡");
+	}
+
+	@Override
+	public void AddWordBatch(InputStream yourPath) throws BiffException,
+			IOException {
+		List<String[]> list = readExcel(yourPath);
+
+		String[] str = null;
+		for (int i = 0; i < list.size(); i++) {
+			str = (String[]) list.get(i);
+			for (int j = 0; j < str.length; j++) {
+				System.out.println("ÒªÌí¼ÓµÄExcelÖĞµÄÄÚÈİ" + str[j]);
+			}
+
+			// ÎÒ×Ô¼ºµÄexcel²»Òª×¢ÊÍµôÒÔÏÂÈı¾ä
+			String yourClass = null;
+			yourClass = str[4];
+			System.out.println("ÄãÏëÌí¼ÓµÄÀà:" + yourClass);
+
+			String yourInstance = null;
+			yourInstance = str[1];
+			yourInstance = yourInstance.replace(" ", "_");// Èç¹ûÊµÀıÖĞÓĞ¿Õ¸ñ£¬Ôò½«¿Õ¸ñÌæ»»³ÉÏÂ»®Ïß
+			System.out.println("ÄãÏëÌí¼ÓµÄÊµÀı:" + yourInstance);
+
+			// ÎÒ×Ô¼ºµÄexcel²»Òª×¢ÊÍµôÒÔÏÂ
+			// if (yourClass.equals("£¨ÏÈ²»ÔÚProt¨¦g¨¦ÖĞÌîĞ´£©")) {
+			if (yourClass.equals("ÎŞ")) {
+				// Èç¹ûHowNetµÄ¸¸ÀàÎª¡°ÎŞ¡±£¬ÔòÊ²Ã´¶¼²»×ö
+			} else {
+				// addIndividualAndProperty.addClass(yourClass, yourInstance);
+				// addIndividualAndProperty.addLabel(yourInstance);
+				
+				/*addIndividualAndProperty.addWordClass(yourClass, yourInstance);
+				addIndividualAndProperty.addWordLabel(yourInstance);
+*/
+				String yourProperty;
+				for (int k = 0; k < 21; k++) {
+					if (propertyLabel[k].equals("µ¥´Ê")
+							|| propertyLabel[k].equals("HownetÖĞµÄ¸¸Àà")) {
+						// µ±Îª¡°µ¥´Ê¡±»ò¡°HownetÖĞµÄ¸¸Àà¡±Ê±£¬Ê²Ã´¶¼²»×ö
+					} else {
+						yourProperty = null;
+						yourProperty = str[k];
+						yourProperty = yourProperty.replace("\n", "");// Èç¹ûÊôĞÔÖĞ´æÔÚ»Ø³µ£¬Ôò½«»Ø³µÉ¾³ı
+						addIndividualAndProperty.addProperty(propertyLabel[k],
+								yourInstance, yourProperty);
+					}
+				}
+			}
+			// µ½ÕâÀï
+
+			// ÎÒ×Ô¼ºµÄexcelÒª×¢ÊÍµôÒÔÏÂ
+			// String yourClass = findDEF(yourInstance);
+			// System.out.println("ÄãÑ¡ÔñµÄ¸¸Àà£¨·µ»Ø£©£º" + yourClass);
+
+			// if (yourClass == null) {
+			// System.out.println(yourInstance + "µÄ¸¸Àà²»ÔÚHowNetÖĞ");
+			// } else {
+			// addIndividualAndProperty.addInstance(yourClass, yourInstance);
+			// }
+			// µ½ÕâÀï
+		}
+		System.out.println("ÅúÁ¿µ¥´Ê²åÈë³É¹¦£¡");
 	}
 
 	@Override
@@ -203,18 +264,18 @@ public class OntologyManageImpl implements OntologyManage {
 		for (int i = 0; i < list.size(); i++) {
 			str = (String[]) list.get(i);
 			for (int j = 0; j < str.length; j++) {
-				System.out.println("è¦æ·»åŠ çš„Excelä¸­çš„å†…å®¹" + str[j]);
+				System.out.println("ÒªÌí¼ÓµÄExcelÖĞµÄÄÚÈİ" + str[j]);
 			}
 
 			String yourClass = null;
-			yourClass = str[4];
-			System.out.println("ä½ æƒ³æ·»åŠ çš„ç±»:" + yourClass + "\n");
+			yourClass = str[3];
+			System.out.println("ÄãÏëÌí¼ÓµÄÀà:" + yourClass + "\n");
 
 			String yourInstance = null;
-			yourInstance = str[3];
-			System.out.println("ä½ æƒ³æ·»åŠ çš„å®ä¾‹:" + yourInstance + "\n");
+			yourInstance = str[4];
+			System.out.println("ÄãÏëÌí¼ÓµÄÊµÀı:" + yourInstance + "\n");
 
-			if (yourClass.equals("ï¼ˆå…ˆä¸åœ¨ProtÃ©gÃ©ä¸­å¡«å†™ï¼‰")) {
+			if (yourClass.equals("£¨ÏÈ²»ÔÚProt¨¦g¨¦ÖĞÌîĞ´£©")) {
 
 			} else {
 				addIndividualAndProperty.addSentenceClass(yourClass,
@@ -224,9 +285,9 @@ public class OntologyManageImpl implements OntologyManage {
 
 			String yourProperty;
 			for (int k = 0; k < sentencePropertyLabel.length; k++) {
-				if (sentencePropertyLabel[k].equals("é—®é¢˜å¥å‹")
-						|| sentencePropertyLabel[k].equals("é—®é¢˜")) {
-					// å½“ä¸ºâ€œé—®é¢˜å¥å‹â€æˆ–â€œé—®é¢˜â€æ—¶ï¼Œä»€ä¹ˆéƒ½ä¸åš
+				if (sentencePropertyLabel[k].equals("ÎÊÌâ¾äĞÍ")
+						|| sentencePropertyLabel[k].equals("ÎÊÌâ")) {
+					// µ±Îª¡°ÎÊÌâ¾äĞÍ¡±»ò¡°ÎÊÌâ¡±Ê±£¬Ê²Ã´¶¼²»×ö
 				} else {
 					yourProperty = null;
 					yourProperty = str[k];
@@ -236,7 +297,7 @@ public class OntologyManageImpl implements OntologyManage {
 				}
 			}
 		}
-		System.out.println("æ‰¹é‡å¥å­æ’å…¥æˆåŠŸï¼");
+		System.out.println("ÅúÁ¿¾ä×Ó²åÈë³É¹¦£¡");
 	}
 
 	@Override
@@ -251,18 +312,18 @@ public class OntologyManageImpl implements OntologyManage {
 				QuerySolution solutionInstance = resultsProperty.next();
 
 				if (solutionInstance.get("?relationID").toString()
-						.contains("31")) {// å¦‚æœæ˜¯å•è¯åˆ™æ‰§è¡Œ
+						.contains("31")) {// Èç¹ûÊÇµ¥´ÊÔòÖ´ĞĞ
 
 					int i = 0;
 					for (i = 0; i < propertyLabel.length; i++) {
-						System.out.println("    â€”â€”â€”â€”"
+						System.out.println("    ¡ª¡ª¡ª¡ª"
 								+ propertyLabel[i]
-								+ "ï¼š"
+								+ "£º"
 								+ substringManage(solutionInstance.get(
 										propertySPARQLValue[i]).toString()));
 
-						if (propertyLabel[i].equals("å•è¯")
-								|| propertyLabel[i].equals("Hownetä¸­çš„çˆ¶ç±»")) {
+						if (propertyLabel[i].equals("µ¥´Ê")
+								|| propertyLabel[i].equals("HownetÖĞµÄ¸¸Àà")) {
 
 						} else {
 							deleteIndividual.deleteInstanceProperty(
@@ -278,22 +339,22 @@ public class OntologyManageImpl implements OntologyManage {
 
 					}
 
-					// åˆ é™¤çˆ¶ç±»å’ŒLabel
+					// É¾³ı¸¸ÀàºÍLabel
 					deleteIndividual.deleteClass(
 							solutionInstance.get("?instanceLabel").toString(),
 							solutionInstance.get("?propertyClass").toString());
 					deleteIndividual.deleteLabel(solutionInstance.get(
 							"?instanceLabel").toString());
 
-					System.out.println("å•è¯åˆ é™¤æˆåŠŸ\n");
+					System.out.println("µ¥´ÊÉ¾³ı³É¹¦\n");
 				} else {
-					// å¦‚æœæ˜¯å¥å­åˆ™ä»€ä¹ˆéƒ½ä¸åš
+					// Èç¹ûÊÇ¾ä×ÓÔòÊ²Ã´¶¼²»×ö
 				}
 			}
 		}
 
 		else {
-			System.out.println("çŸ¥è¯†æœ¬ä½“åº“ä¸­æ²¡æœ‰æ­¤å®ä¾‹");
+			System.out.println("ÖªÊ¶±¾Ìå¿âÖĞÃ»ÓĞ´ËÊµÀı");
 		}
 	}
 
@@ -309,18 +370,18 @@ public class OntologyManageImpl implements OntologyManage {
 				QuerySolution solutionInstance = resultsProperty.next();
 
 				if (solutionInstance.get("?relationID").toString()
-						.contains("85")) {// å¦‚æœæ˜¯å¥å­åˆ™æ‰§è¡Œ
+						.contains("85")) {// Èç¹ûÊÇ¾ä×ÓÔòÖ´ĞĞ
 					int i = 0;
 					for (i = 0; i < sentencePropertyLabel.length; i++) {
-						System.out.println("    â€”â€”â€”â€”"
+						System.out.println("    ¡ª¡ª¡ª¡ª"
 								+ sentencePropertyLabel[i]
-								+ "ï¼š"
+								+ "£º"
 								+ substringManage(solutionInstance.get(
 										sentencePropertySPARQLValue[i])
 										.toString()));
 
-						if (sentencePropertyLabel[i].equals("é—®é¢˜")
-								|| sentencePropertyLabel[i].equals("é—®é¢˜å¥å‹")) {
+						if (sentencePropertyLabel[i].equals("ÎÊÌâ")
+								|| sentencePropertyLabel[i].equals("ÎÊÌâ¾äĞÍ")) {
 
 						} else {
 							deleteIndividual.deleteSentenceInstanceProperty(
@@ -337,22 +398,22 @@ public class OntologyManageImpl implements OntologyManage {
 
 					}
 
-					// åˆ é™¤çˆ¶ç±»å’ŒLabel
+					// É¾³ı¸¸ÀàºÍLabel
 					deleteIndividual.deleteSentenceClass(
 							solutionInstance.get("?instanceLabel").toString(),
 							solutionInstance.get("?propertyClass").toString());
 					deleteIndividual.deleteSentenceLabel(solutionInstance.get(
 							"?instanceLabel").toString());
 
-					System.out.println("å¥å­åˆ é™¤æˆåŠŸ\n");
+					System.out.println("¾ä×ÓÉ¾³ı³É¹¦\n");
 				} else {
-					// å¦‚æœæ˜¯å•è¯åˆ™ä»€ä¹ˆéƒ½ä¸åš
+					// Èç¹ûÊÇµ¥´ÊÔòÊ²Ã´¶¼²»×ö
 				}
 
 			}
 
 		} else {
-			System.out.println("çŸ¥è¯†æœ¬ä½“åº“ä¸­æ²¡æœ‰æ­¤å®ä¾‹");
+			System.out.println("ÖªÊ¶±¾Ìå¿âÖĞÃ»ÓĞ´ËÊµÀı");
 		}
 	}
 
@@ -360,24 +421,24 @@ public class OntologyManageImpl implements OntologyManage {
 	public void Modify(String yourID, String yourPropertyLabel,
 			String yourSPARQLProperty, String yourRelationProperty) {
 
-		// æŸ¥æ‰¾å¯¹åº”çš„ä¸‰å…ƒç»„
+		// ²éÕÒ¶ÔÓ¦µÄÈıÔª×é
 		// ResultSet result = queryWithManyWays.checkThisTriple(yourID,
-		// yourPropertyLabel, "å•è¯");
+		// yourPropertyLabel, "µ¥´Ê");
 		ResultSet result = queryWithManyWays.checkPropertyDependOnId(yourID);
 		QuerySolution solution = null;
 		if (result.hasNext()) {
 			while (result.hasNext()) {
 				solution = result.next();
-				if (yourPropertyLabel.equals("å•è¯ID")) {
+				if (yourPropertyLabel.equals("µ¥´ÊID")) {
 
 					modifyID(solution, yourRelationProperty,
 							yourSPARQLProperty, yourPropertyLabel);
 
-				} else if (yourPropertyLabel.equals("Hownetä¸­çš„çˆ¶ç±»")) {
+				} else if (yourPropertyLabel.equals("HownetÖĞµÄ¸¸Àà")) {
 
 					modifyClass(solution, yourSPARQLProperty);
 
-				} else if (yourPropertyLabel.equals("å•è¯")) {
+				} else if (yourPropertyLabel.equals("µ¥´Ê")) {
 
 					modifyLabel(solution, yourID);
 				} else {
@@ -387,35 +448,35 @@ public class OntologyManageImpl implements OntologyManage {
 
 			}
 		} else {
-			System.out.println("æ— æ­¤ä¸‰å…ƒç»„");
+			System.out.println("ÎŞ´ËÈıÔª×é");
 		}
 
-		System.out.println("ä¿®æ”¹æˆåŠŸ");
+		System.out.println("ĞŞ¸Ä³É¹¦");
 	}
 
 	@Override
 	public void ModifySentence(String yourID, String yourPropertyLabel,
 			String yourSPARQLProperty, String yourRelationProperty) {
 
-		// æŸ¥æ‰¾å¯¹åº”çš„ä¸‰å…ƒç»„
+		// ²éÕÒ¶ÔÓ¦µÄÈıÔª×é
 		// ResultSet result = queryWithManyWays.checkThisTriple(yourID,
-		// yourPropertyLabel, "å•è¯");
+		// yourPropertyLabel, "µ¥´Ê");
 		ResultSet result = queryWithManyWays
 				.checkSentencePropertyDependOnId(yourID);
 		QuerySolution solution = null;
 		if (result.hasNext()) {
 			while (result.hasNext()) {
 				solution = result.next();
-				if (yourPropertyLabel.equals("å¥å­ID")) {
+				if (yourPropertyLabel.equals("¾ä×ÓID")) {
 
 					modifySentenceID(solution, yourRelationProperty,
 							yourSPARQLProperty, yourPropertyLabel);
 
-				} else if (yourPropertyLabel.equals("é—®é¢˜å¥å‹")) {
+				} else if (yourPropertyLabel.equals("ÎÊÌâ¾äĞÍ")) {
 
 					modifySentenceClass(solution, yourSPARQLProperty);
 
-				} else if (yourPropertyLabel.equals("é—®é¢˜")) {
+				} else if (yourPropertyLabel.equals("ÎÊÌâ")) {
 
 					modifySentenceLabel(solution, yourID);
 
@@ -425,13 +486,13 @@ public class OntologyManageImpl implements OntologyManage {
 				}
 
 			}
-			System.out.println("ä¿®æ”¹æˆåŠŸ");
+			System.out.println("ĞŞ¸Ä³É¹¦");
 		} else {
-			System.out.println("æ— æ­¤ä¸‰å…ƒç»„");
+			System.out.println("ÎŞ´ËÈıÔª×é");
 		}
 	}
 
-	// æ ¹æ®ç±»æŸ¥æ‰¾ç±»ä¸‹çš„æ‰€æœ‰å•è¯Label
+	// ¸ù¾İÀà²éÕÒÀàÏÂµÄËùÓĞµ¥´ÊLabel
 	public ResultSet QueryWord(String yourClass) {
 
 		ResultSet resultsInstance = queryWithManyWays.checkInstance(yourClass);
@@ -440,7 +501,30 @@ public class OntologyManageImpl implements OntologyManage {
 
 	}
 
-	// æ ¹æ®IDæŸ¥æ‰¾è¯¥å•è¯åŠå…¶æ‰€æœ‰å±æ€§
+	// ¸ù¾İÀà²éÕÒÀàÏÂµÄËùÓĞµ¥´ÊLabel
+	public List<ResultSet> QueryWordAndPropertiesDependOnClass(String yourClass) {
+
+		// 1.²éÕÒ¸Ã¸¸ÀàÏÂµÄËùÓĞID
+		ResultSet resultsIDDependOnClass = queryWithManyWays
+				.checkIDDependOnClass(yourClass);
+		
+		// 2.¸ù¾İID²éÕÒÊôĞÔ
+		List<ResultSet> resultsWordsAndProperties = new ArrayList<ResultSet>();
+		if (resultsIDDependOnClass.hasNext()){
+			while(resultsIDDependOnClass.hasNext()){
+				QuerySolution solutionIDDependOnClass = resultsIDDependOnClass.next();
+
+				resultsWordsAndProperties.add(QueryIndividualDependOnId(solutionIDDependOnClass.get("?propertyID").toString()));
+			}
+		} else {
+			System.out.println("¸ÃHowNet¸¸ÀàÏÂÃ»ÓĞµ¥´Ê£¡");
+		}
+
+		return resultsWordsAndProperties;
+
+	}
+
+	// ¸ù¾İID²éÕÒ¸Ãµ¥´Ê¼°ÆäËùÓĞÊôĞÔ
 	@Override
 	public ResultSet QueryIndividualDependOnId(String yourID) {
 
@@ -450,7 +534,7 @@ public class OntologyManageImpl implements OntologyManage {
 		return resultsInstance;
 	}
 
-	// æŸ¥ä¸€ä¸ªå•è¯çš„æ‰€æœ‰å±æ€§
+	// ²éÒ»¸öµ¥´ÊµÄËùÓĞÊôĞÔ
 	@Override
 	public ResultSet QueryIndividual(String yourWord) {
 
@@ -459,7 +543,7 @@ public class OntologyManageImpl implements OntologyManage {
 		return resultsInstance;
 	}
 
-	// æŸ¥è¯¢å•è¯å¯¹åº”çš„æ‰€æœ‰ID
+	// ²éÑ¯µ¥´Ê¶ÔÓ¦µÄËùÓĞID
 	@Override
 	public ResultSet QueryAWordAllId(String yourWord) {
 
@@ -469,7 +553,7 @@ public class OntologyManageImpl implements OntologyManage {
 		return resultsInstance;
 	}
 
-	// æŸ¥è¯¢å¥å­å¯¹åº”çš„æ‰€æœ‰ID
+	// ²éÑ¯¾ä×Ó¶ÔÓ¦µÄËùÓĞID
 	@Override
 	public ResultSet QueryASentenceAllId(String yourSentence) {
 
@@ -479,7 +563,7 @@ public class OntologyManageImpl implements OntologyManage {
 		return resultsInstance;
 	}
 
-	// æ ¹æ®IDæŸ¥æ‰¾è¯¥å¥å­åŠå…¶æ‰€æœ‰å±æ€§
+	// ¸ù¾İID²éÕÒ¸Ã¾ä×Ó¼°ÆäËùÓĞÊôĞÔ
 	@Override
 	public ResultSet QuerySentenceIndividualDependOnId(String yourID) {
 
@@ -498,73 +582,48 @@ public class OntologyManageImpl implements OntologyManage {
 		return resultsInstance;
 	}
 
-	// æ ¹æ®å¹´çº§éšæœºæ‰¾å‡º5ä¸ªå•è¯
+	// ¸ù¾İÄê¼¶Ëæ»úÕÒ³ö5¸öµ¥´Ê
 	@Override
 	public List<ResultSet> QueryFiveWordsOfThisGrade(String yourGrade) {
 
-		// æŸ¥æ‰¾æ‰€æœ‰å•è¯çš„ID
-		ResultSet resultsIDOfAllWords = queryWithManyWays.checkIdOfAllWords();
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶µ¥´ÊID
+		List<String> allIdOfThisGrade = QueryAllWordsIdOfThisGrade(yourGrade);
 
-		// ç”¨åŠ¨æ€æ•°ç»„ä¿å­˜è¯¥å¹´çº§å•è¯ID
-		List<String> allIdOfThisGrade = new ArrayList<String>();
-
-		// ç­›é€‰è¯¥å¹´çº§çš„ID
-		if (resultsIDOfAllWords.hasNext()) {
-			while (resultsIDOfAllWords.hasNext()) {
-				// QuerySolution next()
-				// Moves onto the next result.
-				// ç§»åŠ¨åˆ°ä¸‹ä¸ªresultä¸Š
-				QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
-				String propertyId = solutionIdOfAllWords.get("?propertyID")
-						.toString();
-				// æˆªå–æ‰å†Œæ•°ä¹‹å‰çš„ä¿¡æ¯
-				String stringOutOfVersion = propertyId.substring(propertyId
-						.indexOf("/") + 1);
-				String propertyBook = stringOutOfVersion.substring(0,
-						stringOutOfVersion.indexOf("/"));
-				// System.out.println("è¯¥å•è¯çš„å†Œæ•°ï¼š" + propertyBook);
-				if (yourGrade.equals(propertyBook)) {
-					allIdOfThisGrade.add(solutionIdOfAllWords
-							.get("?propertyID").toString());
-				}
-			}
-		}
-
-		// éšæœºå–5ä¸ªå•è¯IDï¼Œä¹‹åæŸ¥æ‰¾æ¯ä¸ªå•è¯çš„å±æ€§
+		// Ëæ»úÈ¡5¸öµ¥´ÊID£¬Ö®ºó²éÕÒÃ¿¸öµ¥´ÊµÄÊôĞÔ
 		List<ResultSet> resultsFiveWordsOfThisGrade = new ArrayList<ResultSet>();
 		if (allIdOfThisGrade.isEmpty()) {
-			System.out.println("è¯¥å¹´çºªæ²¡æœ‰å•è¯ï¼");
-		} else {// è¯¥å¹´çº§æœ‰å•è¯
-			System.out.println("è¯¥å¹´çº§æ‰€æœ‰å•è¯çš„ä¸ªæ•°ï¼š" + allIdOfThisGrade.size());
+			System.out.println("¸ÃÄê¼ÍÃ»ÓĞµ¥´Ê£¡");
+		} else {// ¸ÃÄê¼¶ÓĞµ¥´Ê
+			System.out.println("¸ÃÄê¼¶ËùÓĞµ¥´ÊµÄ¸öÊı£º" + allIdOfThisGrade.size());
 
-			if (allIdOfThisGrade.size() < 5) {// å¦‚æœå•è¯ä¸ªæ•°<5ï¼Œä¿å­˜æ‰€æœ‰å•è¯
+			if (allIdOfThisGrade.size() < 5) {// Èç¹ûµ¥´Ê¸öÊı<5£¬±£´æËùÓĞµ¥´Ê
 				for (int i = 0; i < allIdOfThisGrade.size(); i++) {
 					resultsFiveWordsOfThisGrade.add(queryWithManyWays
 							.checkPropertyDependOnId(allIdOfThisGrade.get(i)
 									.toString()));
 				}
-			} else {// å¦‚æœå•è¯ä¸ªæ•°>=5ï¼Œä»ä¸­é€‰æ‹©ä¸é‡å¤çš„5ä¸ªå•è¯
-					// ç”¨æ•°ç»„ä¿æŒéšæœºIDï¼Œæ¥åˆ¤æ–­æ˜¯å¦æœ‰é‡å¤
+			} else {// Èç¹ûµ¥´Ê¸öÊı>=5£¬´ÓÖĞÑ¡Ôñ²»ÖØ¸´µÄ5¸öµ¥´Ê
+					// ÓÃÊı×é±£³ÖËæ»úID£¬À´ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´
 				List<String> randomIdList = new ArrayList<String>();
-				// éšæœºå–5ä¸ªå•è¯IDï¼Œä¹‹åæŸ¥æ‰¾æ¯ä¸ªå•è¯çš„å±æ€§
+				// Ëæ»úÈ¡5¸öµ¥´ÊID£¬Ö®ºó²éÕÒÃ¿¸öµ¥´ÊµÄÊôĞÔ
 				do {
 					Random ra = new Random();
 					int randomNum = ra.nextInt(allIdOfThisGrade.size() - 1);
-					System.out.println("éšæœºç´¢å¼•ä¸ºï¼š" + randomNum);
+					System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
 					String randomId = allIdOfThisGrade.get(randomNum)
 							.toString();
-					System.out.println("éšæœºIDä¸ºï¼š" + randomId);
+					System.out.println("Ëæ»úIDÎª£º" + randomId);
 
 					int j;
-					// éå†éšæœºIDæ•°ç»„ä¸­çš„æ¯ä¸€ä¸ªå…ƒç´ 
+					// ±éÀúËæ»úIDÊı×éÖĞµÄÃ¿Ò»¸öÔªËØ
 					for (j = 0; j < randomIdList.size(); j++) {
-						// åˆ¤æ–­æ˜¯å¦æœ‰é‡å¤çš„
+						// ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´µÄ
 						if (randomIdList.get(j).equals(randomId)) {
 							break;
 						}
 					}
-					if (j == randomIdList.size()) {// æ— é‡å¤
-						// æŠŠéšæœºIDä¿å­˜å¥½
+					if (j == randomIdList.size()) {// ÎŞÖØ¸´
+						// °ÑËæ»úID±£´æºÃ
 						randomIdList.add(randomId);
 						resultsFiveWordsOfThisGrade.add(queryWithManyWays
 								.checkPropertyDependOnId(randomId));
@@ -578,74 +637,97 @@ public class OntologyManageImpl implements OntologyManage {
 	}
 
 	@Override
-	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade) {
+	public Map<String, String> QuerySentenceAndId(String yourClass) {
+		// ´´½¨¿ÕMapÒÔ±£´æ¼üÖµ¶Ô<ID, instanceLabel>
+		Map<String, String> idAndInstancelabelOfAllInstance = new HashMap<String, String>();
 
-		// æŸ¥æ‰¾æ‰€æœ‰å¥å­çš„ID
-		ResultSet resultsIDOfAllWords = queryWithManyWays
-				.checkIdOfAllSentences();
+		// ²éÕÒÀàÏÂËùÓĞ¾ä×Ó
+		ResultSet resultsInstance = queryWithManyWays.checkInstance(yourClass);
 
-		// ç”¨åŠ¨æ€æ•°ç»„ä¿å­˜è¯¥å¹´çº§å¥å­ID
-		List<String> allSentencesIdOfThisGrade = new ArrayList<String>();
+		// ÒÔ¼üÖµ¶Ô±£´æÃ¿Ò»¸ö
+		if (resultsInstance.hasNext()) {
+			while (resultsInstance.hasNext()) {
+				QuerySolution solutionInstance = resultsInstance.next();
 
-		// ç­›é€‰è¯¥å¹´çº§çš„ID
-		if (resultsIDOfAllWords.hasNext()) {
-			while (resultsIDOfAllWords.hasNext()) {
-				// QuerySolution next()
-				// Moves onto the next result.
-				// ç§»åŠ¨åˆ°ä¸‹ä¸ªresultä¸Š
-				QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
-				String propertyId = solutionIdOfAllWords.get("?propertyID")
-						.toString();
-				// æˆªå–æ‰å†Œæ•°ä¹‹å‰çš„ä¿¡æ¯
-				String stringOutOfVersion = propertyId.substring(propertyId
-						.indexOf("/") + 1);
-				String propertyBook = stringOutOfVersion.substring(0,
-						stringOutOfVersion.indexOf("/"));
-				// System.out.println("è¯¥å•è¯çš„å†Œæ•°ï¼š" + propertyBook);
-				if (yourGrade.equals(propertyBook)) {
-					allSentencesIdOfThisGrade.add(solutionIdOfAllWords.get(
-							"?propertyID").toString());
+				// ÌáÈ¡³öµ±Ç°¾ä×Ó
+				String thisSentence = solutionInstance
+						.get("?instanceLabel")
+						.toString()
+						.substring(
+								0,
+								solutionInstance.get("?instanceLabel")
+										.toString().indexOf("@"));
+				// ¸ù¾İµ±Ç°¾ä×Ó²éÕÒÊôĞÔ£¬È¡³öËùÓĞID
+				ResultSet resultsAllPropertiesOfAInstance = queryWithManyWays
+						.checkAllIdOfAnSentence(thisSentence);
+
+				// ±£´æ¼üÖµ¶Ô<ID, instanceLabel>
+				while (resultsAllPropertiesOfAInstance.hasNext()) {
+					QuerySolution solutionAllPropertiesOfAInstance = resultsAllPropertiesOfAInstance
+							.next();
+
+					// ÌáÈ¡³öµ±Ç°¾ä×ÓµÄID
+					String idOfThisSentence = solutionAllPropertiesOfAInstance
+							.get("?propertyID").toString();
+					// È¥³ı¡°@zh¡±
+					idOfThisSentence = idOfThisSentence.substring(0,
+							idOfThisSentence.indexOf("@"));
+
+					// ±£´æµ½MapÖĞ
+					idAndInstancelabelOfAllInstance.put(idOfThisSentence,
+							thisSentence);
+
 				}
 			}
+		} else {
+			System.out.println("ÖªÊ¶±¾Ìå¿âÖĞÃ»ÓĞ´ËÊµÀı");
 		}
+		return idAndInstancelabelOfAllInstance;
+	}
 
-		// éšæœºå–2ä¸ªå¥å­IDï¼Œä¹‹åæŸ¥æ‰¾æ¯ä¸ªå•è¯çš„å±æ€§
+	@Override
+	public List<ResultSet> QueryTwoSentencesOfThisGrade(String yourGrade) {
+
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶¾ä×ÓID
+		List<String> allSentencesIdOfThisGrade = QueryAllSentencesIdOfThisGrade(yourGrade);
+
+		// Ëæ»úÈ¡2¸ö¾ä×ÓID£¬Ö®ºó²éÕÒÃ¿¸öµ¥´ÊµÄÊôĞÔ
 		List<ResultSet> resultsTwoSentencesOfThisGrade = new ArrayList<ResultSet>();
 		if (allSentencesIdOfThisGrade.isEmpty()) {
-			System.out.println("è¯¥å¹´çºªæ²¡æœ‰å¥å­ï¼");
-		} else {// è¯¥å¹´çº§æœ‰å¥å­
+			System.out.println("¸ÃÄê¼ÍÃ»ÓĞ¾ä×Ó£¡");
+		} else {// ¸ÃÄê¼¶ÓĞ¾ä×Ó
 			System.out
-					.println("è¯¥å¹´çº§æ‰€æœ‰å¥å­çš„ä¸ªæ•°ï¼š" + allSentencesIdOfThisGrade.size());
+					.println("¸ÃÄê¼¶ËùÓĞ¾ä×ÓµÄ¸öÊı£º" + allSentencesIdOfThisGrade.size());
 
-			if (allSentencesIdOfThisGrade.size() < 2) {// å¦‚æœå¥å­ä¸ªæ•°<2ï¼Œå³åªæœ‰ä¸€ä¸ªå¥å­ï¼Œåˆ™ä¿å­˜è¿™1ä¸ªå¥å­å¹¶è¿”å›
+			if (allSentencesIdOfThisGrade.size() < 2) {// Èç¹û¾ä×Ó¸öÊı<2£¬¼´Ö»ÓĞÒ»¸ö¾ä×Ó£¬Ôò±£´æÕâ1¸ö¾ä×Ó²¢·µ»Ø
 				resultsTwoSentencesOfThisGrade
 						.add(queryWithManyWays
 								.checkSentencePropertyDependOnId(allSentencesIdOfThisGrade
 										.get(0).toString()));
-			} else {// å¦‚æœå¥å­ä¸ªæ•°>=2ï¼Œé€‰æ‹©ä¸é‡å¤çš„2ä¸ªå¥å­
-				// ç”¨æ•°ç»„ä¿æŒéšæœºIDï¼Œæ¥åˆ¤æ–­æ˜¯å¦æœ‰é‡å¤
+			} else {// Èç¹û¾ä×Ó¸öÊı>=2£¬Ñ¡Ôñ²»ÖØ¸´µÄ2¸ö¾ä×Ó
+				// ÓÃÊı×é±£³ÖËæ»úID£¬À´ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´
 				List<String> randomIdList = new ArrayList<String>();
 
-				// éšæœºå–2ä¸ªå¥å­IDï¼Œä¹‹åæŸ¥æ‰¾æ¯ä¸ªå•è¯çš„å±æ€§
+				// Ëæ»úÈ¡2¸ö¾ä×ÓID£¬Ö®ºó²éÕÒÃ¿¸öµ¥´ÊµÄÊôĞÔ
 				do {
 					Random ra = new Random();
 					int randomNum = ra
 							.nextInt(allSentencesIdOfThisGrade.size() - 1);
-					System.out.println("éšæœºç´¢å¼•ä¸ºï¼š" + randomNum);
+					System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
 					String randomId = allSentencesIdOfThisGrade.get(randomNum)
 							.toString();
-					System.out.println("éšæœºIDä¸ºï¼š" + randomId);
+					System.out.println("Ëæ»úIDÎª£º" + randomId);
 
 					int j;
-					// éå†éšæœºIDæ•°ç»„ä¸­çš„æ¯ä¸€ä¸ªå…ƒç´ 
+					// ±éÀúËæ»úIDÊı×éÖĞµÄÃ¿Ò»¸öÔªËØ
 					for (j = 0; j < randomIdList.size(); j++) {
-						// åˆ¤æ–­æ˜¯å¦æœ‰é‡å¤çš„
+						// ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´µÄ
 						if (randomIdList.get(j).equals(randomId)) {
 							break;
 						}
 					}
-					if (j == randomIdList.size()) {// æ— é‡å¤
-						// æŠŠéšæœºIDä¿å­˜å¥½
+					if (j == randomIdList.size()) {// ÎŞÖØ¸´
+						// °ÑËæ»úID±£´æºÃ
 						randomIdList.add(randomId);
 
 						resultsTwoSentencesOfThisGrade.add(queryWithManyWays
@@ -660,50 +742,449 @@ public class OntologyManageImpl implements OntologyManage {
 	}
 
 	@Override
-	public Map<String, String> QuerySentenceAndId(String yourClass) {
-		//åˆ›å»ºç©ºMapä»¥ä¿å­˜é”®å€¼å¯¹<ID, instanceLabel>
-		Map<String, String> idAndInstancelabelOfAllInstance = new HashMap<String, String>();
-		
-		// æŸ¥æ‰¾ç±»ä¸‹æ‰€æœ‰å¥å­
-		ResultSet resultsInstance = queryWithManyWays.checkInstance(yourClass);
+	public List<ResultSet> QueryThreeSentencesOfThisGrade(String yourGrade) {
 
-		// ä»¥é”®å€¼å¯¹ä¿å­˜æ¯ä¸€ä¸ª
-		if (resultsInstance.hasNext()) {
-			while (resultsInstance.hasNext()) {
-				QuerySolution solutionInstance = resultsInstance.next();
-				//æå–å‡ºå½“å‰å¥å­
-			   int a=solutionInstance.get("?instanceLabel").toString().indexOf("@");
-               String thisSentence = solutionInstance.get("?instanceLabel").toString().substring(0,a);
-               String tempthisSentence=thisSentence.substring(0, thisSentence.length()-1);
-               String lastSentence = tempthisSentence.replaceAll(",", "_").replaceAll("'", "_i").replace("â€™", "_").replace("_", " ");
-				// æ ¹æ®å½“å‰å¥å­æŸ¥æ‰¾å±æ€§ï¼Œå–å‡ºæ‰€æœ‰ID
-				ResultSet resultsAllPropertiesOfAInstance = queryWithManyWays
-						.checkAllIdOfAnSentence(thisSentence);
-				//ä¿å­˜é”®å€¼å¯¹<ID, instanceLabel>
-				while (resultsAllPropertiesOfAInstance.hasNext()) {
-					QuerySolution solutionAllPropertiesOfAInstance = resultsAllPropertiesOfAInstance.next();
-					//æå–å‡ºå½“å‰å¥å­çš„ID
-					String idOfThisSentence = solutionAllPropertiesOfAInstance.get("?propertyID").toString();
-					//å»é™¤â€œ@zhâ€
-					idOfThisSentence = idOfThisSentence.substring(0, idOfThisSentence.indexOf("@"));
-					//ä¿å­˜åˆ°Mapä¸­
-					idAndInstancelabelOfAllInstance.put(idOfThisSentence, lastSentence);
-					
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶¾ä×ÓID
+		List<String> allSentencesIdOfThisGrade = QueryAllSentencesIdOfThisGrade(yourGrade);
+
+		// Ëæ»úÈ¡3¸ö¾ä×ÓID£¬Ö®ºó²éÕÒÃ¿¸öµ¥´ÊµÄÊôĞÔ
+		List<ResultSet> resultsTwoSentencesOfThisGrade = new ArrayList<ResultSet>();
+		if (allSentencesIdOfThisGrade.isEmpty()) {
+			System.out.println("¸ÃÄê¼ÍÃ»ÓĞ¾ä×Ó£¡");
+		} else {// ¸ÃÄê¼¶ÓĞ¾ä×Ó
+			System.out
+					.println("¸ÃÄê¼¶ËùÓĞ¾ä×ÓµÄ¸öÊı£º" + allSentencesIdOfThisGrade.size());
+
+			if (allSentencesIdOfThisGrade.size() < 3) {// Èç¹û¾ä×Ó¸öÊı<3£¬¼´Ö»ÓĞÒ»¸ö¾ä×Ó£¬Ôò±£´æÕâ1¸ö¾ä×Ó²¢·µ»Ø
+				resultsTwoSentencesOfThisGrade
+						.add(queryWithManyWays
+								.checkSentencePropertyDependOnId(allSentencesIdOfThisGrade
+										.get(0).toString()));
+			} else {// Èç¹û¾ä×Ó¸öÊı>=3£¬Ñ¡Ôñ²»ÖØ¸´µÄ3¸ö¾ä×Ó
+				// ÓÃÊı×é±£³ÖËæ»úID£¬À´ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´
+				List<String> randomIdList = new ArrayList<String>();
+
+				// Ëæ»úÈ¡3¸ö¾ä×ÓID£¬Ö®ºó²éÕÒÃ¿¸öµ¥´ÊµÄÊôĞÔ
+				do {
+					Random ra = new Random();
+					int randomNum = ra
+							.nextInt(allSentencesIdOfThisGrade.size() - 1);
+					System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
+					String randomId = allSentencesIdOfThisGrade.get(randomNum)
+							.toString();
+					System.out.println("Ëæ»úIDÎª£º" + randomId);
+
+					int j;
+					// ±éÀúËæ»úIDÊı×éÖĞµÄÃ¿Ò»¸öÔªËØ
+					for (j = 0; j < randomIdList.size(); j++) {
+						// ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´µÄ
+						if (randomIdList.get(j).equals(randomId)) {
+							break;
+						}
+					}
+					if (j == randomIdList.size()) {// ÎŞÖØ¸´
+						// °ÑËæ»úID±£´æºÃ
+						randomIdList.add(randomId);
+
+						resultsTwoSentencesOfThisGrade.add(queryWithManyWays
+								.checkSentencePropertyDependOnId(randomId));
+					} else {
+						continue;
+					}
+				} while (resultsTwoSentencesOfThisGrade.size() < 3);
+			}
+		}
+		return resultsTwoSentencesOfThisGrade;
+	}
+
+	// ¸ù¾İÄê¼¶²éÑ¯Á½¸öÀà±ğÖĞµÄ3¸öµ¥´Ê
+	@Override
+	public List<String> QueryTwoDifferentThemeWordsOfThisGrade(
+			String yourGrade, String yourWord) {
+		List<String> saveThreeWords = new ArrayList<String>(); // ±£´æ×îÖÕµÄ3¸öµ¥´Ê
+		saveThreeWords.add(yourWord);
+
+		// 1.¸ù¾İµ¥´Ê²éÕÒ¶ÔÓ¦µÄËùÓĞID
+		ResultSet resultAllIdOfThisWord = QueryAWordAllId(yourWord);
+
+		// 2.¸ù¾İIDÅĞ¶ÏÄê¼¶
+		Map<String, List<String>> allThemeOfThisWordMap = new HashMap<String, List<String>>(); // ÓÃÓÚ¸Ãµ¥´Ê¶ÔÓ¦ËùÓĞID¼°ÆäËùÓĞÖ÷Ìâ
+		if (resultAllIdOfThisWord.hasNext()) {
+			while (resultAllIdOfThisWord.hasNext()) {
+
+				QuerySolution solutionAllIdOfThisWord = resultAllIdOfThisWord
+						.next();
+
+				// 3.ÕÒ³ö¸Ãµ¥´ÊµÄ²áÊıÊôĞÔ
+				String bookOfThisWord = interceptBook(solutionAllIdOfThisWord
+						.get("?propertyID").toString());
+				String gradeOfThisWord = bookToGrade(bookOfThisWord);
+
+				// 4.ÅĞ¶ÏÕâ¸öµ¥´ÊµÄÄê¼¶ÊÇ·ñµÈÓÚËù¸øµÄÄê¼¶,ÈôÏàµÈ£¬Ôò±£´æ¸Ãµ¥´ÊµÄÖ÷Ìâ-¹¦ÄÜÒâÄîºÍÖ÷Ìâ-»°ÌâÊôĞÔ
+				if (gradeOfThisWord.equals(yourGrade)) {
+
+					// ¸ù¾İID²éÕÒ¸Ãµ¥´ÊµÄËùÓĞÖ÷Ìâ
+					ResultSet resultAllPropertiesOfThisId = queryWithManyWays
+							.checkPropertyDependOnId((solutionAllIdOfThisWord
+									.get("?propertyID").toString()));
+					List<String> themeOfThisWord = new ArrayList<String>(); // ÓÃÓÚ±£´æ¸ÃÄê¼¶ÖĞ¸Ãµ¥´ÊµÄËùÓĞÖ÷Ìâ
+					if (resultAllPropertiesOfThisId.hasNext()) {
+						while (resultAllPropertiesOfThisId.hasNext()) {
+
+							QuerySolution solutionAllPropertiesOfThisId = resultAllPropertiesOfThisId
+									.next();
+
+							// ±£´æÖ÷Ìâ
+							themeOfThisWord.add(solutionAllPropertiesOfThisId
+									.get("?propertyFunction").toString());
+							themeOfThisWord.add(solutionAllPropertiesOfThisId
+									.get("?propertyTopic").toString());
+
+							// ±£´æMap
+							allThemeOfThisWordMap.put(
+									solutionAllPropertiesOfThisId.get(
+											"?propertyID").toString(),
+									themeOfThisWord);
+						}
+					}
+
+				} else { // Èô²»ÏàµÈ£¬Ôòcontinue
+					continue;
 				}
 			}
 		} else {
-			System.out.println("çŸ¥è¯†æœ¬ä½“åº“ä¸­æ²¡æœ‰æ­¤å®ä¾‹");
+			System.out.println("¸Ãµ¥´Ê²»´æÔÚÓÚ±¾Ìå¿âÖĞ");
 		}
-		return idAndInstancelabelOfAllInstance;
+
+		// 5.¸ù¾İÄê¼¶²éÕÒËùÓĞµ¥´ÊID
+		List<String> allIdOfThisGradeList = QueryAllWordsIdOfThisGrade(yourGrade);
+
+		while (saveThreeWords.size() <= 3) { // ĞèÒªÔÙËæ»úÕÒÁ½¸ö±ğµÄÖ÷ÌâµÄµ¥´Ê
+			int circleTimes = 0;
+
+			// 6.Ëæ»ú³éÈ¡Ò»¸öID
+			Random ra = new Random();
+			int randomNum = ra.nextInt(allIdOfThisGradeList.size() - 1);
+			System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
+			String randomId = allIdOfThisGradeList.get(randomNum).toString();
+			System.out.println("Ëæ»úµ¥´ÊIDÎª£º" + randomId);
+
+			// 7.¶Ô±ÈIDºÍÖ÷ÌâÊÇ·ñÒ»ÖÂ£¬ÈôÒ»ÖÂÔòÖØĞÂ³éÈ¡£¬Èô²»Ò»ÖÂÔò±£´æ
+			for (String key : allThemeOfThisWordMap.keySet()) { // ±éÀúMap
+				// ÅĞ¶ÏIDÊÇ·ñÒ»ÖÂ
+				if (randomId.equals(key)) { // ÈôÒ»ÖÂ£¬ÔòÌø³ö¼ÌĞøÑ­»·
+					continue;
+				} else {
+					circleTimes++;
+				}
+			}
+
+			if (circleTimes < allThemeOfThisWordMap.size()) { // IDÓĞÖØ¸´£¬ĞèÌø³ö£¬½øĞĞÏÂÒ»´ÎÑ­»·
+				continue;
+			} else { // IDÎŞÖØ¸´£¬ĞèÔÙ¶Ô±ÈÖ÷ÌâÊÇ·ñÓĞÖØ¸´
+				List<String> randomThemeList = new ArrayList<String>(); // ÓÃÓÚÁÙÊ±´æ´¢Á½¸öÖ÷Ìâ
+
+				// ²éÑ¯¸ÃËæ»úIDµÄËùÓĞÊôĞÔ
+				ResultSet resultsAllPropertisOfAWord = queryWithManyWays
+						.checkPropertyDependOnId(randomId);
+				if (resultsAllPropertisOfAWord.hasNext()) {
+					while (resultsAllPropertisOfAWord.hasNext()) {
+
+						QuerySolution solutionAllPropertisOfAWord = resultsAllPropertisOfAWord
+								.next();
+						String functionOfThisWord = substringManage(solutionAllPropertisOfAWord
+								.get("?propertyFunction").toString()); // ¸ÃID¶ÔÓ¦µÄÖ÷Ìâ-¹¦ÄÜÒâÄîÊôĞÔ
+						String topicOfThisWord = substringManage(solutionAllPropertisOfAWord
+								.get("?propertyTopic").toString()); // ¸ÃID¶ÔÓ¦µÄÖ÷Ìâ-»°ÌâÊôĞÔ
+
+						int repeatTimes = 0;
+						// ±éÀúMap×öÖ÷ÌâÊôĞÔ¶Ô±È
+						for (String key : allThemeOfThisWordMap.keySet()) {
+
+							List<String> oneInfoOfMap = allThemeOfThisWordMap
+									.get(key);
+
+							// ´¦Àí×Ö·û´®£ºMapÖĞµÄÊôĞÔºÍËæ»úÊôĞÔ¶¼³éÈ¡³öÀ´
+							String functionOfMapString = substringManage(oneInfoOfMap
+									.get(0));
+							String topicOfMapString = substringManage(oneInfoOfMap
+									.get(1));
+
+							if (functionOfMapString.equals(functionOfThisWord)
+									&& !functionOfThisWord.equals("ÎŞ")) { // ÓëpropertyFunction¶Ô±ÈÈôÒ»ÖÂ£¬ÔòÌø³ö¼ÌĞøÑ­»·
+								randomThemeList.add("ÎŞ");
+								repeatTimes++;
+								continue;
+							} else { // ·ñÔò£¬ÔÙÓëpropertyTopic¶Ô±ÈÈôÒ»ÖÂ£¬ÔòÌø³ö¼ÌĞøÑ­»·
+								if (topicOfMapString.equals(topicOfThisWord)
+										&& !topicOfThisWord.equals("ÎŞ")) { // ÓëpropertyTopic¶Ô±ÈÈôÒ»ÖÂ£¬ÔòÌø³ö¼ÌĞøÑ­»·
+									randomThemeList.add("ÎŞ");
+									repeatTimes++;
+									continue;
+								} else { // ·ñÔò£¬ÁÙÊ±±£´æ
+									// Ê²Ã´¶¼²»×ö
+								}
+							}
+						}
+
+						// ±éÀúMapÖ®ºó£¬ÅĞ¶ÏÖØ¸´´ÎÊı
+						if (repeatTimes == 0) { // Èç¹ûÖØ¸´´ÎÊıÎªÁã£¬Ôò±£´æ
+							// ×îÖÕ±£´æ
+							saveThreeWords
+									.add(subStringManage(solutionAllPropertisOfAWord
+											.get("?instanceLabel").toString()));
+						} else {
+							System.out.println("ÓëËù¸øµ¥´ÊµÄÖ÷ÌâÏàÍ¬");
+						}
+					}
+				} else {
+					System.out.println("²»´æÔÚ¸ÃID");
+				}
+			}
+		}
+
+		return saveThreeWords;
 	}
 
+	@Override
+	public List<String> QueryTwoWordsDependOnDifficulty(String yourGrade,
+			String yourDifficultyOfWord1, String yourDifficultyOfWord2) {
+		List<String> twoWordsDependOnDifficultyList = new ArrayList<String>(); // ÓÃÓÚ±£´æÕâÁ½¸öµ¥´Ê
+
+		// 1.²éÕÒ¸ÃÄê¼¶ËùÓĞµ¥´ÊµÄID
+		List<String> allIdOfThisGradeList = QueryAllWordsIdOfThisGrade(yourGrade);
+
+		while (twoWordsDependOnDifficultyList.size() < 2) { // ĞèÒªÔÙËæ»úÕÒÁ½¸ö¶ÔÓ¦Ëù¸øÄÑ¶ÈµÄµ¥´Ê{
+			// 2.Ëæ»ú³éÈ¡Ò»¸öID
+			Random ra = new Random();
+			int randomNum = ra.nextInt(allIdOfThisGradeList.size() - 1);
+			System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
+			String randomId = allIdOfThisGradeList.get(randomNum).toString();
+			System.out.println("Ëæ»úµ¥´ÊIDÎª£º" + randomId);
+
+			// 3.¶Ô±ÈÄÑ¶ÈÊÇ·ñÒ»ÖÂ£¬ÈôÒ»ÖÂÔòÖØĞÂ³éÈ¡£¬Èô²»Ò»ÖÂÔò±£´æ
+			ResultSet resultsAllPropertisOfAWord = queryWithManyWays
+					.checkPropertyDependOnId(randomId);
+			if (resultsAllPropertisOfAWord.hasNext()) {
+				while (resultsAllPropertisOfAWord.hasNext()) {
+
+					QuerySolution solutionAllPropertisOfAWord = resultsAllPropertisOfAWord
+							.next();
+					String difficultyOfThisWord = substringManage(solutionAllPropertisOfAWord
+							.get("?propertyDifficulty").toString()); // ¸ÃID¶ÔÓ¦µÄÄÑ¶È
+
+					if (twoWordsDependOnDifficultyList.size() == 0) { // ÄÑ¶È1µÄµ¥´ÊÃ»ÕÒµ½
+						if (difficultyOfThisWord.equals(yourDifficultyOfWord1)) { // ÈôËæ»úµ¥´ÊÄÑ¶ÈÓëËù¸øÄÑ¶È1ÏàµÈ£¬Ôò±£´æ¸Ãµ¥´Ê
+							twoWordsDependOnDifficultyList
+									.add(substringManage(solutionAllPropertisOfAWord
+											.get("?instanceLabel").toString()));
+						} else {
+							continue;
+						}
+					} else { // ÄÑ¶È1µÄµ¥´ÊÕÒµ½ÁË£¬ÄÑ¶È2µÄµ¥´ÊÃ»ÕÒµ½
+						if (difficultyOfThisWord.equals(yourDifficultyOfWord2)) { // ÈôËæ»úµ¥´ÊÄÑ¶ÈÓëËù¸øÄÑ¶È1ÏàµÈ£¬Ôò±£´æ¸Ãµ¥´Ê
+							twoWordsDependOnDifficultyList
+									.add(substringManage(solutionAllPropertisOfAWord
+											.get("?instanceLabel").toString()));
+						} else {
+							continue;
+						}
+					}
+				}
+			}
+		}
+
+		return twoWordsDependOnDifficultyList;
+	}
+
+	@Override
+	public List<ResultSet> TwoRandomWordsOfThisGrade(String yourGrade) {
+		List<ResultSet> twoRandomWordsOfThisGradeList = new ArrayList<ResultSet>(); // ÓÃÓÚ±£´æÕâÁ½¸öµ¥´Ê
+
+		// 1.²éÕÒ¸ÃÄê¼¶ËùÓĞµ¥´ÊµÄID
+		List<String> allIdOfThisGradeList = QueryAllWordsIdOfThisGrade(yourGrade);
+		String ID1 = new String();
+
+		while (twoRandomWordsOfThisGradeList.size() < 2) { // ĞèÒªÔÙËæ»úÕÒÁ½¸ö¶ÔÓ¦Ëù¸øÄÑ¶ÈµÄµ¥´Ê{
+			// 2.Ëæ»ú³éÈ¡Ò»¸öID
+			Random ra = new Random();
+			int randomNum = ra.nextInt(allIdOfThisGradeList.size() - 1);
+			System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
+			String randomId = allIdOfThisGradeList.get(randomNum).toString();
+			System.out.println("Ëæ»úµ¥´ÊIDÎª£º" + randomId);
+
+			ResultSet resultsAllPropertisOfAWord = queryWithManyWays
+					.checkPropertyDependOnId(randomId);
+			if (twoRandomWordsOfThisGradeList.size() == 0) { // Èç¹ûÒ»¸öµ¥´Ê»¹Ã»ÕÒµ½£¬¾ÍÌí¼Ó½øList<ResultSet>ÖĞ
+				ID1 = randomId;
+				twoRandomWordsOfThisGradeList.add(resultsAllPropertisOfAWord);
+			} else { // Èç¹ûÕÒµ½ÁËÒ»¸ö£¬ĞèÒª¼ì²éÕÒµ½µÄµÚ¶ş¸öÊÇ·ñÓëµÚÒ»¸öÖØ¸´
+				if (randomId.equals(ID1)) { // Èç¹ûÏàµÈ£¬ÔòÖØ¸´£¬ĞèÌø³öÑ­»·ÖØĞÂ²éÕÒ
+					continue;
+				} else { // Èç¹û²»ÏàµÈ£¬Ôò±£´æ
+					twoRandomWordsOfThisGradeList
+							.add(resultsAllPropertisOfAWord);
+				}
+			}
+		}
+
+		return twoRandomWordsOfThisGradeList;
+	}
+
+	@Override
+	public Boolean IfExistInFuseki(String yourWord) {
+		Boolean ifExistInFuseki = false;
+		ResultSet resultOfyourWord = QueryAWordAllId(yourWord);
+		if (resultOfyourWord.hasNext()) {
+			ifExistInFuseki = true;
+		} else {
+			ifExistInFuseki = false;
+		}
+
+		return ifExistInFuseki;
+	}
+
+	@Override
+	public List<String> QueryTheTextOFThisWord(String yourWord,
+			String yourGrade, String themeOfThisWord) {
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶µ¥´ÊID
+		List<String> allIdOfThisGrade = QueryAllWordsIdOfThisGrade(yourGrade);
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶Í¬Ö÷ÌâµÄËæ»úµ¥´Ê
+		List<String> twoWordsWithSameGradeAndSameThemeList = new ArrayList<String>();
+
+		// ¸ù¾İallIdOfThisGradeÕÒ¸ÃÖ÷ÌâµÄËùÓĞID£¬Ö®ºóËæ»ú³éÈ¡2¸ö
+		List<String> wordsOfThisGradeAndThisTheme = new ArrayList<String>();
+		if (allIdOfThisGrade.isEmpty()) {
+			System.out.println("¸ÃÄê¼¶Ã»ÓĞµ¥´Ê£¡");
+		} else {// ¸ÃÄê¼¶ËùÓĞµ¥´Ê
+			System.out.println("¸ÃÄê¼¶ËùÓĞµ¥´ÊµÄ¸öÊı£º" + allIdOfThisGrade.size());
+
+			for (int i = 0; i < allIdOfThisGrade.size(); i++) {
+
+				ResultSet thisWordResultSet = queryWithManyWays
+						.checkPropertyDependOnId(allIdOfThisGrade.get(i)
+								.toString());
+				// ÅĞ¶ÏÊÇ·ñÔÚÍ¬Ò»Ö÷ÌâÏÂ
+				if (thisWordResultSet.hasNext()) {
+					while (thisWordResultSet.hasNext()) {
+						QuerySolution thisWordSolution = thisWordResultSet
+								.next();
+						String topicOfThisWord = substringManage(thisWordSolution
+								.get("?propertyTopic").toString());
+						String functionOfThisWord = substringManage(thisWordSolution
+								.get("?propertyFunction").toString());
+						if (themeOfThisWord.equals(topicOfThisWord)) {
+							wordsOfThisGradeAndThisTheme
+									.add(subStringManage(thisWordSolution.get(
+											"?instanceLabel").toString()));
+						} else if (themeOfThisWord.equals(functionOfThisWord)) {
+							wordsOfThisGradeAndThisTheme
+									.add(subStringManage(thisWordSolution.get(
+											"?instanceLabel").toString()));
+						} else {
+							// ¸úËù¸øÖ÷Ìâ²»ÊÇÍ¬Ò»ÄÚÈİ£¬ÔòÊ²Ã´¶¼²»×ö
+						}
+					}
+				}
+			}
+
+			// Ëæ»ú³éÈ¡2¸öµ¥´Ê
+			do {
+				Random ra = new Random();
+				int randomNum = ra
+						.nextInt(wordsOfThisGradeAndThisTheme.size() - 1);
+				System.out.println("Ëæ»úË÷ÒıÎª£º" + randomNum);
+				String randomWord = wordsOfThisGradeAndThisTheme.get(randomNum)
+						.toString();
+				System.out.println("Ëæ»úµ¥´ÊÎª£º" + randomWord);
+
+				List<String> randomWordsList = new ArrayList<String>();
+				int j;
+				// ±éÀúËæ»úIDÊı×éÖĞµÄÃ¿Ò»¸öÔªËØ
+				for (j = 0; j < randomWordsList.size(); j++) {
+					// ÅĞ¶ÏÊÇ·ñÓĞÖØ¸´µÄ
+					if (randomWordsList.get(j).equals(yourWord)) {
+						break;
+					}
+					if (randomWordsList.get(j).equals(randomWord)) {
+						break;
+					}
+				}
+				if (j == randomWordsList.size()) {// ÎŞÖØ¸´
+					// °ÑËæ»úID±£´æºÃ
+					randomWordsList.add(randomWord);
+					twoWordsWithSameGradeAndSameThemeList.add(randomWord);
+				} else {
+					continue;
+				}
+
+			} while (twoWordsWithSameGradeAndSameThemeList.size() < 2);
+		}
+
+		return twoWordsWithSameGradeAndSameThemeList;
+	}
+
+	@Override
+	public List<ResultSet> QueryAllWordsOfAUnit(String yourVersion,
+			String yourBook, String yourUnit) {
+		// 1.¸ù¾İ°æ±¾²éÕÒ¸Ã°æ±¾ËùÓĞµ¥´Ê
+		ResultSet allWordsOfAUnitResultSet = queryWithManyWays
+				.checkAllWordsOfAVersion(yourVersion);
+
+		// 2.¸ù¾İpropertyVersionÕÒµ½µÚ2Î»£¨²áÊı£©ºÍµÚ3Î»£¨µ¥Ôª£©£¬²¢Óë¸ø¶¨²áÊıºÍµ¥Ôª½øĞĞ¶Ô±È£¬Èô¶Ô±È³É¹¦Ôò±£´æID
+		// ÓÃList<String>±£´æÏàÓ¦µÄID
+		List<String> allIDOfAUnitList = new ArrayList<String>();
+
+		if (allWordsOfAUnitResultSet.hasNext()) {
+			while (allWordsOfAUnitResultSet.hasNext()) {
+				QuerySolution allWordsOfAUnitSolution = allWordsOfAUnitResultSet
+						.next();
+				// ³éÈ¡³öID
+				String ID = substringManage4(allWordsOfAUnitSolution.get(
+						"?propertyVersion").toString());
+				// ³éÈ¡³öµÚ2Î»£¨²áÊı£©ºÍµÚ3Î»£¨µ¥Ôª£©
+				String stringExcept1 = substringManage5(ID);
+				String book = substringManage6(stringExcept1);
+				String stringExcept2 = substringManage5(stringExcept1);
+				String unit = substringManage6(stringExcept2);
+
+				if (book.equals(yourBook)) {
+					if (unit.equals(yourUnit)) {
+						// ÊÇÎÒÒªµÄ²áÊıºÍµ¥Ôª£¬Ôò±£´æ¸ÃID
+						allIDOfAUnitList.add(ID);
+					} else {
+						// Ê²Ã´¶¼²»×ö
+					}
+				} else {
+					// Ê²Ã´¶¼²»×ö
+				}
+			}
+		} else {
+			System.out.println("¸Ã°æ±¾Ã»ÓĞµ¥´Ê");
+		}
+
+		// 3.¸ù¾İIDÕÒ¸Ãµ¥´ÊµÄËùÓĞÊôĞÔ
+		// ÓÃList<ResultSet>±£´æ×îºóµÄ½á¹û¼¯
+		List<ResultSet> resultOfAllWordsOfAUnit = new ArrayList<ResultSet>();
+		for (int i = 0; i < allIDOfAUnitList.size(); i++) {
+			resultOfAllWordsOfAUnit.add(queryWithManyWays
+					.checkPropertyDependOnId(allIDOfAUnitList.get(i)));
+		}
+
+		return resultOfAllWordsOfAUnit;
+	}
 	@Override
 	public void WriteBackToOwl() throws IOException {
 
 		writeOwl.writeBackToOwl();
 
 	}
+	@Override
+	public void WriteBackToRespectiveOwl() throws IOException {
 
+		/*writeOwl.writeBackToRespectiveOwl();*/
+
+	}
 	@Override
 	public void InsertRelationSameAs(InputStream yourPath)
 			throws BiffException, IOException {
@@ -714,7 +1195,7 @@ public class OntologyManageImpl implements OntologyManage {
 			System.out.println("i = " + i);
 			str = (String[]) list.get(i);
 			for (int j = 0; j < str.length; j++) {
-				System.out.println("è¦æ·»åŠ çš„Excelä¸­çš„å†…å®¹" + str[j]);
+				System.out.println("ÒªÌí¼ÓµÄExcelÖĞµÄÄÚÈİ" + str[j]);
 			}
 
 			String question1 = null;
@@ -722,17 +1203,17 @@ public class OntologyManageImpl implements OntologyManage {
 
 			String question2 = null;
 			question2 = str[1];
-			// ç”¨â€œ_â€ä»£æ›¿â€œ â€
+			// ÓÃ¡°_¡±´úÌæ¡° ¡±
 			question1 = question1.replace(" ", "_");
 			question2 = question2.replace(" ", "_");
 			System.out.println("question1:" + question1);
 			System.out.println("question2:" + question2);
 
-			// åˆ¤æ–­question2æ˜¯å¦åœ¨æ•°æ®åº“ä¸­
+			// ÅĞ¶Ïquestion2ÊÇ·ñÔÚÊı¾İ¿âÖĞ
 			boolean ifInDB = queryWithManyWays.checkIfInDB(question2);
 			String ID = null;
 			if (ifInDB == false) {
-				// æŠ½å–question2çˆ¶ç±»(å¯è°ƒç”¨ç‹æ–‡è¾‰æ¥å£æ‰¾çˆ¶ç±»)åœ¨è¿™é‡Œç”¨æˆ‘è‡ªå·±çš„ç¬¨æ–¹æ³•
+				// ³éÈ¡question2¸¸Àà(¿Éµ÷ÓÃÍõÎÄ»Ô½Ó¿ÚÕÒ¸¸Àà)ÔÚÕâÀïÓÃÎÒ×Ô¼ºµÄ±¿·½·¨
 				String[] sentenceAllClass = { "Where", "What", "How", "When",
 						"Which", "Would", "Shall", "Have", "Why", "Whose",
 						"Is", "May", "Could", "Can", "Did", "Will", "Do",
@@ -755,32 +1236,32 @@ public class OntologyManageImpl implements OntologyManage {
 					}
 				}
 				if (j >= sentenceAllClass.length) {
-					System.out.println("æ²¡æœ‰æ‰¾åˆ°è¯¥å¥å­çš„çˆ¶ç±»");
+					System.out.println("Ã»ÓĞÕÒµ½¸Ã¾ä×ÓµÄ¸¸Àà");
 				}
 
-				// è‹¥æœ‰ç¼©å†™ï¼Œå¦‚ï¼šWhat's
+				// ÈôÓĞËõĞ´£¬Èç£ºWhat's
 				// if (question2Class.contains("'")) {
 				// question2Class = question2Class.substring(0,
 				// question2Class.indexOf("'"));
 				// }
 
-				// æ·»åŠ question2çˆ¶ç±»
+				// Ìí¼Óquestion2¸¸Àà
 				addIndividualAndProperty.addSentenceClass(question2Class,
 						question2);
 
-				// æ·»åŠ æ ‡ç­¾Label
+				// Ìí¼Ó±êÇ©Label
 				addIndividualAndProperty.addSentenceLabel(question2);
 
-				// æ·»åŠ å¥å­ID
-				System.out.println("å¥å­çš„ç‰ˆæœ¬");
+				// Ìí¼Ó¾ä×ÓID
+				System.out.println("¾ä×ÓµÄ°æ±¾");
 				// Scanner sc = new Scanner(System.in);
 				// String sentenceVersion = sc.nextLine();
 				String sentenceVersion = str[2];
-				System.out.println("å¥å­çš„å†Œæ•°ï¼ˆ1-12ï¼‰");
+				System.out.println("¾ä×ÓµÄ²áÊı£¨1-12£©");
 				// sc = new Scanner(System.in);
 				// String sentenceBook = sc.nextLine();
 				String sentenceBook = str[3];
-				System.out.println("å¥å­çš„å•å…ƒæ•°");
+				System.out.println("¾ä×ÓµÄµ¥ÔªÊı");
 				// sc = new Scanner(System.in);
 				// String sentenceUnit = sc.nextLine();
 				String sentenceUnit = str[4];
@@ -788,7 +1269,7 @@ public class OntologyManageImpl implements OntologyManage {
 						+ "/";
 
 				int countID = 1;
-				// æŸ¥æ‰¾å‡ºæ‰€æœ‰ä¸‰å…ƒç»„
+				// ²éÕÒ³öËùÓĞÈıÔª×é
 				ResultSet resultAllTriples = queryWithManyWays.checkAllTriple();
 				ResultSet resultInstanceAllProperty = null;
 				QuerySolution solutionAllTriples = null;
@@ -796,7 +1277,7 @@ public class OntologyManageImpl implements OntologyManage {
 					while (resultAllTriples.hasNext()) {
 						// QuerySolution next()
 						// Moves onto the next result.
-						// ç§»åŠ¨åˆ°ä¸‹ä¸ªresultä¸Š
+						// ÒÆ¶¯µ½ÏÂ¸öresultÉÏ
 						solutionAllTriples = resultAllTriples.next();
 						if (solutionAllTriples.get("?s").toString()
 								.contains("'")) {
@@ -816,21 +1297,21 @@ public class OntologyManageImpl implements OntologyManage {
 																	.toString()
 																	.lastIndexOf(
 																			"'")),
-											"85");// æŸ¥æ‰¾è¯¥å®ä¾‹çš„æ‰€æœ‰ID
-							if (resultInstanceAllProperty.hasNext()) {// ç®—å‡ºåŒç‰ˆæœ¬ã€åŒå†Œæ•°ã€åŒå•å…ƒçš„å•è¯ä¸ªæ•°ï¼Œè®¡ç®—ID
+											"85");// ²éÕÒ¸ÃÊµÀıµÄËùÓĞID
+							if (resultInstanceAllProperty.hasNext()) {// Ëã³öÍ¬°æ±¾¡¢Í¬²áÊı¡¢Í¬µ¥ÔªµÄµ¥´Ê¸öÊı£¬¼ÆËãID
 								while (resultInstanceAllProperty.hasNext()) {
 									QuerySolution solution = resultInstanceAllProperty
 											.next();
 									if (solution.get("?allID").toString()
-											.contains(ID)) {// è‹¥åŒç‰ˆæœ¬ã€åŒå†Œæ•°ã€åŒå•å…ƒ
-										countID++;// åˆ™countIDåŠ 1
+											.contains(ID)) {// ÈôÍ¬°æ±¾¡¢Í¬²áÊı¡¢Í¬µ¥Ôª
+										countID++;// ÔòcountID¼Ó1
 									} else {
 										continue;
 									}
 								}
 							} else {
 								System.out
-										.println("æ— åŒç‰ˆæœ¬ã€åŒå†Œæ•°ã€åŒå•å…ƒçš„å•è¯ï¼ŒcountIDä¸å˜ = 1");
+										.println("ÎŞÍ¬°æ±¾¡¢Í¬²áÊı¡¢Í¬µ¥ÔªµÄµ¥´Ê£¬countID²»±ä = 1");
 							}
 							System.out.println("countID: " + countID);
 						} else {
@@ -839,24 +1320,24 @@ public class OntologyManageImpl implements OntologyManage {
 
 					}
 				} else {
-					System.out.println("æ— ä¸‰å…ƒç»„");
+					System.out.println("ÎŞÈıÔª×é");
 				}
 
-				System.out.println("æœ€åçš„countID: " + countID);
+				System.out.println("×îºóµÄcountID: " + countID);
 				ID = ID + String.valueOf(countID);
-				// æ·»åŠ ID
-				addIndividualAndProperty.addSentencePropertyForModify("å¥å­ID",
+				// Ìí¼ÓID
+				addIndividualAndProperty.addSentencePropertyForModify("¾ä×ÓID",
 						question2, ID, ID);
 
 			} else {
-				// ä»€ä¹ˆéƒ½ä¸åš
+				// Ê²Ã´¶¼²»×ö
 			}
 
-			// æ·»åŠ ç­‰ä»·å…³ç³»
+			// Ìí¼ÓµÈ¼Û¹ØÏµ
 			addIndividualAndProperty.addRelationSameAs(question1, question2);
 			// addIndividualAndProperty.addRelationSameAs(question2, question1);
 		}
-		System.out.println("æ‰¹é‡æ’å…¥ç­‰ä»·å…³ç³»æˆåŠŸï¼");
+		System.out.println("ÅúÁ¿²åÈëµÈ¼Û¹ØÏµ³É¹¦£¡");
 
 	}
 
@@ -867,7 +1348,7 @@ public class OntologyManageImpl implements OntologyManage {
 
 		InfModel inf = myReasoner.ReasonSameAs();
 
-		// é€šè¿‡æ ‡ç­¾Labelæ‰¾URI
+		// Í¨¹ı±êÇ©LabelÕÒURI
 		ResultSet result = queryWithManyWays.checkOnlyInstanceURI(yourSentence);
 
 		System.out.println(yourSentence + " * * =>\n");
@@ -877,7 +1358,7 @@ public class OntologyManageImpl implements OntologyManage {
 			while (result.hasNext()) {
 				// QuerySolution next()
 				// Moves onto the next result.
-				// ç§»åŠ¨åˆ°ä¸‹ä¸ªresultä¸Š
+				// ÒÆ¶¯µ½ÏÂ¸öresultÉÏ
 				QuerySolution solution = result.next();
 				Resource yourSentenceSubject = solution.get("?instance")
 						.asResource();
@@ -904,19 +1385,19 @@ public class OntologyManageImpl implements OntologyManage {
 		while (list.hasNext()) {
 			String[] listStringArray = list.next().toString().split("]");
 
-			for (String ss : listStringArray) {// åˆ†è§£å‡ºæ¯ä¸€ä¸ªä¸‰å…ƒç»„
+			for (String ss : listStringArray) {// ·Ö½â³öÃ¿Ò»¸öÈıÔª×é
 				// System.out.println(ss);
 
 				String str1 = ss.substring(0, ss.indexOf(","));
-				System.out.println("str1â€”â€”â€”â€”" + str1);
+				System.out.println("str1¡ª¡ª¡ª¡ª" + str1);
 				allString.add(str1);
 				index++;
 
 				String str2 = ss.substring(ss.indexOf(",") + 1, ss.length());
-				// System.out.println("str2â€”â€”â€”â€”" + str2);
+				// System.out.println("str2¡ª¡ª¡ª¡ª" + str2);
 
 				String str3 = str2.substring(0, str2.indexOf(","));
-				System.out.println("str3â€”â€”â€”â€”" + str3);
+				System.out.println("str3¡ª¡ª¡ª¡ª" + str3);
 				allString.add(str3);
 				index++;
 
@@ -926,14 +1407,14 @@ public class OntologyManageImpl implements OntologyManage {
 					if (str4.contains(")")) {
 						str4 = str4.substring(str4.indexOf(")") + 1);
 					}
-					System.out.println("str4â€”â€”â€”â€”" + str4 + "\n");
+					System.out.println("str4¡ª¡ª¡ª¡ª" + str4 + "\n");
 					allString.add(str4);
 					index++;
 				} else if (str2.substring((str2.indexOf(",") + 1))
 						.contains("'")) {
 					String str4 = str2.substring(str2.indexOf("\'") + 1,
 							str2.lastIndexOf("\'"));
-					System.out.println("str4â€”â€”â€”â€”" + str4 + "\n");
+					System.out.println("str4¡ª¡ª¡ª¡ª" + str4 + "\n");
 					allString.add(str4);
 					index++;
 				} else {
@@ -942,7 +1423,7 @@ public class OntologyManageImpl implements OntologyManage {
 						str4 = str2.substring(str2.indexOf(",") + 1,
 								str2.indexOf(","));
 					}
-					System.out.println("str4â€”â€”â€”â€”" + str4 + "\n");
+					System.out.println("str4¡ª¡ª¡ª¡ª" + str4 + "\n");
 					allString.add(str4);
 					index++;
 				}
@@ -954,16 +1435,16 @@ public class OntologyManageImpl implements OntologyManage {
 			String everyString = allString.subList(i, i + 1).toString();
 			if (i % 3 == 1) {
 
-				// åˆ é™¤ç¬¬ä¸€ä¸ªç©ºæ ¼
+				// É¾³ıµÚÒ»¸ö¿Õ¸ñ
 				if (everyString.contains("]")) {
 					everyString = everyString.substring(
 							everyString.indexOf(" ") + 1,
 							everyString.indexOf("]"));
 				}
 				if (everyString.equals(RDFS.label.toString())) {
-					returnString.add("å¥å­Label");
+					returnString.add("¾ä×ÓLabel");
 				} else if (everyString.equals(RDF.type.toString())) {
-					returnString.add("é—®é¢˜çˆ¶ç±»");
+					returnString.add("ÎÊÌâ¸¸Àà");
 
 					everyString = allString.subList(i + 1, i + 2).toString();
 					everyString = everyString.substring(
@@ -974,7 +1455,7 @@ public class OntologyManageImpl implements OntologyManage {
 					i++;
 
 				} else if (everyString.equals(OWL.sameAs.toString())) {
-					returnString.add("ç­‰ä»·");
+					returnString.add("µÈ¼Û");
 
 					everyString = allString.subList(i + 1, i + 2).toString();
 					everyString = everyString.substring(
@@ -997,10 +1478,10 @@ public class OntologyManageImpl implements OntologyManage {
 		return returnString;
 	}
 
-	// æ ¹æ®å•è¯æŸ¥çœ‹æ‰€æœ‰åŒçº§å•è¯åŠå…¶å±æ€§
+	// ¸ù¾İµ¥´Ê²é¿´ËùÓĞÍ¬¼¶µ¥´Ê¼°ÆäÊôĞÔ
 	@Override
 	public List<ResultSet> QueryBrotherIndividual(String yourTheme) {
-		// // æŸ¥æ‰¾è¯¥å•è¯çš„çš„ä¸»é¢˜å±æ€§å€¼
+		// // ²éÕÒ¸Ãµ¥´ÊµÄµÄÖ÷ÌâÊôĞÔÖµ
 		// String[] theme = { "?propertyTopic", "?propertyFunction"};
 		// ResultSet resultsTopicValue = queryWithManyWays
 		// .checkTopicValue(yourWord);
@@ -1012,12 +1493,12 @@ public class OntologyManageImpl implements OntologyManage {
 		// while (resultsTopicValue.hasNext()) {
 		// // QuerySolution next()
 		// // Moves onto the next result.
-		// // ç§»åŠ¨åˆ°ä¸‹ä¸ªresultä¸Š
+		// // ÒÆ¶¯µ½ÏÂ¸öresultÉÏ
 		// QuerySolution solutionPropertyValue = resultsTopicValue.next();
 		// for (int i = 0; i < theme.length; i++) {
 		// yourThemeValue = solutionPropertyValue.get(theme[i])
 		// .toString();
-		// if (yourThemeValue.contains("æ— ")) {
+		// if (yourThemeValue.contains("ÎŞ")) {
 		// continue;
 		// } else {
 		// yourThemeValueFlag1 = substringManage3(yourThemeValue);
@@ -1025,10 +1506,10 @@ public class OntologyManageImpl implements OntologyManage {
 		// themeSPARQL = theme[i];
 		// }
 		// }
-		// System.out.println(yourWord + "çš„ä¸»é¢˜æ˜¯ï¼š " + yourThemeValue);
+		// System.out.println(yourWord + "µÄÖ÷ÌâÊÇ£º " + yourThemeValue);
 		// }
 		// } else {
-		// System.out.println("è¯¥å•è¯æ— ä¸»é¢˜");
+		// System.out.println("¸Ãµ¥´ÊÎŞÖ÷Ìâ");
 		// }
 
 		String yourThemeValueFlag1 = null;
@@ -1038,11 +1519,11 @@ public class OntologyManageImpl implements OntologyManage {
 			yourThemeValueFlag1 = substringManage2(yourTheme);
 			yourThemeValueFlag2 = substringManage3(yourTheme);
 
-			// æ ¹æ®ä¸»é¢˜å±æ€§æ ‡è®°ï¼Œæ‰¾å‡ºæ‰€æœ‰åŒ…å«è¯¥æ ‡è®°çš„å±æ€§å€¼ï¼Œè¯¥å±æ€§å€¼ä¸­åŒ…å«å•è¯ID
+			// ¸ù¾İÖ÷ÌâÊôĞÔ±ê¼Ç£¬ÕÒ³öËùÓĞ°üº¬¸Ã±ê¼ÇµÄÊôĞÔÖµ£¬¸ÃÊôĞÔÖµÖĞ°üº¬µ¥´ÊID
 			resultsAllBrotherID = queryWithManyWays.checkBrotherID(
 					yourThemeValueFlag1, yourThemeValueFlag2);
 		} else {
-			// æ ¹æ®ä¸»é¢˜å±æ€§æ ‡è®°ï¼Œæ‰¾å‡ºæ‰€æœ‰åŒ…å«è¯¥æ ‡è®°çš„å±æ€§å€¼ï¼Œè¯¥å±æ€§å€¼ä¸­åŒ…å«å•è¯IDï¼ˆéè¯¾æ ‡å®šä¹‰ä¸»é¢˜ï¼‰
+			// ¸ù¾İÖ÷ÌâÊôĞÔ±ê¼Ç£¬ÕÒ³öËùÓĞ°üº¬¸Ã±ê¼ÇµÄÊôĞÔÖµ£¬¸ÃÊôĞÔÖµÖĞ°üº¬µ¥´ÊID£¨·Ç¿Î±ê¶¨ÒåÖ÷Ìâ£©
 			resultsAllBrotherID = queryWithManyWays.checkBrotherID2(yourTheme);
 		}
 
@@ -1052,15 +1533,15 @@ public class OntologyManageImpl implements OntologyManage {
 				QuerySolution solutionBrotherID = resultsAllBrotherID.next();
 				if (solutionBrotherID.get("?propertyTheme").toString()
 						.contains("|")) {
-					// è·³è¿‡ï¼Œä»€ä¹ˆéƒ½ä¸åš
+					// Ìø¹ı£¬Ê²Ã´¶¼²»×ö
 				} else {
 					String brotherTheme = solutionBrotherID.get(
 							"?propertyTheme").toString();
 
-					// æå–ID
+					// ÌáÈ¡ID
 					String brotherID = substringManage4(brotherTheme);
 
-					// æŸ¥æ‰¾æ¯ä¸ªå•è¯IDå¯¹åº”çš„æ‰€æœ‰å±æ€§
+					// ²éÕÒÃ¿¸öµ¥´ÊID¶ÔÓ¦µÄËùÓĞÊôĞÔ
 					ResultSet resultsBrother = queryWithManyWays
 							.checkPropertyDependOnId(brotherID);
 					brotherAllResultSet.add(resultsBrother);
@@ -1068,28 +1549,34 @@ public class OntologyManageImpl implements OntologyManage {
 
 			}
 		} else {
-			System.out.println("è¯¥ä¸»é¢˜æ— å•è¯");
+			System.out.println("¸ÃÖ÷ÌâÎŞµ¥´Ê");
 		}
 
 		return brotherAllResultSet;
 	}
 
-	// é™æ€æ–¹æ³•-------------------------------------------------------------------------------------------------------------------------------------
-	// å¤„ç†å­—ç¬¦ä¸²ï¼šè¯»å–â€œ)â€å’Œâ€œ@â€ä¹‹é—´çš„å­—ç¬¦ä¸²
+	// ¾²Ì¬·½·¨-------------------------------------------------------------------------------------------------------------------------------------
+	// ´¦Àí×Ö·û´®£ºÈ¡@Ö®Ç°µÄ×Ö·û
+	private static String subStringManage(String string) {
+		string = string.substring(0, string.indexOf("@"));
+		return string;
+	}
+
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡¡°)¡±ºÍ¡°@¡±Ö®¼äµÄ×Ö·û´®
 	private static String substringManage(String string) {
 		String newString = string.substring(string.indexOf(")") + 1,
 				string.lastIndexOf("@"));
 		return newString;
 	}
 
-	// å¤„ç†å­—ç¬¦ä¸²ï¼šè¯»å–ä¸»é¢˜å±æ€§å€¼ä¸­â€œ.â€å’Œâ€œ-â€ä¹‹é—´çš„å­—ç¬¦ä¸²
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡Ö÷ÌâÊôĞÔÖµÖĞ¡°.¡±ºÍ¡°-¡±Ö®¼äµÄ×Ö·û´®
 	private static String substringManage2(String string) {
 		String newString = string.substring(string.indexOf(".") + 1,
 				string.lastIndexOf("-"));
 		return newString;
 	}
 
-	// å¤„ç†å­—ç¬¦ä¸²ï¼šè¯»å–ä¸»é¢˜å±æ€§å€¼ä¸­â€œ)â€ä¹‹åï¼Œæˆ–è€…â€œ)â€å’Œâ€œ-â€ä¹‹é—´çš„å­—ç¬¦ä¸²
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡Ö÷ÌâÊôĞÔÖµÖĞ¡°)¡±Ö®ºó£¬»òÕß¡°)¡±ºÍ¡°-¡±Ö®¼äµÄ×Ö·û´®
 	private static String substringManage3(String string) {
 		String newString = string.substring(string.indexOf(")") + 1,
 				string.length());
@@ -1099,10 +1586,30 @@ public class OntologyManageImpl implements OntologyManage {
 		return newString;
 	}
 
-	// å¤„ç†å­—ç¬¦ä¸²ï¼šè¯»å–ä¸»é¢˜å±æ€§å€¼ä¸­ç¬¬ä¸€ä¸ªâ€œ(â€å’Œç¬¬ä¸€ä¸ªâ€œ)â€ä¹‹é—´çš„å­—ç¬¦ä¸²
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡Ö÷ÌâÊôĞÔÖµÖĞµÚÒ»¸ö¡°(¡±ºÍµÚÒ»¸ö¡°)¡±Ö®¼äµÄ×Ö·û´®
 	private static String substringManage4(String string) {
 		String newString = string.substring(string.indexOf("(") + 1,
 				string.indexOf(")"));
+		return newString;
+	}
+
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡µÚÒ»¸ö¡°/¡±µ½×îºóµÄ×Ö·û´®
+	private static String substringManage5(String string) {
+		String newString = string.substring(string.indexOf("/") + 1,
+				string.length());
+		return newString;
+	}
+
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡´Ó¿ªÊ¼µ½µÚÒ»¸ö¡°/¡±µÄ×Ö·û´®
+	private static String substringManage6(String string) {
+		String newString = string.substring(0, string.indexOf("/"));
+		return newString;
+	}
+
+	// ´¦Àí×Ö·û´®£º¶ÁÈ¡´ÓµÚÒ»¸ö¡°/¡±µ½×îºóµÄ×Ö·û´®
+	private static String substringManage7(String string) {
+		String newString = string.substring(string.indexOf("/") + 1,
+				string.length());
 		return newString;
 	}
 
@@ -1127,19 +1634,19 @@ public class OntologyManageImpl implements OntologyManage {
 			Vector<String> DEFS;
 			Vector<String> W_C;
 
-			// è¯»å–ä¸€ä¸ªNoçš„txtå†…å®¹
+			// ¶ÁÈ¡Ò»¸öNoµÄtxtÄÚÈİ
 			temp = in.readLine();
-			String W_c = temp.substring(4);// è¯»å–ä¸­æ–‡
-			temp = in.readLine();
-			temp = in.readLine();
-			temp = in.readLine();
-			temp = in.readLine();
-			String W_e = temp.substring(temp.indexOf("=") + 1);// è¯»å–è‹±æ–‡
+			String W_c = temp.substring(4);// ¶ÁÈ¡ÖĞÎÄ
 			temp = in.readLine();
 			temp = in.readLine();
 			temp = in.readLine();
 			temp = in.readLine();
-			String DEF = temp.substring(temp.indexOf("=") + 1);// è¯»å–DEF
+			String W_e = temp.substring(temp.indexOf("=") + 1);// ¶ÁÈ¡Ó¢ÎÄ
+			temp = in.readLine();
+			temp = in.readLine();
+			temp = in.readLine();
+			temp = in.readLine();
+			String DEF = temp.substring(temp.indexOf("=") + 1);// ¶ÁÈ¡DEF
 
 			//
 			if (ALLWORDS.containsKey(W_e) && ALLMEANS.containsKey(W_e)) {
@@ -1150,7 +1657,7 @@ public class OntologyManageImpl implements OntologyManage {
 				DEFS = new Vector<String>();
 			}
 
-			/* åˆ¤æ–­ä¹‹å‰æ˜¯å¦å‡ºç°è¿‡åŒæ ·çš„W_Cå’ŒDEF */
+			/* ÅĞ¶ÏÖ®Ç°ÊÇ·ñ³öÏÖ¹ıÍ¬ÑùµÄW_CºÍDEF */
 			Iterator<String> It_1 = W_C.iterator();
 			boolean judge_1 = false;
 			while (It_1.hasNext()) {
@@ -1160,7 +1667,7 @@ public class OntologyManageImpl implements OntologyManage {
 					break;
 				}
 			}
-			/* åˆ¤æ–­ä¹‹å‰æ˜¯å¦å‡ºç°è¿‡åŒæ ·çš„DEF */
+			/* ÅĞ¶ÏÖ®Ç°ÊÇ·ñ³öÏÖ¹ıÍ¬ÑùµÄDEF */
 			Iterator<String> It_2 = DEFS.iterator();
 			boolean judge_2 = false;
 			while (It_2.hasNext()) {
@@ -1186,7 +1693,7 @@ public class OntologyManageImpl implements OntologyManage {
 		// findDEF("man");
 	}
 
-	// æŸ¥æ‰¾Hownetä¸­çš„çˆ¶ç±»
+	// ²éÕÒHownetÖĞµÄ¸¸Àà
 	private static String findDEF(String W_e) {
 		if (W_e.contains("@")) {
 			W_e = subStringManage(W_e);
@@ -1196,13 +1703,13 @@ public class OntologyManageImpl implements OntologyManage {
 		Vector<String> DEFS = ALLMEANS.get(W_e);
 		ArrayList<String> result = new ArrayList<String>();
 		if (DEFS == null || DEFS.size() <= 0) {
-			System.out.println(W_e + "çš„çˆ¶ç±»ä¸åœ¨HowNetä¸­");
+			System.out.println(W_e + "µÄ¸¸Àà²»ÔÚHowNetÖĞ");
 		} else {
 			for (int i = 0; i < DEFS.size(); i++) {
 				// System.out.println(m.get(i)[1]);
 				result.add(DEFS.get(i));
 			}
-			System.out.println("è¯·é€‰æ‹©ä½ éœ€è¦çš„çˆ¶ç±»ï¼ˆä»…è¾“å…¥æ•´æ•°ï¼‰");
+			System.out.println("ÇëÑ¡ÔñÄãĞèÒªµÄ¸¸Àà£¨½öÊäÈëÕûÊı£©");
 			int num = 0;
 			for (String temp : result) {
 				num++;
@@ -1228,29 +1735,23 @@ public class OntologyManageImpl implements OntologyManage {
 			} else {
 				yourClass = yourClass.substring(1, index);
 			}
-			System.out.println("ä½ é€‰æ‹©çš„çˆ¶ç±»ï¼š" + yourClass);
+			System.out.println("ÄãÑ¡ÔñµÄ¸¸Àà£º" + yourClass);
 		}
 		return yourClass;
 	}
 
-	// å¤„ç†å­—ç¬¦ä¸²ï¼šå–@ä¹‹å‰çš„å­—ç¬¦
-	private static String subStringManage(String string) {
-		string = string.substring(0, string.indexOf("@"));
-		return string;
-	}
-
-	// ä¿®æ”¹å•è¯ID
+	// ĞŞ¸Äµ¥´ÊID
 	private static void modifyID(QuerySolution solution,
 			String yourRelationProperty, String yourSPARQLProperty,
 			String yourPropertyLabel) {
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteInstanceProperty(solution.get("?instanceLabel")
 				.toString(), solution.get(yourRelationProperty).toString(),
 				solution.get(yourSPARQLProperty).toString());
 
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		Scanner sc = new Scanner(System.in);
-		System.out.println("è¯·è¾“å…¥ä½ æƒ³ä¿®æ”¹çš„å±æ€§å€¼:");
+		System.out.println("ÇëÊäÈëÄãÏëĞŞ¸ÄµÄÊôĞÔÖµ:");
 		String yourModifyValue = sc.nextLine();
 		String yourID = yourModifyValue;
 		addIndividualAndProperty.addPropertyForModify(yourPropertyLabel,
@@ -1258,13 +1759,13 @@ public class OntologyManageImpl implements OntologyManage {
 				yourID);
 
 		for (int i = 0; i < propertyRelation.length; i++) {
-			if (propertyLabel[i].equals("å•è¯")
-					|| propertyLabel[i].equals("Hownetä¸­çš„çˆ¶ç±»")
-					|| propertyLabel[i].equals("å•è¯ID")) {
-				// ä»€ä¹ˆéƒ½ä¸åš
+			if (propertyLabel[i].equals("µ¥´Ê")
+					|| propertyLabel[i].equals("HownetÖĞµÄ¸¸Àà")
+					|| propertyLabel[i].equals("µ¥´ÊID")) {
+				// Ê²Ã´¶¼²»×ö
 			} else {
 
-				// ä¿å­˜ä¹‹å‰çš„å±æ€§å€¼
+				// ±£´æÖ®Ç°µÄÊôĞÔÖµ
 				String prePropertyValue = solution.get(propertySPARQLValue[i])
 						.toString();
 				System.out.println("prePropertyValue:" + prePropertyValue);
@@ -1272,13 +1773,13 @@ public class OntologyManageImpl implements OntologyManage {
 						.substring(prePropertyValue.indexOf(")") + 1);
 				System.out.println("newPropertyValue:" + newPropertyValue);
 
-				// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+				// É¾³ı¸ÃÈıÔª×é
 				deleteIndividual.deleteInstanceProperty(
 						solution.get("?instanceLabel").toString(), solution
 								.get(propertyRelation[i]).toString(), solution
 								.get(propertySPARQLValue[i]).toString());
 
-				// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+				// Ìí¼ÓĞÂµÄÈıÔª×é
 				addIndividualAndProperty.addPropertyForModify(propertyLabel[i],
 						solution.get("?instanceLabel").toString(),
 						newPropertyValue, yourID);
@@ -1287,55 +1788,55 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 	}
 
-	// ä¿®æ”¹å•è¯çˆ¶ç±»
+	// ĞŞ¸Äµ¥´Ê¸¸Àà
 	private static void modifyClass(QuerySolution solution,
 			String yourSPARQLProperty) {
 		Init();
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteClass(solution.get("?instanceLabel").toString(),
 				solution.get(yourSPARQLProperty).toString());
 
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
-		System.out.println("è¯·é€‰æ‹©ä½ æƒ³ä¿®æ”¹çš„çˆ¶ç±»:");
-		// æŸ¥æ‰¾è¦æ·»åŠ çš„å®ä¾‹çš„Hownetçˆ¶ç±»
+		// Ìí¼ÓĞÂµÄÈıÔª×é
+		System.out.println("ÇëÑ¡ÔñÄãÏëĞŞ¸ÄµÄ¸¸Àà:");
+		// ²éÕÒÒªÌí¼ÓµÄÊµÀıµÄHownet¸¸Àà
 		String yourClass = findDEF(solution.get("?instanceLabel").toString());
 
 		addIndividualAndProperty.addClass(yourClass,
 				solution.get("?instanceLabel").toString());
 	}
 
-	// ä¿®æ”¹å•è¯Label
+	// ĞŞ¸Äµ¥´ÊLabel
 	private static void modifyLabel(QuerySolution solution, String yourID) {
-		// ä¿®æ”¹Label
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// ĞŞ¸ÄLabel
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteLabel(solution.get("?instanceLabel").toString());
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		Scanner sc = new Scanner(System.in);
-		System.out.println("è¯·è¾“å…¥ä½ æƒ³ä¿®æ”¹çš„å±æ€§å€¼:");
+		System.out.println("ÇëÊäÈëÄãÏëĞŞ¸ÄµÄÊôĞÔÖµ:");
 		String yourModifyValue = sc.nextLine();
 		addIndividualAndProperty.addLabel(yourModifyValue);
 
-		// ä¿®æ”¹ç±»
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// ĞŞ¸ÄÀà
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteClass(solution.get("?instanceLabel").toString(),
 				solution.get("?propertyClass").toString());
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		addIndividualAndProperty.addClass(solution.get("?propertyClass")
 				.toString(), yourModifyValue);
 
 		for (int i = 0; i < propertyRelation.length; i++) {
-			if (propertyLabel[i].equals("å•è¯")
-					|| propertyLabel[i].equals("Hownetä¸­çš„çˆ¶ç±»")) {
-				// ä»€ä¹ˆéƒ½ä¸åš
+			if (propertyLabel[i].equals("µ¥´Ê")
+					|| propertyLabel[i].equals("HownetÖĞµÄ¸¸Àà")) {
+				// Ê²Ã´¶¼²»×ö
 			} else {
 
-				// åˆ é™¤ç›¸åº”å±æ€§çš„ä¸‰å…ƒç»„
+				// É¾³ıÏàÓ¦ÊôĞÔµÄÈıÔª×é
 				deleteIndividual.deleteInstanceProperty(
 						solution.get("?instanceLabel").toString(), solution
 								.get(propertyRelation[i]).toString(), solution
 								.get(propertySPARQLValue[i]).toString());
 
-				// æ·»åŠ ç›¸åº”å±æ€§çš„ä¸‰å…ƒç»„
+				// Ìí¼ÓÏàÓ¦ÊôĞÔµÄÈıÔª×é
 				addIndividualAndProperty.addPropertyForModify(propertyLabel[i],
 						yourModifyValue, solution.get(propertySPARQLValue[i])
 								.toString(), yourID);
@@ -1344,37 +1845,37 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 	}
 
-	// ä¿®æ”¹å•è¯å±æ€§
+	// ĞŞ¸Äµ¥´ÊÊôĞÔ
 	private static void modifyPropertyValue(QuerySolution solution,
 			String yourRelationProperty, String yourSPARQLProperty,
 			String yourPropertyLabel, String yourID) {
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteInstanceProperty(solution.get("?instanceLabel")
 				.toString(), solution.get(yourRelationProperty).toString(),
 				solution.get(yourSPARQLProperty).toString());
 
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		Scanner sc = new Scanner(System.in);
-		System.out.println("è¯·è¾“å…¥ä½ æƒ³ä¿®æ”¹çš„å•è¯å±æ€§:");
+		System.out.println("ÇëÊäÈëÄãÏëĞŞ¸ÄµÄµ¥´ÊÊôĞÔ:");
 		String yourModifyValue = sc.nextLine();
 		addIndividualAndProperty.addPropertyForModify(yourPropertyLabel,
 				solution.get("?instanceLabel").toString(), yourModifyValue,
 				yourID);
 	}
 
-	// ä¿®æ”¹å¥å­ID
+	// ĞŞ¸Ä¾ä×ÓID
 	private static void modifySentenceID(QuerySolution solution,
 			String yourRelationProperty, String yourSPARQLProperty,
 			String yourPropertyLabel) {
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteSentenceInstanceProperty(
 				solution.get("?instanceLabel").toString(),
 				solution.get(yourRelationProperty).toString(),
 				solution.get(yourSPARQLProperty).toString());
 
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		Scanner sc = new Scanner(System.in);
-		System.out.println("è¯·è¾“å…¥ä½ æƒ³ä¿®æ”¹çš„å±æ€§å€¼:");
+		System.out.println("ÇëÊäÈëÄãÏëĞŞ¸ÄµÄÊôĞÔÖµ:");
 		String yourModifyValue = sc.nextLine();
 		String yourID = yourModifyValue;
 		addIndividualAndProperty.addSentencePropertyForModify(
@@ -1382,13 +1883,13 @@ public class OntologyManageImpl implements OntologyManage {
 				yourModifyValue, yourID);
 
 		for (int i = 0; i < sentencePropertyRelation.length; i++) {
-			if (sentencePropertyLabel[i].equals("é—®é¢˜")
-					|| sentencePropertyLabel[i].equals("é—®é¢˜å¥å‹")
-					|| sentencePropertyLabel[i].equals("å¥å­ID")) {
-				// ä»€ä¹ˆéƒ½ä¸åš
+			if (sentencePropertyLabel[i].equals("ÎÊÌâ")
+					|| sentencePropertyLabel[i].equals("ÎÊÌâ¾äĞÍ")
+					|| sentencePropertyLabel[i].equals("¾ä×ÓID")) {
+				// Ê²Ã´¶¼²»×ö
 			} else {
 
-				// ä¿å­˜ä¹‹å‰çš„å±æ€§å€¼
+				// ±£´æÖ®Ç°µÄÊôĞÔÖµ
 				String prePropertyValue = solution.get(
 						sentencePropertySPARQLValue[i]).toString();
 				System.out.println("prePropertyValue:" + prePropertyValue);
@@ -1396,7 +1897,7 @@ public class OntologyManageImpl implements OntologyManage {
 						.substring(prePropertyValue.indexOf(")") + 1);
 				System.out.println("newPropertyValue:" + newPropertyValue);
 
-				// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+				// É¾³ı¸ÃÈıÔª×é
 				deleteIndividual
 						.deleteSentenceInstanceProperty(
 								solution.get("?instanceLabel").toString(),
@@ -1405,7 +1906,7 @@ public class OntologyManageImpl implements OntologyManage {
 								solution.get(sentencePropertySPARQLValue[i])
 										.toString());
 
-				// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+				// Ìí¼ÓĞÂµÄÈıÔª×é
 				addIndividualAndProperty.addSentencePropertyForModify(
 						sentencePropertyLabel[i], solution
 								.get("?instanceLabel").toString(),
@@ -1415,22 +1916,22 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 	}
 
-	// ä¿®æ”¹å¥å­çˆ¶ç±»
+	// ĞŞ¸Ä¾ä×Ó¸¸Àà
 	private static void modifySentenceClass(QuerySolution solution,
 			String yourSPARQLProperty) {
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteSentenceClass(solution.get("?instanceLabel")
 				.toString(), solution.get(yourSPARQLProperty).toString());
 
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
-		System.out.println("è¯·é€‰æ‹©ä½ æƒ³ä¿®æ”¹çš„é—®é¢˜å¥å‹:");
-		// æŸ¥æ‰¾è¦æ·»åŠ çš„å®ä¾‹çš„Hownetçˆ¶ç±»
+		// Ìí¼ÓĞÂµÄÈıÔª×é
+		System.out.println("ÇëÑ¡ÔñÄãÏëĞŞ¸ÄµÄÎÊÌâ¾äĞÍ:");
+		// ²éÕÒÒªÌí¼ÓµÄÊµÀıµÄHownet¸¸Àà
 		String yourClass = solution
 				.get("?instanceLabel")
 				.toString()
 				.substring(0,
 						solution.get("?instanceLabel").toString().indexOf("_"));
-		// è‹¥æœ‰ç¼©å†™ï¼Œå¦‚ï¼šWhat's
+		// ÈôÓĞËõĞ´£¬Èç£ºWhat's
 		if (yourClass.contains("'")) {
 			yourClass = yourClass.substring(0, yourClass.indexOf("'"));
 		}
@@ -1439,34 +1940,34 @@ public class OntologyManageImpl implements OntologyManage {
 				solution.get("?instanceLabel").toString());
 	}
 
-	// ä¿®æ”¹å¥å­Label
+	// ĞŞ¸Ä¾ä×ÓLabel
 	private static void modifySentenceLabel(QuerySolution solution,
 			String yourID) {
-		// ä¿®æ”¹Label
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// ĞŞ¸ÄLabel
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteSentenceLabel(solution.get("?instanceLabel")
 				.toString());
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		Scanner sc = new Scanner(System.in);
-		System.out.println("è¯·è¾“å…¥ä½ æƒ³ä¿®æ”¹çš„é—®é¢˜:");
+		System.out.println("ÇëÊäÈëÄãÏëĞŞ¸ÄµÄÎÊÌâ:");
 		String yourModifyValue = sc.nextLine();
 		addIndividualAndProperty.addSentenceLabel(yourModifyValue);
 
-		// ä¿®æ”¹ç±»
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// ĞŞ¸ÄÀà
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteSentenceClass(solution.get("?instanceLabel")
 				.toString(), solution.get("?propertyClass").toString());
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		addIndividualAndProperty.addSentenceClass(solution
 				.get("?propertyClass").toString(), yourModifyValue);
 
 		for (int i = 0; i < sentencePropertyRelation.length; i++) {
-			if (sentencePropertyLabel[i].equals("é—®é¢˜")
-					|| sentencePropertyLabel[i].equals("é—®é¢˜å¥å‹")) {
-				// ä»€ä¹ˆéƒ½ä¸åš
+			if (sentencePropertyLabel[i].equals("ÎÊÌâ")
+					|| sentencePropertyLabel[i].equals("ÎÊÌâ¾äĞÍ")) {
+				// Ê²Ã´¶¼²»×ö
 			} else {
 
-				// åˆ é™¤ç›¸åº”å±æ€§çš„ä¸‰å…ƒç»„
+				// É¾³ıÏàÓ¦ÊôĞÔµÄÈıÔª×é
 				deleteIndividual
 						.deleteSentenceInstanceProperty(
 								solution.get("?instanceLabel").toString(),
@@ -1475,7 +1976,7 @@ public class OntologyManageImpl implements OntologyManage {
 								solution.get(sentencePropertySPARQLValue[i])
 										.toString());
 
-				// æ·»åŠ ç›¸åº”å±æ€§çš„ä¸‰å…ƒç»„
+				// Ìí¼ÓÏàÓ¦ÊôĞÔµÄÈıÔª×é
 				addIndividualAndProperty
 						.addSentencePropertyForModify(sentencePropertyLabel[i],
 								yourModifyValue,
@@ -1486,59 +1987,59 @@ public class OntologyManageImpl implements OntologyManage {
 		}
 	}
 
-	// ä¿®æ”¹å¥å­å±æ€§
+	// ĞŞ¸Ä¾ä×ÓÊôĞÔ
 	private static void modifySentencePropertyValue(QuerySolution solution,
 			String yourRelationProperty, String yourSPARQLProperty,
 			String yourPropertyLabel, String yourID) {
-		// åˆ é™¤è¯¥ä¸‰å…ƒç»„
+		// É¾³ı¸ÃÈıÔª×é
 		deleteIndividual.deleteSentenceInstanceProperty(
 				solution.get("?instanceLabel").toString(),
 				solution.get(yourRelationProperty).toString(),
 				solution.get(yourSPARQLProperty).toString());
 
-		// æ·»åŠ æ–°çš„ä¸‰å…ƒç»„
+		// Ìí¼ÓĞÂµÄÈıÔª×é
 		Scanner sc = new Scanner(System.in);
-		System.out.println("è¯·è¾“å…¥ä½ æƒ³ä¿®æ”¹çš„å¥å­å±æ€§:");
+		System.out.println("ÇëÊäÈëÄãÏëĞŞ¸ÄµÄ¾ä×ÓÊôĞÔ:");
 		String yourModifyValue = sc.nextLine();
 		addIndividualAndProperty.addSentencePropertyForModify(
 				yourPropertyLabel, solution.get("?instanceLabel").toString(),
 				yourModifyValue, yourID);
 	}
 
-	// è¯»å–Excelï¼Œè¿”å›å­—ç¬¦ä¸²æ•°ç»„
+	// ¶ÁÈ¡Excel£¬·µ»Ø×Ö·û´®Êı×é
 	private static List<String[]> readExcel(InputStream yourPath)
 			throws BiffException, IOException {
-		// åˆ›å»ºä¸€ä¸ªlist ç”¨æ¥å­˜å‚¨è¯»å–çš„å†…å®¹
+		// ´´½¨Ò»¸ölist ÓÃÀ´´æ´¢¶ÁÈ¡µÄÄÚÈİ
 		List<String[]> list = new ArrayList<String[]>();
 		Workbook rwb = null;
 		Cell cell = null;
-		// è·å–Excelæ–‡ä»¶å¯¹è±¡
+		// »ñÈ¡ExcelÎÄ¼ş¶ÔÏó
 		rwb = Workbook.getWorkbook(yourPath);
 
-		// è·å–æ–‡ä»¶çš„æŒ‡å®šå·¥ä½œè¡¨ é»˜è®¤çš„ç¬¬ä¸€ä¸ª
+		// »ñÈ¡ÎÄ¼şµÄÖ¸¶¨¹¤×÷±í Ä¬ÈÏµÄµÚÒ»¸ö
 		Sheet sheet = rwb.getSheet(0);
 
-		// è¡Œæ•°(è¡¨å¤´çš„ç›®å½•ä¸éœ€è¦ï¼Œä»1å¼€å§‹)
+		// ĞĞÊı(±íÍ·µÄÄ¿Â¼²»ĞèÒª£¬´Ó1¿ªÊ¼)
 		for (int i = 0; i < sheet.getRows(); i++) {
 
-			// åˆ›å»ºä¸€ä¸ªæ•°ç»„ ç”¨æ¥å­˜å‚¨æ¯ä¸€åˆ—çš„å€¼
+			// ´´½¨Ò»¸öÊı×é ÓÃÀ´´æ´¢Ã¿Ò»ÁĞµÄÖµ
 			String[] str = new String[sheet.getColumns()];
 
-			// åˆ—æ•°
+			// ÁĞÊı
 			for (int j = 0; j < sheet.getColumns(); j++) {
 
-				// è·å–ç¬¬iè¡Œï¼Œç¬¬jåˆ—çš„å€¼
+				// »ñÈ¡µÚiĞĞ£¬µÚjÁĞµÄÖµ
 				cell = sheet.getCell(j, i);
 				str[j] = cell.getContents();
 
 			}
-			// æŠŠåˆšè·å–çš„åˆ—å­˜å…¥list
+			// °Ñ¸Õ»ñÈ¡µÄÁĞ´æÈëlist
 			list.add(str);
 		}
 		return list;
 	}
 
-	// æŸ¥è¯¢Labelï¼Œå¹¶è¿”å›å®Œæ•´æ— æ‚è´¨Label
+	// ²éÑ¯Label£¬²¢·µ»ØÍêÕûÎŞÔÓÖÊLabel
 	private static String QueryLabelAndReturn(String URI) {
 		ResultSet resultPropertyLabel = queryWithManyWays
 				.checkOnlyPropertyLabel(URI);
@@ -1556,6 +2057,109 @@ public class OntologyManageImpl implements OntologyManage {
 			}
 		}
 		return label;
+	}
+
+	// ²éÑ¯Ä³Äê¼¶ËùÓĞµ¥´ÊID
+	private static List<String> QueryAllWordsIdOfThisGrade(String yourGrade) {
+		// ¸ù¾İÄê¼¶¼ÆËã²áÊı
+		int yourGradeInt = Integer.parseInt(yourGrade);
+		yourGradeInt = yourGradeInt * 2;
+
+		// ²éÕÒËùÓĞµ¥´ÊµÄID
+		ResultSet resultsIdOfAllWords = queryWithManyWays.checkIdOfAllWords();
+
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶µ¥´ÊID
+		List<String> allIdOfThisGrade = new ArrayList<String>();
+
+		// É¸Ñ¡¸ÃÄê¼¶µÄID
+		if (resultsIdOfAllWords.hasNext()) {
+			while (resultsIdOfAllWords.hasNext()) {
+				// QuerySolution next()
+				// Moves onto the next result.
+				// ÒÆ¶¯µ½ÏÂ¸öresultÉÏ
+				QuerySolution solutionIdOfAllWords = resultsIdOfAllWords.next();
+				String propertyId = solutionIdOfAllWords.get("?propertyID")
+						.toString();
+
+				// ½ØÈ¡µô²áÊıÖ®Ç°µÄĞÅÏ¢
+				String propertyBook = interceptBook(propertyId);
+				if (String.valueOf(yourGradeInt).equals(propertyBook)
+						|| String.valueOf(yourGradeInt - 1)
+								.equals(propertyBook)) {
+					allIdOfThisGrade.add(solutionIdOfAllWords
+							.get("?propertyID").toString());
+				}
+			}
+		}
+		return allIdOfThisGrade;
+	}
+
+	// ²éÑ¯Ä³Äê¼¶ËùÓĞµ¥´ÊID
+	private static List<String> QueryAllSentencesIdOfThisGrade(String yourGrade) {
+		// ²éÕÒËùÓĞ¾ä×ÓµÄID
+		ResultSet resultsIDOfAllWords = queryWithManyWays
+				.checkIdOfAllSentences();
+
+		// ÓÃ¶¯Ì¬Êı×é±£´æ¸ÃÄê¼¶¾ä×ÓID
+		List<String> allSentencesIdOfThisGrade = new ArrayList<String>();
+
+		// É¸Ñ¡¸ÃÄê¼¶µÄID
+		if (resultsIDOfAllWords.hasNext()) {
+			while (resultsIDOfAllWords.hasNext()) {
+				// QuerySolution next()
+				// Moves onto the next result.
+				// ÒÆ¶¯µ½ÏÂ¸öresultÉÏ
+				QuerySolution solutionIdOfAllWords = resultsIDOfAllWords.next();
+				String propertyId = solutionIdOfAllWords.get("?propertyID")
+						.toString();
+				// ½ØÈ¡µô²áÊıÖ®Ç°µÄĞÅÏ¢
+				String stringOutOfVersion = propertyId.substring(propertyId
+						.indexOf("/") + 1);
+				String propertyBook = stringOutOfVersion.substring(0,
+						stringOutOfVersion.indexOf("/"));
+				// System.out.println("¸Ãµ¥´ÊµÄ²áÊı£º" + propertyBook);
+				if (yourGrade.equals(propertyBook)) {
+					allSentencesIdOfThisGrade.add(solutionIdOfAllWords.get(
+							"?propertyID").toString());
+				}
+			}
+		} else {
+			System.out.println("¸ÃID²»¶ÔÓ¦ÈÎºÎÈıÔª×é");
+		}
+
+		return allSentencesIdOfThisGrade;
+	}
+
+	// Í¨¹ıID½ØÈ¡³ö²áÊıĞÅÏ¢
+	private static String interceptBook(String yourId) {
+		// ½ØÈ¡µô²áÊıÖ®Ç°µÄĞÅÏ¢
+		String stringOutOfVersion = yourId.substring(yourId.indexOf("/") + 1);
+		String propertyBook = stringOutOfVersion.substring(0,
+				stringOutOfVersion.indexOf("/"));
+		// System.out.println("¸Ãµ¥´ÊµÄ²áÊı£º" + propertyBook);
+
+		return propertyBook;
+	}
+
+	// ¸ù¾İ²áÊı¼ÆËã³öËùÔÚÄê¼¶
+	private static String bookToGrade(String yourBook) {
+
+		int bookOfThisWordInt = Integer.valueOf(yourBook);
+		int gradeOfThisWord = (int) Math.ceil((float) bookOfThisWordInt / 2);
+		String yourBookString = String.valueOf(gradeOfThisWord);
+
+		return yourBookString;
+	}
+
+	// ¸ù¾İÄê¼¶¼ÆËã²áÊı
+	private static List<String> gradeToBook(String yourGrade) {
+		List<String> book = new ArrayList<String>();
+		int gradeOfThisWordInt = Integer.valueOf(yourGrade);
+		for (int i = 0; i < 2; i++) {
+			int bookOfThisWord = gradeOfThisWordInt * 2 - i;
+			book.add(String.valueOf(bookOfThisWord));
+		}
+		return book;
 	}
 
 }

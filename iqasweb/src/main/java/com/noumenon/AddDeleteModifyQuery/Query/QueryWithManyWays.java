@@ -1,64 +1,73 @@
 package com.noumenon.AddDeleteModifyQuery.Query;
+
 import com.hp.hpl.jena.query.ResultSet;
 
 public interface QueryWithManyWays {
 
 	/**
-	 * æ ¹æ®IdæŸ¥æ‰¾å•è¯åŠå…¶å±æ€§ï¼šè¿”å›ResultSet----------------------------------
+	 * ¸ù¾İId²éÕÒµ¥´Ê¼°ÆäÊôĞÔ£º·µ»ØResultSet----------------------------------
 	 * 
 	 * @param yourId
-	 *            ï¼šå•è¯ID
+	 *            £ºµ¥´ÊID
 	 * @return
 	 */
 	public ResultSet checkPropertyDependOnId(String yourId);
 
 	/**
-	 * æ ¹æ®IdæŸ¥æ‰¾å¥å­åŠå…¶å±æ€§ï¼šè¿”å›å€¼ResultSet---------------------------------
+	 * ¸ù¾İId²éÕÒ¾ä×Ó¼°ÆäÊôĞÔ£º·µ»ØÖµResultSet---------------------------------
 	 * 
 	 * @param yourId
-	 *            ï¼šå¥å­ID
+	 *            £º¾ä×ÓID
 	 * @return
 	 */
 	public ResultSet checkSentencePropertyDependOnId(String yourId);
 
 	/**
-	 * æŸ¥æ‰¾ä¸€ä¸ªç±»ä¸‹çš„æ‰€æœ‰å®ä¾‹æ ‡ç­¾Labelï¼šè¿”å›å€¼ResultSet--------------------------
+	 * ²éÕÒÒ»¸öÀàÏÂµÄËùÓĞÊµÀı±êÇ©Label£º·µ»ØÖµResultSet--------------------------
 	 * 
 	 * @param yourClass
-	 *            ï¼šå•è¯çš„ç±»
+	 *            £ºµ¥´ÊµÄÀà
 	 * @return
 	 */
 	public ResultSet checkInstance(String yourClass);
+	
+	/**
+	 * ²éÕÒ¸Ã¸¸ÀàÏÂµÄËùÓĞID£º·µ»ØÖµResultSet-----------------------------------
+	 * 
+	 * @param yourClass
+	 * @return
+	 */
+	public ResultSet checkIDDependOnClass(String yourClass);
 
 	/**
-	 * æŸ¥æ‰¾è¯¥å®ä¾‹çš„æ‰€æœ‰å®ä¾‹åŠå…¶å±æ€§ï¼šè¿”å›å€¼ResultSet-------------------------------
+	 * ²éÕÒ¸ÃÊµÀıµÄËùÓĞÊµÀı¼°ÆäÊôĞÔ£º·µ»ØÖµResultSet-------------------------------
 	 * 
 	 * @param yourWord
-	 *            ï¼šå•è¯
+	 *            £ºµ¥´Ê
 	 * @return
 	 */
 	public ResultSet checkProperty(String yourWord);
 	
 	/**
-	 * æŸ¥è¯¢ä¸€ä¸ªå•è¯å¯¹åº”çš„æ‰€æœ‰ID
+	 * ²éÑ¯Ò»¸öµ¥´Ê¶ÔÓ¦µÄËùÓĞID
 	 * 
 	 * @param yourWord
-	 *            ï¼šå•è¯
+	 *            £ºµ¥´Ê
 	 * @return
 	 */
 	public ResultSet checkAllIdOfAnWord(String yourWord);
 	
 	/**
-	 * æŸ¥è¯¢ä¸€ä¸ªå¥å­å¯¹åº”çš„æ‰€æœ‰ID
+	 * ²éÑ¯Ò»¸ö¾ä×Ó¶ÔÓ¦µÄËùÓĞID
 	 * 
 	 * @param yourSentence
-	 *                ï¼šå¥å­
+	 *                £º¾ä×Ó
 	 * @return
 	 */
 	public ResultSet checkAllIdOfAnSentence(String yourSentence);
 
 	/**
-	 * æ ¹æ®å®ä¾‹åç§°æŸ¥æ‰¾å¥å­æ‰€æœ‰å±æ€§å€¼ï¼šè¿”å›å€¼ResultSet-----------------------------
+	 * ¸ù¾İÊµÀıÃû³Æ²éÕÒ¾ä×ÓËùÓĞÊôĞÔÖµ£º·µ»ØÖµResultSet-----------------------------
 	 * 
 	 * @param yourSentence
 	 * @return
@@ -66,7 +75,7 @@ public interface QueryWithManyWays {
 	public ResultSet checkSentenceProperty(String yourSentence);
 
 	/**
-	 * åˆ¤æ–­æ•°æ®åº“ä¸­æ˜¯å¦å­˜åœ¨æ­¤å®ä¾‹ï¼šè¿”å›å€¼boolean--------------------------------
+	 * ÅĞ¶ÏÊı¾İ¿âÖĞÊÇ·ñ´æÔÚ´ËÊµÀı£º·µ»ØÖµboolean--------------------------------
 	 * 
 	 * @param Instance
 	 * @return
@@ -74,14 +83,14 @@ public interface QueryWithManyWays {
 	public boolean checkIfInDB(String Instance);
 
 	/**
-	 * æŸ¥æ‰¾æ‰€æœ‰ä¸‰å…ƒç»„ï¼šè¿”å›å€¼ResultSet--------------------------------------
+	 * ²éÕÒËùÓĞÈıÔª×é£º·µ»ØÖµResultSet--------------------------------------
 	 * 
 	 * @return
 	 */
 	public ResultSet checkAllTriple();
 	
 	/**
-	 * æŸ¥æ‰¾ç­‰ä»·sameAså…³ç³»
+	 * ²éÕÒµÈ¼ÛsameAs¹ØÏµ
 	 * 
 	 * @param yourInstance
 	 * @return
@@ -89,7 +98,7 @@ public interface QueryWithManyWays {
 	public ResultSet checkPropertySameAs(String yourInstance);
 	
 	/**
-	 * åªæ‰¾å®ä¾‹çš„Label
+	 * Ö»ÕÒÊµÀıµÄLabel
 	 * 
 	 * @param yourInstance
 	 * @return
@@ -97,7 +106,7 @@ public interface QueryWithManyWays {
 	public ResultSet checkOnlyInstanceURI(String yourInstance);
 	
 	/**
-	 * åªæ‰¾å±æ€§åç§°
+	 * Ö»ÕÒÊôĞÔÃû³Æ
 	 * 
 	 * @param yourPropertyURI
 	 * @return
@@ -105,7 +114,7 @@ public interface QueryWithManyWays {
 	public ResultSet checkOnlyPropertyLabel(String yourPropertyURI);
 	
 	/**
-	 * æ ¹æ®IDæŸ¥æ‰¾å…¶çˆ¶ç±»+æ ‡ç­¾Label+IDçš„ä¸‰å…ƒç»„(ä¸ºä¿®æ”¹ç‰¹ä¾‹è®¾è®¡çš„)
+	 * ¸ù¾İID²éÕÒÆä¸¸Àà+±êÇ©Label+IDµÄÈıÔª×é(ÎªĞŞ¸ÄÌØÀıÉè¼ÆµÄ)
 	 * 
 	 * @param yourID
 	 * @return
@@ -113,14 +122,14 @@ public interface QueryWithManyWays {
 	public ResultSet checkClass_Label(String yourID);
 	
 	/**
-	 * æ ¹æ®å•è¯æŸ¥æ‰¾å®ƒçš„ä¸»é¢˜å±æ€§å€¼
+	 * ¸ù¾İµ¥´Ê²éÕÒËüµÄÖ÷ÌâÊôĞÔÖµ
 	 * @param yourWord
 	 * @return
 	 */
 	public ResultSet checkTopicValue(String yourWord);
 	
 	/**
-	 * æ ¹æ®ä¸»é¢˜å±æ€§æ ‡è®°ï¼Œæ‰¾å‡ºæ‰€æœ‰åŒ…å«è¯¥æ ‡è®°çš„å±æ€§å€¼ï¼Œè¯¥å±æ€§å€¼ä¸­åŒ…å«å•è¯ID
+	 * ¸ù¾İÖ÷ÌâÊôĞÔ±ê¼Ç£¬ÕÒ³öËùÓĞ°üº¬¸Ã±ê¼ÇµÄÊôĞÔÖµ£¬¸ÃÊôĞÔÖµÖĞ°üº¬µ¥´ÊID
 	 * @param yourThemeValueFlag1
 	 * @param yourThemeValueFlag2
 	 * @return
@@ -128,55 +137,76 @@ public interface QueryWithManyWays {
 	public ResultSet checkBrotherID(String yourThemeValueFlag1, String yourThemeValueFlag2);
 	
 	/**
-	 * æ ¹æ®ä¸»é¢˜å±æ€§æ ‡è®°ï¼Œæ‰¾å‡ºæ‰€æœ‰åŒ…å«è¯¥æ ‡è®°çš„å±æ€§å€¼ï¼Œè¯¥å±æ€§å€¼ä¸­åŒ…å«å•è¯ID(ä¸»é¢˜ä¸ºè‡ªå·±å®šä¹‰çš„)
+	 * ¸ù¾İÖ÷ÌâÊôĞÔ±ê¼Ç£¬ÕÒ³öËùÓĞ°üº¬¸Ã±ê¼ÇµÄÊôĞÔÖµ£¬¸ÃÊôĞÔÖµÖĞ°üº¬µ¥´ÊID(Ö÷ÌâÎª×Ô¼º¶¨ÒåµÄ)
 	 * @param yourTheme
 	 * @return
 	 */
 	public ResultSet checkBrotherID2(String yourTheme);
 	
 	/**
-	 * æ ¹æ®å¹´çº§éšæœºæ‰¾å‡º5ä¸ªå•è¯å’Œ2ä¸ªå¥å­
+	 * ¸ù¾İÄê¼¶Ëæ»úÕÒ³ö5¸öµ¥´ÊºÍ2¸ö¾ä×Ó
 	 * @param yourGrade
 	 * @return
 	 */
 	public ResultSet checkAllWordsOfThisGrade(String yourGrade);
 	
 	/**
-	 * æŸ¥è¯¢æ‰€æœ‰çš„å•è¯çš„ID
+	 * ²éÑ¯ËùÓĞµÄµ¥´ÊµÄID
 	 * @return
 	 */
 	public ResultSet checkIdOfAllWords();
 	
 	/**
-	 * æŸ¥è¯¢æ‰€æœ‰çš„å¥å­çš„ID
+	 * ²éÑ¯ËùÓĞµÄ¾ä×ÓµÄID
 	 * @return
 	 */
 	public ResultSet checkIdOfAllSentences();
 	
+	/**
+	 * ²éÑ¯Ä³Äê¼¶ËùÓĞµ¥´ÊµÄID
+	 * @return
+	 */
+	public ResultSet checkAllIdOfThisGrade(String yourGrade);
+	
+	/**
+	 * ²éÑ¯Ä³Ö÷Ìâ-¹¦ÄÜÒâÄîµÄËùÓĞµ¥´ÊµÄID
+	 * @param yourPropertyFunction
+	 * @return
+	 */
+	public ResultSet checkAllIdOfThisPropertyFunction(String yourPropertyFunction);
+	
+	/**
+	 * ¸ù¾İ°æ±¾²éÕÒ¸Ã°æ±¾ËùÓĞµ¥´Ê£º·µ»ØÖµResultSet-------------------------------
+	 * @param yourVersion
+	 * @return
+	 */
+	public ResultSet checkAllWordsOfAVersion(String yourVersion);
+	
+	
 	// -----------------------------------------------------------------------------------------
 	/**
-	 * æ ¹æ®å®ä¾‹+æŸå±æ€§+å±æ€§å€¼ï¼ŒæŸ¥æ‰¾è¯¥ä¸‰å…ƒç»„ï¼šè¿”å›å€¼ResultSet------------------------
+	 * ¸ù¾İÊµÀı+Ä³ÊôĞÔ+ÊôĞÔÖµ£¬²éÕÒ¸ÃÈıÔª×é£º·µ»ØÖµResultSet------------------------
 	 * 
 	 * @param yourInstance
-	 *            ï¼šå®ä¾‹æ ‡ç­¾
+	 *            £ºÊµÀı±êÇ©
 	 * @param propertyLabel
-	 *            ï¼šå±æ€§å
+	 *            £ºÊôĞÔÃû
 	 * @param flag
-	 *            ï¼šæ ‡å¿—ï¼ˆå•è¯ä¸ºâ€œ31â€ï¼Œ å¥å­ä¸ºâ€œ85â€ï¼‰
+	 *            £º±êÖ¾£¨µ¥´ÊÎª¡°31¡±£¬ ¾ä×ÓÎª¡°85¡±£©
 	 * @return
 	 */
 	public ResultSet checkThisTriple(String yourInstance, String propertyLabel,
 			String flag);
 
 	/**
-	 * æ ¹æ®å®ä¾‹LabelæŸ¥å…¶æ‰€æœ‰IDï¼šè¿”å›å€¼ResultSet-------------------------------
+	 * ¸ù¾İÊµÀıLabel²éÆäËùÓĞID£º·µ»ØÖµResultSet-------------------------------
 	 * 
 	 * @param yourInstance
-	 *            ï¼šå®ä¾‹æ ‡ç­¾
+	 *            £ºÊµÀı±êÇ©
 	 * @param flag
-	 * @returnï¼šæ ‡å¿—ï¼ˆå•è¯ä¸ºâ€œ31â€ï¼Œ å¥å­ä¸ºâ€œ85â€ï¼‰
+	 * @return£º±êÖ¾£¨µ¥´ÊÎª¡°31¡±£¬ ¾ä×ÓÎª¡°85¡±£©
 	 */
 	public ResultSet checkAllID(String yourInstance, String flag);
+	
 
 }
-
