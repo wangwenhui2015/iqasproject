@@ -1,33 +1,24 @@
 package com.cnu.iqas.controller.web.ontology;
 
-import java.io.File;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cnu.iqas.bean.Recommend.Answer;
 import com.cnu.iqas.bean.Recommend.Question;
-import com.cnu.iqas.bean.Recommend.QuestionAnswer;
-import com.cnu.iqas.bean.iword.Iword;
 import com.cnu.iqas.bean.ontology.ISentence;
 import com.cnu.iqas.bean.user.User;
 import com.cnu.iqas.service.Recommend.AnswerService;
-import com.cnu.iqas.service.Recommend.QuestionAnswerService;
 import com.cnu.iqas.service.Recommend.QuestionService;
 import com.cnu.iqas.service.ontology.SentenceSim;
 
@@ -195,7 +186,7 @@ public class SearchController {
 				   } else {
 					// 在二维数据表中无法查询的时候，在本体库中进行查询。根据句子进行查询
 					System.out.println("根据句子本体库查询");
-					ISentence sentence = sentenceSim.maxSimilar(text);
+					ISentence sentence = sentenceSim.maxSimilar(text, null);
 					if (sentence != null) {
 						System.out.println("进入本体查询！");
 						sentenceMap.put("sentencequestion",sentence.getInstanceLabel() );
@@ -367,7 +358,7 @@ public class SearchController {
 	    			} else {
 	    				// 在二维数据表中无法查询的时候，在本体库中进行查询。根据句子进行查询
 	    				System.out.println("根据句子本体库查询");
-	    				ISentence sentence = sentenceSim.maxSimilar(text);
+	    				ISentence sentence = sentenceSim.maxSimilar(text, null);
 	    				if (sentence != null) {
 	    					System.out.println("进入本体查询！");
 	    					sentenceMap.put("sentencequestion", sentence.getInstanceLabel());
@@ -539,7 +530,7 @@ public class SearchController {
 			} else {
 				// 在二维数据表中无法查询的时候，在本体库中进行查询。根据句子进行查询
 				System.out.println("根据句子本体库查询");
-				ISentence sentence = sentenceSim.maxSimilar(text);
+				ISentence sentence = sentenceSim.maxSimilar(text, null);
 				if (sentence != null) {
 					System.out.println("进入本体查询！");
 					sentenceMap.put("sentencequestion", sentence.getInstanceLabel());
