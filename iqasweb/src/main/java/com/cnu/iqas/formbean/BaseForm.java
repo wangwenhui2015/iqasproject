@@ -1,7 +1,11 @@
 package com.cnu.iqas.formbean;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +15,9 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.iqas.constant.ResourceConstant;
@@ -225,5 +231,58 @@ public class BaseForm {
 	public static String getExt(String fileFileName){
 		return fileFileName.substring(fileFileName.lastIndexOf('.')+1).toLowerCase();
 	}
-	
+	/**
+	 * 下载文件/图片
+	 * @param response  响应请求
+	 * @param fileResource  文件资源
+	 * @param isLoad 下载还是查看模式 ,false:查看模式，true:下载模式
+	 */
+	private static void loadFile(HttpServletResponse response,Resource fileResource,boolean isLoad){
+		
+		response.setCharacterEncoding("utf-8");
+        //response.setContentType("multipart/form-data");
+        if( isLoad){
+        response.setHeader("Content-Disposition", "attachment;fileName="
+                + fileResource.getFilename());
+        
+        }else{
+        	response.setContentType("video/mp4");
+        }
+        System.out.println(fileResource.getFilename()+"==============");
+		//3.建立文件
+		try {
+			//4.建立字节读取流
+			InputStream is = fileResource.getInputStream();
+			//5.建立缓冲流
+			BufferedInputStream bis = new BufferedInputStream(is);
+			//6.获取response的输出流
+			OutputStream os = response.getOutputStream();
+			//7.缓冲器2kb
+			byte[] buf= new byte[2048];
+			//8.进行传输
+			int len=0;
+			int count=0;
+			while( (len=bis.read(buf))!=-1)
+			{
+				count+=len;
+				os.write(buf, 0, len);
+			}
+			//9.刷新缓冲器
+			os.flush();
+			os.close();
+			bis.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * 加载文件
+	 * @param response 响应请求
+	 * @param fileResource  文件资源
+	 */
+	public static void loadFile(HttpServletResponse response,Resource fileResource){
+		loadFile( response, fileResource,false);
+	}
 }

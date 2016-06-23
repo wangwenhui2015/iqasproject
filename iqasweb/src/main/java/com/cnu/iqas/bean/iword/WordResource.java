@@ -20,6 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="t_resource")
 @GenericGenerator(name="uuidGenderator",strategy="uuid")
+@Deprecated
 public class WordResource {
 	/**
 	 * 资源id
@@ -83,7 +84,6 @@ public class WordResource {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	@Column(nullable=false)
 	public String getWordId() {
 		return wordId;
 	}

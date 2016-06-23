@@ -28,7 +28,6 @@ public interface WordResourceService  extends IfetchResource<WordResource>{
 	 */
 	public String saveWordResourceFile(ServletContext servletContext, CommonsMultipartFile file, int filetype) throws Exception;
 
-	
 	/**
 	 * 根据单词资源id查询单词资源
 	 * @param id

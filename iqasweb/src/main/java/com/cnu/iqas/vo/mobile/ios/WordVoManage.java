@@ -173,28 +173,32 @@ public class WordVoManage {
 						.append(extend).append(splitChar);
 				
 				//3.单词本身的图片（图片）
-				List<WordResource> wResouces= wordResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_IMAGE);
+				//List<WordResource> wResouces= wordResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_IMAGE);
+				List<WordResource> wResouces= wordResourceService.findResourceByName(pe.getInstanceLabel(), ResourceConstant.TYPE_IMAGE);
 				
 				for( WordResource wr : wResouces)
 					pictures.append(wr.getSavepath()+splitChar);
 				
 				//4.单词有关的课文段落（图片）
-				List<WordAttributeResource> wAtResouces =wordAttributeResourceService.find(pe.getPropertyID(), WordAttributeEnum.PROPERTYSCENE, ResourceConstant.TYPE_IMAGE);
+				//List<WordAttributeResource> wAtResouces =wordAttributeResourceService.find(pe.getPropertyID(), WordAttributeEnum.PROPERTYSCENE, ResourceConstant.TYPE_IMAGE);
 				
-				for( WordAttributeResource wr : wAtResouces)
+				//4.单词有关的绘本
+				List<WordResource> boResouces= wordResourceService.findResourceByName(pe.getInstanceLabel(), ResourceConstant.TYPE_PICTUREBOOK);
+				
+				for( WordResource wr : boResouces)
 					dialogues.append(wr.getSavepath()+splitChar);
 				
 				//5:与单词有关的动画（视频）
 				   //5.1自身的相关视频
-				List<WordResource> ownVideos= wordResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_VIDEO);
+				List<WordResource> ownVideos= wordResourceService.findResourceByName(pe.getInstanceLabel(), ResourceConstant.TYPE_VIDEO);
 				   //5.2属性相关的视频
-				List<WordAttributeResource> attrVideos =wordAttributeResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_VIDEO);
+				//List<WordAttributeResource> attrVideos =wordAttributeResourceService.findByWordId(pe.getPropertyID(), ResourceConstant.TYPE_VIDEO);
 				
 				for( WordResource wr : ownVideos)
 					videos.append(wr.getSavepath()+splitChar);
 				
-				for( WordAttributeResource wr : attrVideos)
-					videos.append(wr.getSavepath()+splitChar);
+				/*for( WordAttributeResource wr : attrVideos)
+					videos.append(wr.getSavepath()+splitChar);*/
 				
 				//6:与单词有关的绘本（图片）
 					//6.1自身的相关绘本

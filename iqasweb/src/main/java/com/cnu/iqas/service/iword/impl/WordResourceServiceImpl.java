@@ -1,5 +1,6 @@
 package com.cnu.iqas.service.iword.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -113,6 +114,23 @@ public class WordResourceServiceImpl implements WordResourceService{
 	public WordResource findByContent() {
 		// TODO Auto-generated method stub
 		return wordResourceDao.findByContent();
+	}
+
+	@Override
+	public List<WordResource> findResourceByName(String content, int type) {
+		// TODO Auto-generated method stub
+		  if( content!=null && !content.equals("")){
+		    	 if( ResourceConstant.isResouceType(type)){
+		    		 String wherejpql="o.name= ? and type=?";
+		    		 List<Object> attribute = new ArrayList<Object>();
+		    		 attribute.add(content);
+		    		 attribute.add(type);
+		    		 return this.wordResourceDao.getAllData(wherejpql, attribute.toArray());
+		    	 }else{
+		    		 return null;
+		    	 }
+		     }
+			return null;
 	}
 	
 	

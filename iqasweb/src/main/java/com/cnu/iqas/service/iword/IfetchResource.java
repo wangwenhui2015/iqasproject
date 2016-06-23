@@ -18,4 +18,13 @@ public interface IfetchResource<T> {
 	 * @return
 	 */
 	public List<T> findByWordId(String wordId,int type);
+	
+	/**
+	 * 根据内容和类型查询资源
+	 * @param content 查询 内容
+	 * @param type 资源类型
+	 * @return
+	 */
+	public List<T> findResourceByName(String content,int type);
+	
 }

@@ -112,5 +112,22 @@ public class WordAttributeResourceServiceImpl implements WordAttributeResourceSe
 		 
 	}
 
+	@Override
+	public List<WordAttributeResource> findResourceByName(String content, int type) {
+		// TODO Auto-generated method stub
+				 if( content!=null && !content.equals("")){
+			    	 if( ResourceConstant.isResouceType(type)){
+			    		 String wherejpql="o.name= ? and type=?";
+			    		 List<Object> attribute = new ArrayList<Object>();
+			    		 attribute.add(content);
+			    		 attribute.add(type);
+			    		 return this.wordAttributeResourceDao.getAllData(wherejpql, attribute.toArray());
+			    	 }else{
+			    		 return null;
+			    	 }
+			     }
+				return null;
+	}
+
 
 }
